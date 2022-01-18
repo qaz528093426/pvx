@@ -6,20 +6,38 @@ const Setting = require("./setting.json");
 module.exports = {
 
     //❤️ Multiple pages ~
-    // pages:{
-    //     index : {
-    //         title : 'Home - JX3BOX',
-    //         entry:'src/main.js',
-    //         template : 'public/index.html',
-    //         filename:'index.html',
-    //     },
-    //     $project : {
-    //         title : 'Home - JX3BOX',
-    //         entry:'src/core/$project/index.js',
-    //         template : 'public/$project/index.html',
-    //         filename:'$project/index.html',
-    //     },
-    // },
+    pages:{
+        index : {
+            title : '休闲栏目 - JX3BOX',
+            entry:'src/main.js',
+            template : 'public/index.html',
+            filename:'index.html',
+        },
+        share : {
+            title : '捏脸妆容 - JX3BOX',
+            entry:'src/pages/share.js',
+            template : 'public/index.html',
+            filename:'share/index.html',
+        },
+        house : {
+            title : '家园建设 - JX3BOX',
+            entry:'src/pages/house.js',
+            template : 'public/index.html',
+            filename:'house/index.html',
+        },
+        pet : {
+            title : '宠物大全 - JX3BOX',
+            entry:'src/pages/pet.js',
+            template : 'public/index.html',
+            filename:'pet/index.html',
+        },
+        adventure : {
+            title : '奇遇大全 - JX3BOX',
+            entry:'src/pages/adventure.js',
+            template : 'public/index.html',
+            filename:'adventure/index.html',
+        },
+    },
 
     //❤️ Porxy ~
     devServer: {
@@ -79,45 +97,6 @@ module.exports = {
         disableHostCheck: true
     },
 
-    //webpack配置
-    // configureWebpack: (config) => {
-    //     // 开启分离js
-    //     config.optimization = {
-    //         runtimeChunk: "single",
-    //         splitChunks: {
-    //             chunks: "all",
-    //             maxInitialRequests: Infinity,
-    //             minSize: 200000,
-    //             cacheGroups: {
-    //                 vendor: {
-    //                     test: /[\\/]node_modules[\\/]/,
-    //                     name(module) {
-    //                         // get the name. E.g. node_modules/packageName/not/this/part.js
-    //                         // or node_modules/packageName
-    //                         const packageName = module.context.match(
-    //                             /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-    //                         )[1];
-    //                         // npm package names are URL-safe, but some servers don't like @ symbols
-    //                         return `npm.${packageName.replace("@", "")}`;
-    //                     },
-    //                 },
-    //             },
-    //         },
-    //     };
-    //     // 取消webpack警告的性能提示
-    //     config.performance = {
-    //         hints: "warning",
-    //         //入口起点的最大体积
-    //         maxEntrypointSize: 50000000,
-    //         //生成文件的最大体积
-    //         maxAssetSize: 30000000,
-    //         //只给出 js 文件的性能提示
-    //         assetFilter: function(assetFilename) {
-    //             return assetFilename.endsWith(".js");
-    //         },
-    //     };
-    // },
-
     //❤️ define path for static files ~
     publicPath:
         //FOR Localhost => development
@@ -148,14 +127,14 @@ module.exports = {
 
         //💘 html-webpack-plugin ~
         // Multiple pages disable the block below
-        config.plugin("html").tap(args => {
-            args[0].meta = {                            //------设置SEO信息
-                Keywords: Setting.keys,
-                Description: Setting.desc
-            };
-            args[0].title = Setting.title + SEO.title;  //------自动添加标题后缀
-            return args;
-        });
+        // config.plugin("html").tap(args => {
+        //     args[0].meta = {                            //------设置SEO信息
+        //         Keywords: Setting.keys,
+        //         Description: Setting.desc
+        //     };
+        //     args[0].title = Setting.title + SEO.title;  //------自动添加标题后缀
+        //     return args;
+        // });
 
 
         //💝 in-line small imgs ~
