@@ -12,7 +12,7 @@
                 <template slot="title">捏脸</template>
                 <el-menu-item-group>
                     <el-menu-item index="1-1"><a href="/share"><i class="el-icon-download"></i>捏脸分享</a></el-menu-item>
-                    <el-menu-item index="1-2"><a href="/share/parse"><i class="el-icon-data-line"></i>妆容解析器</a></el-menu-item>
+                    <el-menu-item index="1-2"><a href="/facedata"><i class="el-icon-data-line"></i>妆容解析器</a></el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="2">

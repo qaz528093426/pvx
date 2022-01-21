@@ -13,7 +13,8 @@
             <div class="m-single-data">
                 <el-divider content-position="left">
                     <b>@{{ origin_author }}</b>
-                    <el-divider direction="vertical"></el-divider>独家数据分析
+                    <el-divider direction="vertical"></el-divider>
+                    独家数据分析
                 </el-divider>
                 <facedata v-if="facedata" :data="facedata" />
             </div>
@@ -36,6 +37,7 @@ export default {
         return {
             loading: false,
             single: "",
+
             stat: "",
         };
     },
@@ -52,7 +54,7 @@ export default {
         meta: function () {
             return this.single?.post_meta || "";
         },
-        origin_author: function () { 
+        origin_author: function () {
             return this.single?.post_meta?.author || "匿名";
         },
     },
@@ -64,13 +66,7 @@ export default {
                 getPost(this.id, this)
                     .then(res => {
                         this.single = res.data.data;
-                        return;
-                        this.post = this.$store.state.post = res.data.data;
-                        this.$store.state.user_id = this.post.post_author;
-                        document.title = this.post.post_title;
-
-                        this.meta = this.$store.state.meta = res.data.data.post_meta;
-                        this.post.post_banner = this.meta.pics && this.meta.pics.length && this.meta.pics[0]["url"];
+                        console.log(this.single,'...')
                     })
                     .finally(() => {
                         this.loading = false;
