@@ -27,7 +27,7 @@ export default {
             loading: false,
             list: [],
             search: "",
-
+            
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数

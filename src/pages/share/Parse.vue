@@ -1,10 +1,10 @@
 <template>
-    <div class="v-share-facedata">捏脸妆容解析器?</div>
+    <div class="v-share-faceParse">捏脸妆容解析器?</div>
 </template>
 
 <script>
 export default {
-    name: "FacedataParse",
+    name: "FaceParse",
     props: [],
     components: {},
     data: function () {

@@ -32,6 +32,9 @@ export default {
     computed: {},
     methods: { getAppIcon },
     components: { Nav, ShareList, ShareSingle },
+    created() {
+        sessionStorage.setItem("jx3_ShareId", this.id);
+    },
 };
 </script>
 
