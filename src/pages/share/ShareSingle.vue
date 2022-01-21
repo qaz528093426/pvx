@@ -18,7 +18,7 @@
                 </el-divider>
                 <facedata v-if="facedata" :data="facedata" />
             </div>
-            <Thx class="m-thx" slot="single-append" :postId="id" postType="share" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true" />
+            <Thx class="m-thx" :postId="id" postType="share" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true" />
         </singlebox>
     </div>
 </template>
@@ -28,7 +28,7 @@ import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 import { getPost } from "@/service/share.js";
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 import facedata from "@jx3box/jx3box-facedat/src/Facedat.vue";
-import singlebox from "@jx3box/jx3box-page/src/cms-single";
+import singlebox from "@jx3box/jx3box-common-ui/src/single/cms-single";
 export default {
     name: "single",
     props: [],
@@ -66,7 +66,6 @@ export default {
                 getPost(this.id, this)
                     .then(res => {
                         this.single = res.data.data;
-                        console.log(this.single,'...')
                     })
                     .finally(() => {
                         this.loading = false;
