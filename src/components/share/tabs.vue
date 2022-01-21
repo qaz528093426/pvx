@@ -1,16 +1,10 @@
 <template>
     <div class="m-share-tabs">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="全部" name="0">
+            <el-tab-pane :label="item" v-for="(item, i) in types" :key="i">
                 <span class="u-tabs-span" slot="label">
-                    <img class="u-icon-img" :src="getThumbnail('全部')" alt="全部" />
-                    全部捏脸
-                </span>
-            </el-tab-pane>
-            <el-tab-pane :label="item.label" :name="key" v-for="(item, key) in types" :key="key">
-                <span class="u-tabs-span" slot="label">
-                    <img class="u-icon-img" :src="getThumbnail(item.label)" :alt="item.label" />
-                    {{ item.label }}
+                    <img class="u-icon-img" :src="getThumbnail(item)" :alt="item" />
+                    {{ item }}
                 </span>
             </el-tab-pane>
         </el-tabs>
@@ -32,24 +26,7 @@ export default {
     props: [],
     data: function () {
         return {
-            types: {
-                1: {
-                    label: "成男",
-                    icon: "el-icon-male",
-                },
-                2: {
-                    label: "成女",
-                    icon: "el-icon-female",
-                },
-                3: {
-                    label: "正太",
-                    icon: "el-icon-headset",
-                },
-                4: {
-                    label: "萝莉",
-                    icon: "el-icon-lollipop",
-                },
-            },
+            types: ["全部", "成男", "成女", "正太", "萝莉"],
             changes: [
                 { key: "all", name: "全部" },
                 { key: "newbie", name: "热门" },
@@ -59,13 +36,13 @@ export default {
 
             activeName: "0",
             mark: "all",
-            subtype: 0,
+            subtype: "全部",
         };
     },
     computed: {
         params: function () {
             let params = {};
-            if (this.mark !== "all") params.mark = this.mark;
+            params.mark = this.mark;
             params.subtype = this.subtype;
             return params;
         },
@@ -73,7 +50,7 @@ export default {
     methods: {
         //切换数据
         handleClick() {
-            this.activeName == 0 ? (this.subtype = 0) : (this.subtype = this.types[this.activeName].label);
+            this.subtype = this.types[this.activeName];
             this.onShareList();
         },
         toMark(val) {
