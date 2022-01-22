@@ -22,7 +22,7 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
-import { setPost } from "../../service/share";
+import { setPost } from "@/service/share";
 import { showMinibanner, showBanner } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "item",
@@ -59,7 +59,7 @@ export default {
 
             setPost(item.ID, {
                 mark: item.mark,
-            }).then(res => {
+            }).then((res) => {
                 this.$notify({
                     title: "成功",
                     message: msg,

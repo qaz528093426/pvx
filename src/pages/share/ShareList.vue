@@ -6,11 +6,20 @@
             <div class="m-share-list">
                 <ShareItem v-for="(item, index) in list" :key="index" :item="item" />
             </div>
-            <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading">加载更多</el-button>
-            <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
+            <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+            <el-pagination
+                class="m-archive-pages"
+                background
+                layout="total, prev, pager, next, jumper"
+                :hide-on-single-page="true"
+                :page-size="per"
+                :total="total"
+                :current-page.sync="page"
+                @current-change="changePage"
+            ></el-pagination>
         </template>
 
-        <el-alert v-else class="u-alert" :title="title" type="info" center show-icon></el-alert>
+        <el-alert v-else class="m-archive-null" :title="title" type="info" center show-icon></el-alert>
     </div>
 </template>
 
@@ -18,7 +27,7 @@
 import ShareSearch from "@/components/share/search.vue";
 import ShareTabs from "@/components/share/tabs.vue";
 import ShareItem from "@/components/share/item.vue";
-import { getPosts } from "../../service/share";
+import { getPosts } from "@/service/share";
 export default {
     name: "ShareList",
     props: [],
@@ -33,7 +42,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 20, //每页条目
+            per: 44, //每页条目
 
             appendMode: false, //追加模式
         };
@@ -69,14 +78,14 @@ export default {
         // 获取数据
         getData() {
             this.loading = true;
-            
+
             let params = this.post;
             if (params.mark == "all") delete params.mark;
             if (params.subtype == "全部") delete params.subtype;
             params.page = this.page;
 
             getPosts(params, this)
-                .then(res => {
+                .then((res) => {
                     if (this.appendMode) {
                         this.list = this.list.concat(res.data.data.list);
                     } else {
