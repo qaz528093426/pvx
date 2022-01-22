@@ -7,7 +7,7 @@
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
             <div class="m-main">
-                家具大全
+                <el-alert title="即将登陆" type="warning" show-icon> </el-alert>
             </div>
             <Footer></Footer>
         </Main>
