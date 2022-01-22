@@ -1,16 +1,17 @@
 <template>
     <div class="m-share-tabs">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane :label="item" v-for="(item, i) in types" :key="i">
-                <span class="u-tabs-span" slot="label">
-                    <img class="u-icon-img" :src="getThumbnail(item)" :alt="item" />
-                    {{ item }}
-                </span>
-            </el-tab-pane>
-        </el-tabs>
-        <div class="u-changes">
-            <el-radio-group v-model="mark" size="small" @change="toMark">
-                <el-radio-button v-for="item in changes" :key="item.key" :label="item.key">
+        <!-- <el-tabs class="u-tabs" v-model="activeName" @tab-click="handleClick" type="card">
+            <el-tab-pane :label="item"></el-tab-pane>
+        </el-tabs> -->
+        <div class="u-tabs">
+            <div class="u-tab-item" v-for="(item, i) in subtypes" :key="i" @click="clickTabs(i)" :class="i == activeIndex ? 'active' : ''">
+                <img class="u-icon-img" :src="getThumbnail(item)" :alt="item" />
+                <span class="u-tabs-span">{{ item }}</span>
+            </div>
+        </div>
+        <div class="u-marks">
+            <el-radio-group v-model="mark" @change="toMark">
+                <el-radio-button v-for="item in marks" :key="item.key" :label="item.key">
                     {{ item.name }}
                 </el-radio-button>
             </el-radio-group>
@@ -26,15 +27,15 @@ export default {
     props: [],
     data: function () {
         return {
-            types: ["全部", "成男", "成女", "正太", "萝莉"],
-            changes: [
+            subtypes: ["全部", "成男", "成女", "正太", "萝莉"],
+            marks: [
                 { key: "all", name: "全部" },
                 { key: "newbie", name: "热门" },
                 { key: "advanced", name: "推荐" },
                 { key: "recommended", name: "精选" },
             ],
 
-            activeName: "0",
+            activeIndex: 0,
             mark: "all",
             subtype: "全部",
         };
@@ -49,8 +50,10 @@ export default {
     },
     methods: {
         //切换数据
-        handleClick() {
-            this.subtype = this.types[this.activeName];
+ 
+        clickTabs(i) {
+            this.activeIndex = i;
+            this.subtype = this.subtypes[i];
             this.onShareList();
         },
         toMark(val) {
