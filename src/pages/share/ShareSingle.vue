@@ -1,6 +1,6 @@
 <template>
-    <div class="v-share-single">
-        <singlebox :post="single" :stat="stat" v-loading="loading">
+    <div class="v-share-single" v-loading="loading">
+        <singlebox :post="single" :stat="stat" >
             <div class="m-single-pics" v-if="meta.pics && meta.pics.length">
                 <el-carousel :interval="4000" type="card" arrow="always" height="600px">
                     <el-carousel-item v-for="(item, i) in meta.pics" :key="i">
@@ -10,15 +10,13 @@
                     </el-carousel-item>
                 </el-carousel>
             </div>
+            <div class="u-single-author">作者：<b>{{ origin_author }}</b></div>
             <div class="m-single-data">
                 <el-divider content-position="left">
-                    <b>@{{ origin_author }}</b>
-                    <el-divider direction="vertical"></el-divider>
                     独家数据分析
                 </el-divider>
                 <facedata v-if="facedata" :data="facedata" />
             </div>
-            <Thx class="m-thx" :postId="id" postType="share" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true" />
         </singlebox>
     </div>
 </template>
