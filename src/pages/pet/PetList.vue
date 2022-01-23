@@ -1,11 +1,11 @@
 <template>
     <div class="v-pet-list">
         <div class="m-pet-listGuide flex">
-            <img src="../../assets/img/petbg.png" class="u-bg" />
+            <!-- <img src="../../assets/img/petbg.png" class="u-bg" />
             <div class="guideTil flex">
                 <img src="../../assets/img/pettitle.png" />
                 <img src="../../assets/img/boxlogo.png" />
-            </div>
+            </div> -->
             <div class="screen flex">
                 <div class="select flex">
                     <el-radio-group v-model="petTypeNum" v-if="false">

@@ -51,7 +51,7 @@
                         ><a href="/adventure/"><i class="el-icon-files"></i>奇遇大全</a></el-menu-item
                     >
                     <el-menu-item index="4-2"
-                        ><a href="/adventure/#/trigger"><i class="el-icon-guide"></i>触发汇总</a></el-menu-item
+                        ><a href="/trigger/"><i class="el-icon-guide"></i>触发汇总</a></el-menu-item
                     >
                     <el-menu-item index="4-3"
                         ><a href="https://j3cx.com/serendipity" target="_blank"><i class="el-icon-thumb"></i>奇遇查询</a></el-menu-item
