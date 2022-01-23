@@ -19,6 +19,12 @@ module.exports = {
             template : 'public/index.html',
             filename:'share/index.html',
         },
+        facedata : {
+            title : '妆容解析 - JX3BOX',
+            entry:'src/pages/facedata.js',
+            template : 'public/index.html',
+            filename:'facedata/index.html',
+        },
         house : {
             title : '家园建设 - JX3BOX',
             entry:'src/pages/house.js',

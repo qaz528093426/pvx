@@ -2,7 +2,7 @@
     <div class="m-share-item">
         <a class="u-face" target="_blank" :href="item.ID | postLink">
             <i class="u-img">
-                <img class="u-pic" :src="imgLink" loading="lazy" />
+                <img class="u-pic" :src="showThumb(imgLink)" loading="lazy" />
             </i>
             <span class="u-author">@{{ author }}</span>
         </a>
@@ -22,7 +22,8 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
-import { setPost } from "../../service/share";
+import { setPost } from "@/service/share";
+import { showMinibanner, showBanner } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "item",
     props: ["item"],
@@ -58,13 +59,19 @@ export default {
 
             setPost(item.ID, {
                 mark: item.mark,
-            }).then(res => {
+            }).then((res) => {
                 this.$notify({
                     title: "成功",
                     message: msg,
                     type: "success",
                 });
             });
+        },
+        showThumb: function (item) {
+            return showBanner(item, "face");
+        },
+        showBanner: function (val) {
+            return showMinibanner(val);
         },
     },
     filters: {
