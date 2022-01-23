@@ -78,11 +78,12 @@ export default {
         getAppType : function (){
             let arr = location.pathname?.split('/')
             let type = ''
-            arr?.forEach((str,i) => {
-                if(!!str && str != 'pvx'){
+            for(let str of arr){
+                if(str && str != 'pvx'){
                     type = str
+                    break;
                 }
-            })
+            }
             return type
         },
         getAppLink : function (appKey){
