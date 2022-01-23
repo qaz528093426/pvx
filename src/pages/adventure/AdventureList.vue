@@ -1,5 +1,4 @@
 <template>
-
   <div class="v-adventure-list">
     <div class="listGuide flex">
       <img src="../../assets/img/petbg.png" class="bg" />
@@ -22,15 +21,14 @@
           <el-input placeholder="输入奇遇名字搜索" v-model="keyword" clearable>
           </el-input>
         </div>
-
-
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import adventureClass from "../../assets/data/adventure_class.json";
 export default {
-
   name: "adventureList",
   props: [],
   components: {},
@@ -47,20 +45,6 @@ export default {
   filters: {},
   created: function () {},
   mounted: function () {},
-
-    name: "adventureList",
-    props: [],
-    components: {},
-    data: function () {
-        return {};
-    },
-    computed: {},
-    watch: {},
-    methods: {},
-    filters: {},
-    created: function () {},
-    mounted: function () {},
-
 };
 </script>
 
