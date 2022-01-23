@@ -1,12 +1,23 @@
 <template>
-    <div class="v-trigger-single">触发详情页</div>
+    <div class="v-trigger-single">
+        <div class="m-details">
+            <AdventureItem />
+            <TriggerItem />
+            <TriggerGame />
+        </div>
+        <TriggerIntro />
+    </div>
 </template>
 
 <script>
+import AdventureItem from "@/components/adventure/item.vue";
+import TriggerItem from "@/components/trigger/item.vue";
+import TriggerGame from "@/components/trigger/game.vue";
+import TriggerIntro from "@/components/trigger/intro.vue";
 export default {
     name: "triggerSingle",
     props: [],
-    components: {},
+    components: { AdventureItem, TriggerItem, TriggerGame, TriggerIntro },
     data: function () {
         return {};
     },
@@ -21,4 +32,5 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/adventure/single.less";
+@import "~@/assets/css/adventure/trigger.less";
 </style>
