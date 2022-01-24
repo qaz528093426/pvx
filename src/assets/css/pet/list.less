@@ -1,205 +1,131 @@
-.flex{
+.flex {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.listGuide{
-    width:100%;
+.v-pet-listGuide {
+    width: 100%;
     height: 300px;
     flex-direction: column;
     overflow: visible;
     position: relative;
-    .guideTil{
-        img{
-            height:70px;
-            width:auto;
-            margin-right:5px;
+
+    .v-pet-guideTil {
+        img {
+            height: 70px;
+            width: auto;
+            margin-right: 5px;
         }
     }
-    .bg{
+
+    .v-pet-bg {
         width: 70%;
-        height:auto;
+        height: auto;
         position: absolute;
-        top:0;
-        left:15%;
+        top: 0;
+        left: 15%;
         z-index: -1;
     }
-    .screen{
-        width:auto;
-        height:45px;
+
+    .v-pet-screen {
+        width: auto;
+        height: 45px;
         border-radius: 15px;
-        border:1px solid #a7abaf;
-        box-shadow:0 0 2px #959A9E;
+        border: 1px solid #a7abaf;
+        box-shadow: 0 0 2px #959A9E;
         background: none;
         margin-top: 20px;
         overflow: hidden;
-        .select{
-            height:100%;
-            width:auto;
+
+        .v-pet-select {
+            height: 100%;
+            width: auto;
             padding-left: 10px;
             background-color: #FAFBFCD0;
-            border-right:1px solid #D4D4D2;
+            border-right: 1px solid #D4D4D2;
         }
-        .search{
-            height:100%;
-            width:240px;
+
+        .v-pet-search {
+            height: 100%;
+            width: 240px;
             background-color: #FAFBFCD0;
         }
+
         /*选择器样式修改*/
-        .el-radio{
-            color:#787878;
-            margin-right:10px;
+        .el-radio {
+            color: #787878;
+            margin-right: 10px;
         }
+
         .el-radio__input.is-checked .el-radio__inner {
             border-color: #FAFBFC;
             background: #FAFBFC;
             border: 1px solid #787878;
         }
+
         .el-radio__inner {
             border: 1px solid #787878;
             width: 16px;
             height: 16px;
         }
+
         .el-radio__inner::after {
-            width:8px;
-            height:8px;
-            border:1px solid #787878;
+            width: 8px;
+            height: 8px;
+            border: 1px solid #787878;
         }
-        .el-radio__input.is-checked + .el-radio__label {
+
+        .el-radio__input.is-checked+.el-radio__label {
             color: #787878;
         }
+
         .el-radio__label {
             font-size: 18px;
             padding-left: 2px;
             letter-spacing: 1px;
-            font-family: "KaiTi","Microsoft YaHei";
+            font-family: "KaiTi", "Microsoft YaHei";
             text-shadow: 0 0 1px #787878;
         }
-        .el-input{
-            width:95%;
+
+        .el-input {
+            width: 95%;
             font-size: 18px;
         }
-        .el-input__inner{
-            border:none;
+
+        .el-input__inner {
+            border: none;
             background: none;
             background-color: none;
-            font-family: "KaiTi","Microsoft YaHei";
+            font-family: "KaiTi", "Microsoft YaHei";
             letter-spacing: 1px;
             color: #787878;
-            padding-right:15px;
+            padding-right: 15px;
             text-shadow: 0 0 1px #585858;
         }
-        .el-input__inner::placeholder{
-            color:#919191;
+
+        .el-input__inner::placeholder {
+            color: #919191;
             text-shadow: 0 0 1px #585858;
         }
     }
 }
 
-.listContent{
-    width:100%;
-    height:auto;
+.v-pet-listContent {
+    width: 100%;
+    height: auto;
     flex-wrap: wrap;
     justify-content: flex-start;
     box-sizing: border-box;
-    padding-left:60px;
-    padding-right:50px;
-    .listItemA{
-        width:230px;
-        height:420px;
-        border:1px solid #ccc;
-        box-shadow: 0 0 10px #999;
-        border-radius: 15px;
-        margin:0 15px;
-        margin-bottom: 30px;
-        overflow: hidden;
-        position: relative;
-        cursor: pointer;
-        .petImg{
-            width:100%;
-            height:calc(100% - 40px)
-        }
-        span{
-            height:40px;
-            width:100%;
-            position: absolute;
-            bottom:0;
-            background: #fff;
-            color:#333;
-            font-size: 17px;
-            letter-spacing: 1px;
-            text-shadow: 0 0 1px #333;
-        }
-    }
-    .listItemB{
-        width:230px;
-        height:380px;
-        background: none;
-        border-radius: 3px;
-        margin:0 15px;
-        margin-bottom: 30px;
-        overflow: hidden;
-        position: relative;
-        cursor: pointer;
-        .petImg{
-            position: absolute;
-            left:50%;
-            top:50%;
-            transform: translateX(-50%) translateY(-50%);
-            width:98%;
-            height:98%;
-            z-index:-1;
-        }
-        .petFrame{
-            position: relative;
-            width:100%;
-            height:100%;
-            z-index:0;
-        }
-        span{
-            position: absolute;
-            bottom:11%;
-            left:16%;
-            background: none;
-            color:#FFF2C5;
-            font-size: 22px;
-            letter-spacing: 5px;
-            text-shadow: 0 0 1px #333;
-            z-index: 1;
-            font-family: "SimSun","Microsoft YaHei";
-            font-weight: bold;
-            text-shadow: 0 0 5px #000;
-        }
-        .grayStar,.goldStar{
-            position: absolute;
-            z-index: 1;
-            width:20px;
-            height:80px;
-            top:10%;
-            right:2%;
-            flex-direction: column;
-            justify-content: flex-start;
-            img{
-                width:10px;
-                height:10px;
-                margin:3px 0;
-            }
-        }
-        .goldStar{
-            z-index: 2;
-        }
-        .score{
-            position: absolute;
-            z-index: 1;
-            width:auto;
-            height:auto;
-            color:#fff;
-            font-weight: bold;
-            font-size: 18px;
-            top:2%;
-            right:5%;
-        }
-    }
+    padding-left: 60px;
+    padding-right: 50px;
 }
 
+.m-archive-more {
+    .mb(10px);
+    .w(100%);
+}
+
+.m-archive-pages {
+    overflow-x: auto;
+}
