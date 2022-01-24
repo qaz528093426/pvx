@@ -1,14 +1,13 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="宠物大全" slug="pet" root="/pet" :publishEnable="true" :adminEnable="true" :feedbackEnable="true" :crumbEnable="true">
+        <Breadcrumb name="宠物大全" slug="pet" root="/pvx/pet" :publishEnable="false" :adminEnable="false" :feedbackEnable="true" :crumbEnable="true">
             <img slot="logo" svg-inline :src="getAppIcon('pet')" />
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
             <div class="m-main">
-                <PetSingle v-if="id"></PetSingle>
-                <PetList v-else></PetList>
+                <router-view></router-view>
             </div>
             <Footer></Footer>
         </Main>
@@ -18,20 +17,15 @@
 <script>
 import Nav from "@/components/Nav.vue";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
-import { getAppId } from "@/utils/common";
-import PetList from "./PetList.vue";
-import PetSingle from "./PetSingle.vue";
 export default {
     name: "App",
     props: [],
     data: function () {
-        return {
-            id: getAppId(),
-        };
+        return {};
     },
     computed: {},
     methods: { getAppIcon },
-    components: { Nav, PetList, PetSingle },
+    components: { Nav },
 };
 </script>
 
