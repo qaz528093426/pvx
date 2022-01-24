@@ -1,10 +1,9 @@
 <template>
     <div class="v-pet-list">
         <div class="v-pet-listGuide flex">
-            <img src="../../assets/img/petbg.png" class="v-pet-bg" />
+            <img src="https://img.jx3box.com/image/pvx/petbg.png" class="v-pet-bg" />
             <div class="v-pet-guideTil flex">
-                <img src="../../assets/img/pettitle.png" />
-                <img src="../../assets/img/boxlogo.png" />
+                <img src="https://img.jx3box.com/image/pvx/pettitle.png" />
             </div>
             <div class="v-pet-screen flex">
                 <div class="v-pet-select flex">
