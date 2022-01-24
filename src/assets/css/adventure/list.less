@@ -1,9 +1,14 @@
-.v-adventure-List {
+.v-adventure-List,
+.v-pet-list {
     background-image: url("@{pvx_img}adbg.png");
     background-repeat: no-repeat;
     background-position: center top;
 }
-.m-adventure-header {
+.v-pet-list {
+    background-image: url("@{pvx_img}petbg.png");
+}
+.m-adventure-header,
+.m-pet-header {
     padding: 80px 0 30px 0;
     display: flex;
     flex-direction: column;
@@ -13,6 +18,9 @@
         background-image: url("@{pvx_img}adtitle.png");
         background-size: 100%;
     }
+}
+.m-pet-header .u-title {
+    background-image: url("@{pvx_img}pettitle.png");
 }
 
 .m-adventure-search {
@@ -69,17 +77,19 @@
                 .r(50%);
                 .lt(50%,50%);
                 margin: -3px 0 0 -3px;
-                background: #787878;
+                background: #0366d6;
                 opacity: 0.8;
             }
         }
     }
 }
 
-.m-adventure-list {
+.m-adventure-list,
+.m-pet-list {
     display: flex;
     flex-wrap: wrap;
 }
+
 .m-adventure-item {
     .size(244px,300px);
     .r(10px);
@@ -104,5 +114,12 @@
         cursor: pointer;
         box-shadow: 0 0 10px #787878;
         transform: scale(1.02);
+    }
+}
+
+.m-pet-list .m-adventure-item {
+    .size(227px,375px);
+    img {
+        .h(334px);
     }
 }

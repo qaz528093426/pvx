@@ -1,14 +1,18 @@
 <template>
     <div class="v-adventure-single">
-        奇遇详情页
+        单页
+        <TriggerSingle v-if="false" />
     </div>
 </template>
 
 <script>
+// import TriggerSingle from "../trigger/TriggerSingle.vue";
 export default {
     name: "adventureSingle",
     props: [],
-    components: {},
+    components: {
+        // TriggerSingle
+    },
     data: function () {
         return {};
     },
@@ -16,7 +20,9 @@ export default {
     watch: {},
     methods: {},
     filters: {},
-    created: function () {},
+    created: function () {  
+        console.log(this.id);
+    },
     mounted: function () {},
 };
 </script>

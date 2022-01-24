@@ -1,7 +1,7 @@
 <template>
     <div class="v-trigger-single">
         <div class="m-details">
-            <AdventureItem />
+            <AdventureItem v-if="false"/>
             <TriggerItem />
             <TriggerGame />
         </div>
@@ -19,13 +19,18 @@ export default {
     props: [],
     components: { AdventureItem, TriggerItem, TriggerGame, TriggerIntro },
     data: function () {
-        return {};
+        return {
+            id: "",
+        };
     },
     computed: {},
     watch: {},
     methods: {},
     filters: {},
-    created: function () {},
+    created: function () {
+        this.id = this.$route.params.id
+        console.log(this.id) 
+    },
     mounted: function () {},
 };
 </script>

@@ -7,7 +7,7 @@ const Index = () => import("../views/Index.vue");
 Vue.use(VueRouter);
 
 const routes = [
-    { name: "index", path: "/", component: Index },
+    { name: "index", path: "/:id", component: Index },
     // { name: "fn", path: "/fn", component: Fn },
 ];
 

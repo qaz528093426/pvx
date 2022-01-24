@@ -6,7 +6,7 @@
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
-            <div class="m-main">
+            <div class="m-main"> 
                 <AdventureSingle v-if="id"></AdventureSingle>
                 <AdventureList v-else></AdventureList>
             </div>
