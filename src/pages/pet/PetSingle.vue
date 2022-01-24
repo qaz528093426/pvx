@@ -20,8 +20,8 @@
 import { getPet } from "@/service/pet";
 import { getPetSkill } from "@/service/pet";
 import petCard from "@/components/pet/PetCard.vue";
-import petType from "../../assets/data/pet_type.json";
-import petSource from "../../assets/data/pet_source.json";
+import petType from "@/assets/data/pet_type.json";
+import petSource from "@/assets/data/pet_source.json";
 export default {
     name: "PetSingle",
     props: [],
@@ -32,28 +32,26 @@ export default {
         return {
             petType,
             petSource,
-            petId:'',
             pet: {},
             skill:null,
         };
     },
-    computed: {},
+    computed: {
+        id : function (){
+            return this.$route.params.id
+        }
+    },
     watch: {},
     methods: {
-        //获取宠物ID
-        getPetId:function(){
-            const path = window.location.pathname
-            this.petId = path.split("/")[2]
-        },
         // 获取宠物详情
         getPetInfo: function () {
-            getPet(this.petId).then((res) => {
+            getPet(this.id).then((res) => {
                 this.pet = res.data;
             });
         },
         // 获取宠物技能信息
         getSkillInfo: function () {
-            getPetSkill(this.petId).then((res) => {
+            getPetSkill(this.id).then((res) => {
             });         
         },
         // 获取宠物种类
@@ -80,7 +78,6 @@ export default {
     filters: {},
     created: function () {},
     mounted: function () {
-        this.getPetId();
         this.getPetInfo();
         this.getSkillInfo();
     },
