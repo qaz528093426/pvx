@@ -1,5 +1,5 @@
 <template>
-    <a class="v-pet-listItemB" target="_self" :href="'/pet/' + petObject.Index">
+    <div class="v-pet-listItemB" @click="goSingle">
         <!--宠物卡片图-->
         <img :src="getBgPath(petObject.BgPath)" class="v-pet-petImg" />
         <!--宠物边框图-->
@@ -16,7 +16,7 @@
             {{ petObject.Score ? petObject.Score : "？" }}
         </div>
         <span>{{ petObject.Name }}</span>
-    </a>
+    </div>
 </template>
 
 <script>
@@ -59,6 +59,9 @@ export default {
                 return "https://icon.jx3box.com/pvx/pet/frame" + frameName;
             }
         },
+        goSingle() {
+            this.$router.push({ name: 'single', params: { id: this.petObject.Index } })
+        }
     },
 };
 </script>

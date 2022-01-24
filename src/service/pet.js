@@ -6,11 +6,22 @@ function getPets(params) {
     });
 }
 
-function getPet(petid) {
-    return $node().get(`/pet/${petid}`);
+function getPet(petid, client = 'std') {
+    return $node().get(`/pet/${petid}?client=${client}`);
 }
 
 function getPetSkill(petid) {
     return $node().get(`/pet/${petid}/skill`);
 }
-export { getPets, getPet, getPetSkill };
+
+function getShopInfo({ item_type, item_id, client = 'std' }) {
+    return $node().get(`/shop`, {
+        params: {
+            client,
+            itemType: item_type,
+            itemId: item_id
+        }
+    })
+}
+
+export { getPets, getPet, getPetSkill, getShopInfo };

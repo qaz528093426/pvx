@@ -1,45 +1,104 @@
 <template>
     <div class="v-pet-single">
+        <div class="m-toolbar">
+            <el-button size="medium" icon="el-icon-arrow-left" @click="goBack"
+                >返回列表</el-button
+            >
+            <el-button size="medium" type="primary" icon="el-icon-s-promotion" @click="goItem">查看物品</el-button>
+        </div>
         <div class="v-pet-panel flex">
-            <petCard :petObject="pet"></petCard>
+            <petCard class="u-pet-card" :petObject="pet"></petCard>
             <div class="v-pet-info flex">
-                <div class="v-pet-skill flex">
-                    <img src="" >
+                <div class="u-pet-name">{{ pet.Name }}</div>
+                <div class="">
+                    <template v-for="(skill, index) in petWiki.skills">
+                        <el-popover
+                            :key="index"
+                            trigger="click"
+                            popper-class="u-pet-skill-pop"
+                            :visible-arrow="false"
+                            placement="top"
+                        >
+                            <div class="u-desc">
+                                <div>{{ skill.Name }}</div>
+                                <div>{{ skill.Desc }}</div>
+                            </div>
+                            <img
+                                slot="reference"
+                                class="u-icon"
+                                :src="skill.IconID | iconLink"
+                                alt=""
+                            />
+                        </el-popover>
+                    </template>
                 </div>
-                <div class="v-pet-orange">{{getPetType(pet.Class)}} · {{getPetSource(pet.Source)}}</div>
-                <div><i class="el-icon-star-off" v-for="count in pet.Star" :key="count"></i></div>
-                <div>宠物积分：{{pet.Score}}</div>
-                <div>宠物说明：{{getPetDesc(pet.Desc)}}</div>
-                <div class="v-pet-orange">{{getPetDesc(pet.OutputDes)}}</div>
+                <div class="v-pet-orange">
+                    {{ getPetType(pet.Class) }} · {{ getPetSource(pet.Source) }}
+                </div>
+                <div>
+                    <i
+                        class="el-icon-star-on"
+                        v-for="count in pet.Star"
+                        :key="count"
+                    ></i>
+                </div>
+                <div>宠物分数：{{ pet.Score }}</div>
+                <div class="u-pet-desc">宠物说明：
+                    <template v-for="item in getPetDesc(pet.Desc)">
+                        <span :key="item.text">{{ item.text }}</span>
+                    </template></div>
+                <div class="u-source-text">
+                    <template v-for="item in getPetDesc(pet.OutputDes)">
+                        <span :key="item.text">{{ item.text }}</span>
+                    </template>
+                </div>
+                <div class="u-shop-text" v-if="shopInfo.RewardsPrice || shopInfo.CoinPrice">
+                    商城价格：
+                    <el-tag type="warning" class="u-credit">积分：{{  shopInfo.RewardsPrice }}</el-tag>
+                    <el-tag type="danger">通宝：{{  shopInfo.CoinPrice }}</el-tag>
+                </div>
+            </div>
+            <div class="m-pet-wiki">
+                <wiki-panel scene="detail" :wikiPost="postPet" :borderNone="true"></wiki-panel>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { getPet } from "@/service/pet";
-import { getPetSkill } from "@/service/pet";
+import { getPet, getShopInfo } from "@/service/pet";
+import { getWiki } from "@/service/wiki";
 import petCard from "@/components/pet/PetCard.vue";
+import WikiPanel from '@jx3box/jx3box-common-ui/src/wiki/WikiPanel.vue'
 import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
+import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
+
 export default {
     name: "PetSingle",
     props: [],
     components: {
         petCard,
+        WikiPanel
     },
     data: function () {
         return {
-            petType,
-            petSource,
             pet: {},
-            skill:null,
+            petWiki: {},
+            shopInfo: "",
+            postPet: ''
         };
     },
     computed: {
-        id : function (){
-            return this.$route.params.id
-        }
+        id: function () {
+            return this.$route.params.id;
+        },
+        source_id: function ({ pet }) {
+            return pet?.ItemTabType + "_" + pet?.ItemTabIndex;
+        },
+        client: function () {
+            return this.$store.state.client;
+        },
     },
     watch: {},
     methods: {
@@ -47,39 +106,79 @@ export default {
         getPetInfo: function () {
             getPet(this.id).then((res) => {
                 this.pet = res.data;
+                this.getPetWiki();
+                this.getShopInfo();
             });
         },
         // 获取宠物技能信息
-        getSkillInfo: function () {
-            getPetSkill(this.id).then((res) => {
-            });         
+        getPetWiki: function () {
+            getWiki("item", this.source_id).then((res) => {
+                this.petWiki = res?.data?.data?.source?.pet;
+
+                if (this.petWiki.achievement_id) {
+                    getWiki('achievement', this.petWiki.achievement_id).then(res => {
+                        this.postPet = res?.data?.data?.post || ''
+                    })
+                }
+            });
+        },
+        // 获取宠物商城价格
+        getShopInfo() {
+            const params = {
+                item_type: this.pet.ItemTabType,
+                item_id: this.pet.ItemTabIndex,
+            };
+            getShopInfo(params).then((res) => {
+                this.shopInfo = res?.data || "";
+            });
         },
         // 获取宠物种类
         getPetType: function (typeId) {
-            for(let i=0;i<this.petType.length;i++){
-                if(typeId == this.petType[i].class){
-                    return this.petType[i].name
-                }
-            }
+            const _petType = petType.find((item) => item.class === typeId);
+            return _petType?.name || "";
         },
         // 获取宠物途径
         getPetSource: function (sourceId) {
-            for(let i=0;i<this.petSource.length;i++){
-                if(sourceId == this.petSource[i].source){
-                    return this.petSource[i].name
-                }
-            }
+            const _petSource = petSource.find(
+                (item) => ~~sourceId === ~~item.source
+            );
+            return _petSource?.name || ''
         },
         // 获取宠物描述
-        getPetDesc: function (desc) {
-            return desc.split('"')[1]
+        getPetDesc: function (str) {
+            const regex = /<text>text=(.*?)font=(\d+).*?<\/text>/gimsy;
+            let matches = [];
+            let match;
+            while ((match = regex.exec(str))) {
+                matches.push(match);
+            }
+
+            // 格式化分段
+            let result = [];
+            for (let group of matches) {
+                result.push({
+                    font: ~~group[2],
+                    text: group[1].slice(1, -2).replace(/[\\n]/g, ""),
+                });
+            }
+            return result;
         },
+        goBack() {
+            this.$router.push({ name: "list" });
+        },
+        goItem() {
+            const { ItemTabType, ItemTabIndex } = this.pet
+            const link = getLink('item', `${ItemTabType}_${ItemTabIndex}`)
+
+            window.open(link, '_blank')
+        }
     },
-    filters: {},
+    filters: {
+        iconLink,
+    },
     created: function () {},
     mounted: function () {
         this.getPetInfo();
-        this.getSkillInfo();
     },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="v-pet-list">
+    <div class="v-pet-list" v-loading="loading">
         <div class="v-pet-listGuide flex">
             <img :src="getPic('image/pvx/petbg.png')" class="v-pet-bg" />
             <div class="v-pet-guideTil flex">
@@ -73,6 +73,7 @@ export default {
                 Class: this.petTypeNum,
                 Name: this.petName,
                 Source: this.petSourceNum,
+                client: this.client
             };
         },
         resetParams: function () {
@@ -81,6 +82,9 @@ export default {
         hasNextPage: function () {
             return this.pages > 1 && this.page < this.total;
         },
+        client: function (){
+            return this.$store.state.client
+        }
     },
     watch: {
         resetParams: {
