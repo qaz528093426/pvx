@@ -1,5 +1,5 @@
 <template>
-    <a class="v-pet-listItemB" target="_self" :href="petObject.Index">
+    <a class="v-pet-listItemB" target="_self" :href="'/pet/'+petObject.Index">
         <!--宠物卡片图-->
         <img :src="getBgPath(petObject.BgPath)" class="v-pet-petImg" />
         <!--宠物边框图-->
