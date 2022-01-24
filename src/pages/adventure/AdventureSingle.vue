@@ -1,28 +1,27 @@
 <template>
-    <div class="v-adventure-single">
-        单页
-        <TriggerSingle v-if="false" />
+    <div class="v-adventure-single" v-if="id">
+        <TriggerSingle type="adventure" :id="id" />
     </div>
 </template>
 
 <script>
-// import TriggerSingle from "../trigger/TriggerSingle.vue";
+import TriggerSingle from "../trigger/TriggerSingle.vue";
 export default {
     name: "adventureSingle",
     props: [],
-    components: {
-        // TriggerSingle
-    },
+    components: { TriggerSingle },
     data: function () {
         return {};
     },
-    computed: {},
+    computed: {
+        id: function () {
+            return this.$route.params.id || 1;
+        },
+    },
     watch: {},
     methods: {},
     filters: {},
-    created: function () {  
-        console.log(this.id);
-    },
+    created: function () {},
     mounted: function () {},
 };
 </script>

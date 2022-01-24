@@ -12,12 +12,12 @@ import "@jx3box/jx3box-common/css/normalize.css";
 Vue.use(JX3BOX_UI);
 
 // 数据与路由
-// import router from "./router";
+import router from "../router/adventure";
 // import store from "./store";
 
 import App from "./adventure/Adventure.vue";
 new Vue({
-    // router,
+    router,
     // store,
     render: h => h(App),
 }).$mount("#app");

@@ -6,11 +6,11 @@ function getAdventure(params) {
 }
 // 获取奇遇详情
 function getAdventureID(id) {
-    return $node().get(`/serendipities/${id}`);
+    return $node().get(`/serendipity/${id}`);
 }
 // 获取奇遇任务链
 
 function getAdventureTask(id) {
-    return $node().get(`/serendipities/${id}/task`);
+    return $node().get(`/serendipity/${id}/task`);
 }
 export { getAdventure, getAdventureID, getAdventureTask };
