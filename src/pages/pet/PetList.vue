@@ -121,6 +121,7 @@ export default {
                 Class: this.petType,
                 Name: this.petName,
                 Source: this.petSource,
+                client: this.client
             };
         },
         resetParams: function () {
@@ -129,6 +130,9 @@ export default {
         hasNextPage: function () {
             return this.pages > 1 && this.page < this.total;
         },
+        client: function (){
+            return this.$store.state.client
+        }
     },
     watch: {
         resetParams: {
