@@ -33,27 +33,38 @@
     max-width: 1080px;
     .r(14px);
     overflow: hidden;
-    background-color: #fafbfcd0;
+    color: #787878;
+    background-color: #f5f7fa;
     border: 1px solid #a7abaf;
     box-shadow: 0 0 2px #959a9e;
     display: flex;
     align-items: center;
+    font-family: "KaiTi", "Microsoft YaHei" !important;
     .u-input {
         flex: 1;
         .lh(45px);
         width: 100%;
         border-left: 1px solid #d4d4d2;
+        background-color: #fff;
+
         input {
             .fz(18px);
-            .lh(45px);
-            .bold;
-            color: #787878;
             width: 100%;
-            border: 0;
             padding: 0 15px;
-            margin: 0;
+            border: none;
+            background: none;
+            background-color: none;
+            font-family: "KaiTi", "Microsoft YaHei";
+            letter-spacing: 1px;
+            color: #787878;
+            padding-right: 15px;
             text-shadow: 0 0 1px #585858;
             box-sizing: border-box;
+        }
+
+        input::placeholder {
+            color: #919191;
+            text-shadow: 0 0 1px #585858;
         }
     }
 }
@@ -70,7 +81,6 @@
         .mr(10px);
         display: flex;
         align-items: center;
-        background-color: #fff;
         b {
             .pr;
             .size(12px);

@@ -31,6 +31,8 @@ export default {
             total: 1, //总条目数
             pages: 1, //总页数
             per: 20, //每页条目
+
+            appendMode: false,
         };
     },
     computed: {
@@ -56,13 +58,9 @@ export default {
                         if (e.szName) list.push(e);
                     }
                 });
-                console.log(this.page, "?");
-                if (this.page < 2) {
-                    this.list = list;
-                } else {
-                    this.list = this.list.concat(list);
-                }
-                console.log(this.list, "??");
+                
+                this.appendMode ? (this.list = this.list.concat(list)) : (this.list = list);
+                this.appendMode = false;
                 this.total = res.data.total;
                 this.pages = res.data.pages;
             });
@@ -73,6 +71,7 @@ export default {
         },
         appendPage: function () {
             this.page = this.page + 1;
+            this.appendMode = true;
             this.getData();
         },
         onSearch(e) {
