@@ -2,12 +2,14 @@
     <div class="v-adventure-List">
         <div class="m-adventure-header">
             <div class="u-title"></div>
-            <AdventureSearch />
+            <AdventureSearch @onSearch="onSearch" />
         </div>
-        <div class="m-adventure-list" v-if="list">
+        <div class="m-adventure-list" v-if="list && list.length > 0">
             <AdventureItem v-for="(item, i) in list" :key="i" :item="item" />
         </div>
-        <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+        <div class="u-archive-alert" v-else><el-alert title="没有对应的奇遇，请重新查找" type="info" center show-icon /></div>
+
+        <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" icon="el-icon-arrow-down">加载更多</el-button>
         <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
     </div>
 </template>
@@ -28,26 +30,41 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 8, //每页条目
+            per: 20, //每页条目
         };
     },
     computed: {
+        hasNextPage: function () {
+            return this.pages > 1 && this.page < this.pages;
+        },
         params: function () {
             return {
                 per: this.per,
                 page: this.page || 1,
             };
         },
-        hasNextPage: function () {
-            return this.pages > 1 && this.page < this.total;
-        },
     },
     watch: {},
     methods: {
-        getData() {
-            getAdventure(this.params).then(res => {
-                this.list = res.data.list;
-                console.log(res);
+        getData(params) {
+            params = { ...this.params, ...params };
+            getAdventure(params).then(res => {
+                let list = [];
+                res.data.list.forEach(e => {
+                    if (e.bHide == 1 && e.nClassify == 2) {
+                    } else {
+                        if (e.szName) list.push(e);
+                    }
+                });
+                console.log(this.page, "?");
+                if (this.page < 2) {
+                    this.list = list;
+                } else {
+                    this.list = this.list.concat(list);
+                }
+                console.log(this.list, "??");
+                this.total = res.data.total;
+                this.pages = res.data.pages;
             });
         },
         changePage(i) {
@@ -57,6 +74,11 @@ export default {
         appendPage: function () {
             this.page = this.page + 1;
             this.getData();
+        },
+        onSearch(e) {
+            this.page = 1;
+            if (e.all) delete e.all;
+            this.getData(e);
         },
     },
     filters: {},
