@@ -8,46 +8,62 @@
                 <a class="u-link u-achievement" :href="getLink('cj', achievement_id)"><i class="el-icon-trophy"></i>成就信息</a>
             </div>
         </div>
-        <div class="m-pet-panel flex">
+        <div class="m-pet-content flex">
             <petCard :petObject="pet" :lucky="luckyList"></petCard>
-            <div class="m-pet-info flex">
-                <div class="u-pet-name">{{ pet.Name }}</div>
-                <div class="">
-                    <template v-for="(skill, index) in petWiki.skills">
-                        <el-popover :key="index" trigger="click" popper-class="u-pet-skill-pop" :visible-arrow="false" placement="top">
-                            <div class="u-desc">
-                                <div>{{ skill.Name }}</div>
-                                <div>{{ skill.Desc }}</div>
+            <div class="m-pet-info">
+                <h1 class="u-title">
+                    <span class="u-name">{{ pet.Name }}</span>
+                    <span class="u-type">{{ getPetType(pet.Class) }} · {{ getPetSource(pet.Source) }}</span>
+                    <i class="u-stars">
+                        <i class="el-icon-star-on" v-for="count in pet.Star" :key="count"></i>
+                    </i>
+                </h1>
+
+                <!-- 宠物技能 -->
+                <div class="m-pet-skills">
+                    <div class="u-skill" v-for="(skill, index) in petWiki.skills" :key="index">
+                        <el-popover :key="index" trigger="hover" popper-class="m-pet-skill" :visible-arrow="false" placement="top">
+                            <div class="u-skill-pop">
+                                <div class="u-skill-name">{{ skill.Name }}</div>
+                                <div class="u-skill-desc">{{ skill.Desc }}</div>
                             </div>
-                            <img slot="reference" class="u-icon" :src="skill.IconID | iconLink" alt="" />
+                            <img slot="reference" class="u-skill-icon" :src="skill.IconID | iconLink" :alt="skill.Name" />
                         </el-popover>
-                    </template>
+                    </div>
                 </div>
-                <div class="v-pet-orange">{{ getPetType(pet.Class) }} · {{ getPetSource(pet.Source) }}</div>
-                <div>
-                    <i class="el-icon-star-on" v-for="count in pet.Star" :key="count"></i>
-                </div>
-                <div>宠物分数：{{ pet.Score }}</div>
-                <div class="u-pet-desc">
-                    宠物说明：
-                    <template v-for="item in getPetDesc(pet.Desc)">
-                        <span :key="item.text">{{ item.text }}</span>
-                    </template>
-                </div>
-                <div class="u-source-text">
-                    <template v-for="item in getPetDesc(pet.OutputDes)">
-                        <span :key="item.text">{{ item.text }}</span>
-                    </template>
-                </div>
-                <div class="u-shop-text" v-if="shopInfo.RewardsPrice || shopInfo.CoinPrice">
-                    商城价格：
-                    <el-tag type="warning" class="u-credit">积分：{{ shopInfo.RewardsPrice }}</el-tag>
-                    <el-tag type="danger">通宝：{{ shopInfo.CoinPrice }}</el-tag>
+
+                <div class="u-metas">
+                    <div class="u-meta u-score"><span class="u-meta-label">宠物分数：</span>{{ pet.Score }}</div>
+                    <div class="u-meta u-desc">
+                        <span class="u-meta-label">宠物说明：</span>
+                        <template v-for="item in getPetDesc(pet.Desc)">
+                            <div :key="item.text" v-html="item.text"></div>
+                        </template>
+                    </div>
+                    <div class="u-meta u-source">
+                        <span class="u-meta-label">获取线索：</span>
+                        <template v-for="item in getPetDesc(pet.OutputDes)">
+                            <span :key="item.text">{{ item.text | cleanResourceText }}</span>
+                        </template>
+                    </div>
+                    <div class="u-meta u-shop" v-if="shopInfo.RewardsPrice || shopInfo.CoinPrice">
+                        <span class="u-meta-label">商城价格：</span>
+                        <span class="u-price">
+                            <el-tag class="u-price-item u-rewards"
+                                >积分<b>{{ shopInfo.RewardsPrice }}</b
+                                ><i class="u-icon-rewards"></i
+                            ></el-tag>
+                            <el-tag class="u-price-item u-coin"
+                                >通宝<b>{{ shopInfo.CoinPrice }}</b
+                                ><i class="u-icon-coin"></i
+                            ></el-tag>
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="m-pet-wiki">
-                <detail :id="petWiki.achievement_id" title="宠物攻略"></detail>
-            </div>
+        </div>
+        <div class="m-pet-wiki">
+            <detail :id="petWiki.achievement_id" title="宠物攻略"></detail>
         </div>
     </div>
 </template>
@@ -172,6 +188,9 @@ export default {
     },
     filters: {
         iconLink,
+        cleanResourceText: function (str) {
+            return str && str.startsWith("获取线索：") ? str.replace("获取线索：", "") : str;
+        },
     },
     created: function () {
         this.getPetLucky();
