@@ -16,6 +16,8 @@
     .u-title {
         .size(331px,74px);
         background-image: url("@{pvx_img}adtitle.png");
+        background-repeat: no-repeat;
+        background-position: center top;
         background-size: 100%;
     }
 }
@@ -25,7 +27,9 @@
 
 .m-adventure-search {
     .mt(23px);
-    .size(800px,50px);
+    .h(50px);
+    min-width: 800px;
+    max-width: 1080px;
     .r(14px);
     overflow: hidden;
     background-color: #fafbfc;
@@ -42,12 +46,12 @@
     input {
         .fz(18px);
         .lh(50px);
-        width: 360px;
         color: #787878;
         width: 100%;
         border: 0;
         padding: 0 30px;
         margin: 0;
+        box-sizing: border-box;
     }
 }
 .m-adventure-mark {
@@ -77,7 +81,7 @@
                 .r(50%);
                 .lt(50%,50%);
                 margin: -3px 0 0 -3px;
-                background: #0366d6;
+                background: #b15050;
                 opacity: 0.8;
             }
         }
@@ -91,6 +95,7 @@
 }
 
 .m-adventure-item {
+    .pr;
     .size(244px,300px);
     .r(10px);
     box-sizing: border-box;
@@ -101,14 +106,19 @@
     transition: all 0.2s ease-in-out;
     img {
         .size(100%,262px);
-        border-bottom: 1px solid #787878;
+        .mb(38px);
     }
     .u-title {
+        border-top: 1px solid #787878;
+        background-color: #fff;
+        .pa;
+        .lb(0,0);
         .db;
         .x;
         .color(#787878);
         .fz(18px);
         .size(100%,38px);
+        .lh(38px);
     }
     &:hover {
         cursor: pointer;
@@ -116,10 +126,56 @@
         transform: scale(1.02);
     }
 }
-
+.u-archive-alert {
+    padding: 20px 0 80px 0;
+}
+.m-archive-more {
+    width: 100%;
+    .mb(20px);
+}
 .m-pet-list .m-adventure-item {
     .size(227px,375px);
     img {
         .h(334px);
+    }
+}
+
+@media screen and (max-width: @phone) {
+    .m-adventure-header {
+        padding: 40px 0 10px 0;
+        .u-title {
+            .size(258px,58px);
+        }
+    }
+    .m-adventure-mark {
+        .fz(12px);
+        padding: 0 10px;
+        .u-mark {
+            .mr(5px);
+        }
+    }
+    .m-adventure-search {
+        flex-direction: column;
+        min-width: 100%;
+        height: auto;
+        .fz(12px);
+        .m-adventure-mark {
+            .lh(40px);
+        }
+        .u-input {
+            .lh(40px);
+            input {
+                .fz(12px);
+                .lh(30px);
+            }
+        }
+    }
+    .m-adventure-item {
+        width: 45%;
+        height: auto;
+        margin: 0 8px 10px 8px;
+        img {
+            height: auto;
+        }
     }
 }

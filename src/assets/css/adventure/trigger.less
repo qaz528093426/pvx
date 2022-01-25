@@ -76,9 +76,10 @@
         .m-trigger-item {
             .mr(20px);
         }
-        .m-trigger-item {
-            flex: 1;
-        }
+        // .m-trigger-item {
+        //     flex: 1;
+        // }
+
         .m-trigger-game {
             .w(200px);
             .el-select,
@@ -121,6 +122,7 @@
     box-sizing: border-box;
     border: 1px solid rgba(111, 111, 111, 0.3);
     background-color: #fff;
+    flex-shrink: 0;
     .m-imgbox .u-img {
         .size(100%,260px);
     }
@@ -136,5 +138,18 @@
     }
     .el-carousel__indicators {
         display: none;
+    }
+}
+
+.m-trigger-game .u-alert {
+    margin: 10px 0;
+}
+@media screen and (max-width: @phone) {
+    .v-trigger-single .m-details {
+        flex-wrap: wrap;
+        .m-trigger-img {
+            width: 100%;
+            .mr(0px);
+        }
     }
 }
