@@ -127,12 +127,7 @@ export default {
     },
     computed: {
         params: function () {
-            return {
-                Class: this.petType,
-                Name: this.petName,
-                Source: this.petSource,
-                client: this.client,
-            };
+            return [this.petType, this.petName, this.petSource, this.client];
         },
         request_params: function () {
             return {
@@ -160,7 +155,7 @@ export default {
                 this.page = 1;
             },
         },
-        request_params: {
+        params: {
             deep: true,
             immediate: true,
             handler: function () {
