@@ -7,7 +7,7 @@
             <el-button size="medium" type="primary" icon="el-icon-s-promotion" @click="goItem">查看物品</el-button>
         </div>
         <div class="v-pet-panel flex">
-            <petCard class="u-pet-card" :petObject="pet"></petCard>
+            <petCard class="u-pet-card" :petObject="pet" :lucky="luckyList"></petCard>
             <div class="v-pet-info flex">
                 <div class="u-pet-name">{{ pet.Name }}</div>
                 <div class="">
@@ -68,6 +68,7 @@
 <script>
 import { getPet, getShopInfo } from "@/service/pet";
 import { getWiki } from "@/service/wiki";
+import { getPetLucky } from "@/service/pet";
 import petCard from "@/components/pet/PetCard.vue";
 import WikiPanel from '@jx3box/jx3box-common-ui/src/wiki/WikiPanel.vue'
 import petType from "@/assets/data/pet_type.json";
@@ -86,7 +87,8 @@ export default {
             pet: {},
             petWiki: {},
             shopInfo: "",
-            postPet: ''
+            postPet: '',
+            luckyList: [],
         };
     },
     computed: {
@@ -171,12 +173,23 @@ export default {
             const link = getLink('item', `${ItemTabType}_${ItemTabIndex}`)
 
             window.open(link, '_blank')
-        }
+        },
+        // 获取福缘宠物id
+        getPetLucky: function () {
+            getPetLucky().then((res) => {
+                let data = res.data.std 
+                let rawDate = new Date();
+                let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
+                this.luckyList = data[dateIndex];
+            })
+        },
     },
     filters: {
         iconLink,
     },
-    created: function () {},
+    created: function () {
+        this.getPetLucky();
+    },
     mounted: function () {
         this.getPetInfo();
     },
