@@ -1,12 +1,10 @@
-// import { $node } from "@jx3box/jx3box-common/js/https";
+import { $node } from "@jx3box/jx3box-common/js/https";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import axios from "axios";
-
-// TODO:
-const $ = axios.create({
-    baseURL : 'http://localhost:7002/'
-})
-// const $ = $node()
+// const $ = axios.create({
+//     baseURL : 'http://localhost:7002/'
+// })
+const $ = $node()
 
 function getPets(params) {
     return $.get("/pets", {
