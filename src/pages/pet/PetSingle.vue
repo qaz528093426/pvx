@@ -82,11 +82,11 @@ export default {
         id: function () {
             return this.$route.params.id;
         },
-        item_id : function (){
-            return 1
+        item_id: function () {
+            return 1;
         },
-        achievement_id : function (){
-            return this.petWiki.achievement_id
+        achievement_id: function () {
+            return this.petWiki.achievement_id;
         },
         source_id: function ({ pet }) {
             return pet?.ItemTabType + "_" + pet?.ItemTabIndex;
