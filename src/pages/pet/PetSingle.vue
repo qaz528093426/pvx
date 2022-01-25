@@ -4,8 +4,10 @@
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
             <div class="m-pet-links">
                 <a class="u-link u-item" :href="getLink('item', item_id)"><i class="el-icon-collection-tag"></i>物品信息</a>
-                <em> | </em>
-                <a class="u-link u-achievement" :href="getLink('cj', achievement_id)"><i class="el-icon-trophy"></i>成就信息</a>
+                <template v-if="achievement_id">
+                    <em> | </em>
+                    <a class="u-link u-achievement" :href="getLink('cj', achievement_id)"><i class="el-icon-trophy"></i>成就信息</a>
+                </template>
             </div>
         </div>
         <div class="m-pet-content flex">
@@ -63,7 +65,7 @@
             </div>
         </div>
         <div class="m-pet-wiki">
-            <detail :id="petWiki.achievement_id" title="宠物攻略"></detail>
+            <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略"></detail>
         </div>
     </div>
 </template>
@@ -99,13 +101,10 @@ export default {
             return this.$route.params.id;
         },
         item_id: function () {
-            return 1;
+            return this.pet?.ItemTabType + "_" + this.pet?.ItemTabIndex;
         },
         achievement_id: function () {
             return this.petWiki.achievement_id;
-        },
-        source_id: function ({ pet }) {
-            return pet?.ItemTabType + "_" + pet?.ItemTabIndex;
         },
         client: function () {
             return this.$store.state.client;
@@ -123,7 +122,7 @@ export default {
         },
         // 获取宠物技能信息
         getPetWiki: function () {
-            getWiki("item", this.source_id).then((res) => {
+            getWiki("item", this.item_id).then((res) => {
                 this.petWiki = res?.data?.data?.source?.pet;
             });
         },
