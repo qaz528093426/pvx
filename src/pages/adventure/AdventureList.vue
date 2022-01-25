@@ -28,7 +28,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 40, //每页条目
+            per: 8, //每页条目
         };
     },
     computed: {

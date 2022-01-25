@@ -1,28 +1,33 @@
 <template>
     <div class="v-trigger-single">
         <div class="m-details">
-            <AdventureItem :item="list" />
+            <TriggerImgs :task="task" />
             <TriggerItem />
-            <TriggerGame />
+            <TriggerGame :title="title" />
         </div>
-        <TriggerIntro />
+        <TriggerIntro :content="content" />
     </div>
 </template>
 
 <script>
-import AdventureItem from "@/components/adventure/item.vue";
+import TriggerImgs from "@/components/trigger/img.vue";
 import TriggerItem from "@/components/trigger/item.vue";
 import TriggerGame from "@/components/trigger/game.vue";
 import TriggerIntro from "@/components/trigger/intro.vue";
-import { getAdventureID, getAdventureTask } from "@/service/adventure";
+import { getAdventureID, getAdventureTask, getSerendipity, getSerendipityJson } from "@/service/adventure";
+import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
+
 export default {
     name: "triggerSingle",
     props: ["id", "type"],
-    components: { AdventureItem, TriggerItem, TriggerGame, TriggerIntro },
+    components: { TriggerImgs, TriggerItem, TriggerGame, TriggerIntro },
     data: function () {
         return {
             list: [],
-            task: [],
+            task: { name: "三山四海", list: [] },
+            title: "",
+            content: "",
+            loading: false,
         };
     },
     computed: {},
@@ -31,18 +36,43 @@ export default {
         getAdventure() {
             getAdventureID(this.id).then(res => {
                 this.list = res.data;
-                console.log(res, "getAdventureID");
+                this.task.name = res.data.szName;
             });
             getAdventureTask(this.id).then(res => {
-                this.task = res.data;
-                console.log(res, "getAdventureTask");
+                let list = [];
+                res.data?.forEach(item => {
+                    const key = item.szFramePath;
+                    if (!list.includes(key)) list.push(key);
+                });
+                let arr = [];
+                list.forEach(e => {
+                    if (e) {
+                        let k = e.replace(/\\/g, "/");
+                        arr.push(this.imgNameTga(k));
+                    }
+                });
+                this.task.list = arr;
             });
+            getSerendipityJson().then(res => {
+                let json = res.data;
+                let id = json[this.id];
+                getSerendipity(id).then(res => {
+                    let { title, content } = res.data.data.post;
+                    this.title = title;
+                    this.content = content;
+                });
+            });
+        },
+
+        imgNameTga: function (link) {
+            link = link.split(".tga");
+            return link[0];
         },
     },
     filters: {},
     created: function () {
         if (this.type == "adventure") this.getAdventure();
-        console.log(this.id, this.type);
+        console.log(this.id, this.type, this.serendipityJson);
     },
     mounted: function () {},
 };

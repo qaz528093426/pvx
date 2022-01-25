@@ -1,19 +1,24 @@
 <template>
-    <div class="m-trigger-intro"></div>
+    <div class="m-trigger-intro" v-if="content">
+         <div v-html="content"></div> 
+    </div>
 </template>
 <script>
 export default {
     name: "intro",
-    props: [],
+    props: ["content"],
     components: {},
     data: function () {
-        return {};
+        return {
+
+        };
     },
     computed: {},
-
     methods: {},
     filters: {},
-    created: function () {},
+    created: function () {
+        console.log(this.content)
+    },
     mounted: function () {},
 };
 </script>

@@ -53,6 +53,12 @@ module.exports = {
     //❤️ Porxy ~
     devServer: {
         proxy: {
+            "/api/serendipity": {
+                target: "https://next.jx3box.com/",
+                onProxyReq: function (request) {
+                    request.setHeader("origin", "");
+                },
+            },
             "/api/vip": {
                 target: "https://pay.jx3box.com",
                 onProxyReq: function (request) {

@@ -32,11 +32,13 @@ export default {
 
     methods: {
         imgUrl: function (val) {
-            return this.imgRoot + "reward/open/" + val + ".png";
+            return this.imgRoot + "reward/open/" + val + ".png" || 'https://img.jx3box.com/image/face/null2.png';
         },
     },
     filters: {},
-    created: function () {},
+    created: function () {
+        console.log(this.item,'???')
+    },
     mounted: function () {},
 };
 </script>
