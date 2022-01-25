@@ -76,10 +76,7 @@ export default {
             this.getData();
         },
         onSearch(e) {
-            this.params = {
-                per: this.per,
-                page: this.page,
-            };
+            this.page = 1;
             if (e.all) delete e.all;
             this.getData(e);
         },

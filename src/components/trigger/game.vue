@@ -38,7 +38,7 @@ export default {
         getUserList() {
             let params = {
                 server: this.server,
-                serendipity: this.title+'2',
+                serendipity: this.title,
                 start: 0,
                 pageIndex: 1,
                 pageSize: 9,
