@@ -3,7 +3,7 @@
         <div class="m-details">
             <TriggerImgs :task="task" />
             <TriggerItem />
-            <TriggerGame :title="title" />
+            <TriggerGame :title="task.name" />
         </div>
         <TriggerIntro :content="content" />
     </div>
@@ -25,7 +25,6 @@ export default {
         return {
             list: [],
             task: { name: "三山四海", list: [] },
-            title: "",
             content: "",
             loading: false,
         };
@@ -58,7 +57,6 @@ export default {
                 let id = json[this.id];
                 getSerendipity(id).then(res => {
                     let { title, content } = res.data.data.post;
-                    this.title = title;
                     this.content = content;
                 });
             });

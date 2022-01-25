@@ -23,19 +23,17 @@ export default {
             return location.origin + "/adventure/" + this.item.dwID;
         },
         imgName: function () {
-            let link = this.item.szOpenRewardPath.replaceAll("\\", "\/");
+            let link = this.item.szOpenRewardPath?.replaceAll("\\", "\/");
             if (link?.indexOf("tga") == -1) return link;
             let reg = /(.*)\/(.*)\.tga/gi;
             let result = reg.exec(link);
             let open = result?.[1].split("reward");
-            console.log(open, "open");
             return open?.[1] + "/" + result?.[2];
         },
     },
 
     methods: {
         imgUrl: function (val) {
-            console.log(val, "?????");
             if (val?.indexOf("weapon") !== -1) return this.imgRoot + "reward/Open/weapon/school_211.png";
             if (val?.indexOf("camp") !== -1) return this.imgRoot + "reward/Open/camp/camp_0_Open.png";
             if (val?.indexOf("zzwg") !== -1) return this.imgRoot + "reward/Open/zzwg/school_1_Open.png";

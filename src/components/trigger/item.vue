@@ -2,7 +2,7 @@
     <div class="m-trigger-item">
         <div class="m-trigger-reward">
             <span class="u-title">奖励</span>
-            <span class="u-img" v-for="(item, i) in 6" :key="i"></span>
+            <span class="u-img" v-for="(item, i) in 2" :key="i"></span>
         </div>
         <div class="m-trigger-condition">
             <span class="u-title">触发方式</span>

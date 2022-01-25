@@ -3,12 +3,13 @@
         <el-select v-model="server" placeholder="区服" size="medium" class="u-select-meirentu" @change="getUserList">
             <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
         </el-select>
-        <ul class="m-game-user">
+        <ul class="m-game-user" v-if="list && list.length > 0">
             <li v-for="(item, i) in list" :key="i">
-                <span>{{ item.name }}</span>
+                <span>{{ item.name || "匿名" }}</span>
                 <span>{{ item.dwTime | wikiDate }}</span>
             </li>
         </ul>
+        <el-alert class="u-alert" v-else title="无记录" type="info" center  :closable="false" />
     </div>
 </template>
 <script>
@@ -37,7 +38,7 @@ export default {
         getUserList() {
             let params = {
                 server: this.server,
-                serendipity: this.title,
+                serendipity: this.title+'2',
                 start: 0,
                 pageIndex: 1,
                 pageSize: 9,

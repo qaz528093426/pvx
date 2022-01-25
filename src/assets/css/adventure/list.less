@@ -16,6 +16,8 @@
     .u-title {
         .size(331px,74px);
         background-image: url("@{pvx_img}adtitle.png");
+        background-repeat: no-repeat;
+        background-position: center top;
         background-size: 100%;
     }
 }
@@ -43,7 +45,7 @@
     border-left: 1px solid #eee;
     input {
         .fz(18px);
-        .lh(50px); 
+        .lh(50px);
         color: #787878;
         width: 100%;
         border: 0;
@@ -93,6 +95,7 @@
 }
 
 .m-adventure-item {
+    .pr;
     .size(244px,300px);
     .r(10px);
     box-sizing: border-box;
@@ -103,14 +106,19 @@
     transition: all 0.2s ease-in-out;
     img {
         .size(100%,262px);
-        border-bottom: 1px solid #787878;
+        .mb(38px);
     }
     .u-title {
+        border-top: 1px solid #787878;
+        background-color: #fff;
+        .pa;
+        .lb(0,0);
         .db;
         .x;
         .color(#787878);
         .fz(18px);
         .size(100%,38px);
+        .lh(38px);
     }
     &:hover {
         cursor: pointer;
@@ -118,8 +126,10 @@
         transform: scale(1.02);
     }
 }
-
-.m-archive-more{
+.u-archive-alert {
+    padding: 20px 0 80px 0;
+}
+.m-archive-more {
     width: 100%;
     .mb(20px);
 }
@@ -127,5 +137,45 @@
     .size(227px,375px);
     img {
         .h(334px);
+    }
+}
+
+@media screen and (max-width: @phone) {
+    .m-adventure-header {
+        padding: 40px 0 10px 0;
+        .u-title {
+            .size(258px,58px);
+        }
+    }
+    .m-adventure-mark {
+        .fz(12px);
+        padding: 0 10px;
+        .u-mark {
+            .mr(5px);
+        }
+    }
+    .m-adventure-search {
+        flex-direction: column;
+        min-width: 100%;
+        height: auto;
+        .fz(12px);
+        .m-adventure-mark {
+            .lh(40px);
+        }
+        .u-input {
+            .lh(40px);
+            input {
+                .fz(12px);
+                .lh(30px);
+            }
+        }
+    }
+    .m-adventure-item {
+        width: 45%;
+        height: auto;
+        margin: 0 8px 10px 8px;
+        img {
+            height: auto;
+        }
     }
 }

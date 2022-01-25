@@ -3,7 +3,7 @@
         <div class="m-adventure-mark">
             <span class="u-mark" v-for="(item, i) in marks" :key="i" @click="changeMark(i)">
                 <b :class="i == index ? 'active' : ''"></b>
-                <span>{{ item }}</span>
+                <span>{{ item.name }}</span>
             </span>
         </div>
         <div class="u-input">
@@ -20,7 +20,12 @@ export default {
     data: function () {
         return {
             search: "",
-            marks: ["全部奇遇", "绝世奇遇", "普通奇遇", "宠物奇遇"],
+            marks: [
+                { name: "全部奇遇", type: "all", id: 1 },
+                { name: "绝世奇遇", type: "bPerfect", id: 1 },
+                { name: "普通奇遇", type: "nClassify", id: 2 },
+                { name: "宠物奇遇", type: "nClassify", id: 1 },
+            ],
             index: 0,
         };
     },
@@ -37,9 +42,18 @@ export default {
     methods: {
         changeMark(i) {
             this.index = i;
+            this.jointParams();
         },
-        getData() {
-            console.log(this.search);
+        jointParams() {
+            let params = {};
+            params[this.marks[this.index].type] = this.marks[this.index].id;
+            if (this.search) params.name = this.search;
+            this.$emit("onSearch", params);
+        },
+    },
+    watch: {
+        search() {
+            this.jointParams();
         },
     },
     filters: {},
