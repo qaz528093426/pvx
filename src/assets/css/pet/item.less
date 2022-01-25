@@ -8,6 +8,8 @@
     overflow: hidden;
     position: relative;
     cursor: pointer;
+    transition: 0.2s ease;
+
     .v-pet-petImg {
         position: absolute;
         left: 50%;
@@ -17,12 +19,14 @@
         height: 98%;
         z-index: -1;
     }
+
     .v-pet-petFrame {
         position: relative;
         width: 100%;
         height: 100%;
         z-index: 0;
     }
+
     span {
         position: absolute;
         bottom: 11%;
@@ -37,25 +41,37 @@
         font-weight: bold;
         text-shadow: 0 0 5px #000;
     }
+
     .v-pet-grayStar,
     .v-pet-goldStar {
         position: absolute;
         z-index: 1;
         width: 20px;
-        height: 80px;
+        height: 100px;
         top: 10%;
         right: 2%;
         flex-direction: column;
         justify-content: flex-start;
-        img {
-            width: 10px;
-            height: 10px;
-            margin: 3px 0;
+
+        .v-pet-grayStarImg,
+        .v-pet-goldStarImg {
+            width: 15px;
+            height: 15px;
+            margin: 1px 0;
+            background: url("https://icon.jx3box.com/pvx/pet/misc/newpets-81.png");
+            background-size: 100%;
+        }
+
+        .v-pet-goldStarImg {
+            background: url("https://icon.jx3box.com/pvx/pet/misc/newpets-18.png");
+            background-size: 100%;
         }
     }
+
     .v-pet-goldStar {
         z-index: 2;
     }
+
     .v-pet-score {
         position: absolute;
         z-index: 1;
@@ -67,4 +83,47 @@
         top: 2%;
         right: 5%;
     }
+
+    .v-pet-lucky{
+        position: absolute;
+        z-index: 1;
+        left:0;
+        top:0;
+        width:55px;
+        height:120px;
+        background: url("https://icon.jx3box.com/pvx/pet/misc/newpets-3.png") no-repeat;
+        background-size: 100%;
+    }
+}
+
+.v-pet-listItemB:hover {
+    transform: scale(1.05);
+}
+
+.v-pet-listItemB:after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    border-radius: 5px;
+    background-image: linear-gradient(45deg, #ffffff05 0%, #66666605 73%, #ffffff10 78%, #cccccc05 80%, #66666605 100%);
+    box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9, 7px 7px 20px 0px #0002,
+        4px 4px 5px 0px #0001;
+    transition: all 0.2s ease;
+}
+
+.v-pet-listItemB:hover:after {
+    height: 130%;
+    background-image: linear-gradient(45deg, #ffffff10 0%, #66666620 73%, #ffffff66 78%, #cccccc44 80%, #66666610 100%);
+}
+
+@media screen and (max-width: @phone) {
+    .v-pet-listItemB {
+        margin:5px 0px;
+        zoom: 0.7;
+    }
+
 }

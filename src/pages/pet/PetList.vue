@@ -1,27 +1,72 @@
 <template>
-    <div class="v-pet-list">
+    <div class="v-pet-list" v-loading="loading">
         <div class="v-pet-listGuide flex">
-            <img :src="getPic('image/pvx/petbg.png')" class="v-pet-bg" />
             <div class="v-pet-guideTil flex">
-                <img :src="getPic('image/pvx/pettitle.png')" />
+                <i class="v-pet-logo"></i>
             </div>
             <div class="v-pet-screen flex">
                 <div class="v-pet-select flex">
-                    <el-radio-group class="u-type" v-model="petTypeNum">
-                        <el-radio v-for="item in petType" :key="item.type" :label="item.class">{{ item.name }}</el-radio>
+                    <el-radio-group class="u-type" v-model="petType">
+                        <el-radio
+                            v-for="item in Type"
+                            :key="item.type"
+                            :label="item.class"
+                            >{{ item.name }}</el-radio
+                        >
                     </el-radio-group>
-                    <el-select class="u-source" v-model="petSourceNum" placeholder="获取来源">
-                        <el-option v-for="item in petSource" :key="item.source" :label="item.name" :value="item.source"> </el-option>
+                    <el-select
+                        class="m-type"
+                        v-model="petType"
+                        placeholder="宠物种类"
+                    >
+                        <el-option
+                            v-for="item in Type"
+                            :key="item.type"
+                            :label="item.name"
+                            :value="item.class"
+                        >
+                        </el-option>
+                    </el-select>
+                    <el-select
+                        class="u-source"
+                        v-model="petSource"
+                        placeholder="获取来源"
+                    >
+                        <el-option
+                            v-for="item in Source"
+                            :key="item.source"
+                            :label="item.name"
+                            :value="item.source"
+                        >
+                        </el-option>
                     </el-select>
                 </div>
                 <div class="v-pet-search flex">
-                    <el-input placeholder="输入宠物名字搜索" v-model="petName" clearable> </el-input>
+                    <el-input
+                        placeholder="输入宠物名字搜索"
+                        v-model="petName"
+                        clearable
+                    >
+                    </el-input>
                 </div>
             </div>
         </div>
         <div class="v-pet-listContent flex" v-if="petList.length > 0">
-            <petLink v-for="pet in petList" :key="pet.index" :petObject="pet"></petLink>
-            <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+            <petLink
+                v-for="pet in petList"
+                :key="pet.index"
+                :petObject="pet"
+                :lucky="luckyIndex"
+            ></petLink>
+            <el-button
+                class="m-archive-more"
+                v-show="hasNextPage"
+                type="primary"
+                @click="appendPage"
+                :loading="loading"
+                icon="el-icon-arrow-down"
+                >加载更多</el-button
+            >
             <el-pagination
                 class="m-archive-pages"
                 background
@@ -39,8 +84,10 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getPets } from "@/service/pet";
-import petType from "@/assets/data/pet_type.json";
-import petSource from "@/assets/data/pet_source.json";
+import { getPet } from "@/service/pet";
+import Type from "@/assets/data/pet_type.json";
+import Source from "@/assets/data/pet_source.json";
+import Lucky from "@/assets/data/pet_lucky.json";
 import petLink from "@/components/pet/PetLink.vue";
 export default {
     name: "PetList",
@@ -57,12 +104,13 @@ export default {
             pages: 1, //总页数
             per: 16, //每页条目
             appendMode: false, //追加模式
-
-            petType,
-            petSource,
-            petTypeNum: "",
-            petSourceNum: "",
+            Type,
+            Source,
+            Lucky,
+            petType: "",
+            petSource: "",
             petName: "",
+            luckyList: [],
         };
     },
     computed: {
@@ -70,13 +118,13 @@ export default {
             return {
                 per: this.per,
                 page: this.page || 1,
-                Class: this.petTypeNum,
+                Class: this.petType,
                 Name: this.petName,
-                Source: this.petSourceNum,
+                Source: this.petSource,
             };
         },
         resetParams: function () {
-            return [this.Name, this.petTypeNum, this.petSourceNum];
+            return [this.petName, this.petType, this.petSource];
         },
         hasNextPage: function () {
             return this.pages > 1 && this.page < this.total;
@@ -127,13 +175,28 @@ export default {
                     this.loading = false;
                 });
         },
+        // 获取福缘宠物id
+        getPetLucky: function () {
+            let rawDate = new Date();
+            let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
+            let luckyList = []
+            for (let i = 0; i < 3; i++) {
+                getPet(this.Lucky.std[dateIndex][i]).then((res) => {
+                    luckyList.push(res.data)
+                });
+            }
+            this.luckyIndex = this.Lucky.std[dateIndex]
+            this.luckyList = luckyList;
+        },
     },
     filters: {},
-    created: function () {},
+    created: function () {
+        this.getPetLucky();
+    },
     mounted: function () {},
 };
 </script>
 
 <style lang="less">
-@import "~@/assets/css/adventure/list.less";
+@import "~@/assets/css/pet/list.less";
 </style>
