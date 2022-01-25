@@ -1,6 +1,5 @@
 <template>
     <div class="m-detail-view">
-
         <div class="m-wiki-post-panel" v-if="wiki_post && wiki_post.post">
             <WikiPanel :wiki-post="wiki_post">
                 <template slot="head-title">
@@ -8,10 +7,7 @@
                     <span class="u-txt">{{ title }}</span>
                 </template>
                 <template slot="head-actions">
-                    <a
-                        class="el-button el-button--primary"
-                        :href="publish_url(`achievement/${id}`)"
-                    >
+                    <a class="el-button el-button--primary" :href="publish_url(`achievement/${id}`)">
                         <i class="el-icon-edit"></i>
                         <span>完善{{ title }}</span>
                     </a>
@@ -37,12 +33,12 @@ import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/wiki/WikiPanel";
 import WikiRevisions from "@jx3box/jx3box-common-ui/src/wiki/WikiRevisions";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
-import { WikiPost } from "@jx3box/jx3box-common/js/helper";
+import { getSerendipity } from "@/service/adventure";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 
 export default {
     name: "Detail",
-    props: ['id', 'title'],
+    props: ["id", "title"],
     data() {
         return {
             wiki_post: null,
@@ -52,15 +48,19 @@ export default {
         isRevision: function () {
             return !!this.$route.params.post_id;
         },
-        author_id: function () {
-            return ~~this.wiki_post.post.user_id;
-        },
         client: function () {
             return this.$store.state.client;
         },
     },
     methods: {
         publish_url: publishLink,
+        triggerStat: function () {
+            if (this.client == "origin") {
+                postStat("origin_cj", this.id);
+            } else {
+                postStat("cj", this.id);
+            }
+        },
     },
     created() {},
     components: {
@@ -74,22 +74,17 @@ export default {
             handler() {
                 // 获取最新攻略
                 if (this.id) {
-                    WikiPost.newest("achievement", this.id).then(
-                        (res) => {
-                            res = res.data;
-                            if (res.code === 200) this.wiki_post = res.data;
-                            if (this.wiki_post && this.wiki_post.source) {
-                                let pet = this.wiki_post.source.pet;
-                                if (pet && pet.id) postStat("pet", pet.id);
-                            }
-                        },
-                        () => {
-                            this.wiki_post = null;
+                    getSerendipity(this.id).then((res) => {
+                        this.wiki_post = res.data.data;
+                        if (this.wiki_post && this.wiki_post.source) {
+                            let pet = this.wiki_post.source.pet;
+                            if (pet && pet.id) postStat("pet", pet.id);
                         }
-                    );
+                        this.triggerStat();
+                    });
                 }
             },
-        }
+        },
     },
 };
 </script>

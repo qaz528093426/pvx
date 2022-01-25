@@ -14,7 +14,7 @@
 import TriggerImgs from "@/components/trigger/img.vue";
 import TriggerItem from "@/components/trigger/item.vue";
 import TriggerGame from "@/components/trigger/game.vue";
-import Detail from '@/components/wiki/Detail.vue';
+import Detail from "@/components/wiki/Detail.vue";
 import { getAdventureID, getAdventureTask, getSerendipityJson } from "@/service/adventure";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
 
@@ -29,25 +29,25 @@ export default {
             content: "",
             loading: false,
 
-            achieve_id: ''
+            achieve_id: "",
         };
     },
     computed: {},
     watch: {},
     methods: {
         getAdventure() {
-            getAdventureID(this.id).then(res => {
+            getAdventureID(this.id).then((res) => {
                 this.list = res.data;
                 this.task.name = res.data.szName;
             });
-            getAdventureTask(this.id).then(res => {
+            getAdventureTask(this.id).then((res) => {
                 let list = [];
-                res.data?.forEach(item => {
+                res.data?.forEach((item) => {
                     const key = item.szFramePath;
                     if (!list.includes(key)) list.push(key);
                 });
                 let arr = [];
-                list.forEach(e => {
+                list.forEach((e) => {
                     if (e) {
                         let k = e.replace(/\\/g, "/");
                         arr.push(this.imgNameTga(k));
@@ -55,10 +55,10 @@ export default {
                 });
                 this.task.list = arr;
             });
-            getSerendipityJson().then(res => {
+            getSerendipityJson().then((res) => {
                 let id = res.data[this.id];
 
-                this.achieve_id = id
+                this.achieve_id = id;
             });
         },
 
