@@ -23,22 +23,30 @@ export default {
             return location.origin + "/adventure/" + this.item.dwID;
         },
         imgName: function () {
-            let link = this.item.szOpenRewardPath;
-            let reg = /(.*)\\(.*)\.tga/gi;
+            let link = this.item.szOpenRewardPath.replaceAll("\\", "\/");
+            if (link?.indexOf("tga") == -1) return link;
+            let reg = /(.*)\/(.*)\.tga/gi;
             let result = reg.exec(link);
-            return result?.[2];
+            let open = result?.[1].split("reward");
+            console.log(open, "open");
+            return open?.[1] + "/" + result?.[2];
         },
     },
 
     methods: {
         imgUrl: function (val) {
-            return this.imgRoot + "reward/open/" + val + ".png" || 'https://img.jx3box.com/image/face/null2.png';
+            console.log(val, "?????");
+            if (val?.indexOf("weapon") !== -1) return this.imgRoot + "reward/Open/weapon/school_211.png";
+            if (val?.indexOf("camp") !== -1) return this.imgRoot + "reward/Open/camp/camp_0_Open.png";
+            if (val?.indexOf("zzwg") !== -1) return this.imgRoot + "reward/Open/zzwg/school_1_Open.png";
+            if (val?.indexOf("jcs") !== -1) return this.imgRoot + "reward/Open/jcs/school_1_Open.png";
+
+            return this.imgRoot + "reward/" + val + ".png";
         },
     },
     filters: {},
-    created: function () {
-        console.log(this.item,'???')
+    mounted: function () {
+        // console.log(this.item, "/");
     },
-    mounted: function () {},
 };
 </script>

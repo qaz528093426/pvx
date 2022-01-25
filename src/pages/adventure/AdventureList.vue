@@ -7,7 +7,7 @@
         <div class="m-adventure-list" v-if="list">
             <AdventureItem v-for="(item, i) in list" :key="i" :item="item" />
         </div>
-        <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+        <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" icon="el-icon-arrow-down">加载更多</el-button>
         <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
     </div>
 </template>
@@ -28,7 +28,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 8, //每页条目
+            per: 20, //每页条目
         };
     },
     computed: {
@@ -45,9 +45,19 @@ export default {
     watch: {},
     methods: {
         getData() {
-            getAdventure(this.params).then(res => {
-                this.list = res.data.list;
-                console.log(res);
+            let params = this.params;
+            getAdventure(params).then(res => {
+                let list = [];
+                res.data.list.forEach(e => {
+                    if (e.bHide == 1 && e.nClassify == 2) {
+                    } else {
+                        list.push(e);
+                    }
+                });
+                this.list = this.list.concat(list);
+                console.log(list, "list", list.length);
+                this.total = res.data.total;
+                this.pages = res.data.pages;
             });
         },
         changePage(i) {
