@@ -96,10 +96,9 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getPets, getPet } from "@/service/pet";
+import { getPets,getPetLucky } from "@/service/pet";
 import Type from "@/assets/data/pet_type.json";
 import Source from "@/assets/data/pet_source.json";
-import Lucky from "@/assets/data/pet_lucky.json";
 import petItem from "@/components/pet/PetItem.vue";
 export default {
     name: "PetList",
@@ -118,7 +117,7 @@ export default {
 
             Type,
             Source,
-            Lucky,
+            Lucky:[],
             petType: "",
             petSource: "",
             petName: "",
@@ -196,9 +195,12 @@ export default {
         },
         // 获取福缘宠物id
         getPetLucky: function () {
-            let rawDate = new Date();
-            let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
-            this.luckyList = this.Lucky.std[dateIndex];
+            getPetLucky().then((res) => {
+                let data = res.data.std 
+                let rawDate = new Date();
+                let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
+                this.luckyList = data[dateIndex];
+            })
         },
     },
     filters: {},
