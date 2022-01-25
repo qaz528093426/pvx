@@ -1,31 +1,79 @@
 <template>
     <div class="v-pet-list" v-loading="loading">
-        <div class="v-pet-listGuide flex">
-            <div class="v-pet-guideTil flex">
-                <i class="v-pet-logo"></i>
+        <div class="m-pet-header flex">
+            <div class="m-pet-title flex">
+                <i class="u-logo"></i>
             </div>
-            <div class="v-pet-screen flex">
-                <div class="v-pet-select flex">
-                    <el-radio-group class="u-type" v-model="petType">
-                        <el-radio v-for="item in Type" :key="item.type" :label="item.class">{{ item.name }}</el-radio>
+            <div class="m-pet-toolbar flex">
+                <div class="m-pet-filter flex">
+                    <el-radio-group
+                        class="u-type u-type-radio"
+                        v-model="petType"
+                    >
+                        <el-radio
+                            v-for="item in Type"
+                            :key="item.type"
+                            :label="item.class"
+                            >{{ item.name }}</el-radio
+                        >
                     </el-radio-group>
-                    <el-select class="m-type" v-model="petType" placeholder="宠物种类">
-                        <el-option v-for="item in Type" :key="item.type" :label="item.name" :value="item.class"> </el-option>
+                    <el-select
+                        class="u-type u-type-select"
+                        v-model="petType"
+                        placeholder="宠物种类"
+                    >
+                        <el-option
+                            v-for="item in Type"
+                            :key="item.type"
+                            :label="item.name"
+                            :value="item.class"
+                        >
+                        </el-option>
                     </el-select>
-                    <el-select class="u-source" v-model="petSource" placeholder="获取来源">
-                        <el-option v-for="item in Source" :key="item.source" :label="item.name" :value="item.source"> </el-option>
+                    <el-select
+                        class="u-source"
+                        v-model="petSource"
+                        placeholder="获取来源"
+                    >
+                        <el-option
+                            v-for="item in Source"
+                            :key="item.source"
+                            :label="item.name"
+                            :value="item.source"
+                        >
+                        </el-option>
                     </el-select>
                 </div>
-                <div class="v-pet-search flex">
-                    <el-input placeholder="输入宠物名字搜索" v-model="petName" clearable> </el-input>
+                <div class="m-pet-search flex">
+                    <el-input
+                        placeholder="输入宠物名字搜索"
+                        v-model="petName"
+                        clearable
+                    >
+                    </el-input>
                 </div>
             </div>
         </div>
-        <div class="v-pet-listContent flex" v-if="petList && petList.length > 0">
-            <pet-item v-for="pet in petList" :key="pet.index" :petObject="pet" :lucky="luckyIndex"></pet-item>
-            <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+        <div class="m-pet-content" v-if="petList && petList.length > 0">
+            <div class="m-pet-list flex">
+                <pet-item
+                    v-for="pet in petList"
+                    :key="pet.index"
+                    :petObject="pet"
+                    :lucky="luckyList"
+                ></pet-item>
+            </div>
+            <el-button
+                class="m-archive-more m-pet-more"
+                v-show="hasNextPage"
+                type="primary"
+                @click="appendPage"
+                :loading="loading"
+                icon="el-icon-arrow-down"
+                >加载更多</el-button
+            >
             <el-pagination
-                class="m-archive-pages"
+                class="m-archive-pages m-pet-pages"
                 background
                 layout="total, prev, pager, next, jumper"
                 :hide-on-single-page="true"
@@ -35,7 +83,14 @@
                 @current-change="changePage"
             ></el-pagination>
         </div>
-        <el-alert v-else class="v-pet-null" title="没有找到相关宠物" type="info" show-icon> </el-alert>
+        <el-alert
+            v-else
+            class="m-pet-null"
+            title="没有找到相关宠物"
+            type="info"
+            show-icon
+        >
+        </el-alert>
     </div>
 </template>
 
@@ -45,7 +100,7 @@ import { getPets, getPet } from "@/service/pet";
 import Type from "@/assets/data/pet_type.json";
 import Source from "@/assets/data/pet_source.json";
 import Lucky from "@/assets/data/pet_lucky.json";
-import petItem from "@/components/pet/PetLink.vue";
+import petItem from "@/components/pet/PetItem.vue";
 export default {
     name: "PetList",
     props: [],
@@ -129,9 +184,9 @@ export default {
             this.loading = true;
             getPets(this.request_params)
                 .then((res) => {
-                    let newList = res.data.list; //.filter((item) => {
-                    // return item.NameFrame
-                    // })
+                    let newList = res.data.list.filter((item) => {
+                        return item.NameFrame;
+                    });
                     if (appendMode) {
                         this.petList = this.petList.concat(newList);
                     } else {
@@ -148,14 +203,7 @@ export default {
         getPetLucky: function () {
             let rawDate = new Date();
             let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
-            let luckyList = [];
-            for (let i = 0; i < 3; i++) {
-                getPet(this.Lucky.std[dateIndex][i]).then((res) => {
-                    luckyList.push(res.data);
-                });
-            }
-            this.luckyIndex = this.Lucky.std[dateIndex];
-            this.luckyList = luckyList;
+            this.luckyList = this.Lucky.std[dateIndex];
         },
     },
     filters: {},
