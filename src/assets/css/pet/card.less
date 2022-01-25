@@ -1,0 +1,100 @@
+.m-pet-card {
+    width: 260px;
+    height: 468px;
+    border-radius: 3px;
+    margin: 0 30px 30px 0;
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+    transition: 0.2s ease;
+    padding:4px;
+    zoom: 0.85;
+    .u-image{
+        .size(100%);
+    }
+
+    .u-frame {
+        .size(100%);
+        .z(1);
+        .pa;
+        .lt(0,0);
+    }
+
+    .u-name{
+        position: absolute;
+        bottom: 50px;
+        left: 50px;
+        background: none;
+        color: #fff2c5;
+        font-size: 24px;
+        letter-spacing: 5px;
+        text-shadow: 0 0 1px #333;
+        z-index: 1;
+        font-family: "SimSun", "Microsoft YaHei";
+        font-weight: bold;
+        text-shadow: 0 0 5px #000;
+    }
+
+    .u-stars{
+        background:url('@{pet_root}misc/newpets-81.png') repeat-y;
+        position: absolute;
+        .z(2);
+        width: 18px;
+        height: 90px;
+        top: 52px;
+        right: 8px;
+    }
+
+    .u-star{
+        // height:100%;
+        .db;
+        background:url('@{pet_root}misc/newpets-18.png') repeat-y;
+        background-size: 100%;
+        width:100%;
+        &.u-star-1{
+            height:16px;
+        }
+        &.u-star-2{
+            height:32px;
+        }
+        &.u-star-3{
+            height:50px;
+        }
+        &.u-star-4{
+            height:74px;
+        }
+        &.u-star-5{
+            height:90px;
+        }
+    }
+
+    .u-score {
+        position: absolute;
+        z-index: 1;
+        color: #fff;
+        font-weight: bold;
+        font-size: 20px;
+        top: 13px;
+        right: 13px;
+    }
+
+    .u-lucky{
+        position: absolute;
+        z-index: 1;
+        left:0;
+        top:0;
+        width:55px;
+        height:120px;
+        background: url("https://icon.jx3box.com/pvx/pet/misc/newpets-3.png") no-repeat;
+        background-size: 100%;
+    }
+    
+}
+
+@media screen and (max-width: @phone) {
+    .m-pet-item {
+        margin:5px 0px;
+        zoom: 0.6;
+    }
+
+}
