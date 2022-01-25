@@ -6,9 +6,9 @@
             >
             <el-button size="medium" type="primary" icon="el-icon-s-promotion" @click="goItem">查看物品</el-button>
         </div>
-        <div class="v-pet-panel flex">
-            <petCard class="u-pet-card" :petObject="pet" :lucky="luckyList"></petCard>
-            <div class="v-pet-info flex">
+        <div class="m-pet-panel flex">
+            <petCard :petObject="pet" :lucky="luckyList"></petCard>
+            <div class="m-pet-info flex">
                 <div class="u-pet-name">{{ pet.Name }}</div>
                 <div class="">
                     <template v-for="(skill, index) in petWiki.skills">
