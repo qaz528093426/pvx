@@ -133,7 +133,7 @@ module.exports = {
         //for lost
         "/",
 
-    chainWebpack: config => {
+    chainWebpack: (config) => {
         //💘 html-webpack-plugin ~
         // Multiple pages disable the block below
         // config.plugin("html").tap(args => {
@@ -150,7 +150,7 @@ module.exports = {
             .rule("images")
             .use("url-loader")
             .loader("url-loader")
-            .tap(options => Object.assign(options, { limit: 10240 }));
+            .tap((options) => Object.assign(options, { limit: 10240 }));
 
         //💝 in-line svg imgs ~
         config.module.rule("vue").use("vue-svg-inline-loader").loader("vue-svg-inline-loader");
@@ -158,12 +158,16 @@ module.exports = {
         //💖 import common less var * mixin ~
         const types = ["vue-modules", "vue", "normal-modules", "normal"];
         var preload_styles = [];
-        preload_styles.push(path.resolve(__dirname, "./node_modules/csslab/base.less"), path.resolve(__dirname, "./node_modules/@jx3box/jx3box-common/css/var.less"), path.resolve(__dirname, "./src/assets/css/var.less"));
+        preload_styles.push(
+            path.resolve(__dirname, "./node_modules/csslab/base.less"),
+            path.resolve(__dirname, "./node_modules/@jx3box/jx3box-common/css/var.less"),
+            path.resolve(__dirname, "./src/assets/css/var.less")
+        );
         function addStyleResource(rule) {
             rule.use("style-resource").loader("style-resources-loader").options({
                 patterns: preload_styles,
             });
         }
-        types.forEach(type => addStyleResource(config.module.rule("less").oneOf(type)));
+        types.forEach((type) => addStyleResource(config.module.rule("less").oneOf(type)));
     },
 };

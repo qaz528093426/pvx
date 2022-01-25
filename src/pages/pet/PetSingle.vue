@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="m-pet-wiki">
-                <wiki-panel scene="detail" :wikiPost="postPet" :borderNone="true"></wiki-panel>
+                <detail :id="petWiki.achievement_id" title="宠物攻略"></detail>
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@ import { getPet, getShopInfo } from "@/service/pet";
 import { getWiki } from "@/service/wiki";
 import { getPetLucky } from "@/service/pet";
 import petCard from "@/components/pet/PetCard.vue";
-import WikiPanel from '@jx3box/jx3box-common-ui/src/wiki/WikiPanel.vue'
+import Detail from '@/components/wiki/Detail.vue';
 import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
@@ -80,7 +80,7 @@ export default {
     props: [],
     components: {
         petCard,
-        WikiPanel
+        Detail
     },
     data: function () {
         return {
@@ -116,12 +116,6 @@ export default {
         getPetWiki: function () {
             getWiki("item", this.source_id).then((res) => {
                 this.petWiki = res?.data?.data?.source?.pet;
-
-                if (this.petWiki.achievement_id) {
-                    getWiki('achievement', this.petWiki.achievement_id).then(res => {
-                        this.postPet = res?.data?.data?.post || ''
-                    })
-                }
             });
         },
         // 获取宠物商城价格
