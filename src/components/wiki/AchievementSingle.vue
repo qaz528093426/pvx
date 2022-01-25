@@ -1,31 +1,11 @@
 <template>
-    <div
-        class="m-achievement-single"
-        :class="fold ? 'fold' : ''"
-        v-if="JSON.stringify(achievement) !== '{}'"
-    >
+    <div class="m-achievement-single" :class="fold ? 'fold' : ''" v-if="JSON.stringify(achievement) !== '{}'">
         <div class="u-header">
-            <a
-                class="u-title"
-                :target="targetable"
-                @click="url_filter(achievement.ID)"
-                v-text="achievement.Name"
-            ></a>
+            <a class="u-title" :target="targetable" @click="url_filter(achievement.ID)" v-text="achievement.Name"></a>
             <div class="u-other">
-                <span
-                    class="u-attr"
-                    v-text="achievement.post ? ('修订时间：' + ts2str(achievement.post.updated)) : ''"
-                ></span>
-                <span
-                    class="u-attr"
-                    v-text="achievement.post?('综合难度：'+$options.filters.star(achievement.post.level)):''"
-                ></span>
-                <Fav
-                    v-if="showFavorite"
-                    class="u-attr u-fav"
-                    post-type="achievement"
-                    :post-id="achievement.ID"
-                />
+                <span class="u-attr" v-text="achievement.post ? '修订时间：' + ts2str(achievement.post.updated) : ''"></span>
+                <span class="u-attr" v-text="achievement.post ? '综合难度：' + $options.filters.star(achievement.post.level) : ''"></span>
+                <Fav v-if="showFavorite" class="u-attr u-fav" post-type="achievement" :post-id="achievement.ID" />
             </div>
         </div>
         <div class="u-footer">
@@ -34,31 +14,16 @@
                 <div v-if="achievement.PostfixName" v-text="'称号后缀：' + achievement.PostfixName"></div>
             </div>
             <el-row v-if="achievement.SubAchievementList" class="u-subs" :gutter="30">
-                <el-col
-                    v-for="(sub_achievement, key) in achievement.SubAchievementList"
-                    :key="key"
-                    :xs="12"
-                    :sm="8"
-                    :md="8"
-                    class="u-sub"
-                >
-                    <router-link
-                        :to="sub_achievement.Visible == 1 ? {name: 'view',params: { source_id: sub_achievement.ID }} : {}"
-                        target="_blank"
-                    >
+                <el-col v-for="(sub_achievement, key) in achievement.SubAchievementList" :key="key" :xs="12" :sm="8" :md="8" class="u-sub">
+                    <router-link :to="sub_achievement.Visible == 1 ? { name: 'view', params: { source_id: sub_achievement.ID } } : {}" target="_blank">
                         <img class="u-icon" :src="icon_url(sub_achievement.IconID)" />
                         <span v-text="sub_achievement.Name"></span>
                     </router-link>
                 </el-col>
             </el-row>
             <div v-if="achievement.SeriesAchievementList" class="u-seriess">
-                <div
-                    v-for="(series_achievement, key) in achievement.SeriesAchievementList"
-                    class="u-series"
-                    :key="key"
-                    :class="series_achievement.ID == achievement.ID ? 'active' : ''"
-                >
-                    <router-link :to="{name: 'view', params: { source_id: series_achievement.ID }}">
+                <div v-for="(series_achievement, key) in achievement.SeriesAchievementList" class="u-series" :key="key" :class="series_achievement.ID == achievement.ID ? 'active' : ''">
+                    <router-link :to="{ name: 'view', params: { source_id: series_achievement.ID } }">
                         <img class="u-icon" :src="icon_url(series_achievement.IconID)" />
                         <div class="detail">
                             <h4 v-text="series_achievement.Name"></h4>
@@ -68,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="u-expand" :class="{'disable': empty}" @click="fold = !fold">
+        <div class="u-expand" :class="{ disable: empty }" @click="fold = !fold">
             <hr />
             <i class="u-icon el-icon-caret-top"></i>
             <i class="u-icon el-icon-caret-bottom"></i>
@@ -85,21 +50,14 @@ export default {
     props: ["achievement", "fold", "target", "jump", "showFavorite"],
     computed: {
         empty() {
-            return !(
-                this.achievement.Prefix ||
-                this.achievement.Postfix ||
-                this.achievement.SubAchievementList ||
-                this.achievement.SeriesAchievementList
-            );
+            return !(this.achievement.Prefix || this.achievement.Postfix || this.achievement.SubAchievementList || this.achievement.SeriesAchievementList);
         },
         targetable() {
-            return this.target || typeof this.target !== "undefined"
-                ? this.target
-                : "";
+            return this.target || typeof this.target !== "undefined" ? this.target : "";
         },
-        client : function (){
-            return this.$store.state.client
-        }
+        client: function () {
+            return this.$store.state.client;
+        },
     },
     methods: {
         ts2str,
@@ -108,8 +66,7 @@ export default {
         },
         url_filter(source_id) {
             if (this.jump === true || typeof this.jump === "undefined") {
-                this.$store.state.scroll_tops[this.$route.name] =
-                    document.documentElement.scrollTop;
+                this.$store.state.scroll_tops[this.$route.name] = document.documentElement.scrollTop;
                 this.$router.push({
                     name: "view",
                     params: { source_id: source_id },

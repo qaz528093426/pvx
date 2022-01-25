@@ -1,10 +1,12 @@
 <template>
     <div class="v-pet-single">
-        <div class="m-toolbar">
-            <el-button size="medium" icon="el-icon-arrow-left" @click="goBack"
-                >返回列表</el-button
-            >
-            <el-button size="medium" type="primary" icon="el-icon-s-promotion" @click="goItem">查看物品</el-button>
+        <div class="m-pet-navigation">
+            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
+            <div class="m-pet-links">
+                <a class="u-link u-item" :href="getLink('item', item_id)"><i class="el-icon-collection-tag"></i>物品信息</a>
+                <em> | </em>
+                <a class="u-link u-achievement" :href="getLink('cj', achievement_id)"><i class="el-icon-trophy"></i>成就信息</a>
+            </div>
         </div>
         <div class="m-pet-panel flex">
             <petCard :petObject="pet" :lucky="luckyList"></petCard>
@@ -12,41 +14,26 @@
                 <div class="u-pet-name">{{ pet.Name }}</div>
                 <div class="">
                     <template v-for="(skill, index) in petWiki.skills">
-                        <el-popover
-                            :key="index"
-                            trigger="click"
-                            popper-class="u-pet-skill-pop"
-                            :visible-arrow="false"
-                            placement="top"
-                        >
+                        <el-popover :key="index" trigger="click" popper-class="u-pet-skill-pop" :visible-arrow="false" placement="top">
                             <div class="u-desc">
                                 <div>{{ skill.Name }}</div>
                                 <div>{{ skill.Desc }}</div>
                             </div>
-                            <img
-                                slot="reference"
-                                class="u-icon"
-                                :src="skill.IconID | iconLink"
-                                alt=""
-                            />
+                            <img slot="reference" class="u-icon" :src="skill.IconID | iconLink" alt="" />
                         </el-popover>
                     </template>
                 </div>
-                <div class="v-pet-orange">
-                    {{ getPetType(pet.Class) }} · {{ getPetSource(pet.Source) }}
-                </div>
+                <div class="v-pet-orange">{{ getPetType(pet.Class) }} · {{ getPetSource(pet.Source) }}</div>
                 <div>
-                    <i
-                        class="el-icon-star-on"
-                        v-for="count in pet.Star"
-                        :key="count"
-                    ></i>
+                    <i class="el-icon-star-on" v-for="count in pet.Star" :key="count"></i>
                 </div>
                 <div>宠物分数：{{ pet.Score }}</div>
-                <div class="u-pet-desc">宠物说明：
+                <div class="u-pet-desc">
+                    宠物说明：
                     <template v-for="item in getPetDesc(pet.Desc)">
                         <span :key="item.text">{{ item.text }}</span>
-                    </template></div>
+                    </template>
+                </div>
                 <div class="u-source-text">
                     <template v-for="item in getPetDesc(pet.OutputDes)">
                         <span :key="item.text">{{ item.text }}</span>
@@ -54,8 +41,8 @@
                 </div>
                 <div class="u-shop-text" v-if="shopInfo.RewardsPrice || shopInfo.CoinPrice">
                     商城价格：
-                    <el-tag type="warning" class="u-credit">积分：{{  shopInfo.RewardsPrice }}</el-tag>
-                    <el-tag type="danger">通宝：{{  shopInfo.CoinPrice }}</el-tag>
+                    <el-tag type="warning" class="u-credit">积分：{{ shopInfo.RewardsPrice }}</el-tag>
+                    <el-tag type="danger">通宝：{{ shopInfo.CoinPrice }}</el-tag>
                 </div>
             </div>
             <div class="m-pet-wiki">
@@ -70,7 +57,7 @@ import { getPet, getShopInfo } from "@/service/pet";
 import { getWiki } from "@/service/wiki";
 import { getPetLucky } from "@/service/pet";
 import petCard from "@/components/pet/PetCard.vue";
-import Detail from '@/components/wiki/Detail.vue';
+import Detail from "@/components/wiki/Detail.vue";
 import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
@@ -80,20 +67,26 @@ export default {
     props: [],
     components: {
         petCard,
-        Detail
+        Detail,
     },
     data: function () {
         return {
             pet: {},
             petWiki: {},
             shopInfo: "",
-            postPet: '',
+            postPet: "",
             luckyList: [],
         };
     },
     computed: {
         id: function () {
             return this.$route.params.id;
+        },
+        item_id: function () {
+            return 1;
+        },
+        achievement_id: function () {
+            return this.petWiki.achievement_id;
         },
         source_id: function ({ pet }) {
             return pet?.ItemTabType + "_" + pet?.ItemTabIndex;
@@ -135,10 +128,8 @@ export default {
         },
         // 获取宠物途径
         getPetSource: function (sourceId) {
-            const _petSource = petSource.find(
-                (item) => ~~sourceId === ~~item.source
-            );
-            return _petSource?.name || ''
+            const _petSource = petSource.find((item) => ~~sourceId === ~~item.source);
+            return _petSource?.name || "";
         },
         // 获取宠物描述
         getPetDesc: function (str) {
@@ -163,20 +154,21 @@ export default {
             this.$router.push({ name: "list" });
         },
         goItem() {
-            const { ItemTabType, ItemTabIndex } = this.pet
-            const link = getLink('item', `${ItemTabType}_${ItemTabIndex}`)
+            const { ItemTabType, ItemTabIndex } = this.pet;
+            const link = getLink("item", `${ItemTabType}_${ItemTabIndex}`);
 
-            window.open(link, '_blank')
+            window.open(link, "_blank");
         },
         // 获取福缘宠物id
         getPetLucky: function () {
             getPetLucky().then((res) => {
-                let data = res.data.std 
+                let data = res.data.std;
                 let rawDate = new Date();
                 let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
                 this.luckyList = data[dateIndex];
-            })
+            });
         },
+        getLink,
     },
     filters: {
         iconLink,

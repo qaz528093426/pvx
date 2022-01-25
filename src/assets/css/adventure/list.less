@@ -9,10 +9,11 @@
 }
 .m-adventure-header,
 .m-pet-header {
-    padding: 80px 0 30px 0;
+    .h(200px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     .u-title {
         .size(331px,74px);
         background-image: url("@{pvx_img}adtitle.png");
@@ -27,38 +28,52 @@
 
 .m-adventure-search {
     .mt(23px);
-    .h(50px);
+    .h(45px);
     min-width: 800px;
     max-width: 1080px;
     .r(14px);
     overflow: hidden;
-    background-color: #fafbfc;
-    border: 1px solid #eee;
+    color: #787878;
+    background-color: #f5f7fa;
+    border: 1px solid #a7abaf;
+    box-shadow: 0 0 2px #959a9e;
     display: flex;
     align-items: center;
-}
-
-.u-input {
-    flex: 1;
-    .lh(50px);
-    width: 100%;
-    border-left: 1px solid #eee;
-    input {
-        .fz(18px);
-        .lh(50px);
-        color: #787878;
+    font-family: "KaiTi", "Microsoft YaHei" !important;
+    .u-input {
+        flex: 1;
+        .lh(45px);
         width: 100%;
-        border: 0;
-        padding: 0 30px;
-        margin: 0;
-        box-sizing: border-box;
+        border-left: 1px solid #d4d4d2;
+        background-color: #fff;
+
+        input {
+            .fz(18px);
+            width: 100%;
+            padding: 0 15px;
+            border: none;
+            background: none;
+            background-color: none;
+            font-family: "KaiTi", "Microsoft YaHei";
+            letter-spacing: 1px;
+            color: #787878;
+            padding-right: 15px;
+            text-shadow: 0 0 1px #585858;
+            box-sizing: border-box;
+        }
+
+        input::placeholder {
+            color: #919191;
+            text-shadow: 0 0 1px #585858;
+        }
     }
 }
+
 .m-adventure-mark {
     .fz(18px);
     .bold;
     .color(#787878);
-    .lh(50px);
+    .lh(45px);
     padding: 0 10px 0 20px;
     display: flex;
     .u-mark {
@@ -66,7 +81,6 @@
         .mr(10px);
         display: flex;
         align-items: center;
-        background-color: #fff;
         b {
             .pr;
             .size(12px);
