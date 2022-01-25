@@ -1,12 +1,15 @@
 <template>
     <div class="v-pet-list" v-loading="loading">
-        <div class="v-pet-listGuide flex">
-            <div class="v-pet-guideTil flex">
-                <i class="v-pet-logo"></i>
+        <div class="m-pet-header flex">
+            <div class="m-pet-title flex">
+                <i class="u-logo"></i>
             </div>
-            <div class="v-pet-screen flex">
-                <div class="v-pet-select flex">
-                    <el-radio-group class="u-type" v-model="petType">
+            <div class="m-pet-toolbar flex">
+                <div class="m-pet-filter flex">
+                    <el-radio-group
+                        class="u-type u-type-radio"
+                        v-model="petType"
+                    >
                         <el-radio
                             v-for="item in Type"
                             :key="item.type"
@@ -15,7 +18,7 @@
                         >
                     </el-radio-group>
                     <el-select
-                        class="m-type"
+                        class="u-type u-type-select"
                         v-model="petType"
                         placeholder="宠物种类"
                     >
@@ -41,7 +44,7 @@
                         </el-option>
                     </el-select>
                 </div>
-                <div class="v-pet-search flex">
+                <div class="m-pet-search flex">
                     <el-input
                         placeholder="输入宠物名字搜索"
                         v-model="petName"
@@ -51,15 +54,17 @@
                 </div>
             </div>
         </div>
-        <div class="v-pet-listContent flex" v-if="petList.length > 0">
-            <petLink
-                v-for="pet in petList"
-                :key="pet.index"
-                :petObject="pet"
-                :lucky="luckyIndex"
-            ></petLink>
+        <div class="m-pet-content" v-if="petList && petList.length > 0">
+            <div class="m-pet-list flex">
+                <pet-item
+                    v-for="pet in petList"
+                    :key="pet.index"
+                    :petObject="pet"
+                    :lucky="luckyList"
+                ></pet-item>
+            </div>
             <el-button
-                class="m-archive-more"
+                class="m-archive-more m-pet-more"
                 v-show="hasNextPage"
                 type="primary"
                 @click="appendPage"
@@ -68,32 +73,39 @@
                 >加载更多</el-button
             >
             <el-pagination
-                class="m-archive-pages"
+                class="m-archive-pages m-pet-pages"
                 background
                 layout="total, prev, pager, next, jumper"
                 :hide-on-single-page="true"
                 :page-size="per"
                 :total="total"
                 :current-page.sync="page"
+                @current-change="changePage"
             ></el-pagination>
         </div>
-        <div class="v-pet-listContent flex" v-else>没有找到相关宠物</div>
+        <el-alert
+            v-else
+            class="m-pet-null"
+            title="没有找到相关宠物"
+            type="info"
+            show-icon
+        >
+        </el-alert>
     </div>
 </template>
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getPets } from "@/service/pet";
-import { getPet } from "@/service/pet";
+import { getPets, getPet } from "@/service/pet";
 import Type from "@/assets/data/pet_type.json";
 import Source from "@/assets/data/pet_source.json";
 import Lucky from "@/assets/data/pet_lucky.json";
-import petLink from "@/components/pet/PetLink.vue";
+import petItem from "@/components/pet/PetItem.vue";
 export default {
     name: "PetList",
     props: [],
     components: {
-        petLink,
+        petItem,
     },
     data: function () {
         return {
@@ -103,7 +115,7 @@ export default {
             total: 1, //总条目数
             pages: 1, //总页数
             per: 16, //每页条目
-            appendMode: false, //追加模式
+
             Type,
             Source,
             Lucky,
@@ -115,13 +127,16 @@ export default {
     },
     computed: {
         params: function () {
+            return [this.petType, this.petName, this.petSource, this.client];
+        },
+        request_params: function () {
             return {
                 per: this.per,
                 page: this.page || 1,
                 Class: this.petType,
                 Name: this.petName,
                 Source: this.petSource,
-                client: this.client
+                client: this.client,
             };
         },
         resetParams: function () {
@@ -130,9 +145,9 @@ export default {
         hasNextPage: function () {
             return this.pages > 1 && this.page < this.total;
         },
-        client: function (){
-            return this.$store.state.client
-        }
+        client: function () {
+            return this.$store.state.client;
+        },
     },
     watch: {
         resetParams: {
@@ -153,20 +168,21 @@ export default {
             return __imgPath + url;
         },
         appendPage: function () {
-            this.page++;
+            this.page += 1;
+            this.getPetList(true);
+        },
+        changePage: function () {
+            this.getPetList();
         },
         // 获取宠物列表
-        getPetList: function () {
+        getPetList: function (appendMode = false) {
             this.loading = true;
-            getPets(this.params)
+            getPets(this.request_params)
                 .then((res) => {
-                    let newList = [];
-                    for (let i = 0; i < res.data.list.length; i++) {
-                        if (res.data.list[i].NameFrame) {
-                            newList.push(res.data.list[i]);
-                        }
-                    }
-                    if (this.appendMode) {
+                    let newList = res.data.list.filter((item) => {
+                        return item.NameFrame;
+                    });
+                    if (appendMode) {
                         this.petList = this.petList.concat(newList);
                     } else {
                         this.petList = newList;
@@ -175,7 +191,6 @@ export default {
                     this.pages = res.data.pages;
                 })
                 .finally(() => {
-                    this.appendMode = false;
                     this.loading = false;
                 });
         },
@@ -183,14 +198,7 @@ export default {
         getPetLucky: function () {
             let rawDate = new Date();
             let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
-            let luckyList = []
-            for (let i = 0; i < 3; i++) {
-                getPet(this.Lucky.std[dateIndex][i]).then((res) => {
-                    luckyList.push(res.data)
-                });
-            }
-            this.luckyIndex = this.Lucky.std[dateIndex]
-            this.luckyList = luckyList;
+            this.luckyList = this.Lucky.std[dateIndex];
         },
     },
     filters: {},
