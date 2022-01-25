@@ -7,7 +7,7 @@
             </strong>
         </RightSideMsg>
 
-        <el-menu :default-openeds="['1', '2', '3', '4']">
+        <el-menu :default-openeds="['1', '3', '4']">
             <el-submenu index="1">
                 <template slot="title">捏脸</template>
                 <el-menu-item-group>
@@ -50,9 +50,9 @@
                     <el-menu-item index="4-1" :class="{ 'is-active': active == 'adventure' }"
                         ><a :href="getAppLink('adventure')"><i class="el-icon-files"></i>奇遇大全</a></el-menu-item
                     >
-                    <el-menu-item index="4-2"
+                    <!-- <el-menu-item index="4-2"
                         ><a href="/trigger/"><i class="el-icon-guide"></i>触发汇总</a></el-menu-item
-                    >
+                    > -->
                     <el-menu-item index="4-3"
                         ><a href="https://j3cx.com/serendipity" target="_blank"><i class="el-icon-thumb"></i>奇遇查询</a></el-menu-item
                     >
@@ -69,38 +69,37 @@ export default {
     components: {},
     data: function () {
         return {
-            active : ''
+            active: "",
         };
     },
     computed: {},
     watch: {},
     methods: {
-        getAppType : function (){
-            let arr = location.pathname?.split('/')
-            let type = ''
-            for(let str of arr){
-                if(str && str != 'pvx'){
-                    type = str
+        getAppType: function () {
+            let arr = location.pathname?.split("/");
+            let type = "";
+            for (let str of arr) {
+                if (str && str != "pvx") {
+                    type = str;
                     break;
                 }
             }
-            return type
+            return type;
         },
-        getAppLink : function (appKey){
-            let isDev = location.hostname == 'localhost'
-            if(isDev){
-                return '/' + appKey
-            }else{
-                return '/pvx/' + appKey
+        getAppLink: function (appKey) {
+            let isDev = location.hostname == "localhost";
+            if (isDev) {
+                return "/" + appKey;
+            } else {
+                return "/pvx/" + appKey;
             }
-        }
+        },
     },
     filters: {},
     created: function () {
-        this.active = this.getAppType()
+        this.active = this.getAppType();
     },
-    mounted: function () {
-    },
+    mounted: function () {},
 };
 </script>
 
