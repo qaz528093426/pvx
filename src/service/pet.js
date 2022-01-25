@@ -1,5 +1,6 @@
 import { $node } from "@jx3box/jx3box-common/js/https";
-
+import {__iconPath} from "@jx3box/jx3box-common/data/jx3box.json"
+import axios from "axios"
 function getPets(params) {
     return $node().get("/pets", {
         params: params,
@@ -24,4 +25,8 @@ function getShopInfo({ item_type, item_id, client = 'std' }) {
     })
 }
 
-export { getPets, getPet, getPetSkill, getShopInfo };
+function getPetLucky (){
+    return axios.get(__iconPath + "pvx/pet/output/pet_lucky.json")
+}
+
+export { getPets, getPet, getPetSkill, getShopInfo , getPetLucky };
