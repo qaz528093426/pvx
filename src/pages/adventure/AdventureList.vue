@@ -31,22 +31,23 @@ export default {
             total: 1, //总条目数
             pages: 1, //总页数
             per: 20, //每页条目
-
-            params: {
-                per: this.per,
-                page: this.page || 1,
-            },
         };
     },
     computed: {
         hasNextPage: function () {
             return this.pages > 1 && this.page < this.pages;
         },
+        params: function () {
+            return {
+                per: this.per,
+                page: this.page || 1,
+            };
+        },
     },
     watch: {},
     methods: {
-        getData() {
-            let params = this.params;
+        getData(params) {
+            params = { ...this.params, ...params };
             getAdventure(params).then(res => {
                 let list = [];
                 res.data.list.forEach(e => {
@@ -55,11 +56,13 @@ export default {
                         if (e.szName) list.push(e);
                     }
                 });
-                if (this.page == 1) {
+                console.log(this.page, "?");
+                if (this.page < 2) {
                     this.list = list;
                 } else {
                     this.list = this.list.concat(list);
                 }
+                console.log(this.list, "??");
                 this.total = res.data.total;
                 this.pages = res.data.pages;
             });
@@ -78,8 +81,7 @@ export default {
                 page: this.page,
             };
             if (e.all) delete e.all;
-            this.params = { ...this.params, ...e };
-            this.getData();
+            this.getData(e);
         },
     },
     filters: {},
