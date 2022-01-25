@@ -1,6 +1,6 @@
 .v-pet-single {
 
-    .v-pet-panel {
+    .m-pet-panel {
         width: 100%;
         height: auto;
         flex-wrap: wrap;
@@ -11,34 +11,38 @@
             width: 100%;
             margin-top: 10px;
         }
+
+        .m-pet-info {
+            box-sizing: border-box;
+            width: calc(100% - 300px);
+            height: 476px;
+            background: #f6f6f6;
+            border-radius: 15px;
+            padding: 20px 30px;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: flex-start;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom:30px;
+        }
     }
+
     .u-pet-name {
         display: none;
     }
-    
-    .v-pet-info {
-        box-sizing: border-box;
-        width: calc(100% - 250px);
-        height: 380px;
-        background: #f6f6f6;
-        border-radius: 15px;
-        padding: 20px 30px;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: flex-start;
-        font-size: 18px;
-        letter-spacing: 2px;
-    }
-    
+
+
+
     .u-source-text {
         color: #ec9d13;
     }
-    
+
     .u-icon {
         margin-right: 10px;
         cursor: pointer;
     }
-    
+
     .m-toolbar {
         display: flex;
         justify-content: space-between;
@@ -54,6 +58,7 @@
     padding: 0;
     border-radius: 3px;
     border: 1px solid #132221;
+
     .u-desc {
         background: #132221;
         padding: 10px;
@@ -62,17 +67,24 @@
 }
 
 @media screen and (max-width: @phone) {
-    .v-pet-panel {
-        .u-pet-card {
-            display: none;
+    .v-pet-single{
+        .m-pet-panel {
+            justify-content: center;
+            .u-pet-card {
+                display: none;
+            }
+    
+            .m-pet-info {
+                width: 100%;
+                margin-bottom:15px;
+            }
         }
-        .v-pet-info {
-            width: 100%;
+    
+        .u-pet-name {
+            display: block !important;
         }
     }
-    .u-pet-name {
-        display: block !important;
-    }
+
 }
 
 .m-pet-navigation{

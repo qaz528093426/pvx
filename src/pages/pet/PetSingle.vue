@@ -8,9 +8,9 @@
                 <a class="u-link u-achievement" :href="getLink('cj', achievement_id)"><i class="el-icon-trophy"></i>成就信息</a>
             </div>
         </div>
-        <div class="v-pet-panel flex">
-            <petCard class="u-pet-card" :petObject="pet" :lucky="luckyList"></petCard>
-            <div class="v-pet-info flex">
+        <div class="m-pet-panel flex">
+            <petCard :petObject="pet" :lucky="luckyList"></petCard>
+            <div class="m-pet-info flex">
                 <div class="u-pet-name">{{ pet.Name }}</div>
                 <div class="">
                     <template v-for="(skill, index) in petWiki.skills">

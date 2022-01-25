@@ -59,8 +59,8 @@ export default {
         },
         // 判断福缘
         getLucky: function (index) {
-            if (index) {
-                return this.lucky.indexOf(index.toString()) != -1;
+            if(index){
+                return this.lucky.indexOf(index.toString()) != -1
             }
         },
     },
@@ -69,5 +69,4 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/pet/card.less";
-
 </style>
