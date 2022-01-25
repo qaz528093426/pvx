@@ -7,7 +7,7 @@
                     <span class="u-txt">{{ title }}</span>
                 </template>
                 <template slot="head-actions">
-                    <a class="el-button el-button--primary" :href="publish_url(`achievement/${id}`)">
+                    <a class="el-button el-button--primary" :href="publish_url(`${type}/${id}`)">
                         <i class="el-icon-edit"></i>
                         <span>完善{{ title }}</span>
                     </a>
@@ -18,12 +18,12 @@
             </WikiPanel>
 
             <!-- 历史版本 -->
-            <WikiRevisions type="achievement" :source-id="id" />
+            <WikiRevisions :type="type" :source-id="id" />
         </div>
         <div class="m-wiki-post-empty" v-else>
             <i class="el-icon-s-opportunity"></i>
             <span>暂无攻略，我要</span>
-            <a class="s-link" :href="publish_url(`achievement/${id}`)">完善攻略</a>
+            <a class="s-link" :href="publish_url(`${type}/${id}`)">完善攻略</a>
         </div>
     </div>
 </template>
@@ -38,7 +38,7 @@ import { publishLink } from "@jx3box/jx3box-common/js/utils";
 
 export default {
     name: "Detail",
-    props: ["id", "title"],
+    props: ["achievement_id", "item_id", "title"],
     data() {
         return {
             wiki_post: null,
@@ -50,6 +50,12 @@ export default {
         },
         client: function () {
             return this.$store.state.client;
+        },
+        id: function () {
+            return this.achievement_id || this.item_id;
+        },
+        type: function () {
+            return this.achievement_id ? "achievement" : "item";
         },
     },
     methods: {
