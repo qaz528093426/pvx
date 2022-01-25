@@ -1,8 +1,18 @@
-import { $node, $helper, axios, $cms, $next } from "@jx3box/jx3box-common/js/https";
-import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
+import {
+    $node,
+    $helper,
+    axios,
+    $cms,
+    $next
+} from "@jx3box/jx3box-common/js/https";
+import {
+    __iconPath
+} from "@jx3box/jx3box-common/data/jx3box";
 // 获取奇遇列表
 function getAdventure(params) {
-    return $node().get(`/serendipities`, { params });
+    return $node().get(`/serendipities`, {
+        params
+    });
 }
 // 获取奇遇详情
 function getAdventureID(id) {
@@ -13,8 +23,9 @@ function getAdventureID(id) {
 function getAdventureTask(id) {
     return $node().get(`/serendipity/${id}/task`);
 }
+
 function getSerendipity(id) {
-    return $helper().get("/api/wiki/post?", {
+    return $helper().get("/api/wiki/post", {
         params: {
             type: "achievement",
             source_id: id,
@@ -30,8 +41,19 @@ function getSerendipityJson() {
 function getUserInfo() {
     return $cms().get("/api/cms/user/my/info");
 }
+
 function getUserSerendipity(params) {
-    return $next().get("/api/serendipity?", { params });
+    return $next().get("/api/serendipity", {
+        params
+    });
 }
 
-export { getAdventure, getAdventureID, getAdventureTask, getSerendipity, getUserInfo, getSerendipityJson, getUserSerendipity };
+export {
+    getAdventure,
+    getAdventureID,
+    getAdventureTask,
+    getSerendipity,
+    getUserInfo,
+    getSerendipityJson,
+    getUserSerendipity
+};

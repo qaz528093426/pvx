@@ -1,57 +1,43 @@
 <template>
-    <div class="v-pet-listItemA">
+    <div class="m-pet-card">
         <!--宠物卡片图-->
-        <img :src="getBgPath(petObject.BgPath)" class="v-pet-petImg" />
+        <img :src="getImgSrc(petObject.BgPath)" class="u-image" />
         <!--宠物边框图-->
-        <img :src="getFrame(petObject.Quality)" class="v-pet-petFrame" />
-        <!--固定灰色星星贴图-->
-        <div class="v-pet-grayStar flex">
-            <img
-                src="https://icon.jx3box.com/pvx/pet/misc/newpets-81.png"
-                v-for="count in 5"
-                :key="count"
-            />
+        <img :src="getFrameSrc(petObject.Quality)" class="u-frame" />
+        <!-- 宠物星级 -->
+        <div class="u-stars">
+            <i class="u-star" :class="'u-star-' + petObject.Star"></i>
         </div>
-        <!--宠物星级-->
-        <div class="v-pet-goldStar flex">
-            <img
-                src="https://icon.jx3box.com/pvx/pet/misc/newpets-18.png"
-                v-for="count in petObject.Star"
-                :key="count"
-            />
+        <!--福缘-->
+        <i class="u-lucky" v-if="getLucky(petObject.Index)"></i>
+        <!--分数-->
+        <div class="u-score flex">
+            {{ petObject.Score || "？" }}
         </div>
-        <div class="v-pet-score flex">
-            {{ petObject.Score ? petObject.Score : "？" }}
-        </div>
-        <span>{{ petObject.Name }}</span>
+        <span class="u-name">{{ petObject.Name }}</span>
     </div>
 </template>
 
 <script>
+import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     props: {
         petObject: {},
+        lucky: {},
     },
     data: function () {
         return {};
     },
     methods: {
         // 获取宠物图片路径
-        getBgPath: function (path) {
+        getImgSrc: function (path) {
             if (path) {
-                const imgName = path.match(/.*\\(.*?).tga/);
-                if (imgName[1] == "kp_WJ_运输机甲001") {
-                    imgName[1] = "kp_wj_运输机甲001";
-                }
-                return (
-                    "https://icon.jx3box.com/pvx/pet/images/" +
-                    imgName[1] +
-                    ".png"
-                );
+                let img_name = path.match(/.*[\/,\\](.*?).tga/);
+                return __iconPath + "pvx/pet/images/" + img_name[1] + ".png";
             }
         },
         // 获取宠物边框图片路径
-        getFrame: function (quality) {
+        getFrameSrc: function (quality) {
             let frameName = "";
             if (quality) {
                 switch (quality) {
@@ -68,7 +54,13 @@ export default {
                         frameName = "/purpleborder.png";
                         break;
                 }
-                return "https://icon.jx3box.com/pvx/pet/frame" + frameName;
+                return __iconPath + "pvx/pet/frame" + frameName;
+            }
+        },
+        // 判断福缘
+        getLucky: function (index) {
+            if (index) {
+                return this.lucky.indexOf(index.toString()) != -1;
             }
         },
     },
@@ -76,71 +68,6 @@ export default {
 </script>
 
 <style lang="less">
-.v-pet-listItemA {
-    width: 230px;
-    height: 380px;
-    background: none;
-    border-radius: 3px;
-    overflow: hidden;
-    position: relative;
-    .v-pet-petImg {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%);
-        width: 98%;
-        height: 98%;
-        z-index: -1;
-    }
-    .v-pet-petFrame {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-    }
-    span {
-        position: absolute;
-        bottom: 11%;
-        left: 16%;
-        background: none;
-        color: #fff2c5;
-        font-size: 22px;
-        letter-spacing: 5px;
-        text-shadow: 0 0 1px #333;
-        z-index: 1;
-        font-family: "SimSun", "Microsoft YaHei";
-        font-weight: bold;
-        text-shadow: 0 0 5px #000;
-    }
-    .v-pet-grayStar,
-    .v-pet-goldStar {
-        position: absolute;
-        z-index: 1;
-        width: 20px;
-        height: 80px;
-        top: 10%;
-        right: 2%;
-        flex-direction: column;
-        justify-content: flex-start;
-        img {
-            width: 10px;
-            height: 10px;
-            margin: 3px 0;
-        }
-    }
-    .v-pet-goldStar {
-        z-index: 2;
-    }
-    .v-pet-score {
-        position: absolute;
-        z-index: 1;
-        width: auto;
-        height: auto;
-        color: #fff;
-        font-weight: bold;
-        font-size: 18px;
-        top: 2%;
-        right: 5%;
-    }
-}
+@import "~@/assets/css/pet/card.less";
+
 </style>
