@@ -67,9 +67,9 @@
         <div class="m-pet-wiki" v-if="petWiki">
             <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略"></detail>
         </div>
-        <div class="m-pet-serendipity">
+        <!-- <div class="m-pet-serendipity">
             <Serendipity :title="title"/>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -82,14 +82,14 @@ import Detail from "@/components/wiki/Detail.vue";
 import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
-import Serendipity from "@/components/common/serendipity.vue";
+// import Serendipity from "@/components/common/serendipity.vue";
 export default {
     name: "PetSingle",
     props: [],
     components: {
         petCard,
         Detail,
-        Serendipity,
+        // Serendipity,
     },
     data: function () {
         return {

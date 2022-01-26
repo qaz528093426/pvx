@@ -21,7 +21,7 @@ export default {
         return {
             search: "",
             marks: [
-                { name: "全部奇遇", type: "all", id: 1 },
+                { name: "全部奇遇", type: "all", id: '' },
                 { name: "绝世奇遇", type: "bPerfect", id: 1 },
                 { name: "普通奇遇", type: "nClassify", id: 2 },
                 { name: "宠物奇遇", type: "nClassify", id: 1 },
@@ -30,15 +30,6 @@ export default {
         };
     },
     computed: {},
-    watch: {
-        search(val) {
-            if (val == "") return;
-            clearTimeout(this.tiemOut);
-            this.tiemOut = setTimeout(() => {
-                this.getData();
-            }, 500);
-        },
-    },
     methods: {
         changeMark(i) {
             this.index = i;
@@ -46,7 +37,10 @@ export default {
         },
         jointParams() {
             let params = {};
-            params[this.marks[this.index].type] = this.marks[this.index].id;
+            const item = this.marks[this.index]
+            if (item.id) {
+                params[item.type] = item.id;
+            }
             if (this.search) params.name = this.search;
             this.$emit("onSearch", params);
         },
@@ -55,9 +49,6 @@ export default {
         search() {
             this.jointParams();
         },
-    },
-    filters: {},
-    created: function () {},
-    mounted: function () {},
+    }
 };
 </script>

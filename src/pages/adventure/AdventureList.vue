@@ -1,5 +1,5 @@
 <template>
-    <div class="v-adventure-List">
+    <div class="v-adventure-List" v-loading="loading">
         <div class="m-adventure-header">
             <div class="u-title"></div>
             <AdventureSearch @onSearch="onSearch" />
@@ -12,7 +12,16 @@
         </div>
 
         <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" icon="el-icon-arrow-down">加载更多</el-button>
-        <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
+        <el-pagination
+            class="m-archive-pages"
+            background
+            layout="total, prev, pager, next, jumper"
+            :hide-on-single-page="true"
+            :page-size="per"
+            :total="total"
+            :current-page.sync="page"
+            @current-change="changePage"
+        ></el-pagination>
     </div>
 </template>
 
@@ -35,6 +44,8 @@ export default {
             per: 16, //每页条目
 
             appendMode: false,
+
+            search: "",
         };
     },
     computed: {
@@ -50,18 +61,23 @@ export default {
     },
     watch: {},
     methods: {
-        getData(params) {
-            params = { ...this.params, ...params };
-            getAdventures(params).then(res => {
-                let list = [];
-                res.data.list.forEach(e => {
-                    list.push(this.toSpecial(e));
+        getData() {
+            this.loading = true;
+            let params = { ...this.params, ...this.search };
+            getAdventures(params)
+                .then((res) => {
+                    let list = [];
+                    res.data.list.forEach((e) => {
+                        list.push(this.toSpecial(e));
+                    });
+                    this.appendMode ? (this.list = this.list.concat(list)) : (this.list = list);
+                    this.appendMode = false;
+                    this.total = res.data.total;
+                    this.pages = res.data.pages;
+                })
+                .finally(() => {
+                    this.loading = false;
                 });
-                this.appendMode ? (this.list = this.list.concat(list)) : (this.list = list);
-                this.appendMode = false;
-                this.total = res.data.total;
-                this.pages = res.data.pages;
-            });
         },
         //处理特殊的链接
         toSpecial(data) {
@@ -86,10 +102,10 @@ export default {
             this.appendMode = true;
             this.getData();
         },
-        onSearch(e) {
+        onSearch(params) {
             this.page = 1;
-            if (e.all) delete e.all;
-            this.getData(e);
+            this.search = params;
+            this.getData();
         },
     },
     filters: {},

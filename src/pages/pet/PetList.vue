@@ -150,11 +150,9 @@ export default {
             });
         },
     },
-    filters: {},
     created: function () {
         this.getPetLucky();
     },
-    mounted: function () {},
 };
 </script>
 

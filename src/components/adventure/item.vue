@@ -36,7 +36,7 @@ export default {
             return this.imgRoot + "reward/" + val + ".png";
         },
         getLink(adventure_id) {
-            this.item.nClassify == 1 ? this.$router.push({ name: "pet", params: { id: adventure_id } }) : this.$router.push({ name: "single", params: { id: adventure_id } });
+            this.$router.push({ name: "single", params: { id: adventure_id } })
         },
     },
     filters: {},

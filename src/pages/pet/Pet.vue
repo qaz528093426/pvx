@@ -7,7 +7,9 @@
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
             <div class="m-main">
-                <router-view></router-view>
+                <keep-alive include="PetList">
+                    <router-view></router-view>
+                </keep-alive>
             </div>
             <Footer></Footer>
         </Main>
