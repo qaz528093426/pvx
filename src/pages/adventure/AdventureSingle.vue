@@ -9,9 +9,7 @@
                 </a>
             </div>
         </div>
-        <div class="m-adventure-header">
-            <h1 class="m-adventure-title">{{ title }}</h1>
-        </div>
+        <h1 class="m-adventure-title">{{ title }}</h1>
         <div class="m-adventure-content">
             <task :id="id" />
         </div>
@@ -43,6 +41,7 @@ export default {
             achieve_id: "",
             data: "",
             task: [],
+            isPet: true,
         };
     },
     computed: {
@@ -59,21 +58,19 @@ export default {
         goBack() {
             this.$router.push({ name: "list" });
         },
-        getAchievementId() {
-            getSerendipityAchievementIds().then((res) => {
-                this.achieve_id = res.data[this.id];
-            });
-        },
-        getAdventure() {
-            getAdventure(this.id).then((res) => {
+        gerData() {
+            getAdventure(this.id).then(res => {
+                this.isPet = false;
                 this.data = res.data;
+            });
+            getSerendipityAchievementIds().then(res => {
+                this.achieve_id = res.data[this.id];
             });
         },
     },
     filters: {},
     created: function () {
-        this.getAchievementId();
-        this.getAdventure();
+        this.gerData();
     },
     mounted: function () {},
 };
