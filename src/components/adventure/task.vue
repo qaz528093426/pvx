@@ -1,7 +1,7 @@
 <template>
     <div class="m-adventure-task" v-if="task">
-        <el-carousel :autoplay="false">
-            <el-carousel-item v-for="(item, i) in task.list" :key="i">
+        <el-carousel class="u-carousel" :autoplay="false" type="card">
+            <el-carousel-item v-for="(item, i) in task" :key="i">
                 <img class="u-img" :src="imgUrl(item)" />
             </el-carousel-item>
         </el-carousel>
@@ -18,30 +18,35 @@ export default {
     components: {},
     data: function () {
         return {
-            imgRoot: __iconPath + "pvx/serendipity/images/",
+            imgRoot: __iconPath + "pvx/serendipity/images//",
             task: "",
         };
     },
     computed: {},
     methods: {
         imgUrl: function (link) {
-            link = this.transformTga(link);
             return this.imgRoot + "/" + link + ".png";
         },
-        transformTga(link) {
-            link = link.split("/");
-            return link[link.length - 2] + "/" + link[link.length - 1];
+        imgNameTga: function (link) {
+            return link.match(/(\S*)Adventure\/(\S*)\.tga/)[2];
         },
         loadData() {
-            getAdventureTask(this.id).then((res) => {
-                this.task = res.data || [];
+            getAdventureTask(this.id).then(res => {
+                let list = [];
+                res.data.forEach(e => {
+                    if (e.szFramePath) {
+                        let k = e.szFramePath?.replace(/\\/g, "/");
+                        list.push(this.imgNameTga(k));
+                    }
+                });
+                this.task = [...new Set(list)]
             });
         },
     },
     filters: {},
     created: function () {},
     mounted: function () {
-        this.loadData()
+        this.loadData();
     },
 };
 </script>

@@ -47,10 +47,10 @@ export default {
     methods: {
         getLink,
         getAdventure() {
-            getAdventureID(this.id).then(res => {
-                this.list = res.data;
-                this.task.name = res.data.szName;
-            });
+            // getAdventureID(this.id).then(res => {
+            //     this.list = res.data;
+            //     this.task.name = res.data.szName;
+            // });
             getAdventureTask(this.id).then(res => {
                 let list = [];
                 res.data?.forEach(item => {
