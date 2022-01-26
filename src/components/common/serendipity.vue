@@ -1,23 +1,24 @@
 <template>
-    <div class="m-trigger-game">
-        <el-select v-model="server" placeholder="区服" size="medium" class="u-select-meirentu" @change="getUserList">
+    <div class="m-serendipity">
+        <el-select v-model="server" placeholder="区服" size="medium" class="u-select">
             <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
         </el-select>
-        <ul class="m-game-user" v-if="list && list.length > 0">
+        <ul class="u-list" v-if="list && list.length > 0">
             <li v-for="(item, i) in list" :key="i">
                 <span>{{ item.name || "匿名" }}</span>
                 <span>{{ item.dwTime | wikiDate }}</span>
             </li>
         </ul>
-        <el-alert class="u-alert" v-else title="无记录" type="info" center  :closable="false" />
+        <el-alert class="u-alert" v-else title="无记录" type="info" center :closable="false" />
     </div>
 </template>
 <script>
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
-import { getUserInfo, getUserSerendipity } from "@/service/adventure";
+import { getUserInfo, getSerendipity } from "@/service/adventure";
 import { showRecently } from "@/utils/moment";
+import User from "@jx3box/jx3box-common/js/user";
 export default {
-    name: "game",
+    name: "serendipity",
     props: ["title"],
     components: {},
     data: function () {
@@ -27,23 +28,26 @@ export default {
             list: [],
         };
     },
-    computed: {},
-
-    methods: {
-        getUserServer() {
-            getUserInfo().then(res => {
-                this.server = res.data.data.jx3_server;
-            });
-        },
-        getUserList() {
-            let params = {
+    computed: {
+        params: function () {
+            return {
                 server: this.server,
                 serendipity: this.title,
                 start: 0,
                 pageIndex: 1,
-                pageSize: 9,
+                pageSize: 10,
             };
-            getUserSerendipity(params).then(res => {
+        },
+    },
+    methods: {
+        getUserServer() {
+            User.isLogin() &&
+                getUserInfo().then((res) => {
+                    this.server = res.data.data.jx3_server;
+                });
+        },
+        loadSerendipity() {
+            getSerendipity(this.params).then((res) => {
                 this.list = res.data.data.data;
             });
         },
@@ -54,7 +58,7 @@ export default {
         },
     },
     created: function () {
-        this.getUserServer();
+        this.loadSerendipity();
         this.getUserList();
     },
     mounted: function () {},

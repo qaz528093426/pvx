@@ -28,7 +28,7 @@
 <script>
 import AdventureSearch from "@/components/adventure/search.vue";
 import AdventureItem from "@/components/adventure/item.vue";
-import { getAdventure } from "@/service/adventure";
+import { getAdventures } from "@/service/adventure";
 export default {
     name: "adventureList",
     props: [],
@@ -61,7 +61,7 @@ export default {
     methods: {
         getData(params) {
             params = { ...this.params, ...params };
-            getAdventure(params).then((res) => {
+            getAdventures(params).then((res) => {
                 let list = [];
                 res.data.list.forEach((e) => {
                     if (e.bHide == 1 && e.nClassify == 2) {

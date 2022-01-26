@@ -1,6 +1,6 @@
 <template>
-    <div class="m-trigger-img">
-        <el-carousel class="m-imgbox" :autoplay="false">
+    <div class="m-adventure-task" v-if="task">
+        <el-carousel :autoplay="false">
             <el-carousel-item v-for="(item, i) in task.list" :key="i">
                 <img class="u-img" :src="imgUrl(item)" />
             </el-carousel-item>
@@ -11,17 +11,18 @@
 
 <script>
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
+import { getAdventureTask } from "@/service/adventure";
 export default {
-    name: "img",
-    props: ["task"],
+    name: "task",
+    props: ["id"],
     components: {},
     data: function () {
         return {
             imgRoot: __iconPath + "pvx/serendipity/images/",
+            task: "",
         };
     },
     computed: {},
-
     methods: {
         imgUrl: function (link) {
             link = this.transformTga(link);
@@ -31,14 +32,16 @@ export default {
             link = link.split("/");
             return link[link.length - 2] + "/" + link[link.length - 1];
         },
-        // imgName: function (link) {
-        //     let reg = /(.*)\\(.*)\.tga/gi;
-        //     let result = reg.exec(link);
-        //     return result?.[2];
-        // },
+        loadData() {
+            getAdventureTask(this.id).then((res) => {
+                this.task = res.data || [];
+            });
+        },
     },
     filters: {},
     created: function () {},
-    mounted: function () {},
+    mounted: function () {
+        this.loadData()
+    },
 };
 </script>

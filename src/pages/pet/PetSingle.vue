@@ -67,6 +67,9 @@
         <div class="m-pet-wiki">
             <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略"></detail>
         </div>
+        <div class="m-pet-serendipity">
+            <Serendipity :title="title"/>
+        </div>
     </div>
 </template>
 
@@ -79,13 +82,14 @@ import Detail from "@/components/wiki/Detail.vue";
 import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
-
+import Serendipity from "@/components/common/serendipity.vue";
 export default {
     name: "PetSingle",
     props: [],
     components: {
         petCard,
         Detail,
+        Serendipity,
     },
     data: function () {
         return {
@@ -109,6 +113,9 @@ export default {
         client: function () {
             return this.$store.state.client;
         },
+        title : function (){
+            return this.pet.Name
+        }
     },
     watch: {},
     methods: {
@@ -122,7 +129,7 @@ export default {
         },
         // 获取宠物技能信息
         getPetWiki: function () {
-            getWiki("item", this.item_id).then((res) => {
+            this.item_id && getWiki("item", this.item_id).then((res) => {
                 this.petWiki = res?.data?.data?.source?.pet;
             });
         },

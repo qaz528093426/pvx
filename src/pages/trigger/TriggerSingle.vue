@@ -11,27 +11,27 @@
         </div>
 
         <div class="m-details">
-            <TriggerImgs :task="task" />
-            <TriggerItem />
-            <TriggerGame :title="task.name" />
+            <!-- <TriggerImgs :task="task" /> -->
+            <!-- <TriggerItem /> -->
+            <!-- <TriggerGame :title="task.name" /> -->
         </div>
 
-        <detail :id="achieve_id" title="奇遇攻略"></detail>
+        <!-- <detail :id="achieve_id" title="奇遇攻略"></detail> -->
     </div>
 </template>
 
 <script>
-import TriggerImgs from "@/components/trigger/img.vue";
-import TriggerItem from "@/components/trigger/item.vue";
-import TriggerGame from "@/components/trigger/game.vue";
-import Detail from "@/components/wiki/Detail.vue";
-import { getAdventureID, getAdventureTask, getSerendipityJson } from "@/service/adventure";
+// import TriggerImgs from "@/components/trigger/img.vue";
+// import TriggerItem from "@/components/trigger/item.vue";
+// import TriggerGame from "@/components/trigger/game.vue";
+// import Detail from "@/components/wiki/Detail.vue";
+import { getAdventureID, getAdventureTask, getSerendipityAchievementIds } from "@/service/adventure";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "triggerSingle",
     props: ["id", "type"],
-    components: { TriggerImgs, TriggerItem, TriggerGame, Detail },
+    // components: { TriggerImgs, TriggerItem, TriggerGame, Detail },
     data: function () {
         return {
             list: [],
@@ -66,7 +66,7 @@ export default {
                 });
                 this.task.list = arr;
             });
-            getSerendipityJson().then(res => {
+            getSerendipityAchievementIds().then(res => {
                 this.achieve_id = res.data[this.id];
             });
         },

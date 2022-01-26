@@ -60,13 +60,6 @@ export default {
     },
     methods: {
         publish_url: publishLink,
-        triggerStat: function () {
-            if (this.client == "origin") {
-                postStat("origin_cj", this.id);
-            } else {
-                postStat("cj", this.id);
-            }
-        },
     },
     created() {},
     components: {
@@ -82,11 +75,6 @@ export default {
                 if (val) {
                     getWiki(this.type, this.id).then((res) => {
                         this.wiki_post = res.data.data;
-                        if (this.wiki_post && this.wiki_post.source) {
-                            let pet = this.wiki_post.source.pet;
-                            if (pet && pet.id) postStat("pet", pet.id);
-                        }
-                        this.triggerStat();
                     });
                 }
             },

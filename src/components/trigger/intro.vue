@@ -1,6 +1,6 @@
 <template>
     <div class="m-trigger-intro" v-if="content">
-         <div v-html="content"></div> 
+        <div v-html="content"></div>
     </div>
 </template>
 <script>
@@ -9,15 +9,13 @@ export default {
     props: ["content"],
     components: {},
     data: function () {
-        return {
-
-        };
+        return {};
     },
     computed: {},
     methods: {},
     filters: {},
     created: function () {
-        console.log(this.content)
+        console.log(this.content);
     },
     mounted: function () {},
 };
