@@ -128,7 +128,7 @@ export default {
         },
         // 获取宠物技能信息
         getPetWiki: function () {
-            this.item_id && getWiki("item", this.item_id).then((res) => {
+            this.item_id && getWiki("item", this.item_id, this.client).then((res) => {
                 this.petWiki = res?.data?.data?.source?.pet;
             });
         },
