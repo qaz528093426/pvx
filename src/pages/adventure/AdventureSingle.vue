@@ -1,15 +1,22 @@
 <template>
     <div class="v-adventure-single" v-if="id">
-        <TriggerSingle type="adventure" :id="id" />
+        <!-- <TriggerSingle type="adventure" :id="id" /> -->
+        <div class="m-adventure-wiki">
+            <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="奇遇攻略"></detail>
+        </div>
     </div>
 </template>
 
 <script>
-import TriggerSingle from "../trigger/TriggerSingle.vue";
+// import TriggerSingle from "../trigger/TriggerSingle.vue";
+import Detail from "@/components/wiki/Detail.vue";
 export default {
     name: "adventureSingle",
     props: [],
-    components: { TriggerSingle },
+    components: {
+        // TriggerSingle,
+        Detail,
+    },
     data: function () {
         return {};
     },
@@ -19,7 +26,8 @@ export default {
         },
     },
     watch: {},
-    methods: {},
+    methods: {
+    },
     filters: {},
     created: function () {},
     mounted: function () {},
