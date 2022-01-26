@@ -1,6 +1,6 @@
 <template>
     <div class="m-adventure-item" v-if="item">
-        <a :href="link" target="_blank">
+        <a @click="getLink(item.dwID)" target="_blank">
             <img :src="imgUrl(imgName)" :alt="item.szName" />
             <span class="u-title">{{ item.szName }}</span>
         </a>
@@ -20,7 +20,7 @@ export default {
     },
     computed: {
         link: function () {
-            return "./" + this.item.dwID;
+            return "/adventure/" + this.item.dwID;
         },
         imgName: function () {
             let link = this.item.szOpenRewardPath?.replaceAll("\\", "\/");
@@ -31,7 +31,6 @@ export default {
             return open?.[1] + "/" + result?.[2];
         },
     },
-
     methods: {
         imgUrl: function (val) {
             if (val?.indexOf("weapon") !== -1) return this.imgRoot + "reward/Open/weapon/school_211.png";
@@ -41,6 +40,10 @@ export default {
 
             return this.imgRoot + "reward/" + val + ".png";
         },
+        getLink(adventure_id) {
+            // return `/pet/${pet_id}`
+            this.$router.push({ name: 'single', params: { id: adventure_id } })
+        }
     },
     filters: {},
     mounted: function () {

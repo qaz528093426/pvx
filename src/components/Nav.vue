@@ -12,7 +12,7 @@
                 <template slot="title">捏脸</template>
                 <el-menu-item-group>
                     <el-menu-item index="1-1" :class="{ 'is-active': active == 'share' }">
-                        <a :href="getAppLink('share')">
+                        <a href="/share">
                             <i class="el-icon-download"></i>捏脸分享
                         </a>
                     </el-menu-item>
@@ -47,7 +47,7 @@
                 <template slot="title">宠物</template>
                 <el-menu-item-group>
                     <el-menu-item index="3-1" :class="{ 'is-active': active == 'pet' }">
-                        <a :href="getAppLink('pet')">
+                        <a href="/pet">
                             <i class="el-icon-files"></i>宠物大全
                         </a>
                     </el-menu-item>
@@ -62,7 +62,7 @@
                 <template slot="title">奇遇</template>
                 <el-menu-item-group>
                     <el-menu-item index="4-1" :class="{ 'is-active': active == 'adventure' }">
-                        <a :href="getAppLink('adventure')">
+                        <a href="/adventure">
                             <i class="el-icon-files"></i>奇遇大全
                         </a>
                     </el-menu-item>

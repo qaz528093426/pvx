@@ -1,5 +1,5 @@
 <template>
-    <a class="m-pet-item" :href="getPetLink(petObject.Index)">
+    <a class="m-pet-item" @click="getLink(petObject.Index)">
         <!--宠物卡片图-->
         <img :src="getImgSrc(petObject.BgPath)" class="u-image" />
         <!--宠物边框图-->
@@ -60,9 +60,9 @@ export default {
             return this.lucky.indexOf(index.toString()) != -1
         },
         // 宠物链接
-        getPetLink(pet_id) {
-            return `./${pet_id}`
-            // this.$router.push({ name: 'single', params: { id: pet_id } })
+        getLink(pet_id) {
+            // return `/pet/${pet_id}`
+            this.$router.push({ name: 'single', params: { id: pet_id } })
         }
     },
 };
