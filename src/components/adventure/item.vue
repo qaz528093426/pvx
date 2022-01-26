@@ -33,11 +33,6 @@ export default {
     },
     methods: {
         imgUrl: function (val) {
-            if (val?.indexOf("weapon") !== -1) return this.imgRoot + "reward/Open/weapon/school_211.png";
-            if (val?.indexOf("camp") !== -1) return this.imgRoot + "reward/Open/camp/camp_0_Open.png";
-            if (val?.indexOf("zzwg") !== -1) return this.imgRoot + "reward/Open/zzwg/school_1_Open.png";
-            if (val?.indexOf("jcs") !== -1) return this.imgRoot + "reward/Open/jcs/school_1_Open.png";
-
             return this.imgRoot + "reward/" + val + ".png";
         },
         getLink(adventure_id) {

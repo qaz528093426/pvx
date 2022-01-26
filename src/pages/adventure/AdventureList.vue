@@ -12,16 +12,7 @@
         </div>
 
         <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" icon="el-icon-arrow-down">加载更多</el-button>
-        <el-pagination
-            class="m-archive-pages"
-            background
-            layout="total, prev, pager, next, jumper"
-            :hide-on-single-page="true"
-            :page-size="per"
-            :total="total"
-            :current-page.sync="page"
-            @current-change="changePage"
-        ></el-pagination>
+        <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
     </div>
 </template>
 
@@ -61,20 +52,30 @@ export default {
     methods: {
         getData(params) {
             params = { ...this.params, ...params };
-            getAdventures(params).then((res) => {
+            getAdventures(params).then(res => {
                 let list = [];
-                res.data.list.forEach((e) => {
-                    if (e.bHide == 1 && e.nClassify == 2) {
-                    } else {
-                        if (e.szName) list.push(e);
-                    }
+                res.data.list.forEach(e => {
+                    list.push(this.toSpecial(e));
                 });
-
                 this.appendMode ? (this.list = this.list.concat(list)) : (this.list = list);
                 this.appendMode = false;
                 this.total = res.data.total;
                 this.pages = res.data.pages;
             });
+        },
+        //处理特殊的链接
+        toSpecial(data) {
+            if (data.szOpenRewardPath) {
+                let str = data.szOpenRewardPath;
+                if (str?.indexOf("weapon") !== -1) str = "ui/Image/Adventure/reward/Open/weapon/school_211.tga";
+                if (str?.indexOf("camp") !== -1) {
+                    data.bHide ? (str = "ui/Image/Adventure/reward/Open/camp/camp_2_Open.tga") : (str = "ui/Image/Adventure/reward/Open/camp/camp_1_Open.tga");
+                }
+                if (str?.indexOf("zzwg") !== -1) str = "ui/Image/Adventure/reward/Open/zzwg/school_211_Open.tga";
+                if (str?.indexOf("jcs") !== -1) str = "ui/Image/Adventure/reward/Open/jcs/school_211.tga";
+                data.szOpenRewardPath = str;
+            }
+            return data;
         },
         changePage(i) {
             this.page = i;
