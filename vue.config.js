@@ -4,6 +4,7 @@ const { JX3BOX, SEO } = require("@jx3box/jx3box-common");
 const Setting = require("./setting.json");
 
 module.exports = {
+    publicPath: './',
     //❤️ Multiple pages ~
     pages: {
         index: {

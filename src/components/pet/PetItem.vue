@@ -1,5 +1,5 @@
 <template>
-    <div class="m-pet-item" @click="goSingle">
+    <a class="m-pet-item" :href="getPetLink(petObject.Index)">
         <!--宠物卡片图-->
         <img :src="getImgSrc(petObject.BgPath)" class="u-image" />
         <!--宠物边框图-->
@@ -15,7 +15,7 @@
             {{ petObject.Score || "？" }}
         </div>
         <span class="u-name">{{ petObject.Name }}</span>
-    </div>
+    </a>
 </template>
 
 <script>
@@ -59,8 +59,10 @@ export default {
         getLucky: function (index) {
             return this.lucky.indexOf(index.toString()) != -1
         },
-        goSingle() {
-            this.$router.push({ name: 'single', params: { id: this.petObject.Index } })
+        // 宠物链接
+        getPetLink(pet_id) {
+            return `./${pet_id}`
+            // this.$router.push({ name: 'single', params: { id: pet_id } })
         }
     },
 };

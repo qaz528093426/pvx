@@ -6,72 +6,26 @@
             </div>
             <div class="m-pet-toolbar flex">
                 <div class="m-pet-filter flex">
-                    <el-radio-group
-                        class="u-type u-type-radio"
-                        v-model="petType"
-                    >
-                        <el-radio
-                            v-for="item in Type"
-                            :key="item.type"
-                            :label="item.class"
-                            >{{ item.name }}</el-radio
-                        >
+                    <el-radio-group class="u-type u-type-radio" v-model="petType">
+                        <el-radio v-for="item in Type" :key="item.type" :label="item.class">{{ item.name }}</el-radio>
                     </el-radio-group>
-                    <el-select
-                        class="u-type u-type-select"
-                        v-model="petType"
-                        placeholder="宠物种类"
-                    >
-                        <el-option
-                            v-for="item in Type"
-                            :key="item.type"
-                            :label="item.name"
-                            :value="item.class"
-                        >
-                        </el-option>
+                    <el-select class="u-type u-type-select" v-model="petType" placeholder="宠物种类">
+                        <el-option v-for="item in Type" :key="item.type" :label="item.name" :value="item.class"> </el-option>
                     </el-select>
-                    <el-select
-                        class="u-source"
-                        v-model="petSource"
-                        placeholder="获取来源"
-                    >
-                        <el-option
-                            v-for="item in Source"
-                            :key="item.source"
-                            :label="item.name"
-                            :value="item.source"
-                        >
-                        </el-option>
+                    <el-select class="u-source" v-model="petSource" placeholder="获取来源">
+                        <el-option v-for="item in Source" :key="item.source" :label="item.name" :value="item.source"> </el-option>
                     </el-select>
                 </div>
                 <div class="m-pet-search flex">
-                    <el-input
-                        placeholder="输入宠物名字搜索"
-                        v-model="petName"
-                        clearable
-                    >
-                    </el-input>
+                    <el-input placeholder="输入宠物名字搜索" v-model="petName" clearable> </el-input>
                 </div>
             </div>
         </div>
         <div class="m-pet-content" v-if="petList && petList.length > 0">
             <div class="m-pet-list flex">
-                <pet-item
-                    v-for="pet in petList"
-                    :key="pet.index"
-                    :petObject="pet"
-                    :lucky="luckyList"
-                ></pet-item>
+                <pet-item v-for="pet in petList" :key="pet.index" :petObject="pet" :lucky="luckyList"></pet-item>
             </div>
-            <el-button
-                class="m-archive-more m-pet-more"
-                v-show="hasNextPage"
-                type="primary"
-                @click="appendPage"
-                :loading="loading"
-                icon="el-icon-arrow-down"
-                >加载更多</el-button
-            >
+            <el-button class="m-archive-more m-pet-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
             <el-pagination
                 class="m-archive-pages m-pet-pages"
                 background
@@ -83,20 +37,13 @@
                 @current-change="changePage"
             ></el-pagination>
         </div>
-        <el-alert
-            v-else
-            class="m-pet-null"
-            title="没有找到相关宠物"
-            type="info"
-            show-icon
-        >
-        </el-alert>
+        <el-alert v-else class="m-pet-null" title="没有找到相关宠物" type="info" show-icon> </el-alert>
     </div>
 </template>
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getPets,getPetLucky } from "@/service/pet";
+import { getPets, getPetLucky } from "@/service/pet";
 import Type from "@/assets/data/pet_type.json";
 import Source from "@/assets/data/pet_source.json";
 import petItem from "@/components/pet/PetItem.vue";
@@ -117,7 +64,7 @@ export default {
 
             Type,
             Source,
-            Lucky:[],
+            Lucky: [],
             petType: "",
             petSource: "",
             petName: "",
@@ -196,11 +143,11 @@ export default {
         // 获取福缘宠物id
         getPetLucky: function () {
             getPetLucky().then((res) => {
-                let data = res.data.std 
+                let data = res.data.std;
                 let rawDate = new Date();
                 let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
                 this.luckyList = data[dateIndex];
-            })
+            });
         },
     },
     filters: {},
