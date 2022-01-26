@@ -33,7 +33,7 @@ import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/wiki/WikiPanel";
 import WikiRevisions from "@jx3box/jx3box-common-ui/src/wiki/WikiRevisions";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
-import { getSerendipity } from "@/service/adventure";
+import { getWiki } from "@/service/wiki";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 
 export default {
@@ -77,10 +77,10 @@ export default {
     watch: {
         id: {
             immediate: true,
-            handler() {
+            handler(val) {
                 // 获取最新攻略
-                if (this.id) {
-                    getSerendipity(this.id).then((res) => {
+                if (val) {
+                    getWiki(this.type, this.id).then((res) => {
                         this.wiki_post = res.data.data;
                         if (this.wiki_post && this.wiki_post.source) {
                             let pet = this.wiki_post.source.pet;
