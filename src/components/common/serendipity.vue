@@ -5,7 +5,7 @@
                 <i class="el-icon-present"></i>
                 触发记录
             </span>
-            <el-select v-model="server" placeholder="区服" size="medium" class="u-select">
+            <el-select v-model="server" placeholder="区服" size="small" class="u-select">
                 <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
             </el-select>
         </div>
