@@ -2,8 +2,8 @@
     <div class="m-serendipity">
         <div class="u-title">
             <span class="u-label">
-                <i class="el-icon-s-help"></i>
-                服务器选择
+                <i class="el-icon-present"></i>
+                触发记录
             </span>
             <el-select v-model="server" placeholder="区服" size="medium" class="u-select">
                 <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
@@ -86,3 +86,7 @@ export default {
     mounted: function () {},
 };
 </script>
+
+<style lang="less">
+@import "~@/assets/css/adventure/serendipity.less";
+</style>
