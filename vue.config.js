@@ -43,12 +43,6 @@ module.exports = {
             template: "public/index.html",
             filename: "adventure/index.html",
         },
-        trigger: {
-            title: "奇遇触发 - JX3BOX",
-            entry: "src/pages/trigger.js",
-            template: "public/index.html",
-            filename: "trigger/index.html",
-        },
     },
 
     //❤️ Porxy ~
