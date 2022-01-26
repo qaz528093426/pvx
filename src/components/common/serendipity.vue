@@ -59,7 +59,6 @@ export default {
     },
     created: function () {
         this.loadSerendipity();
-        this.getUserList();
     },
     mounted: function () {},
 };

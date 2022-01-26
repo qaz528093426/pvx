@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="m-pet-wiki">
+        <div class="m-pet-wiki" v-if="petWiki">
             <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略"></detail>
         </div>
         <div class="m-pet-serendipity">
@@ -94,9 +94,8 @@ export default {
     data: function () {
         return {
             pet: {},
-            petWiki: {},
+            petWiki: '',
             shopInfo: "",
-            postPet: "",
             luckyList: [],
         };
     },
