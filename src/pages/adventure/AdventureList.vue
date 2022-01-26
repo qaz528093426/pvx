@@ -7,10 +7,21 @@
         <div class="m-adventure-list" v-if="list && list.length > 0">
             <AdventureItem v-for="(item, i) in list" :key="i" :item="item" />
         </div>
-        <div class="u-archive-alert" v-else><el-alert title="没有对应的奇遇，请重新查找" type="info" center show-icon /></div>
+        <div class="u-archive-alert" v-else>
+            <el-alert title="没有对应的奇遇，请重新查找" type="info" center show-icon />
+        </div>
 
         <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" icon="el-icon-arrow-down">加载更多</el-button>
-        <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
+        <el-pagination
+            class="m-archive-pages"
+            background
+            layout="total, prev, pager, next, jumper"
+            :hide-on-single-page="true"
+            :page-size="per"
+            :total="total"
+            :current-page.sync="page"
+            @current-change="changePage"
+        ></el-pagination>
     </div>
 </template>
 
@@ -30,7 +41,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 20, //每页条目
+            per: 16, //每页条目
 
             appendMode: false,
         };
@@ -50,15 +61,15 @@ export default {
     methods: {
         getData(params) {
             params = { ...this.params, ...params };
-            getAdventure(params).then(res => {
+            getAdventure(params).then((res) => {
                 let list = [];
-                res.data.list.forEach(e => {
+                res.data.list.forEach((e) => {
                     if (e.bHide == 1 && e.nClassify == 2) {
                     } else {
                         if (e.szName) list.push(e);
                     }
                 });
-                
+
                 this.appendMode ? (this.list = this.list.concat(list)) : (this.list = list);
                 this.appendMode = false;
                 this.total = res.data.total;

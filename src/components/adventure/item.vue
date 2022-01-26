@@ -20,7 +20,7 @@ export default {
     },
     computed: {
         link: function () {
-            return location.origin + "/adventure/" + this.item.dwID;
+            return "./" + this.item.dwID;
         },
         imgName: function () {
             let link = this.item.szOpenRewardPath?.replaceAll("\\", "\/");

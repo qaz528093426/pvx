@@ -72,7 +72,6 @@
 .m-adventure-mark {
     .fz(18px);
 
-
     .color(#787878);
     .lh(45px);
     padding: 0 10px 0 20px;
@@ -101,7 +100,7 @@
             }
         }
 
-        span{
+        span {
             font-size: 18px;
             padding-left: 2px;
             letter-spacing: 1px;
@@ -122,30 +121,40 @@
     .size(244px,300px);
     .r(10px);
     box-sizing: border-box;
-    border: 1px solid rgba(111, 111, 111, 0.3);
-    background-color: #fff;
+    border:1px solid @border-hr;
     overflow: hidden;
     margin: 0 30px 30px 0;
     transition: all 0.2s ease-in-out;
+    background-color:#fff;
     img {
         .size(100%,262px);
-        .mb(38px);
+        // .mb(38px);
     }
     .u-title {
-        border-top: 1px solid #787878;
-        background-color: #fff;
         .pa;
-        .lb(0,0);
+        .lb(0,20px);
         .db;
         .x;
         .color(#787878);
         .fz(18px);
         .size(100%,38px);
         .lh(38px);
+        font-weight: 300;
+        &::before,&::after{
+            .fz(12px,38px);
+            padding:0 5px;
+            color:#eee;
+        }
+        &::before{
+            content:"✿";
+        }
+        &::after{
+            content:"✿";
+        }
     }
     &:hover {
         cursor: pointer;
-        box-shadow: 0 0 10px #787878;
+        box-shadow: 0 0 10px rgba(0,0,0,.1);
         transform: scale(1.02);
     }
 }
