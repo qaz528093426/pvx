@@ -1,15 +1,25 @@
 <template>
     <div class="v-adventure-single" v-if="id">
+        <div class="m-adventure-navigation">
+            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
+            <div class="m-trigger-links">
+                <a class="u-link u-achievement" :href="getLink('cj', achieve_id)">
+                    <i class="el-icon-trophy"></i>
+                    成就信息
+                </a>
+            </div>
+        </div>
         <!-- <TriggerSingle type="adventure" :id="id" /> -->
         <div class="m-adventure-wiki">
-            <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="奇遇攻略"></detail>
+            <detail :achievement_id="achieve_id" title="奇遇攻略"></detail>
         </div>
     </div>
 </template>
 
 <script>
-// import TriggerSingle from "../trigger/TriggerSingle.vue";
+import { getLink } from "@jx3box/jx3box-common/js/utils";
 import Detail from "@/components/wiki/Detail.vue";
+import { getAdventureID, getAdventureTask, getSerendipityJson } from "@/service/adventure";
 export default {
     name: "adventureSingle",
     props: [],
@@ -18,7 +28,9 @@ export default {
         Detail,
     },
     data: function () {
-        return {};
+        return {
+            achieve_id: "",
+        };
     },
     computed: {
         id: function () {
@@ -27,9 +39,18 @@ export default {
     },
     watch: {},
     methods: {
+        getLink,
+
+        getAchievementId() {
+            getSerendipityJson().then(res => {
+                this.achieve_id = res.data[this.id];
+            });
+        },
     },
     filters: {},
-    created: function () {},
+    created: function () {
+        this.getAchievementId();
+    },
     mounted: function () {},
 };
 </script>
