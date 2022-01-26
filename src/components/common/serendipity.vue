@@ -28,7 +28,7 @@
 </template>
 <script>
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
-import { getUserInfo, getSerendipity } from "@/service/adventure";
+import { getUserInfo, getSerendipity } from "@/service/serendipity";
 import { showRecently, showDate } from "@/utils/moment";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
