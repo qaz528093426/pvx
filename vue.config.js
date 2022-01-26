@@ -4,7 +4,6 @@ const { JX3BOX, SEO } = require("@jx3box/jx3box-common");
 const Setting = require("./setting.json");
 
 module.exports = {
-    publicPath: './',
     //❤️ Multiple pages ~
     pages: {
         index: {
@@ -49,7 +48,7 @@ module.exports = {
     devServer: {
         proxy: {
             "/api/serendipity": {
-                target: "https://next.jx3box.com/",
+                target: "https://pull.j3cx.com/",
                 onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },

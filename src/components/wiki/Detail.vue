@@ -73,7 +73,7 @@ export default {
             handler(val) {
                 // 获取最新攻略
                 if (val) {
-                    getWiki(this.type, this.id, this.client).then((res) => {
+                    getWiki(this.type, this.id).then((res) => {
                         this.wiki_post = res.data.data;
                     });
                 }

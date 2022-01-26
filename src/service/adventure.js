@@ -33,7 +33,7 @@ function getUserInfo() {
 }
 
 function getSerendipity(params) {
-    return $next({mute:true}).get("/api/serendipity", {
+    return axios.get("https://pull.j3cx.com/api/serendipity", {
         params
     });
 }
