@@ -9,9 +9,7 @@
                 </a>
             </div>
         </div>
-        <div class="m-adventure-header">
-            <h1 class="m-adventure-title">{{ title }}</h1>
-        </div>
+        <h1 class="m-adventure-title">{{ title }}</h1>
         <div class="m-adventure-content">
             <task :id="id" />
         </div>

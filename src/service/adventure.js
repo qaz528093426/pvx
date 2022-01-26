@@ -1,17 +1,9 @@
-import {
-    $node,
-    $helper,
-    axios,
-    $cms,
-    $next
-} from "@jx3box/jx3box-common/js/https";
-import {
-    __iconPath
-} from "@jx3box/jx3box-common/data/jx3box";
+import { $node, $helper, axios, $cms, $next } from "@jx3box/jx3box-common/js/https";
+import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
 // 获取奇遇列表
 function getAdventures(params) {
     return $node().get(`/serendipities`, {
-        params
+        params,
     });
 }
 // 获取奇遇详情
@@ -28,21 +20,4 @@ function getSerendipityAchievementIds() {
     return axios.get(`${__iconPath}pvx/serendipity/output/serendipity.json`);
 }
 
-function getUserInfo() {
-    return $cms().get("/api/cms/user/my/info");
-}
-
-function getSerendipity(params) {
-    return $next({mute:true}).get("/api/serendipity", {
-        params
-    });
-}
-
-export {
-    getAdventures,
-    getAdventure,
-    getAdventureTask,
-    getUserInfo,
-    getSerendipityAchievementIds,
-    getSerendipity
-};
+export { getAdventures, getAdventure, getAdventureTask, getSerendipityAchievementIds };
