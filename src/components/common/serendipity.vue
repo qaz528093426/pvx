@@ -88,5 +88,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "~@/assets/css/adventure/serendipity.less";
+@import "~@/assets/css/common/serendipity.less";
 </style>
