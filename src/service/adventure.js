@@ -33,7 +33,7 @@ function getUserInfo() {
 }
 
 function getSerendipity(params) {
-    return $next().get("/api/serendipity", {
+    return $next({mute:true}).get("/api/serendipity", {
         params
     });
 }
