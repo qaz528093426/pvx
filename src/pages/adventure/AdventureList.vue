@@ -106,7 +106,7 @@ export default {
     created: function () {
         User.isLogin() &&
             getUserSchool().then(res => {
-                this.school = schoolImgID[res.data.data.list[0].mount];
+                if (res.data.data.list && res.data.data.list.length > 0) this.school = schoolImgID[res.data.data.list[0].mount];
             });
         this.getData();
     },
