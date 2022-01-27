@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="家具大全" slug="funiture" root="/funiture" :publishEnable="true" :adminEnable="true" :feedbackEnable="true" :crumbEnable="true">
+        <Breadcrumb name="家具大全" slug="funiture" root="/pvx/funiture" :publishEnable="false" :adminEnable="false" :feedbackEnable="true" :crumbEnable="true">
             <img slot="logo" svg-inline :src="getAppIcon('funiture')" />
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>

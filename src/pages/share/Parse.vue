@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="妆容解析" slug="facedata" root="/pvx/facedata" :publishEnable="true" :adminEnable="true" :feedbackEnable="true" :crumbEnable="true">
+        <Breadcrumb name="妆容解析" slug="facedata" root="/pvx/facedata" :publishEnable="false" :adminEnable="false" :feedbackEnable="true" :crumbEnable="true">
             <img slot="logo" svg-inline :src="getAppIcon('facedata')" />
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>

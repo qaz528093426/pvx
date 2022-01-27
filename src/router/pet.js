@@ -7,6 +7,7 @@ const Single = () => import("../pages/pet/PetSingle.vue");
 Vue.use(VueRouter);
 
 const routes = [
+    { name: "index", path: "/", component: List },
     { name: "list", path: "/pet", component: List },
     { name: "single", path: "/pet/:id", component: Single },
 ];

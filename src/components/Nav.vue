@@ -7,19 +7,15 @@
             </strong>
         </RightSideMsg>
 
-        <el-menu :default-openeds="['1', '3', '4']">
+        <el-menu :default-openeds="['1', '2', '3', '4']">
             <el-submenu index="1">
                 <template slot="title">捏脸</template>
                 <el-menu-item-group>
                     <el-menu-item index="1-1" :class="{ 'is-active': active == 'share' }">
-                        <a href="/share">
-                            <i class="el-icon-download"></i>捏脸分享
-                        </a>
+                        <a href="/share"> <i class="el-icon-download"></i>捏脸分享 </a>
                     </el-menu-item>
                     <el-menu-item index="1-2" :class="{ 'is-active': active == 'facedata' }">
-                        <a :href="getAppLink('facedata')">
-                            <i class="el-icon-data-line"></i>妆容解析器
-                        </a>
+                        <a :href="getAppLink('facedata')"> <i class="el-icon-data-line"></i>妆容解析器 </a>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
@@ -27,19 +23,13 @@
                 <template slot="title">家园</template>
                 <el-menu-item-group>
                     <el-menu-item index="2-1" :class="{ 'is-active': active == 'furniture' }">
-                        <a :href="getAppLink('furniture')">
-                            <i class="el-icon-files"></i>家具大全
-                        </a>
+                        <a :href="getAppLink('furniture')"> <i class="el-icon-files"></i>家具大全 </a>
                     </el-menu-item>
                     <el-menu-item index="2-2">
-                        <a :href="getAppLink('blueprint')">
-                            <i class="el-icon-data-line"></i>蓝图解析器
-                        </a>
+                        <a :href="getAppLink('blueprint')" class="disabled"> <i class="el-icon-data-line"></i>蓝图解析器 </a>
                     </el-menu-item>
                     <el-menu-item index="2-3">
-                        <a href="https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/" target="_blank">
-                            <i class="el-icon-download"></i>家园蓝图
-                        </a>
+                        <a href="https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/" target="_blank"> <i class="el-icon-download"></i>家园蓝图 </a>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
@@ -47,14 +37,10 @@
                 <template slot="title">宠物</template>
                 <el-menu-item-group>
                     <el-menu-item index="3-1" :class="{ 'is-active': active == 'pet' }">
-                        <a href="/pet">
-                            <i class="el-icon-files"></i>宠物大全
-                        </a>
+                        <a href="/pet"> <i class="el-icon-files"></i>宠物大全 </a>
                     </el-menu-item>
                     <el-menu-item index="3-2">
-                        <a :href="getAppLink('petmap')" class="disabled">
-                            <i class="el-icon-map-location"></i>宠物地图
-                        </a>
+                        <a :href="getAppLink('petmap')" class="disabled"> <i class="el-icon-map-location"></i>宠物地图 </a>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
@@ -62,17 +48,13 @@
                 <template slot="title">奇遇</template>
                 <el-menu-item-group>
                     <el-menu-item index="4-1" :class="{ 'is-active': active == 'adventure' }">
-                        <a href="/adventure">
-                            <i class="el-icon-files"></i>奇遇大全
-                        </a>
+                        <a href="/adventure"> <i class="el-icon-files"></i>奇遇大全 </a>
                     </el-menu-item>
                     <!-- <el-menu-item index="4-2"
                         ><a href="/trigger/"><i class="el-icon-guide"></i>触发汇总</a></el-menu-item
                     >-->
                     <el-menu-item index="4-2">
-                        <a href="https://j3cx.com/serendipity" target="_blank">
-                            <i class="el-icon-thumb"></i>奇遇查询
-                        </a>
+                        <a href="https://j3cx.com/serendipity" target="_blank"> <i class="el-icon-thumb"></i>奇遇查询 </a>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
@@ -117,7 +99,7 @@ export default {
     created: function () {
         this.active = this.getAppType();
     },
-    mounted: function () { },
+    mounted: function () {},
 };
 </script>
 
