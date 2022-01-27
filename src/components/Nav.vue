@@ -25,10 +25,10 @@
                     <el-menu-item index="2-1" :class="{ 'is-active': active == 'furniture' }">
                         <a :href="getAppLink('furniture')"> <i class="el-icon-files"></i>家具大全 </a>
                     </el-menu-item>
-                    <el-menu-item index="2-2">
+                    <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
                         <a :href="getAppLink('flower')" target="_blank"> <i class="el-icon-guide"></i>花价查询 </a>
                     </el-menu-item>
-                    <el-menu-item index="2-3">
+                    <el-menu-item index="2-3" :class="{ 'is-active': active == 'blueprint' }">
                         <a :href="getAppLink('blueprint')" class="disabled"> <i class="el-icon-data-line"></i>蓝图解析 </a>
                     </el-menu-item>
                     <el-menu-item index="2-4">
@@ -42,7 +42,7 @@
                     <el-menu-item index="3-1" :class="{ 'is-active': active == 'pet' }">
                         <a href="/pet"> <i class="el-icon-files"></i>宠物大全 </a>
                     </el-menu-item>
-                    <el-menu-item index="3-2">
+                    <el-menu-item index="3-2" :class="{ 'is-active': active == 'petmap' }">
                         <a :href="getAppLink('petmap')" class="disabled"> <i class="el-icon-map-location"></i>宠物地图 </a>
                     </el-menu-item>
                 </el-menu-item-group>
