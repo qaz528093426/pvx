@@ -1,7 +1,7 @@
 <template>
     <div class="m-adventure-item" v-if="item">
         <a @click="getLink(item.dwID)" target="_blank">
-            <img :src="imgUrl(imgName)" :alt="item.szName" />
+            <span class="u-img" :style="imgStyle(imgName)"></span>
             <span class="u-title">{{ item.szName }}</span>
         </a>
     </div>
@@ -36,7 +36,13 @@ export default {
             return this.imgRoot + "reward/" + val + ".png";
         },
         getLink(adventure_id) {
-            this.$router.push({ name: "single", params: { id: adventure_id } })
+            this.$router.push({ name: "single", params: { id: adventure_id } });
+        },
+        imgStyle: function (imgName) {
+            return {
+                backgroundImage: "url(" + this.imgUrl(imgName) + ")",
+                
+            };
         },
     },
     filters: {},

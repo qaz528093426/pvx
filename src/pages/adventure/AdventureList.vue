@@ -12,23 +12,16 @@
         </div>
 
         <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" icon="el-icon-arrow-down">加载更多</el-button>
-        <el-pagination
-            class="m-archive-pages"
-            background
-            layout="total, prev, pager, next, jumper"
-            :hide-on-single-page="true"
-            :page-size="per"
-            :total="total"
-            :current-page.sync="page"
-            @current-change="changePage"
-        ></el-pagination>
+        <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
     </div>
 </template>
 
 <script>
 import AdventureSearch from "@/components/adventure/search.vue";
 import AdventureItem from "@/components/adventure/item.vue";
-import { getAdventures } from "@/service/adventure";
+import { getAdventures, getUserSchool } from "@/service/adventure";
+import User from "@jx3box/jx3box-common/js/user";
+import schoolImgID from "@/assets/data/school_img_id.json";
 export default {
     name: "adventureList",
     props: [],
@@ -44,7 +37,7 @@ export default {
             per: 16, //每页条目
 
             appendMode: false,
-
+            school: 2,
             search: "",
         };
     },
@@ -65,9 +58,10 @@ export default {
             this.loading = true;
             let params = { ...this.params, ...this.search };
             getAdventures(params)
-                .then((res) => {
+                .then(res => {
                     let list = [];
-                    res.data.list.forEach((e) => {
+
+                    res.data.list.forEach(e => {
                         list.push(this.toSpecial(e));
                     });
                     this.appendMode ? (this.list = this.list.concat(list)) : (this.list = list);
@@ -83,12 +77,12 @@ export default {
         toSpecial(data) {
             if (data.szOpenRewardPath) {
                 let str = data.szOpenRewardPath;
-                if (str?.indexOf("weapon") !== -1) str = "ui/Image/Adventure/reward/Open/weapon/school_211.tga";
+                if (str?.indexOf("weapon") !== -1) str = "ui/Image/Adventure/reward/Open/weapon/school_" + this.school + "_Open.tga";
                 if (str?.indexOf("camp") !== -1) {
-                    data.bHide ? (str = "ui/Image/Adventure/reward/Open/camp/camp_2_Open.tga") : (str = "ui/Image/Adventure/reward/Open/camp/camp_1_Open.tga");
+                    data.bHide ? (str = "ui/Image/Adventure/reward/Open/camp/camp_2_Open.tga") : (str = "ui/Image/Adventure/reward/Open/camp/camp_0_Open.tga");
                 }
-                if (str?.indexOf("zzwg") !== -1) str = "ui/Image/Adventure/reward/Open/zzwg/school_211_Open.tga";
-                if (str?.indexOf("jcs") !== -1) str = "ui/Image/Adventure/reward/Open/jcs/school_211.tga";
+                if (str?.indexOf("zzwg") !== -1) str = "ui/Image/Adventure/reward/Open/zzwg/school_" + this.school + "_Open.tga";
+                if (str?.indexOf("jcs") !== -1) str = "ui/Image/Adventure/reward/Open/jcs/school_" + this.school + "_Open.tga";
                 data.szOpenRewardPath = str;
             }
             return data;
@@ -110,6 +104,10 @@ export default {
     },
     filters: {},
     created: function () {
+        User.isLogin() &&
+            getUserSchool().then(res => {
+                this.school = schoolImgID[res.data.data.list[0].mount];
+            });
         this.getData();
     },
     mounted: function () {},

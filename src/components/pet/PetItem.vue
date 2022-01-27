@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {__iconPath} from "@jx3box/jx3box-common/data/jx3box.json"
+import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     props: {
         petObject: {},
@@ -32,7 +32,7 @@ export default {
         // 获取宠物图片路径
         getImgSrc: function (path) {
             let img_name = path.match(/.*[\/,\\](.*?).tga/);
-            return __iconPath + "pvx/pet/images/" + img_name[1] + ".png"
+            return __iconPath + "pvx/pet/images/" + img_name[1] + ".png";
         },
         // 获取宠物边框图片路径
         getFrameSrc: function (quality) {
@@ -57,13 +57,13 @@ export default {
         },
         // 判断福缘
         getLucky: function (index) {
-            return this.lucky.indexOf(index.toString()) != -1
+            return this.lucky.indexOf(index.toString()) != -1;
         },
         // 宠物链接
         getLink(pet_id) {
             // return `/pet/${pet_id}`
-            this.$router.push({ name: 'single', params: { id: pet_id } })
-        }
+            this.$router.push({ name: "single", params: { id: pet_id } });
+        },
     },
 };
 </script>
