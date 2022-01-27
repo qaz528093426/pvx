@@ -30,6 +30,12 @@ module.exports = {
             template: "public/index.html",
             filename: "furniture/index.html",
         },
+        flower: {
+            title: "花价查询 - JX3BOX",
+            entry: "src/pages/flower.js",
+            template: "public/index.html",
+            filename: "flower/index.html",
+        },
         pet: {
             title: "宠物大全 - JX3BOX",
             entry: "src/pages/pet.js",
