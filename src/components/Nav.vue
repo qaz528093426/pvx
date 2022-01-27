@@ -26,7 +26,7 @@
                         <a :href="getAppLink('furniture')"> <i class="el-icon-files"></i>家具大全 </a>
                     </el-menu-item>
                     <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
-                        <a :href="getAppLink('flower')" target="_blank"> <i class="el-icon-guide"></i>花价查询 </a>
+                        <a :href="getAppLink('flower')"> <i class="el-icon-guide"></i>花价查询 </a>
                     </el-menu-item>
                     <el-menu-item index="2-3" :class="{ 'is-active': active == 'blueprint' }">
                         <a :href="getAppLink('blueprint')" class="disabled"> <i class="el-icon-data-line"></i>蓝图解析 </a>
