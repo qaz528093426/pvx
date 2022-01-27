@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="奇遇大全" slug="adventure" root="/pvx/adventure" :publishEnable="false" :adminEnable="false" :feedbackEnable="true" :crumbEnable="true">
+        <Breadcrumb name="奇遇大全" slug="adventure" root="/adventure" :publishEnable="false" :adminEnable="false" :feedbackEnable="true" :crumbEnable="true">
             <img slot="logo" svg-inline :src="getAppIcon('qiyu')" />
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>
