@@ -5,7 +5,7 @@
             <AdventureSearch @onSearch="onSearch" />
         </div>
         <div class="m-adventure-list" v-if="list && list.length > 0">
-            <AdventureItem v-for="(item, i) in newList" :key="i" :item="item" />
+            <AdventureItem v-for="(item, i) in list" :key="i" :item="item" />
         </div>
         <div class="u-archive-alert" v-else>
             <el-alert title="没有对应的奇遇，请重新查找" type="info" center show-icon />
@@ -20,8 +20,8 @@
 import AdventureSearch from "@/components/adventure/search.vue";
 import AdventureItem from "@/components/adventure/item.vue";
 import { getAdventures, getUserSchool } from "@/service/adventure";
-import User from "@jx3box/jx3box-common/js/user";
-import schoolImgID from "@/assets/data/school_img_id.json";
+// import User from "@jx3box/jx3box-common/js/user";
+// import schoolImgID from "@/assets/data/school_img_id.json";
 export default {
     name: "adventureList",
     props: [],
@@ -68,7 +68,8 @@ export default {
                 .then(res => {
                     let list = [];
                     res.data.list.forEach(e => {
-                        list.push(e);
+                        // list.push(e);
+                        list.push(this.toSpecial(e));
                     });
                     this.appendMode ? (this.list = this.list.concat(list)) : (this.list = list);
                     this.appendMode = false;
@@ -109,10 +110,10 @@ export default {
         },
     },
     created: function () {
-        User.isLogin() &&
-            getUserSchool().then(res => {
-                if (res.data.data.list) this.school = schoolImgID[res.data.data.list[0].mount];
-            });
+        // User.isLogin() &&
+        //     getUserSchool().then(res => {
+        //         if (res.data.data.list) this.school = schoolImgID[res.data.data.list[0].mount];
+        //     });
         this.getData();
     },
     mounted: function () {},
