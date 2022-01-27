@@ -89,7 +89,7 @@ export default {
             return [this.petName, this.petType, this.petSource];
         },
         hasNextPage: function () {
-            return this.pages > 1 && this.page < this.total;
+            return this.pages > 1 && this.page < this.pages;
         },
         client: function () {
             return this.$store.state.client;

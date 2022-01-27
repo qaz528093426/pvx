@@ -38,7 +38,7 @@ export default {
 
             appendMode: false,
             school: "2",
-            search: "",
+            search: {},
         };
     },
     computed: {
