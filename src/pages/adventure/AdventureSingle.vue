@@ -16,9 +16,9 @@
         <div class="m-adventure-wiki">
             <detail :achievement_id="achieve_id" title="奇遇攻略"></detail>
         </div>
-        <!-- <div class="m-adventure-serendipity">
+        <div class="m-adventure-serendipity">
             <Serendipity :title="title" />
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -27,14 +27,14 @@ import { getLink } from "@jx3box/jx3box-common/js/utils";
 import Detail from "@/components/wiki/Detail.vue";
 import { getAdventure, getSerendipityAchievementIds } from "@/service/adventure";
 import task from "@/components/adventure/task.vue";
-// import Serendipity from "@/components/common/serendipity.vue";
+import Serendipity from "@/components/common/serendipity.vue";
 export default {
     name: "adventureSingle",
     props: [],
     components: {
         Detail,
         task,
-        // Serendipity,
+        Serendipity,
     },
     data: function () {
         return {
