@@ -5,7 +5,7 @@
             <AdventureSearch @onSearch="onSearch" />
         </div>
         <div class="m-adventure-list" v-if="list && list.length > 0">
-            <AdventureItem v-for="(item, i) in list" :key="i" :item="item" />
+            <AdventureItem v-for="(item, i) in newList" :key="i" :item="item" />
         </div>
         <div class="u-archive-alert" v-else>
             <el-alert title="没有对应的奇遇，请重新查找" type="info" center show-icon />
@@ -37,7 +37,7 @@ export default {
             per: 16, //每页条目
 
             appendMode: false,
-            school: 2,
+            school: "2",
             search: "",
         };
     },
@@ -51,6 +51,13 @@ export default {
                 page: this.page || 1,
             };
         },
+        newList: function () {
+            let list = [];
+            this.list.forEach(e => {
+                list.push(this.toSpecial(e));
+            });
+            return list;
+        },
     },
     watch: {},
     methods: {
@@ -60,9 +67,8 @@ export default {
             getAdventures(params)
                 .then(res => {
                     let list = [];
-
                     res.data.list.forEach(e => {
-                        list.push(this.toSpecial(e));
+                        list.push(e);
                     });
                     this.appendMode ? (this.list = this.list.concat(list)) : (this.list = list);
                     this.appendMode = false;
@@ -102,11 +108,10 @@ export default {
             this.getData();
         },
     },
-    filters: {},
     created: function () {
         User.isLogin() &&
             getUserSchool().then(res => {
-                if (res.data.data.list && res.data.data.list.length > 0) this.school = schoolImgID[res.data.data.list[0].mount];
+                if (res.data.data.list) this.school = schoolImgID[res.data.data.list[0].mount];
             });
         this.getData();
     },
