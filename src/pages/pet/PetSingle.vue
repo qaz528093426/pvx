@@ -51,7 +51,7 @@
                     <div class="u-meta u-shop" v-if="shopInfo.RewardsPrice || shopInfo.CoinPrice">
                         <span class="u-meta-label">商城价格：</span>
                         <span class="u-price">
-                            <el-tag class="u-price-item u-rewards"
+                            <el-tag class="u-price-item u-rewards" v-if="shopInfo.RewardsPrice > 0"
                                 >积分<b>{{ shopInfo.RewardsPrice }}</b
                                 ><i class="u-icon-rewards"></i
                             ></el-tag>
