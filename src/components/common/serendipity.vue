@@ -1,11 +1,11 @@
 <template>
-    <div class="m-serendipity">
+    <div class="m-serendipity" v-if="title">
         <div class="u-title">
             <span class="u-label">
                 <i class="el-icon-present"></i>
                 触发记录
             </span>
-            <el-select v-model="server" placeholder="区服" size="small" class="u-select">
+            <el-select v-model="server" placeholder="区服" size="small" class="u-select" @change="changeServer">
                 <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
             </el-select>
         </div>
@@ -54,17 +54,14 @@ export default {
         },
     },
     methods: {
-        getUserServer() {
-            User.isLogin() &&
-                getUserInfo().then(res => {
-                    this.server = res.data.data.jx3_server;
-                });
-        },
         loadSerendipity() {
-            getSerendipity(this.params).then(res => {
+            getSerendipity(this.params).then((res) => {
                 this.list = res.data.data.data;
             });
         },
+        changeServer(){
+            this.loadSerendipity();
+        }
     },
     filters: {
         wikiDate: function (val) {
@@ -74,16 +71,19 @@ export default {
             return showDate(val);
         },
     },
-    watch: {
-        server(val) {
-            if (val) this.loadSerendipity();
-        },
+    mounted: function () {
+        if (User.isLogin()) {
+            getUserInfo()
+                .then((res) => {
+                    this.server = res.data.data.jx3_server || "长安城";
+                })
+                .then(() => {
+                    this.loadSerendipity();
+                });
+        } else {
+            this.loadSerendipity();
+        }
     },
-    created: function () {
-        this.getUserServer();
-        this.loadSerendipity();
-    },
-    mounted: function () {},
 };
 </script>
 
