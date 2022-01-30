@@ -32,7 +32,7 @@
                         <a :href="getAppLink('blueprint')" class="disabled"> <i class="el-icon-data-line"></i>蓝图解析 </a>
                     </el-menu-item>
                     <el-menu-item index="2-4">
-                        <a href="https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/" target="_blank"> <i class="el-icon-download"></i>家园蓝图 </a>
+                        <a href="https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/" target="_blank"> <i class="el-icon-position"></i>家园蓝图 </a>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
