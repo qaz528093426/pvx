@@ -60,7 +60,7 @@ export default {
         // 判断福缘
         getLucky: function (index) {
             if(index){
-                return this.lucky.indexOf(index.toString()) != -1
+                return this.lucky?.indexOf(index.toString()) != -1
             }
         },
     },

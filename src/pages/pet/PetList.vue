@@ -47,6 +47,7 @@ import { getPets, getPetLucky } from "@/service/pet";
 import Type from "@/assets/data/pet_type.json";
 import Source from "@/assets/data/pet_source.json";
 import petItem from "@/components/pet/PetItem.vue";
+import dayjs from 'dayjs'
 export default {
     name: "PetList",
     props: [],
@@ -144,8 +145,7 @@ export default {
         getPetLucky: function () {
             getPetLucky().then((res) => {
                 let data = res.data.std;
-                let rawDate = new Date();
-                let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
+                let dateIndex = dayjs(new Date()).format('MDD')
                 this.luckyList = data[dateIndex];
             });
         },
