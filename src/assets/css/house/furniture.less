@@ -1,0 +1,164 @@
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.m-furniture {
+    padding: 20px;
+}
+
+.m-furniture-title {
+    .mb(30px);
+
+    .u-logo {
+        .h(65px);
+        .w(310px);
+        background: url("@{pvx_img}pettitle.png") no-repeat;
+        background-size: 100% 100%;
+    }
+}
+
+
+
+.m-furniture-container {}
+
+.m-furniture-search {
+    .mb(30px);
+
+    .u-type {
+        .w(75px);
+
+        .el-input__inner {
+            border-radius: 12px;
+            background: #cc819c;
+            border: none;
+        }
+
+        .el-input__inner::placeholder {
+            color: #fff;
+        }
+
+        .el-select__caret {
+            color: #fff;
+        }
+    }
+
+    .u-search {
+        .w(380px);
+        margin: 0 10px;
+
+        .el-input__inner {
+            border-radius: 12px;
+
+            &:focus {
+                border: 1px solid #cc819c;
+            }
+        }
+    }
+
+    .u-button {
+        .w(75px);
+        border-radius: 12px;
+        background: #cc819c;
+        color: #fff;
+        border: none;
+
+        &:hover {
+            background: #df789d;
+        }
+    }
+}
+
+.m-furniture-item {
+    .w(380px);
+    .h(230px);
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 5px #ccc;
+    cursor: pointer;
+    
+
+    &:hover {
+        .m-furniture-image{
+            transform: scale(1.05);
+        }
+    }
+
+    .m-furniture-image {
+        .w(200px);
+        .h(200px);
+        .pr;
+        border-radius: 15px;
+        background: #2B3D3D;
+        transition: 0.2s ease;
+        .u-use{
+            .pa;
+            color:rgb(252, 230, 250);
+            font-weight: bold;
+            letter-spacing: 1px;
+            right:10px;
+            top:10px;
+        }
+        .u-price{
+            .w(100px);
+            .h(30px);
+            .pa;
+            border-radius: 15px 0 0 15px;
+            background: #cecece;
+            right:0;
+            bottom:20px;
+            color:#333;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    }
+
+    .m-furniture-detail {
+        .ml(15px);
+        .h(200px);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+
+        .u-name,
+        .u-type,
+        .u-attribute {
+            font-weight: bold;
+            color: #333;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .u-type,
+        .u-attribute {
+            font-size: 15px;
+        }
+
+        .u-attribute {
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 13px;
+        }
+
+        .u-blue {
+            background: #81B0CC;
+        }
+
+        .u-pink {
+            background: #CC819C;
+        }
+
+        .u-yellow {
+            background: #CCA981;
+        }
+
+        .u-green {
+            background: #81CCB2;
+        }
+
+        .u-purple {
+            background: #B381CC;
+        }
+    }
+}
