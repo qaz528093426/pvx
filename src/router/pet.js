@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-const List = () => import("../pages/pet/PetList.vue");
-const Single = () => import("../pages/pet/PetSingle.vue");
+const List = () => import("@/views/pet/PetList.vue");
+const Single = () => import("@/views/pet/PetSingle.vue");
 
 Vue.use(VueRouter);
 

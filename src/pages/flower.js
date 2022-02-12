@@ -18,7 +18,7 @@ Vue.use(JX3BOX_UI);
 // import router from "../router";
 // import store from "../store";
 
-import Flower from "./house/Flower.vue";
+import Flower from "@/views/house/Flower.vue";
 new Vue({
     // router,
     // store,

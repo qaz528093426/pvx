@@ -15,7 +15,7 @@ Vue.use(JX3BOX_UI);
 // import router from "../router/share.js";
 // import store from "./store";
 
-import App from "./share/Parse.vue";
+import App from "@/views/share/Parse.vue";
 
 new Vue({
     // router,

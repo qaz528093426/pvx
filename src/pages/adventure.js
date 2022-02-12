@@ -15,7 +15,7 @@ Vue.use(JX3BOX_UI);
 import router from "../router/adventure";
 import store from "../store";
 
-import App from "./adventure/Adventure.vue";
+import App from "@/views/adventure/Adventure.vue";
 new Vue({
     router,
     store,

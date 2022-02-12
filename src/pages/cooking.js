@@ -14,7 +14,7 @@ Vue.use(JX3BOX_UI);
 // 数据与路由
 import store from "../store";
 
-import App from "./price/Cooking.vue";
+import App from "@/views/price/Cooking.vue";
 new Vue({
     store,
     render: h => h(App),

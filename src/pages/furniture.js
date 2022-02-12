@@ -15,7 +15,7 @@ Vue.use(JX3BOX_UI);
 // import router from "./router";
 // import store from "./store";
 
-import App from "./house/Furniture.vue";
+import App from "@/views/house/Furniture.vue";
 new Vue({
     // router,
     // store,
