@@ -48,9 +48,33 @@ module.exports = {
             template: "public/index.html",
             filename: "adventure/index.html",
         },
+        cooking: {
+            title: "技艺助手 - JX3BOX",
+            entry: "src/pages/cooking.js",
+            template: "public/index.html",
+            filename: "cooking/index.html",
+        },
+        price: {
+            title: "物价大全 - JX3BOX",
+            entry: "src/pages/price.js",
+            template: "public/index.html",
+            filename: "price/index.html",
+        },
+        gold: {
+            title: "金价走势 - JX3BOX",
+            entry: "src/pages/gold.js",
+            template: "public/index.html",
+            filename: "gold/index.html",
+        },
+        dress: {
+            title: "外观大全 - JX3BOX",
+            entry: "src/pages/dress.js",
+            template: "public/index.html",
+            filename: "dress/index.html",
+        },
     },
 
-    //❤️ Porxy ~
+    //❤️ Proxy ~
     devServer: {
         proxy: {
             "/api/serendipity": {
@@ -73,30 +97,6 @@ module.exports = {
             },
             "/api/messages": {
                 target: "https://helper.jx3box.com",
-                onProxyReq: function (request) {
-                    request.setHeader("origin", "");
-                },
-            },
-            "/api/summary": {
-                target: "https://next2.jx3box.com",
-                onProxyReq: function (request) {
-                    request.setHeader("origin", "");
-                },
-            },
-            "/api/comment": {
-                target: "https://next2.jx3box.com",
-                onProxyReq: function (request) {
-                    request.setHeader("origin", "");
-                },
-            },
-            "/api/team": {
-                target: "https://team.api.jx3box.com",
-                onProxyReq: function (request) {
-                    request.setHeader("origin", "");
-                },
-            },
-            "/xoyo/daily": {
-                target: "https://team.api.jx3box.com",
                 onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },
