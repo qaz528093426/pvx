@@ -3,7 +3,7 @@
         <div class="m-adventure-navigation">
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
             <div class="m-trigger-links">
-                <a class="u-link u-achievement" :href="getLink('cj', achieve_id)">
+                <a class="u-link u-achievement" :href="getLink('cj', achieve_id)" target="_blank">
                     <i class="el-icon-trophy"></i>
                     成就信息
                 </a>
@@ -14,7 +14,7 @@
             <task :id="id" />
         </div>
         <div class="m-adventure-wiki">
-            <detail :achievement_id="achieve_id" title="奇遇攻略"></detail>
+            <detail :achievement_id="achieve_id" title="奇遇攻略" real_type="adventure"></detail>
         </div>
         <div class="m-adventure-serendipity">
             <Serendipity :title="title" />
@@ -59,11 +59,11 @@ export default {
             this.$router.push({ name: "list" });
         },
         gerData() {
-            getAdventure(this.id).then(res => {
+            getAdventure(this.id).then((res) => {
                 this.isPet = false;
                 this.data = res.data;
             });
-            getSerendipityAchievementIds().then(res => {
+            getSerendipityAchievementIds().then((res) => {
                 this.achieve_id = res.data[this.id];
             });
         },

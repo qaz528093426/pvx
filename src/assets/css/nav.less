@@ -3,8 +3,8 @@
 }
 
 .el-menu {
-    border: none;
-    background: none;
+    border: none !important;
+    background: none !important;
 
     .el-submenu__title {
         .lh(40px);
@@ -40,10 +40,12 @@
         }
     }
 
-    .disabled{
+    .disabled {
         cursor: default;
 
-        color:#999;
-        *{color:#999;}
+        color: #999;
+        * {
+            color: #999;
+        }
     }
 }

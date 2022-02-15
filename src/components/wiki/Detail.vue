@@ -14,6 +14,7 @@
                 </template>
                 <template slot="body">
                     <Article :content="wiki_post.post.content" />
+                    <Thx class="m-thx" :postId="real_id" :postType="real_type" :adminBoxcoinEnable="false" :userBoxcoinEnable="false" />
                 </template>
             </WikiPanel>
 
@@ -38,7 +39,7 @@ import { publishLink } from "@jx3box/jx3box-common/js/utils";
 
 export default {
     name: "Detail",
-    props: ["achievement_id", "item_id", "title"],
+    props: ["achievement_id", "item_id", "title",'real_type'],
     data() {
         return {
             wiki_post: null,
@@ -57,6 +58,10 @@ export default {
         type: function () {
             return this.achievement_id ? "achievement" : "item";
         },
+        // 本地类型ID
+        real_id : function (){
+            return this.$route.params.id
+        }
     },
     methods: {
         publish_url: publishLink,

@@ -3,10 +3,10 @@
         <div class="m-pet-navigation">
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
             <div class="m-pet-links">
-                <a class="u-link u-item" :href="getLink('item', item_id)"><i class="el-icon-collection-tag"></i>物品信息</a>
+                <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
                 <template v-if="achievement_id">
                     <em> | </em>
-                    <a class="u-link u-achievement" :href="getLink('cj', achievement_id)"><i class="el-icon-trophy"></i>成就信息</a>
+                    <a class="u-link u-achievement" :href="getLink('cj', achievement_id)" target="_blank"><i class="el-icon-trophy"></i>成就信息</a>
                 </template>
             </div>
         </div>
@@ -38,9 +38,11 @@
                     <div class="u-meta u-score"><span class="u-meta-label">宠物分数：</span>{{ pet.Score }}</div>
                     <div class="u-meta u-desc">
                         <span class="u-meta-label">宠物说明：</span>
-                        <template v-for="item in getPetDesc(pet.Desc)">
-                            <div :key="item.text" v-html="item.text"></div>
-                        </template>
+                        <span class="u-meta-value">
+                            <template v-for="item in getPetDesc(pet.Desc)">
+                                <span :key="item.text" v-html="item.text"></span>
+                            </template>
+                        </span>
                     </div>
                     <div class="u-meta u-source">
                         <span class="u-meta-label">获取线索：</span>
@@ -65,11 +67,8 @@
             </div>
         </div>
         <div class="m-pet-wiki" v-if="petWiki">
-            <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略"></detail>
+            <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略"  real_type="pet"></detail>
         </div>
-        <!-- <div class="m-pet-serendipity">
-            <Serendipity :title="title"/>
-        </div> -->
     </div>
 </template>
 
@@ -94,7 +93,7 @@ export default {
     data: function () {
         return {
             pet: {},
-            petWiki: '',
+            petWiki: "",
             shopInfo: "",
             luckyList: [],
         };
@@ -112,9 +111,9 @@ export default {
         client: function () {
             return this.$store.state.client;
         },
-        title : function (){
-            return this.pet.Name
-        }
+        title: function () {
+            return this.pet.Name;
+        },
     },
     watch: {},
     methods: {
@@ -128,9 +127,10 @@ export default {
         },
         // 获取宠物技能信息
         getPetWiki: function () {
-            this.item_id && getWiki("item", this.item_id).then((res) => {
-                this.petWiki = res?.data?.data?.source?.pet;
-            });
+            this.item_id &&
+                getWiki("item", this.item_id).then((res) => {
+                    this.petWiki = res?.data?.data?.source?.pet;
+                });
         },
         // 获取宠物商城价格
         getShopInfo() {
