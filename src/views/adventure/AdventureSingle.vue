@@ -19,6 +19,9 @@
         <div class="m-adventure-serendipity">
             <Serendipity :title="title" />
         </div>
+        <div class="m-pvx-comment">
+            <Comment :id="id" category="pz" order="desc" />
+        </div>
     </div>
 </template>
 
@@ -28,6 +31,7 @@ import Detail from "@/components/wiki/Detail.vue";
 import { getAdventure, getSerendipityAchievementIds } from "@/service/adventure";
 import task from "@/components/adventure/task.vue";
 import Serendipity from "@/components/common/serendipity.vue";
+import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 export default {
     name: "adventureSingle",
     props: [],
@@ -35,6 +39,7 @@ export default {
         Detail,
         task,
         Serendipity,
+        Comment
     },
     data: function () {
         return {

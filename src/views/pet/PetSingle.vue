@@ -69,6 +69,9 @@
         <div class="m-pet-wiki" v-if="petWiki">
             <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略"  real_type="pet"></detail>
         </div>
+        <div class="m-pvx-comment">
+            <Comment :id="id" category="pz" order="desc" />
+        </div>
     </div>
 </template>
 
@@ -81,6 +84,7 @@ import Detail from "@/components/wiki/Detail.vue";
 import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
+import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 // import Serendipity from "@/components/common/serendipity.vue";
 export default {
     name: "PetSingle",
@@ -88,6 +92,7 @@ export default {
     components: {
         petCard,
         Detail,
+        Comment,
         // Serendipity,
     },
     data: function () {
