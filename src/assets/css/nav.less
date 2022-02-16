@@ -7,12 +7,13 @@
     background: none !important;
 
     .el-submenu__title {
-        .lh(40px);
-        .h(40px);
+        .lh(20px);
+        .h(20px);
         padding-left: 15px !important;
         color: #aaa;
         .bold;
         .fz(12px);
+        .mt(20px);
     }
     .el-menu-item-group__title {
         .none;
@@ -20,9 +21,9 @@
 }
 .el-submenu .el-menu-item {
     padding-left: 30px !important;
+    // padding-left: 10px !important;
 
-    a,
-    span {
+    a{
         .db;
         .fz(13px);
     }
@@ -30,6 +31,12 @@
     a,
     i {
         color: @color;
+    }
+
+    img,i{
+        // .size(24px);
+        // .y(top);
+        .mr(5px);
     }
 
     &.is-active {

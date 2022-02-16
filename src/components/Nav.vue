@@ -12,10 +12,18 @@
                 <template slot="title">栉掠</template>
                 <el-menu-item-group>
                     <el-menu-item index="1-1" :class="{ 'is-active': active == 'share' }">
-                        <a href="/share"> <i class="el-icon-download"></i>捏脸分享 </a>
+                        <a href="/share">
+                            <i class="el-icon-download"></i>
+                            <!-- <img src="@/assets/img/share.svg" /> -->
+                            <span>捏脸分享</span>
+                        </a>
                     </el-menu-item>
                     <el-menu-item index="1-2" :class="{ 'is-active': active == 'facedata' }">
-                        <a :href="getAppLink('facedata')"> <i class="el-icon-setting"></i>妆容解析 </a>
+                        <a :href="getAppLink('facedata')">
+                            <i class="el-icon-setting"></i>
+                            <!-- <img src="@/assets/img/facedata.svg" /> -->
+                            <span>妆容解析</span>
+                        </a>
                     </el-menu-item>
                     <!-- <el-menu-item index="1-3" :class="{ 'is-active': active == 'dress' }">
                         <a :href="getAppLink('dress')" class="disabled"> <i class="el-icon-shopping-bag-1"></i>外观大全 </a>
@@ -26,10 +34,18 @@
                 <template slot="title">家园</template>
                 <el-menu-item-group>
                     <el-menu-item index="2-1" :class="{ 'is-active': active == 'furniture' }">
-                        <a :href="getAppLink('furniture')" class="disabled"> <i class="el-icon-table-lamp"></i>家具大全 </a>
+                        <a :href="getAppLink('furniture')" class="disabled">
+                            <i class="el-icon-table-lamp"></i>
+                            <!-- <img src="@/assets/img/furniture.svg" /> -->
+                            <span>家具大全</span>
+                        </a>
                     </el-menu-item>
                     <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
-                        <a :href="getAppLink('flower')"> <i class="el-icon-guide"></i>花价查询 </a>
+                        <a :href="getAppLink('flower')">
+                            <i class="el-icon-guide"></i>
+                            <!-- <img src="@/assets/img/flower.svg" /> -->
+                            <span>花价查询</span>
+                        </a>
                     </el-menu-item>
                     <!-- <el-menu-item index="2-3" :class="{ 'is-active': active == 'blueprint' }">
                         <a :href="getAppLink('blueprint')" class="disabled"> <i class="el-icon-setting"></i>蓝图解析 </a>
@@ -43,10 +59,18 @@
                 <template slot="title">珍奇</template>
                 <el-menu-item-group>
                     <el-menu-item index="3-1" :class="{ 'is-active': active == 'pet' }">
-                        <a href="/pet"> <i class="el-icon-sugar"></i>宠物大全 </a>
+                        <a href="/pet">
+                            <i class="el-icon-sugar"></i>
+                            <!-- <img src="@/assets/img/pet2.svg" /> -->
+                            <span>宠物大全</span>
+                        </a>
                     </el-menu-item>
                     <el-menu-item index="4-1" :class="{ 'is-active': active == 'adventure' }">
-                        <a href="/adventure"> <i class="el-icon-files"></i>奇遇大全 </a>
+                        <a href="/adventure">
+                            <i class="el-icon-files"></i>
+                            <!-- <img src="@/assets/img/adventure.svg" /> -->
+                            <span>奇遇大全</span>
+                        </a>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
