@@ -1,5 +1,5 @@
 <template>
-    <div class="v-adventure-single" v-if="id">
+    <div class="v-adventure-single" v-if="id" v-loading="loading">
         <div class="m-adventure-navigation">
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
             <div class="m-trigger-links">
@@ -48,6 +48,7 @@ export default {
             data: "",
             task: [],
             isPet: true,
+            loading : false,
         };
     },
     computed: {
@@ -64,12 +65,15 @@ export default {
         goBack() {
             this.$router.push({ name: "list" });
         },
-        gerData() {
+        getData() {
+            this.loading = true
             getAdventure(this.id).then((res) => {
                 this.isPet = false;
                 this.data = res.data;
                 postStat('adventure', this.id)
-            });
+            }).finally(() => {
+                this.loading = false
+            })
             getSerendipityAchievementIds().then((res) => {
                 this.achieve_id = res.data[this.id];
             });
@@ -77,7 +81,7 @@ export default {
     },
     filters: {},
     created: function () {
-        this.gerData();
+        this.getData();
     },
     mounted: function () {},
 };

@@ -1,5 +1,5 @@
 <template>
-    <div class="v-pet-single" v-if="pet">
+    <div class="v-pet-single" v-if="pet" v-loading="loading">
         <div class="m-pet-navigation">
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
             <div class="m-pet-links">
@@ -108,11 +108,12 @@ export default {
     },
     data: function () {
         return {
-            pet: '',
+            pet: "",
             petWiki: "",
             shopInfo: "",
             luckyList: [],
             medalList: [],
+            loading: false,
         };
     },
     computed: {
@@ -131,11 +132,11 @@ export default {
         title: function () {
             return this.pet?.Name;
         },
-		params : function (){
-			return {
-				client : this.client
-			}
-		}
+        params: function () {
+            return {
+                client: this.client,
+            };
+        },
     },
     watch: {
         id() {
@@ -145,14 +146,19 @@ export default {
     methods: {
         // 获取宠物详情
         getPetInfo: function () {
-            getPet(this.id,this.params).then((res) => {
-                this.pet = res.data;
-                this.medalList = res.data.medal_list;
-                this.getPetWiki();
-                this.getShopInfo();
-                this.getPetMedal();
-                postStat("pet", this.id);
-            });
+            this.loading = true;
+            getPet(this.id, this.params)
+                .then((res) => {
+                    this.pet = res.data;
+                    this.medalList = res.data.medal_list;
+                    this.getPetWiki();
+                    this.getShopInfo();
+                    this.getPetMedal();
+                    postStat("pet", this.id);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         // 获取宠物技能信息
         getPetWiki: function () {

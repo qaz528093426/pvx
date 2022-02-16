@@ -1,5 +1,5 @@
 <template>
-    <div class="m-serendipity" v-if="title">
+    <div class="m-serendipity" v-if="title" v-loading="loading">
         <div class="u-title">
             <span class="u-label">
                 <i class="el-icon-present"></i>
@@ -41,6 +41,7 @@ export default {
             servers,
             server: "长安城",
             list: [],
+            loading: false,
         };
     },
     computed: {
@@ -56,9 +57,14 @@ export default {
     },
     methods: {
         loadSerendipity() {
-            getSerendipity(this.params).then((res) => {
-                this.list = res.data.data.data;
-            });
+            this.loading = true;
+            getSerendipity(this.params)
+                .then((res) => {
+                    this.list = res.data.data.data;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         changeServer() {
             this.loadSerendipity();
