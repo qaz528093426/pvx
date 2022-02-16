@@ -5,8 +5,8 @@
 		<div class="u-box" v-for="item in petList" :key="item.id">
 			<div class="u-name"><i class="el-icon-star-on"></i>{{ item.name }}</div>
 			<div class="u-imgsBox">
-				<div  class="u-img" v-for="(imgs, index) in petImgs[item.id]" :key="index" @click="getLink(index)">
-					<el-image  :src="imgs.img" fit="contain" ></el-image>
+				<div class="u-img" v-for="(imgs, index) in petImgs[item.id]" :key="index" @click="getLink(index)" :class="'i-quality-' + imgs.Quality">
+					<el-image :src="imgs.img" fit="contain" ></el-image>
 					<span>{{ imgs.name }}</span>
 				</div>
 			</div>

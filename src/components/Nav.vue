@@ -62,9 +62,9 @@
                     <el-menu-item index="5-3" :class="{ 'is-active': active == 'gold' }">
                         <a :href="getAppLink('gold')" class="disabled"> <i class="el-icon-data-line"></i>金价走势 </a>
                     </el-menu-item>
-                    <!-- <el-menu-item index="5-4">
+                    <el-menu-item index="5-4">
                         <a href="https://jx3.seasunwbl.com/buyer?t=coin" target="_blank"> <i class="el-icon-position"></i>万宝楼 </a>
-                    </el-menu-item> -->
+                    </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>
