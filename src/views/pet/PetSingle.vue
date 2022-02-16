@@ -67,7 +67,12 @@
 			</div>
 		</div>
 		<!-- 宠物羁绊 -->
-		<petFetters :list="medalList" />
+		<div class="m-pet-fetters">
+			<div class="u-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">宠物羁绊</span></div>
+			<!-- 羁绊信息 -->
+			<petFetters :list="item" v-for="(item, index) in medalList" :key="index" />
+		</div>
+
 		<!-- 宠物攻略 -->
 		<div class="m-pet-wiki" v-if="petWiki">
 			<detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略" real_type="pet"></detail>
@@ -79,7 +84,7 @@
 </template>
 
 <script>
-import { getPet, getShopInfo } from "@/service/pet";
+import { getPet, getPets, getShopInfo } from "@/service/pet";
 import { getWiki } from "@/service/wiki";
 import { getPetLucky } from "@/service/pet";
 import petCard from "@/components/pet/PetCard.vue";
@@ -126,13 +131,12 @@ export default {
 			return this.pet.Name;
 		},
 	},
-	watch: {},
 	methods: {
 		// 获取宠物详情
 		getPetInfo: function () {
 			getPet(this.id).then((res) => {
 				this.pet = res.data;
-				this.medalList = res.data.medal_list;
+				if (res.data.medal_list.length > 0) this.getPetFetters(res.data.medal_list);
 				this.getPetWiki();
 				this.getShopInfo();
 			});
@@ -202,6 +206,21 @@ export default {
 			});
 		},
 		getLink,
+		// 获取宠物羁绊的宠物
+		getPetFetters(list) {
+			list.map((el) => {
+				let _list = [];
+				for (const key in el) {
+					if (key.indexOf("PetIndex") !== -1 && el[key] !== null) {
+						_list.push(el[key]);
+					}
+				}
+				getPets({ ids: _list.join(",") }).then((res) => {
+					el.petList = res.data.list;
+				});
+			});
+			this.medalList = list;
+		},
 	},
 	filters: {
 		iconLink,
