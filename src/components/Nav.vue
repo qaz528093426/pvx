@@ -54,13 +54,13 @@
                 <template slot="title">商贾</template>
                 <el-menu-item-group>
                     <el-menu-item index="5-1" :class="{ 'is-active': active == 'cooking' }">
-                        <a :href="getAppLink('cooking')"> <i class="el-icon-setting"></i>技艺助手 </a>
+                        <a :href="getAppLink('cooking')" class="disabled"> <i class="el-icon-setting"></i>技艺助手 </a>
                     </el-menu-item>
                     <el-menu-item index="5-2" :class="{ 'is-active': active == 'price' }">
-                        <a :href="getAppLink('price')"> <i class="el-icon-coin"></i>物价大全 </a>
+                        <a :href="getAppLink('price')" class="disabled"> <i class="el-icon-coin"></i>物价大全 </a>
                     </el-menu-item>
                     <el-menu-item index="5-3" :class="{ 'is-active': active == 'gold' }">
-                        <a :href="getAppLink('gold')"> <i class="el-icon-data-line"></i>金价走势 </a>
+                        <a :href="getAppLink('gold')" class="disabled"> <i class="el-icon-data-line"></i>金价走势 </a>
                     </el-menu-item>
                     <!-- <el-menu-item index="5-4">
                         <a href="https://jx3.seasunwbl.com/buyer?t=coin" target="_blank"> <i class="el-icon-position"></i>万宝楼 </a>
