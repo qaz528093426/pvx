@@ -1,10 +1,10 @@
 <template>
 	<div class="m-fettersBox">
 		<!-- 羁绊信息 -->
-		<div class="u-name"><i class="el-icon-star-on"></i>{{ list.Name }}</div>
+		<div class="u-name"><i class="el-icon-star-on"></i>{{ info.Name }}</div>
 		<div class="u-imgsBox">
-			<div class="u-img" v-for="pet in list.petList" :key="pet.Index" @click="getLink(pet.Index)" :class="'i-quality-' + pet.Quality">
-				<el-image :src="getImgSrc(pet.BgPath)" fit="contain"></el-image>
+			<div class="u-img" v-for="pet in info.petList" :key="pet.Index" :class="'i-quality-' + pet.Quality" @click="getLink(pet.Index)">
+				<img :src="getImgSrc(pet.BgPath)" fit="contain" />
 				<span>{{ pet.Name }}</span>
 			</div>
 		</div>
@@ -14,7 +14,7 @@
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
 	name: "Fetters",
-	props: ["list"],
+	props: ["info"],
 	components: {},
 	data: function () {
 		return {};

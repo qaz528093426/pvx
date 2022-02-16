@@ -24,7 +24,7 @@
 				<!-- 宠物技能 -->
 				<div class="m-pet-skills">
 					<div class="u-skill" v-for="(skill, index) in petWiki.skills" :key="index">
-						<el-popover :key="index" trigger="hover" popper-class="m-pet-skill" :visible-arrow="false" placement="top">
+						<el-popover trigger="hover" popper-class="m-pet-skill" :visible-arrow="false" placement="top">
 							<div class="u-skill-pop">
 								<div class="u-skill-name">{{ skill.Name }}</div>
 								<div class="u-skill-desc">{{ skill.Desc }}</div>
@@ -39,8 +39,8 @@
 					<div class="u-meta u-desc">
 						<span class="u-meta-label">宠物说明：</span>
 						<span class="u-meta-value">
-							<template v-for="item in getPetDesc(pet.Desc)">
-								<span :key="item.text" v-html="item.text"></span>
+							<template v-for="(item, index) in getPetDesc(pet.Desc)">
+								<span :key="index" v-html="item.text"></span>
 							</template>
 						</span>
 					</div>
@@ -70,7 +70,7 @@
 		<div class="m-pet-fetters">
 			<div class="u-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">宠物羁绊</span></div>
 			<!-- 羁绊信息 -->
-			<petFetters :list="item" v-for="(item, index) in medalList" :key="index" />
+			<petFetters :info="item" v-for="item in medalList" :key="item.ID" />
 		</div>
 
 		<!-- 宠物攻略 -->
@@ -131,14 +131,20 @@ export default {
 			return this.pet.Name;
 		},
 	},
+	watch: {
+		id() {
+			this.getPetInfo()
+		}
+	},
 	methods: {
 		// 获取宠物详情
 		getPetInfo: function () {
 			getPet(this.id).then((res) => {
 				this.pet = res.data;
-				if (res.data.medal_list.length > 0) this.getPetFetters(res.data.medal_list);
+				this.medalList = res.data.medal_list
 				this.getPetWiki();
 				this.getShopInfo();
+				this.getPetMedal()
 			});
 		},
 		// 获取宠物技能信息
@@ -207,19 +213,27 @@ export default {
 		},
 		getLink,
 		// 获取宠物羁绊的宠物
-		getPetFetters(list) {
-			list.map((el) => {
-				let _list = [];
-				for (const key in el) {
-					if (key.indexOf("PetIndex") !== -1 && el[key] !== null) {
-						_list.push(el[key]);
+		getPetMedal() {
+			const ids = new Set()
+			// 将每个羁绊的宠物id取出来
+			this.medalList.forEach(item => {
+				item.pets = []
+				for (const key in item) {
+					if (key.includes('PetIndex') && item[key]) {
+						item.pets = [...item.pets, item[key]]
+						ids.add(item[key])
 					}
 				}
-				getPets({ ids: _list.join(",") }).then((res) => {
-					el.petList = res.data.list;
-				});
-			});
-			this.medalList = list;
+			})
+			getPets({ ids: [...ids].join(',') }).then(res => {
+				const list = res.data.list
+				// 将羁绊的宠物放入对应的羁绊中
+				this.medalList.map(item => {
+					const petList = list.filter(pet => item.pets.includes(pet.Index))
+					this.$set(item, 'petList', petList)
+					return item
+				})
+			})
 		},
 	},
 	filters: {
