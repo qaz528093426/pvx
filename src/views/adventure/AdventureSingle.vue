@@ -32,6 +32,7 @@ import { getAdventure, getSerendipityAchievementIds } from "@/service/adventure"
 import task from "@/components/adventure/task.vue";
 import Serendipity from "@/components/common/serendipity.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
+import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 export default {
     name: "adventureSingle",
     props: [],
@@ -67,6 +68,7 @@ export default {
             getAdventure(this.id).then((res) => {
                 this.isPet = false;
                 this.data = res.data;
+                postStat('adventure', this.id)
             });
             getSerendipityAchievementIds().then((res) => {
                 this.achieve_id = res.data[this.id];

@@ -95,6 +95,7 @@ import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 // import Serendipity from "@/components/common/serendipity.vue";
+import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 export default {
 	name: "PetSingle",
 	props: [],
@@ -145,6 +146,7 @@ export default {
 				this.getPetWiki();
 				this.getShopInfo();
 				this.getPetMedal()
+				postStat('pet', this.id)
 			});
 		},
 		// 获取宠物技能信息
