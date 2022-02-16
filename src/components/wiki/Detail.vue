@@ -33,13 +33,12 @@
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/wiki/WikiPanel";
 import WikiRevisions from "@jx3box/jx3box-common-ui/src/wiki/WikiRevisions";
-import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { getWiki } from "@/service/wiki";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 
 export default {
     name: "Detail",
-    props: ["achievement_id", "item_id", "title",'real_type'],
+    props: ["achievement_id", "item_id", "title", "real_type"],
     data() {
         return {
             wiki_post: null,
@@ -59,9 +58,9 @@ export default {
             return this.achievement_id ? "achievement" : "item";
         },
         // 本地类型ID
-        real_id : function (){
-            return this.$route.params.id
-        }
+        real_id: function () {
+            return this.$route.params.id;
+        },
     },
     methods: {
         publish_url: publishLink,
@@ -79,7 +78,7 @@ export default {
                 // 获取最新攻略
                 if (val) {
                     getWiki(this.type, this.id).then((res) => {
-                        this.wiki_post = res.data.data;
+                        this.wiki_post = res?.data?.data;
                     });
                 }
             },

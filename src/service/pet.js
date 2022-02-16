@@ -12,16 +12,16 @@ function getPets(params) {
     });
 }
 
-function getPet(petid, client = "std") {
+function getPet(petid, params) {
     return $.get(`/pet/${petid}`, {
-        params: {
-            client,
-        },
+        params
     });
 }
 
-function getPetSkill(petid) {
-    return $.get(`/pet/${petid}/skill`);
+function getPetSkill(petid,  params) {
+    return $.get(`/pet/${petid}/skill`,{
+        params
+    });
 }
 
 function getShopInfo({ item_type, item_id, client = "std" }) {
