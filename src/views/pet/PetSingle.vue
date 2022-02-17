@@ -162,6 +162,7 @@ export default {
         },
         // 获取宠物技能信息
         getPetWiki: function () {
+            // TODO:新的接口
             this.item_id &&
                 getWiki("item", this.item_id).then((res) => {
                     this.petWiki = res?.data?.data?.source?.pet;

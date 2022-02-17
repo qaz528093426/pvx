@@ -38,6 +38,7 @@ import { publishLink } from "@jx3box/jx3box-common/js/utils";
 
 export default {
     name: "Detail",
+    // TODO:宠物的关联成就ID应在上层传递下来
     props: ["achievement_id", "item_id", "title", "real_type"],
     data() {
         return {
@@ -61,6 +62,14 @@ export default {
         real_id: function () {
             return this.$route.params.id;
         },
+        params: function () {
+            return {
+                type: this.type,
+                source_id: this.id,
+                supply: 1,
+                client: this.client,
+            };
+        },
     },
     methods: {
         publish_url: publishLink,
@@ -77,7 +86,7 @@ export default {
             handler(val) {
                 // 获取最新攻略
                 if (val) {
-                    getWiki(this.type, this.id).then((res) => {
+                    getWiki(this.params).then((res) => {
                         this.wiki_post = res?.data?.data;
                     });
                 }
