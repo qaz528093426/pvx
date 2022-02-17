@@ -41,9 +41,9 @@
             .mr(7px);
         }
     }
-    .u-desc{
+    .u-desc {
         .fz(12px,2);
-        color:#fda522;
+        color: #fda522;
         .mb(10px);
     }
 }
@@ -52,18 +52,31 @@
     .flex;
     flex-wrap: wrap;
 
-    .u-fetter {
-        // .flex;
-        .pointer;
+    .el-popover__reference-wrapper {
+        display: inline-block;
         .mr(15px);
+    }
+    .u-fetter {
+        .pr;
+        .pointer;
+        display: inline-block;
         .mb(10px);
         .r(3px);
         .clip;
-        // flex-direction: column;
-        // border-style: solid;
-        // background-image: linear-gradient(to right, #eee, #b1b1b1);
-        // box-shadow: 0 0 4px 1px #4d4d4d82;
         width: 48px;
+
+        .u-mark {
+            color: #fff;
+            font-size: 12px;
+            line-height: 16px;
+            transform: rotate(45deg) scale(0.8);
+            position: absolute;
+            right: -20px;
+            top: 0;
+            padding: 0 15px 0 25px;
+            font-style: normal;
+            background-color: #2fcb53;
+        }
     }
 
     .u-fetter-icon {
@@ -72,8 +85,8 @@
             .db;
             .r(6px);
 
-            &:hover{
-                filter:brightness(110%) saturate(110%);
+            &:hover {
+                filter: brightness(110%) saturate(110%);
             }
         }
 
@@ -101,11 +114,6 @@
         &.u-quality-5:after {
             border-color: #ffa500;
         }
-
-        &.isActive:after{
-            background-image: url("@{img_path}/image/item/orange.gif");
-            border:none;
-        }
     }
 
     .u-fetter-name {
@@ -117,4 +125,14 @@
         overflow: hidden;
         white-space: nowrap;
     }
+    
+}
+
+.m-pet-pop {
+    min-width: initial;
+    padding: 0 !important;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    transform: translateY(-10px);
 }

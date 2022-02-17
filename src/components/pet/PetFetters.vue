@@ -7,28 +7,47 @@
         </div>
 
         <div class="m-fetters-list">
-            <router-link class="u-fetter" v-for="pet in info.petList" :key="pet.Index" :to="'/pet/' + pet.Index">
-                <i class="u-fetter-icon" :class="['u-quality-' + pet.Quality, { isActive: pet.Index == id }]"><img :src="iconLink(pet.IconID)" /></i>
-                <!-- <jx3-item-simple class="u-pet-icon" :item="pet.item" only-icon="true" icon-size="48px" /> -->
-                <span class="u-fetter-name">{{ pet.Name }}</span>
-            </router-link>
+            <el-popover
+                placement="top"
+                popper-class="m-pet-pop"
+                width="auto"
+                :visible-arrow="false"
+                trigger="hover"
+                transition="none"
+                :close-delay="0"
+                v-for="pet in info.petList"
+                :key="pet.Index"
+            >
+                <router-link slot="reference" class="u-fetter" :to="'/pet/' + pet.Index">
+                    <i class="u-fetter-icon" :class="['u-quality-' + pet.Quality]">
+                        <img :src="iconLink(pet.IconID)" />
+                    </i>
+                    <span class="u-fetter-name">{{ pet.Name }}</span>
+                    <i class="u-mark" v-if="pet.Index == id">当前</i>
+                </router-link>
+
+                <jx3-item :item_id="`${pet.ItemTabType}_${pet.ItemTabIndex}`"></jx3-item>
+            </el-popover>
         </div>
     </div>
 </template>
 <script>
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { iconLink, extractTextContent } from "@jx3box/jx3box-common/js/utils";
+import Item from "@jx3box/jx3box-editor/src/Item";
 export default {
     name: "Fetters",
     props: ["info"],
-    components: {},
+    components: {
+        'jx3-item': Item
+    },
     data: function () {
         return {};
     },
     computed: {
         id: function () {
             return this.$route.params.id;
-        },
+        }
     },
     methods: {
         // 获取宠物图片路径
