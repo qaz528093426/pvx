@@ -412,5 +412,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "~@/assets/css/house/flower.less";
+@import "~@/assets/css/homeland/flower.less";
 </style>

@@ -1,13 +1,18 @@
 <template>
-    <div class="v-homeland-tutorial">
-        1.家园升级表
-        2.拉取菜单组homeland_rec
+    <div class="v-homeland-furniture">
+
+        1.家具详情（属性+图片），加入清单
+        2.庐远广记
+        3.攻略
+        4.评论
+        
+
     </div>
 </template>
 
 <script>
 export default {
-   name : 'Tutorial',
+   name : 'FurnitureSingle',
    props:[],
    components : {},
    data : function(){

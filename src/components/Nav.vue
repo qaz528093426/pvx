@@ -33,28 +33,33 @@
             <el-submenu index="2">
                 <template slot="title">家园</template>
                 <el-menu-item-group>
+                    <el-menu-item index="2-1" :class="{ 'is-active': active == 'tutorial' }">
+                        <a :href="getAppLink('homeland/tutorial')" class="disabled">
+                            <i class="el-icon-reading"></i>
+                            <span>家园指南</span>
+                        </a>
+                    </el-menu-item>
                     <el-menu-item index="2-1" :class="{ 'is-active': active == 'furniture' }">
-                        <a :href="getAppLink('/homeland/furniture')" class="disabled">
+                        <a :href="getAppLink('homeland/furniture')" class="disabled">
                             <i class="el-icon-table-lamp"></i>
-                            <!-- <img src="@/assets/img/furniture.svg" /> -->
                             <span>家具大全</span>
                         </a>
                     </el-menu-item>
                     <el-menu-item index="2-2" :class="{ 'is-active': active == 'maps' }">
                         <a :href="getAppLink('homeland/maps')" class="disabled">
-                            <i class="el-icon-guide"></i>
+                            <i class="el-icon-map-location"></i>
                             <span>家园地图</span>
                         </a>
                     </el-menu-item>
                     <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
                         <a :href="getAppLink('homeland/flower')">
-                            <i class="el-icon-guide"></i>
+                            <i class="el-icon-sunny"></i>
                             <span>花价查询</span>
                         </a>
                     </el-menu-item>
-                    <!-- <el-menu-item index="2-3" :class="{ 'is-active': active == 'blueprint' }">
-                        <a :href="getAppLink('blueprint')" class="disabled"> <i class="el-icon-setting"></i>蓝图解析 </a>
-                    </el-menu-item> -->
+                    <el-menu-item index="2-3" :class="{ 'is-active': active == 'blueprint' }">
+                        <a :href="getAppLink('homeland/blueprint')" class="disabled"> <i class="el-icon-setting"></i>蓝图解析 </a>
+                    </el-menu-item>
                     <el-menu-item index="2-4">
                         <a href="https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/" target="_blank"> <i class="el-icon-position"></i>家园蓝图 </a>
                     </el-menu-item>
