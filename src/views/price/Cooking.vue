@@ -62,8 +62,6 @@
                     @click="handleClick(subItem)"
                   >
                     <div
-                      @mouseover.native="handleMouse(index, i)"
-                      @mouseout.native="handleMouse(index, i)"
                       class="c-cooking-menu-item"
                     >
                       {{ subItem.title }}
@@ -74,7 +72,7 @@
                         <el-input-number
                           size="mini"
                           :min="1"
-                          @change="handleNumber"
+                          @change="handleNumber(this,index,i)"
                           v-model="subItem.buildNumber"
                         ></el-input-number>
                         <el-button icon="el-icon-plus" circle></el-button>
