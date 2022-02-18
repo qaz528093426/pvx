@@ -8,6 +8,7 @@
           class="c-Panel-itemNav flex-center-between"
         >
           <div>
+            <Item/>
             <div>物品图标</div>
             <div>{{item.name}}</div>
             <div>需要金钱</div>
@@ -43,9 +44,11 @@
 </template>
 
 <script>
+import Item from '@jx3box/jx3box-editor/src/Item.vue'
 export default {
   name: "Panel",
   props: ["panelArr"],
+  components:{Item},
   data: function () {
     return {};
   },
