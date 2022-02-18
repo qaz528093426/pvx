@@ -181,14 +181,18 @@ export default {
     handleSelect() {}, //选择搜索的物品
     querySearch() {}, //搜索物品
     addPanel(val) {
-      if (this.panelArr.length > 0) {
-        let arr = this.panelArr.filter((item) => val.id == item.id)
-        console.log(arr);
-        // if ( ) {
-      
-        // }
+      // if (this.panelArr.length > 0) {
+      //   
+      // }
+      let arr = this.panelArr.filter((item) => val.id == item.id);
+      console.log(arr);
+      if (arr.length > 0) {
+        this.$message({
+          message: "不可重复添加购物车",
+          type: "warning",
+        });
+        return;
       }
-
       this.panelArr.push(val);
     }, //加入购物车
   },
