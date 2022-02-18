@@ -5,6 +5,7 @@ import Vue from "vue";
 import ElementUI from "element-ui";
 Vue.use(ElementUI);
 
+// 其他组件
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
 
@@ -14,14 +15,15 @@ import "@jx3box/jx3box-common/css/element.css";
 import "@jx3box/jx3box-common/css/normalize.css";
 Vue.use(JX3BOX_UI);
 
-// 数据与路由
-// import router from "../router";
-// import store from "../store";
 
-import Flower from "@/views/house/Flower.vue";
+// 数据与路由
+import router from "../router/homeland.js";
+// import store from "./store";
+
+import App from "@/views/homeland/Homeland.vue";
 new Vue({
-    // router,
+    router,
     // store,
-    render: h => h(Flower),
+    render: h => h(App),
 }).$mount("#app");
 

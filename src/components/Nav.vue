@@ -34,16 +34,21 @@
                 <template slot="title">家园</template>
                 <el-menu-item-group>
                     <el-menu-item index="2-1" :class="{ 'is-active': active == 'furniture' }">
-                        <a :href="getAppLink('furniture')" class="disabled">
+                        <a :href="getAppLink('/homeland/furniture')" class="disabled">
                             <i class="el-icon-table-lamp"></i>
                             <!-- <img src="@/assets/img/furniture.svg" /> -->
                             <span>家具大全</span>
                         </a>
                     </el-menu-item>
-                    <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
-                        <a :href="getAppLink('flower')">
+                    <el-menu-item index="2-2" :class="{ 'is-active': active == 'maps' }">
+                        <a :href="getAppLink('homeland/maps')" class="disabled">
                             <i class="el-icon-guide"></i>
-                            <!-- <img src="@/assets/img/flower.svg" /> -->
+                            <span>家园地图</span>
+                        </a>
+                    </el-menu-item>
+                    <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
+                        <a :href="getAppLink('homeland/flower')">
+                            <i class="el-icon-guide"></i>
                             <span>花价查询</span>
                         </a>
                     </el-menu-item>
@@ -124,7 +129,7 @@ export default {
             if (isDev) {
                 return `/${appKey}/`;
             } else {
-                return `/pvx/${appKey}/`;
+                return `/pvx/${appKey}`;
             }
         },
     },

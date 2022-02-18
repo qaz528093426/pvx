@@ -18,23 +18,18 @@ module.exports = {
             template: "public/index.html",
             filename: "share/index.html",
         },
+        // TODO:未来待整合
         facedata: {
             title: "妆容解析 - JX3BOX",
             entry: "src/pages/facedata.js",
             template: "public/index.html",
             filename: "facedata/index.html",
         },
-        furniture: {
-            title: "家具大全 - JX3BOX",
-            entry: "src/pages/furniture.js",
+        homeland: {
+            title: "家园建设 - JX3BOX",
+            entry: "src/pages/homeland.js",
             template: "public/index.html",
-            filename: "furniture/index.html",
-        },
-        flower: {
-            title: "花价查询 - JX3BOX",
-            entry: "src/pages/flower.js",
-            template: "public/index.html",
-            filename: "flower/index.html",
+            filename: "homeland/index.html",
         },
         pet: {
             title: "宠物大全 - JX3BOX",
@@ -48,30 +43,30 @@ module.exports = {
             template: "public/index.html",
             filename: "adventure/index.html",
         },
-        cooking: {
-            title: "技艺助手 - JX3BOX",
-            entry: "src/pages/cooking.js",
-            template: "public/index.html",
-            filename: "cooking/index.html",
-        },
-        price: {
-            title: "物价大全 - JX3BOX",
-            entry: "src/pages/price.js",
-            template: "public/index.html",
-            filename: "price/index.html",
-        },
-        gold: {
-            title: "金价走势 - JX3BOX",
-            entry: "src/pages/gold.js",
-            template: "public/index.html",
-            filename: "gold/index.html",
-        },
-        dress: {
-            title: "外观大全 - JX3BOX",
-            entry: "src/pages/dress.js",
-            template: "public/index.html",
-            filename: "dress/index.html",
-        },
+        // cooking: {
+        //     title: "技艺助手 - JX3BOX",
+        //     entry: "src/pages/cooking.js",
+        //     template: "public/index.html",
+        //     filename: "cooking/index.html",
+        // },
+        // price: {
+        //     title: "物价大全 - JX3BOX",
+        //     entry: "src/pages/price.js",
+        //     template: "public/index.html",
+        //     filename: "price/index.html",
+        // },
+        // gold: {
+        //     title: "金价走势 - JX3BOX",
+        //     entry: "src/pages/gold.js",
+        //     template: "public/index.html",
+        //     filename: "gold/index.html",
+        // },
+        // dress: {
+        //     title: "外观大全 - JX3BOX",
+        //     entry: "src/pages/dress.js",
+        //     template: "public/index.html",
+        //     filename: "dress/index.html",
+        // },
     },
 
     //❤️ Proxy ~
