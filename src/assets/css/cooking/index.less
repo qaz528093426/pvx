@@ -1,19 +1,74 @@
 
-.m-cooking-side{
-    width: 100%;
-    max-width: 350px;
-    .c-cooking-search{
-        .c-cooking-input{
+.flex-start-between{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.flex-center-between{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.flex-column-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.m-cooking-main{
+    padding: 20px 30px;
+    .m-cooking-side{
+        width: 100%;
+        max-width: 220px;
+        .c-cooking-search{
 
         }
-    }
-    .c-cooking-column{
-        .c-cooking-menu-item{
-            display: flex;
-            justify-content: space-between;
-            .c-cooking-menu-action{
+        .c-cooking-itemList{
 
+            .c-cooking-itemNav{
+                .c-cooking-itemAct{
+                    display: none;
+                }
+            }
+            .el-menu-item:hover{
+                .c-cooking-itemAct{
+                    display: flex;
+                }
+            }
+            
+        }
+    }
+    .m-cooking-content{
+        .c-cooking-mainItem{
+            .u-cooking-itemIcon{
+                width: 80px;
+                height: 80px;
+                background: #333;
+            }
+            .u-cooking-itemName{
+            
             }
         }
     }
+}
+.Panel{ //购物车
+    width: 500px;
+    .m-Panel-content{
+        border: 1px solid #dcdfe6;
+        border-radius: 10px;
+        margin: 10px 0;
+    }
+    .c-Panel-itemList{
+        padding: 15px 8px 5px;
+        border-bottom: 1px solid #dcdfe6;
+        .c-Panel-itemNav{
+            border-radius: 6px;
+            padding: 10px 5px;
+            margin: 10px 0;
+            background-color: #dcdfe6;
+        }
+    }
+    .c-Panel-total{
+        padding: 8px;
+    }  
+
 }
