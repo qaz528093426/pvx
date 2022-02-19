@@ -40,11 +40,15 @@
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/wiki/WikiPanel";
 import WikiRevisions from "@jx3box/jx3box-common-ui/src/wiki/WikiRevisions";
-// import { getWiki } from "@/service/wiki";
 import { publishLink, ts2str } from "@jx3box/jx3box-common/js/utils";
 import { WikiPost } from "@jx3box/jx3box-common/js/helper";
 export default {
     name: "Wiki",
+    components: {
+        WikiPanel,
+        WikiRevisions,
+        Article,
+    },
     props: ["title", "source_type", "source_id", "type", "id"],
     data() {
         return {
@@ -75,58 +79,48 @@ export default {
         updated_at: function () {
             return ts2str(this.wiki_post?.post?.updated);
         },
-        publish_url : function (){
-            return publishLink(`${this.source_type}/${this.source_id}`)
-        }
+        publish_url: function () {
+            return publishLink(`${this.source_type}/${this.source_id}`);
+        },
     },
-    components: {
-        WikiPanel,
-        WikiRevisions,
-        Article,
+    methods: {
+        loadData: function () {
+            if (this.client == "std") {
+                WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
+                    this.wiki_post = res?.data?.data;
+                    if (this.wiki_post.post) this.is_empty = false;
+                    console.log("获取正式服攻略");
+                });
+            } else {
+                WikiPost.newest(this.source_type, this.source_id, 1, "origin")
+                    .then((res) => {
+                        this.wiki_post = res?.data?.data;
+                        if (this.wiki_post.post) this.is_empty = false;
+                        console.log("获取怀旧服攻略");
+                        return !!this.wiki_post.post;
+                    })
+                    .then((data) => {
+                        if (!data) {
+                            console.log("兼容：获取正式服攻略");
+                            WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
+                                this.wiki_post = res?.data?.data;
+                                if (this.wiki_post.post) this.is_empty = false;
+                                this.compatible = true;
+                            });
+                        }
+                    });
+            }
+        },
     },
     watch: {
         id: {
             immediate: true,
             handler(val) {
-                if (val) {
-                    if (this.client == "std") {
-                        WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
-                            let data = res?.data?.data;
-                            this.wiki_post = data;
-                            if (data.post) {
-                                this.is_empty = false;
-                            }
-                            console.log("获取正式服攻略");
-                        });
-                    } else {
-                        WikiPost.newest(this.source_type, this.source_id, 1, "origin")
-                            .then((res) => {
-                                let data = res?.data?.data;
-                                this.wiki_post = data;
-                                if (data.post) {
-                                    this.is_empty = false;
-                                }
-                                console.log("获取怀旧服攻略");
-                                return !!data.post;
-                            })
-                            .then((data) => {
-                                if (!data) {
-                                    console.log("兼容：获取正式服攻略");
-                                    WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
-                                        let data = res?.data?.data;
-                                        this.wiki_post = data;
-                                        if (data.post) {
-                                            this.is_empty = false;
-                                        }
-                                        this.compatible = true;
-                                    });
-                                }
-                            });
-                    }
-                }
+                if (val) this.loadData();
             },
         },
     },
+    mounted: function () {},
 };
 </script>
 
