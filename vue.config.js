@@ -36,29 +36,11 @@ module.exports = {
             template: "public/index.html",
             filename: "adventure/index.html",
         },
-        // cooking: {
-        //     title: "技艺助手 - JX3BOX",
-        //     entry: "src/pages/cooking.js",
+        // merchants: {
+        //     title: "商贾云集 - JX3BOX",
+        //     entry: "src/pages/merchants.js",
         //     template: "public/index.html",
-        //     filename: "cooking/index.html",
-        // },
-        // price: {
-        //     title: "物价大全 - JX3BOX",
-        //     entry: "src/pages/price.js",
-        //     template: "public/index.html",
-        //     filename: "price/index.html",
-        // },
-        // gold: {
-        //     title: "金价走势 - JX3BOX",
-        //     entry: "src/pages/gold.js",
-        //     template: "public/index.html",
-        //     filename: "gold/index.html",
-        // },
-        // dress: {
-        //     title: "外观大全 - JX3BOX",
-        //     entry: "src/pages/dress.js",
-        //     template: "public/index.html",
-        //     filename: "dress/index.html",
+        //     filename: "merchants/index.html",
         // },
     },
 

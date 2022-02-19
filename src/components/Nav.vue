@@ -19,83 +19,6 @@
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="2">
-                <template slot="title">家园</template>
-                <el-menu-item-group>
-                    <!-- <el-menu-item index="2-1" :class="{ 'is-active': active == 'tutorial' }">
-                        <a :href="getAppLink('homeland/tutorial')" class="disabled">
-                            <i class="el-icon-reading"></i>
-                            <span>家园指南</span>
-                        </a>
-                    </el-menu-item>
-                    <el-menu-item index="2-1" :class="{ 'is-active': active == 'furniture' }">
-                        <a :href="getAppLink('homeland/furniture')" class="disabled">
-                            <i class="el-icon-table-lamp"></i>
-                            <span>家具大全</span>
-                        </a>
-                    </el-menu-item>
-                    <el-menu-item index="2-2" :class="{ 'is-active': active == 'maps' }">
-                        <a :href="getAppLink('homeland/maps')" class="disabled">
-                            <i class="el-icon-map-location"></i>
-                            <span>家园地图</span>
-                        </a>
-                    </el-menu-item> -->
-                    <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
-                        <a href="/homeland/flower">
-                            <i class="el-icon-sunny"></i>
-                            <span>花价查询</span>
-                        </a>
-                    </el-menu-item>
-                    <!-- <el-menu-item index="2-3" :class="{ 'is-active': active == 'blueprint' }">
-                        <a :href="getAppLink('homeland/blueprint')" class="disabled"> <i class="el-icon-setting"></i>蓝图解析 </a>
-                    </el-menu-item> -->
-                    <el-menu-item index="2-4">
-                        <a href="https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/" target="_blank"> <i class="el-icon-position"></i>家园蓝图 </a>
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="3">
-                <template slot="title">珍奇</template>
-                <el-menu-item-group>
-                    <el-menu-item index="3-1" :class="{ 'is-active': active == 'pet' }">
-                        <a href="/pet">
-                            <i class="el-icon-sugar"></i>
-                            <!-- <img src="@/assets/img/pet2.svg" /> -->
-                            <span>宠物大全</span>
-                        </a>
-                    </el-menu-item>
-                    <el-menu-item index="4-1" :class="{ 'is-active': active == 'adventure' }">
-                        <a href="/adventure">
-                            <i class="el-icon-files"></i>
-                            <!-- <img src="@/assets/img/adventure.svg" /> -->
-                            <span>奇遇大全</span>
-                        </a>
-                    </el-menu-item>
-                    <!-- <el-menu-item index="4-3" :class="{ 'is-active': active == 'horse' }">
-                        <a href="/horse">
-                            <i class="el-icon-files"></i>
-                            <span>坐骑大全</span>
-                        </a>
-                    </el-menu-item> -->
-                </el-menu-item-group>
-            </el-submenu>
-            <!-- <el-submenu index="4">
-                <template slot="title">商贾</template>
-                <el-menu-item-group>
-                    <el-menu-item index="5-1" :class="{ 'is-active': active == 'cooking' }">
-                        <a :href="getAppLink('cooking')" class="disabled"> <i class="el-icon-setting"></i>技艺助手 </a>
-                    </el-menu-item>
-                    <el-menu-item index="5-2" :class="{ 'is-active': active == 'price' }">
-                        <a :href="getAppLink('price')" class="disabled"> <i class="el-icon-coin"></i>物价大全 </a>
-                    </el-menu-item>
-                    <el-menu-item index="5-3" :class="{ 'is-active': active == 'gold' }">
-                        <a :href="getAppLink('gold')" class="disabled"> <i class="el-icon-data-line"></i>金价走势 </a>
-                    </el-menu-item>
-                    <el-menu-item index="5-4">
-                        <a href="https://jx3.seasunwbl.com/buyer?t=coin" target="_blank"> <i class="el-icon-position"></i>万宝楼 </a>
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu> -->
         </el-menu>
     </div>
 </template>
@@ -130,13 +53,103 @@ export default {
                         },
                         {
                             path: "/exterior",
-                            label: "妆容解析",
+                            label: "外观大全",
                             icon: "el-icon-setting",
                             key: "exterior",
                             status: false,
                         },
                     ],
                 },
+
+                {
+                    key: "homeland",
+                    label: "家园",
+                    index: "2",
+                    submenus: [
+                        {
+                            path: "/homeland/tutorial",
+                            label: "家园指南",
+                            icon: "el-icon-reading",
+                            key: "tutorial",
+                            status: false,
+                        },
+                        {
+                            path: "/homeland/furniture",
+                            label: "家具大全",
+                            icon: "el-icon-table-lamp",
+                            key: "furniture",
+                            status: false,
+                        },
+                        {
+                            path: "/homeland/maps",
+                            label: "家园地图",
+                            icon: "el-icon-map-location",
+                            key: "maps",
+                            status: false,
+                        },
+                        {
+                            path: "/homeland/flower",
+                            label: "花价查询",
+                            icon: "el-icon-sunny",
+                            key: "flower",
+                            status: true,
+                        },
+                        {
+                            path: "https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/",
+                            label: "蓝图下载",
+                            icon: "el-icon-position",
+                            key: "blueprint",
+                            status: true,
+                        },
+                    ],
+                },
+
+                {
+                    key: "rare",
+                    label: "珍奇",
+                    index: "3",
+                    submenus: [
+                        {
+                            path: "/pet",
+                            label: "宠物大全",
+                            icon: "el-icon-sugar",
+                            key: "pet",
+                            status: true,
+                        },
+                        {
+                            path: "/adventure",
+                            label: "奇遇大全",
+                            icon: "el-icon-files",
+                            key: "adventure",
+                            status: true,
+                        },
+                        {
+                            path: "/horse",
+                            label: "坐骑大全",
+                            icon: "el-icon-files",
+                            key: "horse",
+                            status: false,
+                        },
+                    ],
+                },
+
+                // {
+                //     key: "merchants",
+                //     label: "商贾",
+                //     index: "4",
+                //     submenus: [
+                //         {
+                //             path: "/merchants/cooking",
+                //             label: "技艺助手",
+                //             icon: "el-icon-sugar",
+                //             key: "cooking",
+                //             status: false,
+                //         },
+                //         // 物价大全
+                //         // 金价走势
+                //         // 万宝楼
+                //     ],
+                // },
             ],
         };
     },

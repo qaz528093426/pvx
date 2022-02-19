@@ -2,7 +2,7 @@
     <div id="app">
         <Header></Header>
         <Breadcrumb name="家园建设" slug="homeland" root="/homeland" :publishEnable="false" :adminEnable="false" :feedbackEnable="true" :crumbEnable="false">
-            <img slot="logo" svg-inline :src="getAppIcon('homeland')" />
+            <img slot="logo" svg-inline :src="getAppIcon('furniture')" />
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
