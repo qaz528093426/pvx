@@ -22,8 +22,8 @@
                 </h1>
 
                 <!-- 宠物技能 -->
-                <div class="m-pet-skills" v-if="petWiki">
-                    <div class="u-skill" v-for="(skill, index) in petWiki.skills" :key="index">
+                <div class="m-pet-skills">
+                    <div class="u-skill" v-for="(skill, index) in petSkills" :key="index">
                         <el-popover trigger="hover" popper-class="m-pet-skill" :visible-arrow="false" placement="top">
                             <div class="u-skill-pop">
                                 <div class="u-skill-name">{{ skill.Name }}</div>
@@ -84,8 +84,7 @@
 </template>
 
 <script>
-import { getPet, getPets, getShopInfo } from "@/service/pet";
-import { getWiki } from "@/service/wiki";
+import { getPet, getPets, getShopInfo, getPetSkill, getSkill } from "@/service/pet";
 import { getPetLucky } from "@/service/pet";
 import petCard from "@/components/pet/PetCard.vue";
 import petFetters from "@/components/pet/PetFetters.vue";
@@ -94,8 +93,8 @@ import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
-// import Serendipity from "@/components/common/serendipity.vue";
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
+
 export default {
     name: "PetSingle",
     props: [],
@@ -104,12 +103,11 @@ export default {
         petFetters,
         Detail,
         Comment,
-        // Serendipity,
     },
     data: function () {
         return {
             pet: "",
-            petWiki: "",
+            petSkills: [],
             shopInfo: "",
             luckyList: [],
             medalList: [],
@@ -141,6 +139,7 @@ export default {
     watch: {
         id() {
             this.getPetInfo();
+            this.loadPetSkills();
         },
     },
     methods: {
@@ -151,7 +150,6 @@ export default {
                 .then((res) => {
                     this.pet = res.data;
                     this.medalList = res.data.medal_list;
-                    this.getPetWiki();
                     this.getShopInfo();
                     this.getPetMedal();
                     postStat("pet", this.id);
@@ -161,12 +159,41 @@ export default {
                 });
         },
         // 获取宠物技能信息
-        getPetWiki: function () {
-            // TODO:新的接口
-            this.item_id &&
-                getWiki("item", this.item_id).then((res) => {
-                    this.petWiki = res?.data?.data?.source?.pet;
-                });
+        loadPetSkills: function () {
+            getPetSkill(this.id).then(res => {
+                const levelIds = [];
+                const skillIds = [];
+
+                this.petSkills = [];
+
+                for (const key in res.data) {
+                    // 技能等级
+                    if (key.startsWith('Level') && res.data[key]) {
+                        levelIds.push(res.data[key])
+                    }
+                    // 技能id
+                    if (key.startsWith('SkillID') && res.data[key]) {
+                        skillIds.push(res.data[key])
+                    }
+                }
+
+                getSkill({
+                    ids: skillIds.join(','),
+                    client: this.client
+                }).then(skillRes => {
+
+                    levelIds.forEach((level, index) => {
+                        let skills = skillRes.data.filter(skill => skill.Level === level);
+
+                        const skill = skills.find(_skill => _skill.SkillID === skillIds[index]);
+
+                        if (skill) {
+                            this.petSkills.push(skill)
+                        }
+                    })
+
+                })
+            })
         },
         // 获取宠物商城价格
         getShopInfo() {
@@ -261,6 +288,7 @@ export default {
     },
     mounted: function () {
         this.getPetInfo();
+        this.loadPetSkills();
     },
 };
 </script>
