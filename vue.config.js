@@ -18,13 +18,6 @@ module.exports = {
             template: "public/index.html",
             filename: "share/index.html",
         },
-        // TODO:未来待整合
-        facedata: {
-            title: "妆容解析 - JX3BOX",
-            entry: "src/pages/facedata.js",
-            template: "public/index.html",
-            filename: "facedata/index.html",
-        },
         homeland: {
             title: "家园建设 - JX3BOX",
             entry: "src/pages/homeland.js",

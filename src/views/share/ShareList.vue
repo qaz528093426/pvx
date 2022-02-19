@@ -110,6 +110,8 @@ export default {
             this.getData();
         },
     },
+    mounted : function (){
+    }
 };
 </script>
 

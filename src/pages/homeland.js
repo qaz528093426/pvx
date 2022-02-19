@@ -18,12 +18,12 @@ Vue.use(JX3BOX_UI);
 
 // 数据与路由
 import router from "../router/homeland.js";
-// import store from "./store";
+import store from "../store";
 
 import App from "@/views/homeland/Homeland.vue";
 new Vue({
     router,
-    // store,
+    store,
     render: h => h(App),
 }).$mount("#app");
 

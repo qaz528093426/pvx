@@ -8,26 +8,15 @@
         </RightSideMsg>
 
         <el-menu :default-openeds="['1', '2', '3']">
-            <el-submenu index="1">
-                <template slot="title">栉掠</template>
+            <el-submenu :index="group.index" v-for="group in menus" :key="group.key">
+                <template slot="title">{{group.label}}</template>
                 <el-menu-item-group>
-                    <el-menu-item index="1-1" :class="{ 'is-active': active == 'share' }">
-                        <a href="/share">
-                            <i class="el-icon-download"></i>
-                            <!-- <img src="@/assets/img/share.svg" /> -->
-                            <span>捏脸分享</span>
+                    <el-menu-item v-for="item in group.submenus" :key="item.key" :class="{ 'is-active': active == item.key }" v-show="item.status">
+                        <a :href="item.path" :target="item.target || '_self'">
+                            <i :class="item.icon"></i>
+                            <span>{{ item.label }}</span>
                         </a>
                     </el-menu-item>
-                    <el-menu-item index="1-2" :class="{ 'is-active': active == 'facedata' }">
-                        <a :href="getAppLink('facedata')">
-                            <i class="el-icon-setting"></i>
-                            <!-- <img src="@/assets/img/facedata.svg" /> -->
-                            <span>妆容解析</span>
-                        </a>
-                    </el-menu-item>
-                    <!-- <el-menu-item index="1-3" :class="{ 'is-active': active == 'dress' }">
-                        <a :href="getAppLink('dress')" class="disabled"> <i class="el-icon-shopping-bag-1"></i>外观大全 </a>
-                    </el-menu-item> -->
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="2">
@@ -90,7 +79,7 @@
                     </el-menu-item> -->
                 </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="4">
+            <!-- <el-submenu index="4">
                 <template slot="title">商贾</template>
                 <el-menu-item-group>
                     <el-menu-item index="5-1" :class="{ 'is-active': active == 'cooking' }">
@@ -106,35 +95,58 @@
                         <a href="https://jx3.seasunwbl.com/buyer?t=coin" target="_blank"> <i class="el-icon-position"></i>万宝楼 </a>
                     </el-menu-item>
                 </el-menu-item-group>
-            </el-submenu>
+            </el-submenu> -->
         </el-menu>
     </div>
 </template>
 
 <script>
+import {compact} from 'lodash'
 export default {
     name: "Nav",
     props: [],
     components: {},
     data: function () {
         return {
-            active: "",
+            menus: [
+                {
+                    key: "face",
+                    label: "栉掠",
+                    index: "1",
+                    submenus: [
+                        {
+                            path: "/share",
+                            label: "捏脸分享",
+                            icon: "el-icon-download",
+                            key: "share",
+                            status: true,
+                        },
+                        {
+                            path: "/pvx/facedata",
+                            label: "妆容解析",
+                            icon: "el-icon-setting",
+                            key: "facedata",
+                            status: true,
+                        },
+                        {
+                            path: "/exterior",
+                            label: "妆容解析",
+                            icon: "el-icon-setting",
+                            key: "exterior",
+                            status: false,
+                        },
+                    ],
+                },
+            ],
         };
     },
-    computed: {},
-    watch: {},
-    methods: {
-        getAppType: function () {
-            let arr = location.pathname?.split("/");
-            let type = "";
-            for (let str of arr) {
-                if (str && str != "pvx") {
-                    type = str;
-                    break;
-                }
-            }
-            return type;
+    computed: {
+        active: function () {
+            let arr = compact(location.pathname?.split("/"));
+            return arr.length > 1 ? arr[1] : arr[0]
         },
+    },
+    methods: {
         getAppLink: function (appKey) {
             let isDev = location.hostname == "localhost";
             if (isDev) {
@@ -144,11 +156,6 @@ export default {
             }
         },
     },
-    filters: {},
-    created: function () {
-        this.active = this.getAppType();
-    },
-    mounted: function () {},
 };
 </script>
 

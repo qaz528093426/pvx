@@ -9,7 +9,7 @@ const FurnitureList = () => import("@/views/homeland/FurnitureList.vue");
 const FurnitureSingle = () => import("@/views/homeland/FurnitureSingle.vue");
 
 const routes = [
-    // { name: "flower", path: "/", component: Flower },
+    { name: "index", path: "/", component: FurnitureList },
     { name: "flower", path: "/flower", component: Flower },
     { name: "maps", path: "/maps", component: Maps },
     { name: "tutorial", path: "/tutorial", component: Tutorial },
