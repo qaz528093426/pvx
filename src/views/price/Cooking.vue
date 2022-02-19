@@ -116,7 +116,11 @@
           </div>
           <!-- 购物车 -->
           <div class="m-cooking-panel">
-            <Panel :panelArr="panelArr" />
+            <Panel
+              :panelArr="panelArr"
+              :makingsArr="makingsArr"
+              @removePanel="removePanel"
+            />
           </div>
         </div>
         <!-- 底部 -->
@@ -145,14 +149,51 @@ export default {
         { name: "下装", id: "2", children: [] },
       ], //物品类型表
       itemArr: [
-        { name: "上衣1", formId: "1", id: "1", num: 1 },
-        { name: "上衣2", formId: "1", id: "2", num: 1 },
-        { name: "下装1", formId: "2", id: "3", num: 1 },
-        { name: "下装2", formId: "2", id: "4", num: 1 },
+        {
+          name: "上衣1",
+          formId: "1",
+          id: "1",
+          num: 1,
+          children: [
+            { name: "上衣1材料1", id: "1-1", num: 5 },
+            { name: "上衣1材料2", id: "1-2", num: 3 },
+          ],
+        },
+        {
+          name: "上衣2",
+          formId: "1",
+          id: "2",
+          num: 1,
+          children: [
+            { name: "上衣2材料1", id: "2-1", num: 2 },
+            { name: "上衣2材料2", id: "2-2", num: 3 },
+          ],
+        },
+        {
+          name: "下装1",
+          formId: "2",
+          id: "3",
+          num: 1,
+          children: [
+            { name: "下装1材料1", id: "3-1", num: 6 },
+            { name: "下装1材料2", id: "3-2", num: 2 },
+          ],
+        },
+        {
+          name: "下装2",
+          formId: "2",
+          id: "4",
+          num: 1,
+          children: [
+            { name: "下装2材料1", id: "4-1", num: 8 },
+            { name: "下装2材料2", id: "4-2", num: 1 },
+          ],
+        },
       ], //物品列表
       itemName: "", //搜索的物品名称
       itemObj: null, //选中物品数据
       panelArr: [], //购物车数据
+      makingsArr: [], //购物车需要材料数据
     };
   },
   mounted() {
@@ -182,7 +223,7 @@ export default {
     querySearch() {}, //搜索物品
     addPanel(val) {
       // if (this.panelArr.length > 0) {
-      //   
+      //
       // }
       let arr = this.panelArr.filter((item) => val.id == item.id);
       console.log(arr);
@@ -193,8 +234,23 @@ export default {
         });
         return;
       }
+      if (this.makingsArr.length > 0) {
+        this.makingsArr.forEach((item) => {
+          
+        });
+      } else {
+        this.makingsArr = val.children
+      }
       this.panelArr.push(val);
     }, //加入购物车
+    removePanel(data) {
+      this.panelArr.forEach((item, index) => {
+        if (item.id == data.id) {
+          console.log(item, "this.panelArr");
+          this.panelArr.splice(index, 1);
+        }
+      });
+    },
   },
 };
 </script>
