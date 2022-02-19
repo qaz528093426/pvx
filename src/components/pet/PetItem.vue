@@ -1,5 +1,6 @@
 <template>
-    <a class="m-pet-item" @click="getLink(petObject.Index)">
+    <router-link class="m-pet-item" :to="'/' + petObject.Index">
+        <!--  @click="getLink(petObject.Index)" -->
         <!--宠物卡片图-->
         <img :src="getImgSrc(petObject.BgPath)" class="u-image" />
         <!--宠物边框图-->
@@ -15,7 +16,7 @@
             {{ petObject.Score || "？" }}
         </div>
         <span class="u-name">{{ petObject.Name }}</span>
-    </a>
+    </router-link>
 </template>
 
 <script>

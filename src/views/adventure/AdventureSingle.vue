@@ -40,16 +40,16 @@ export default {
         Wiki,
         task,
         Serendipity,
-        Comment
+        Comment,
     },
     data: function () {
         return {
-            type:'adventure',
+            type: "adventure",
             achieve_id: "",
             data: "",
             task: [],
             isPet: true,
-            loading : false,
+            loading: false,
         };
     },
     computed: {
@@ -60,32 +60,39 @@ export default {
             return this.data?.szName;
         },
     },
-    watch: {},
+    watch: {
+        id: {
+            immediate: true,
+            handler: function (val) {
+                if (val) {
+                    this.getData();
+                }
+            },
+        },
+    },
     methods: {
         getLink,
         goBack() {
             this.$router.push({ name: "list" });
         },
         getData() {
-            this.loading = true
-            getAdventure(this.id).then((res) => {
-                this.isPet = false;
-                this.data = res.data;
-                
-            }).finally(() => {
-                this.loading = false
-                postStat(this.type, this.id)
-            })
+            this.loading = true;
+            getAdventure(this.id)
+                .then((res) => {
+                    this.isPet = false;
+                    this.data = res.data;
+                })
+                .finally(() => {
+                    this.loading = false;
+                    postStat(this.type, this.id);
+                });
             getSerendipityAchievementIds().then((res) => {
                 this.achieve_id = res.data[this.id];
             });
         },
     },
-    filters: {},
-    created: function () {
-        this.getData();
+    mounted: function () {
     },
-    mounted: function () {},
 };
 </script>
 
