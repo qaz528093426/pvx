@@ -82,13 +82,12 @@
                             <span>奇遇大全</span>
                         </a>
                     </el-menu-item>
-                    <el-menu-item index="4-3" :class="{ 'is-active': active == 'horse' }">
+                    <!-- <el-menu-item index="4-3" :class="{ 'is-active': active == 'horse' }">
                         <a href="/horse">
                             <i class="el-icon-files"></i>
-                            <!-- <img src="@/assets/img/adventure.svg" /> -->
                             <span>坐骑大全</span>
                         </a>
-                    </el-menu-item>
+                    </el-menu-item> -->
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="4">

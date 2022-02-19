@@ -14,7 +14,7 @@
             <task :id="id" />
         </div>
         <div class="m-adventure-wiki">
-            <Wiki source_type="achievement" :source_id="achieve_id" :type="type" title="奇遇攻略"></Wiki>
+            <Wiki source_type="achievement" :source_id="achieve_id" :type="type" :id="id" title="奇遇攻略"></Wiki>
         </div>
         <div class="m-adventure-serendipity">
             <Serendipity :title="title" />
