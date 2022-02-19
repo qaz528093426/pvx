@@ -55,10 +55,16 @@ export default {
             wiki_post: null,
 
             compatible: false,
-            is_empty: true,
+            // is_empty: true,
         };
     },
     computed: {
+        post_content : function (){
+            return this.wiki_post?.post
+        },
+        is_empty : function (){
+            return !this.wiki_post?.post
+        },
         isRevision: function () {
             return !!this.$route.params.post_id;
         },
@@ -88,24 +94,20 @@ export default {
             if (this.client == "std") {
                 WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
                     this.wiki_post = res?.data?.data;
-                    if (this.wiki_post.post) this.is_empty = false;
                     console.log("获取正式服攻略");
                 });
             } else {
                 WikiPost.newest(this.source_type, this.source_id, 1, "origin")
                     .then((res) => {
                         this.wiki_post = res?.data?.data;
-                        if (this.wiki_post.post) this.is_empty = false;
                         console.log("获取怀旧服攻略");
-                        return !!this.wiki_post.post;
                     })
-                    .then((data) => {
-                        if (!data) {
-                            console.log("兼容：获取正式服攻略");
+                    .then(() => {
+                        if (!this.post_content) {
                             WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
                                 this.wiki_post = res?.data?.data;
-                                if (this.wiki_post.post) this.is_empty = false;
                                 this.compatible = true;
+                                console.log("兼容：获取正式服攻略");
                             });
                         }
                     });
