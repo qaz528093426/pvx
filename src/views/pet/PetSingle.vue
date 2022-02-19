@@ -139,7 +139,6 @@ export default {
     watch: {
         id() {
             this.getPetInfo();
-            this.loadPetSkills();
         },
     },
     methods: {
@@ -150,6 +149,7 @@ export default {
                 .then((res) => {
                     this.pet = res.data;
                     this.medalList = res.data.medal_list;
+                    this.loadPetSkills(res.data.__skills);
                     this.getShopInfo();
                     this.getPetMedal();
                     postStat("pet", this.id);
@@ -159,40 +159,38 @@ export default {
                 });
         },
         // 获取宠物技能信息
-        loadPetSkills: function () {
-            getPetSkill(this.id).then(res => {
-                const levelIds = [];
-                const skillIds = [];
+        loadPetSkills: function (data) {
+            const levelIds = [];
+            const skillIds = [];
 
-                this.petSkills = [];
+            this.petSkills = [];
 
-                for (const key in res.data) {
-                    // 技能等级
-                    if (key.startsWith('Level') && res.data[key]) {
-                        levelIds.push(res.data[key])
-                    }
-                    // 技能id
-                    if (key.startsWith('SkillID') && res.data[key]) {
-                        skillIds.push(res.data[key])
-                    }
+            for (const key in data) {
+                // 技能等级
+                if (key.startsWith('Level') && data[key]) {
+                    levelIds.push(data[key])
                 }
+                // 技能id
+                if (key.startsWith('SkillID') && data[key]) {
+                    skillIds.push(data[key])
+                }
+            }
 
-                getSkill({
-                    ids: skillIds.join(','),
-                    client: this.client
-                }).then(skillRes => {
+            getSkill({
+                ids: skillIds.join(','),
+                client: this.client
+            }).then(skillRes => {
 
-                    levelIds.forEach((level, index) => {
-                        let skills = skillRes.data.filter(skill => skill.Level === level);
+                levelIds.forEach((level, index) => {
+                    let skills = skillRes.data.filter(skill => skill.Level === level);
 
-                        const skill = skills.find(_skill => _skill.SkillID === skillIds[index]);
+                    const skill = skills.find(_skill => _skill.SkillID === skillIds[index]);
 
-                        if (skill) {
-                            this.petSkills.push(skill)
-                        }
-                    })
-
+                    if (skill) {
+                        this.petSkills.push(skill)
+                    }
                 })
+
             })
         },
         // 获取宠物商城价格
@@ -288,7 +286,6 @@ export default {
     },
     mounted: function () {
         this.getPetInfo();
-        this.loadPetSkills();
     },
 };
 </script>
