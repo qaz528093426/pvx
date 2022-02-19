@@ -52,7 +52,7 @@
                         </a>
                     </el-menu-item> -->
                     <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
-                        <a :href="getAppLink('homeland/flower')">
+                        <a href="/homeland/flower">
                             <i class="el-icon-sunny"></i>
                             <span>花价查询</span>
                         </a>
