@@ -18,7 +18,7 @@
               v-model="item.num"
               :min="1"
             ></el-input-number>
-            <el-button size="mini">
+            <el-button @click="removePanel(item)" size="mini">
               移出购物车
             </el-button>
           </div>
@@ -30,9 +30,9 @@
     </div>
     <div class="m-Panel-content">
       <div class="c-Panel-itemList">
-        <div class="c-Panel-itemNav flex-center-between">
+        <div v-for="item in makingsArr" :key="item.id" class="c-Panel-itemNav flex-center-between">
           <div>物品图标</div>
-          <div>物品名字</div>
+          <div>{{item.name}}</div>
           <div>需要金钱</div>
         </div>
       </div>
@@ -47,13 +47,17 @@
 import Item from '@jx3box/jx3box-editor/src/Item.vue'
 export default {
   name: "Panel",
-  props: ["panelArr"],
+  props: ["panelArr","makingsArr"],
   components:{Item},
   data: function () {
     return {};
   },
   mounted() {},
-  methods: {},
+  methods: {
+    removePanel(item){
+      this.$emit('removePanel',item)
+    }
+  },
 };
 </script>
 
