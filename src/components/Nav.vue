@@ -122,7 +122,7 @@ export default {
                             status: true,
                         },
                         {
-                            path: "/pvx/facedata",
+                            path: "/share/facedata",
                             label: "妆容解析",
                             icon: "el-icon-setting",
                             key: "facedata",

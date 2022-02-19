@@ -13,7 +13,7 @@ import Facedat from "@jx3box/jx3box-facedat/src/Facedat";
 import Upload from "@jx3box/jx3box-facedat/src/Upload";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
-    name: "App",
+    name: "FacedataParse",
     props: [],
     data: function () {
         return {
@@ -35,9 +35,9 @@ export default {
                 this.done = false;
             }
         },
-        getAppIcon,
     },
-    mounted: function () {},
+    mounted: function () {
+    },
     components: {
         Facedat,
         Upload,

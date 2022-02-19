@@ -7,14 +7,16 @@ const ShareSingle = () => import("@/views/share/ShareSingle.vue");
 const FaceParse = () => import("@/views/share/Parse.vue");
 
 const routes = [
-    { name: "index", path: "/", component: ShareList },
-    { name: "list", path: "/share", component: ShareList },
-    { name: "single", path: "/share/:id(\\d+)", component: ShareSingle },
+
     { name: "parse", path: "/facedata", component: FaceParse },
+    
+    { name: "list", path: "/", component: ShareList },
+    { name: "single", path: "/:id(\\d+)", component: ShareSingle },
 ];
 
 const router = new VueRouter({
     mode: "history",
+    base: '/share',
     routes,
 });
 
