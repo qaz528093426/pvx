@@ -14,20 +14,20 @@
             <task :id="id" />
         </div>
         <div class="m-adventure-wiki">
-            <detail :achievement_id="achieve_id" title="奇遇攻略" real_type="adventure"></detail>
+            <Wiki source_type="achievement" :source_id="achieve_id" :type="type" title="奇遇攻略"></Wiki>
         </div>
         <div class="m-adventure-serendipity">
             <Serendipity :title="title" />
         </div>
         <div class="m-pvx-comment">
-            <Comment :id="id" category="pz" order="desc" />
+            <Comment :id="id" :category="type" order="desc" />
         </div>
     </div>
 </template>
 
 <script>
 import { getLink } from "@jx3box/jx3box-common/js/utils";
-import Detail from "@/components/wiki/Detail.vue";
+import Wiki from "@/components/wiki/Wiki.vue";
 import { getAdventure, getSerendipityAchievementIds } from "@/service/adventure";
 import task from "@/components/adventure/task.vue";
 import Serendipity from "@/components/common/serendipity.vue";
@@ -37,13 +37,14 @@ export default {
     name: "adventureSingle",
     props: [],
     components: {
-        Detail,
+        Wiki,
         task,
         Serendipity,
         Comment
     },
     data: function () {
         return {
+            type:'adventure',
             achieve_id: "",
             data: "",
             task: [],
@@ -70,9 +71,10 @@ export default {
             getAdventure(this.id).then((res) => {
                 this.isPet = false;
                 this.data = res.data;
-                postStat('adventure', this.id)
+                
             }).finally(() => {
                 this.loading = false
+                postStat(this.type, this.id)
             })
             getSerendipityAchievementIds().then((res) => {
                 this.achieve_id = res.data[this.id];

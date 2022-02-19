@@ -75,10 +75,10 @@
 
         <!-- 宠物攻略 -->
         <div class="m-pet-wiki">
-            <detail :achievement_id="achievement_id" :item_id="item_id" title="宠物攻略" real_type="pet"></detail>
+            <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="宠物攻略"></Wiki>
         </div>
         <div class="m-pvx-comment">
-            <Comment :id="id" category="pz" order="desc" />
+            <Comment :id="id" :category="type" order="desc" />
         </div>
     </div>
 </template>
@@ -88,7 +88,7 @@ import { getPet, getPets, getShopInfo, getPetSkill, getSkill } from "@/service/p
 import { getPetLucky } from "@/service/pet";
 import petCard from "@/components/pet/PetCard.vue";
 import petFetters from "@/components/pet/PetFetters.vue";
-import Detail from "@/components/wiki/Detail.vue";
+import Wiki from "@/components/wiki/Wiki.vue";
 import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
@@ -101,11 +101,12 @@ export default {
     components: {
         petCard,
         petFetters,
-        Detail,
+        Wiki,
         Comment,
     },
     data: function () {
         return {
+            type : 'pet',
             pet: "",
             petSkills: [],
             shopInfo: "",
@@ -152,10 +153,10 @@ export default {
                     this.medalList = res.data.medal_list;
                     this.getShopInfo();
                     this.getPetMedal();
-                    postStat("pet", this.id);
                 })
                 .finally(() => {
                     this.loading = false;
+                    postStat(this.type, this.id);
                 });
         },
         // 获取宠物技能信息
