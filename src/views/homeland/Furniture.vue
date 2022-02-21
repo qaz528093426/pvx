@@ -1,13 +1,13 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="宠物大全" slug="pet" root="/pet" :feedbackEnable="true" :crumbEnable="true">
-            <img slot="logo" svg-inline :src="getAppIcon('pet')" />
+        <Breadcrumb name="家具大全" slug="furniture" root="/furniture" :feedbackEnable="true" :crumbEnable="true">
+            <img slot="logo" svg-inline :src="getAppIcon('furniture')" />
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
             <div class="m-main">
-                <keep-alive include="PetList">
+                <keep-alive include="FurnitureList">
                     <router-view></router-view>
                 </keep-alive>
             </div>
@@ -20,7 +20,7 @@
 import Nav from "@/components/Nav.vue";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
-    name: "Pet",
+    name: "Furniture",
     props: [],
     data: function () {
         return {};

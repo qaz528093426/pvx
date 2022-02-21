@@ -24,6 +24,12 @@ module.exports = {
             template: "public/index.html",
             filename: "homeland/index.html",
         },
+        furniture: {
+            title: "家园建设 - JX3BOX",
+            entry: "src/pages/furniture.js",
+            template: "public/index.html",
+            filename: "furniture/index.html",
+        },
         pet: {
             title: "宠物大全 - JX3BOX",
             entry: "src/pages/pet.js",
