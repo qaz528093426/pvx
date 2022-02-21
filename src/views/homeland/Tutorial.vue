@@ -27,11 +27,11 @@
                     </caption>
                     <thead>
                         <th>等级</th>
-                        <th>属性1</th>
-                        <th>属性2</th>
-                        <th>属性3</th>
-                        <th>属性4</th>
-                        <th>5</th>
+                        <th>观赏</th>
+                        <th>实用</th>
+                        <th>坚固</th>
+                        <th>风水</th>
+                        <th>趣味</th>
                         <th>园宅币</th>
                     </thead>
                     <tbody>

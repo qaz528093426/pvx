@@ -67,17 +67,17 @@ export default {
                     index: "2",
                     submenus: [
                         {
-                            path: "/homeland/tutorial",
-                            label: "家园指南",
-                            icon: "el-icon-reading",
-                            key: "tutorial",
-                            status: true,
-                        },
-                        {
                             path: "/furniture",
                             label: "家具大全",
                             icon: "el-icon-table-lamp",
                             key: "furniture",
+                            status: false,
+                        },
+                        {
+                            path: "/homeland/tutorial",
+                            label: "家园指南",
+                            icon: "el-icon-reading",
+                            key: "tutorial",
                             status: true,
                         },
                         {

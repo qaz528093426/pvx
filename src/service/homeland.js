@@ -15,4 +15,9 @@ function getHomelandGame() {
     return $.get("homeland_game_play.json");
 }
 
-export { getHomelandLevelUp, getHomelandGame };
+// 获取地图房屋坐标
+function getHomelandCoord(mapId) {
+    return $.get(`landinfo/${mapId}.json`);
+}
+
+export { getHomelandLevelUp, getHomelandGame, getHomelandCoord };
