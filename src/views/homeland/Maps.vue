@@ -1,8 +1,6 @@
 <template>
 	<div class="v-homeland-maps">
 		<h1 class="m-homeland-title">家园地图</h1>
-
-		<!-- TODO:地图tabs -->
 		<div class="m-homeland-maps-tabs">
 			<el-tabs v-model="active">
 				<el-tab-pane v-for="(label, map_id) in data" :key="map_id" :label="label" :name="map_id">
@@ -47,7 +45,7 @@ export default {
 	components: { GamePrice },
 	data: function () {
 		return {
-			active: DEFAULT_MAP_ID,
+			active: this.$route.query.map_id || DEFAULT_MAP_ID,
 			data: homeland_maps,
 
 			coords: {},
@@ -56,11 +54,7 @@ export default {
 			map_id: "",
 		};
 	},
-	computed: {
-		query: function () {
-			return this.$route.query.map_id;
-		},
-	},
+	computed: {},
 	watch: {
 		// 重载坐标数据
 		active: {
@@ -74,15 +68,6 @@ export default {
 						},
 					})
 					.catch((err) => err);
-			},
-		},
-		query: {
-			deep: true,
-			immediate: true,
-			handler: function (val) {
-				if (val) {
-					this.active = val;
-				}
 			},
 		},
 	},
@@ -121,7 +106,7 @@ export default {
 	},
 	mounted: function () {
 		this.init();
-		this.loadCoords(DEFAULT_MAP_ID);
+		this.loadCoords(this.active);
 	},
 };
 </script>
