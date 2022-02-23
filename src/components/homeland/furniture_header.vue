@@ -1,48 +1,25 @@
 <template>
-    <div class="m-furniture-header">
-        <div class="m-furniture-title flex">
-            <i class="u-logo"></i>
-        </div>
-        <div class="m-furniture-search flex">
-            <el-select
-                class="u-type u-type-select"
-                v-model="furnitureType"
-                placeholder="全部"
-            >
-                <el-option
-                    v-for="item in Type"
-                    :key="item.type"
-                    :label="item.name"
-                    :value="item.class"
-                >
-                </el-option>
-            </el-select>
-            <el-input
-                class="u-search"
-                placeholder="输入家具名字搜索"
-                v-model="furnitureName"
-                clearable
-            >
-            </el-input>
-            <el-button
-                class="u-button"
-                slot="append"
-                icon="el-icon-search"
-            ></el-button>
-        </div>
-    </div>
+	<div class="m-furniture-header">
+		<h1 class="u-title">家具大全</h1>
+		<el-input placeholder="请输入搜索内容" v-model="search" class="input-with-select">
+			<span slot="prepend">关键词</span>
+			<el-button slot="append" icon="el-icon-search"></el-button>
+		</el-input>
+	</div>
 </template>
-
 <script>
 export default {
-    props: {},
-    data: function () {
-        return {};
-    },
-    methods: {},
+	name: "Header",
+	props: [],
+	data: function () {
+		return {
+			search: "",
+		};
+	},
+	watch: {
+		search(val) {
+			this.$emit("onSearchKey", val);
+		},
+	},
 };
 </script>
-
-<style lang="less">
-@import "~@/assets/css/house/furniture.less";
-</style>

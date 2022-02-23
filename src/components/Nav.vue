@@ -71,7 +71,7 @@ export default {
                             label: "家具大全",
                             icon: "el-icon-table-lamp",
                             key: "furniture",
-                            status: false,
+                            status: true,
                         },
                         {
                             path: "/homeland/tutorial",
