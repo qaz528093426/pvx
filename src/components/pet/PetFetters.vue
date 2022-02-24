@@ -18,7 +18,7 @@
                 v-for="pet in info.petList"
                 :key="pet.Index"
             >
-                <router-link slot="reference" class="u-fetter" :to="'/pet/' + pet.Index">
+                <router-link slot="reference" class="u-fetter" :to="'/' + pet.Index">
                     <i class="u-fetter-icon" :class="['u-quality-' + pet.Quality]">
                         <img :src="iconLink(pet.IconID)" />
                     </i>
