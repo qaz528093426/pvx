@@ -186,10 +186,10 @@
 				"name": "岩层",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 155,
-					"hover": 156,
-					"checked": 158,
-					"down": 157
+                    "normal": 159,
+					"hover": 160,
+					"checked": 161,
+					"down": 162
 				}
 			}
 		],
@@ -698,10 +698,10 @@
 				"name": "许愿树",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 31,
-					"hover": 32,
-					"checked": 34,
-					"down": 33
+					"normal": 67,
+					"hover": 68,
+					"checked": 70,
+					"down": 69
 				}
 			},
 			{
@@ -722,32 +722,32 @@
 				"name": "地板",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 167,
-					"hover": 168,
-					"checked": 170,
-					"down": 169
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			},
 			{
 				"id": 2,
 				"name": "门",
 				"attr": {
-					"icon": "homelandbuildingfiltericon1.png",
-					"normal": 120,
-					"hover": 121,
-					"checked": 123,
-					"down": 122
+					"icon": "homelandbuildingfiltericon2.png",
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			},
 			{
 				"id": 3,
 				"name": "墙",
 				"attr": {
-					"icon": "homelandbuildingfiltericon1.png",
-					"normal": 136,
-					"hover": 137,
-					"checked": 139,
-					"down": 138
+					"icon": "homelandbuildingfiltericon2.png",
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			},
 			{
@@ -755,10 +755,10 @@
 				"name": "阑额",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 107,
-					"hover": 108,
-					"checked": 110,
-					"down": 109
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			},
 			{
@@ -766,10 +766,10 @@
 				"name": "柱子",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 43,
-					"hover": 44,
-					"checked": 46,
-					"down": 45
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			},
 			{
@@ -777,21 +777,21 @@
 				"name": "屋檐",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 35,
-					"hover": 36,
-					"checked": 38,
-					"down": 37
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			},
 			{
 				"id": 8,
 				"name": "屋顶",
 				"attr": {
-					"icon": "homelandbuildingfiltericon1.png",
-					"normal": 140,
-					"hover": 141,
-					"checked": 143,
-					"down": 142
+					"icon": "homelandbuildingfiltericon2.png",
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			},
 			{
@@ -799,10 +799,10 @@
 				"name": "楼梯",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 31,
-					"hover": 32,
-					"checked": 34,
-					"down": 33
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			},
 			{
@@ -810,10 +810,10 @@
 				"name": "阳台",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 135,
-					"hover": 136,
-					"checked": 138,
-					"down": 137
+					"normal": 155,
+					"hover": 156,
+					"checked": 158,
+					"down": 157
 				}
 			}
 		],
@@ -823,21 +823,10 @@
 				"name": "花草",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 167,
-					"hover": 168,
-					"checked": 170,
-					"down": 169
-				}
-			},
-			{
-				"id": 11,
-				"name": "种植",
-				"attr": {
-					"icon": "homelandbuildingfiltericon1.png",
-					"normal": 120,
-					"hover": 121,
-					"checked": 123,
-					"down": 122
+					"normal": 151,
+					"hover": 152,
+					"checked": 154,
+					"down": 153
 				}
 			},
 			{
@@ -845,10 +834,10 @@
 				"name": "地表",
 				"attr": {
 					"icon": "homelandbuildingfiltericon1.png",
-					"normal": 136,
-					"hover": 137,
-					"checked": 139,
-					"down": 138
+					"normal": 0,
+					"hover": 1,
+					"checked": 3,
+					"down": 2
 				}
 			}
 		],
@@ -912,17 +901,6 @@
 				"id": 2,
 				"name": "局部图",
 				"attr": {
-					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 131,
-					"hover": 132,
-					"checked": 134,
-					"down": 133
-				}
-			},
-			{
-				"id": 3,
-				"name": "基座",
-				"attr": {
 					"icon": "homelandbuildingfiltericon1.png",
 					"normal": 32,
 					"hover": 33,
@@ -935,7 +913,7 @@
 				"name": "基座",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-					"normal": 159,
+                    "normal": 159,
 					"hover": 160,
 					"checked": 162,
 					"down": 161
