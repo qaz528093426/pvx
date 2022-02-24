@@ -1,0 +1,271 @@
+@blue: #81b0cc;
+@pink: #cc819c;
+@yellow: #cca981;
+@green: #81ccb2;
+@purple: #b381cc;
+
+.flex {
+	display: flex;
+}
+
+.v-homeland-furniture {
+	.pr;
+}
+
+.u-navigation {
+	.pr;
+	.mb(20px);
+	.u-links {
+		.pa;
+		.rt(0);
+
+		.u-link {
+			.fz(14px);
+
+			i {
+				.mr(2px);
+				.y;
+			}
+
+			.underline(@color-link);
+		}
+
+		em {
+			margin: 0 5px;
+		}
+	}
+}
+
+.m-infoBox {
+	.mb(20px);
+	.u-infoImg {
+		.pr;
+		.size(180px);
+		.mr(20px);
+		.r(3px);
+		flex-shrink: 0;
+		box-sizing: border-box;
+		border: 3px inset #f5f7fa;
+		img {
+			.full;
+		}
+		.u-price {
+			.lh(30px);
+			.pa;
+			.flex;
+			.rb(-4px,10px);
+			align-items: center;
+			border-radius: 15px 0 0 15px;
+			background: #fafafa;
+			color: #333;
+			font-weight: bold;
+			letter-spacing: 1px;
+			padding: 0 10px;
+			box-shadow: 0 0 5px #aaa;
+			font-family: "KaiTi", "Microsoft YaHei";
+			i {
+				.dbi;
+				background-image: url("@{game_icons}money-44.png");
+				background-size: 16px;
+				.size(16px);
+				.mr(4px);
+			}
+		}
+	}
+	.u-info-card {
+		.pr;
+		.r(5px);
+		.size(100%,180px);
+		background-color: #f5f7fa;
+		padding: 20px;
+		box-sizing: border-box;
+		border: 1px solid #ccc;
+		.u-title {
+			.fz(22px,2);
+			.bold;
+			font-family: "KaiTi", "Microsoft YaHei";
+		}
+		.u-info {
+			.fz(14px,30px);
+			.color(#f58638);
+			i {
+				.mr(5px);
+			}
+		}
+		.u-nature,
+		.u-other {
+			.fz(14px);
+			.mt(10px);
+		}
+		.u-relation {
+			.flex;
+			flex-direction: column;
+			.u-line {
+				.lh(28px);
+				.pointer;
+				.color(#666,#0366d6);
+				i {
+					.mr(10px);
+				}
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+		.m-buttons {
+			.pa;
+			.rt(10px,10px);
+			.u-plansBox {
+				.mr(10px);
+			}
+		}
+		.mr20 {
+			margin-right: 20px;
+		}
+		.u-label {
+			.mr(5px);
+			color: #8a6d3b;
+		}
+		.u-blue {
+			color: @blue;
+		}
+		.u-pink {
+			color: @pink;
+		}
+		.u-yellow {
+			color: @yellow;
+		}
+		.u-green {
+			color: @green;
+		}
+		.u-purple {
+			color: @purple;
+		}
+	}
+}
+
+.m-luYuan {
+	.r(5px);
+	border: 1px solid #ccc;
+	background-color: #fafbfc;
+
+	.u-title {
+		.fz(20px,32px);
+		.bold;
+		.color(#666);
+		cursor: default;
+		background-color: #f5f7fa;
+		border-bottom: 1px solid #eee;
+		padding: 10px 20px;
+		font-family: "KaiTi", "Microsoft YaHei";
+		.u-label {
+			.fz(14px,32px);
+			.color(#8a6d3b);
+
+			.ml(20px);
+		}
+		.u-name {
+			&::before {
+				content: "✥ ";
+			}
+			&::after {
+				content: " ✥";
+			}
+		}
+	}
+
+	.u-box {
+		padding: 10px 20px 10px 20px;
+		.u-score {
+			.flex;
+			.fz(14px,2);
+			.bold;
+			.mb(10px);
+			color: #3d454d;
+			align-items: center;
+		}
+		.m-furniture-item {
+			.mr(20px);
+			.mb(20px);
+		}
+	}
+}
+
+.m-fetters-list {
+	.flex;
+	flex-wrap: wrap;
+
+	.el-popover__reference-wrapper {
+		display: inline-block;
+		.mr(15px);
+	}
+	.u-fetter {
+		.pr;
+		.pointer;
+		display: inline-block;
+		.mb(10px);
+		.r(3px);
+		.clip;
+		width: 48px;
+
+		.u-mark {
+			color: #fff;
+			font-size: 12px;
+			line-height: 16px;
+			transform: rotate(45deg) scale(0.8);
+			position: absolute;
+			right: -20px;
+			top: 0;
+			padding: 0 15px 0 25px;
+			font-style: normal;
+			background-color: #2fcb53;
+		}
+	}
+
+	.u-fetter-icon {
+		img {
+			.size(48px);
+			.db;
+			.r(6px);
+
+			&:hover {
+				filter: brightness(110%) saturate(110%);
+			}
+		}
+
+		.db;
+		.pr;
+		&:after {
+			content: "";
+			.db;
+			.size(100%);
+			.pa;
+			.lt(0);
+			border: 2px solid transparent;
+			box-sizing: border-box;
+		}
+
+		&.u-quality-2:after {
+			border-color: #00d24b;
+		}
+		&.u-quality-3:after {
+			border-color: #007eff;
+		}
+		&.u-quality-4:after {
+			border-color: #ff2dff;
+		}
+		&.u-quality-5:after {
+			border-color: #ffa500;
+		}
+	}
+
+	.u-fetter-name {
+		.db;
+		.x;
+		.lh(24px);
+		color: @color;
+		.w(100%);
+		overflow: hidden;
+		white-space: nowrap;
+	}
+}

@@ -38,8 +38,7 @@
 			<div class="m-homeland-posts" v-if="posts && posts.length">
 				<h2 class="u-header"><i class="el-icon-star-on"></i> 家园攻略</h2>
 				<div class="u-box">
-					<a :href="item.link" target="_blank" class="u-item" v-for="item in 100" :key="item">{{ item }}</a>
-					<!-- <a :href="item.link" target="_blank" class="u-item" v-for="(item, i) in posts" :key="i">{{ item.label }}</a> -->
+					<a :href="item.link" target="_blank" class="u-item" v-for="(item, i) in posts" :key="i">{{ item.label }}</a>
 				</div>
 			</div>
 		</div>

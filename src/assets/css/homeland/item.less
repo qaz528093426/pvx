@@ -1,0 +1,118 @@
+.m-furniture-item {
+	.size(380px,200px);
+	.r(8px);
+	.pointer;
+	.color(#3d454d);
+	border: 1px solid #ddd;
+	box-shadow: 0 0 5px #ccc;
+
+	.m-furniture-image {
+		.size(175px);
+		.pr;
+		.ml(10px);
+		background: #2b3d3d;
+		transition: 0.2s ease;
+		.u-use,
+		.u-dye {
+			.pa;
+			.rt(6px,0);
+			.r(2px);
+			.size(26px,26px);
+			background: url("@{game_icons}homeland/interact.png") #fafafa center center no-repeat;
+			background-size: 20px;
+			box-shadow: 0 0 5px #aaa;
+		}
+		.u-use + .u-dye {
+			.rt(36px,0);
+		}
+		.u-dye {
+			.rt(6px,0);
+			background: url("@{game_icons}homeland/dye.png") #fafafa center center no-repeat;
+		}
+		.u-price {
+			.w(auto);
+			.lh(30px);
+			.pa;
+			.rb(0,20px);
+			border-radius: 15px 0 0 15px;
+			background: #fafafa;
+			color: #333;
+			font-weight: bold;
+			letter-spacing: 1px;
+			padding: 0 10px;
+			box-shadow: 0 0 5px #aaa;
+			font-family: "KaiTi", "Microsoft YaHei";
+			i {
+				background-image: url("@{game_icons}money-44.png");
+				background-size: 16px;
+				.size(16px);
+				.mr(4px);
+			}
+		}
+		.u-img {
+			.full;
+			.r(5px);
+		}
+	}
+
+	.m-furniture-detail {
+		.ml(15px);
+		.w(160px);
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-around;
+
+		.u-name {
+			.w(100%);
+			.bold;
+			.clip;
+			.nobreak;
+			.mb(10px);
+			box-sizing: border-box;
+			font-size: 16px;
+			letter-spacing: 1px;
+			font-family: "KaiTi", "Microsoft YaHei";
+		}
+
+		.u-nature {
+			font-size: 12px;
+			.lh(24px);
+			.mb(2px);
+			display: flex;
+			align-items: center;
+		}
+
+		.u-attribute {
+			.r(3px);
+			.mr(5px);
+			color: #fff;
+			padding: 0 5px;
+		}
+
+		.u-blue {
+			background: #81b0cc;
+		}
+
+		.u-pink {
+			background: #cc819c;
+		}
+
+		.u-yellow {
+			background: #cca981;
+		}
+
+		.u-green {
+			background: #81ccb2;
+		}
+
+		.u-purple {
+			background: #b381cc;
+		}
+	}
+
+	&:hover {
+		.m-furniture-image {
+			transform: scale(1.05);
+		}
+	}
+}

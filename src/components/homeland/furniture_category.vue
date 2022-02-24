@@ -82,7 +82,7 @@ export default {
 				if (el.name == item.szName) {
 					img = el.attr.icon;
 				}
-			});
+			}); 
 			return img !== "" ? { backgroundImage: "url(" + __imgPath + "image/game/homeland/" + img + ")" } : "";
 		},
 
