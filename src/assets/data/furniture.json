@@ -31,6 +31,7 @@
 		{ "id": "22", "name": "未知" }
 	],
 	"levelList": [
+		{ "level": "all", "name": "全部" },
 		{ "level": 1, "name": "1级" },
 		{ "level": 2, "name": "2级" },
 		{ "level": 3, "name": "3级" },
@@ -186,7 +187,7 @@
 				"name": "岩层",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-                    "normal": 194,
+					"normal": 194,
 					"hover": 195,
 					"checked": 197,
 					"down": 196
@@ -913,7 +914,7 @@
 				"name": "基座",
 				"attr": {
 					"icon": "homelandbuildingfiltericon2.png",
-                    "normal": 159,
+					"normal": 159,
 					"hover": 160,
 					"checked": 162,
 					"down": 161

@@ -66,7 +66,6 @@
 	}
 }
 
-
 .m-furniture-container {
 	.r(5px);
 	background-color: #f5f7fa;
@@ -84,7 +83,7 @@
 	.w(120px);
 	.u-title {
 		.fz(16px);
-		cursor: default;
+		.pointer;
 		&::before,
 		&::after {
 			padding: 0 5px;
@@ -134,7 +133,7 @@
 				.db;
 				.pt(52px);
 				.w(52px);
-				.x; 
+				.x;
 				background-repeat: no-repeat;
 			}
 
@@ -195,4 +194,17 @@
 		.mr(20px);
 		.mb(20px);
 	}
+}
+
+.m-furniture-pages {
+    padding: 20px ;
+    background-color: #fff;
+	.m-archive-more {
+		.db;
+		.w(100%);
+        .mb(20px) !important;
+	}
+    .m-archive-pages {
+        overflow-x: auto;
+    }
 }

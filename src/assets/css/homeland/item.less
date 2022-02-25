@@ -10,45 +10,27 @@
 		.size(175px);
 		.pr;
 		.ml(10px);
+        .r(5px);
 		background: #2b3d3d;
 		transition: 0.2s ease;
 		.u-use,
 		.u-dye {
 			.pa;
-			.rt(6px,0);
+			.rb(6px,10px);
 			.r(2px);
 			.size(26px,26px);
-			background: url("@{game_icons}homeland/interact.png") #fafafa center center no-repeat;
-			background-size: 20px;
-			box-shadow: 0 0 5px #aaa;
+			.z(1);
+			background: url("@{game_icons}homeland/interact.png") rgba(255, 255, 255, 0.5) center center no-repeat;
+			box-shadow: 0 0 3px #999;
 		}
 		.u-use + .u-dye {
-			.rt(36px,0);
+			.rb(6px,46px);
 		}
 		.u-dye {
-			.rt(6px,0);
-			background: url("@{game_icons}homeland/dye.png") #fafafa center center no-repeat;
+			.rb(6px,10px);
+			background: url("@{game_icons}homeland/dye.png") rgba(255, 255, 255, 0.5) center center no-repeat;
 		}
-		.u-price {
-			.w(auto);
-			.lh(30px);
-			.pa;
-			.rb(0,20px);
-			border-radius: 15px 0 0 15px;
-			background: #fafafa;
-			color: #333;
-			font-weight: bold;
-			letter-spacing: 1px;
-			padding: 0 10px;
-			box-shadow: 0 0 5px #aaa;
-			font-family: "KaiTi", "Microsoft YaHei";
-			i {
-				background-image: url("@{game_icons}money-44.png");
-				background-size: 16px;
-				.size(16px);
-				.mr(4px);
-			}
-		}
+
 		.u-img {
 			.full;
 			.r(5px);
@@ -76,8 +58,8 @@
 
 		.u-nature {
 			font-size: 12px;
-			.lh(24px);
-			.mb(2px);
+			.lh(22px);
+			.mb(4px);
 			display: flex;
 			align-items: center;
 		}
