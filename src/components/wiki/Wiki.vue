@@ -26,7 +26,7 @@
             </WikiPanel>
 
             <!-- 历史版本 -->
-            <WikiRevisions :type="source_type" :source-id="source_id" />
+            <WikiRevisions :type="source_type" :source-id="source_id" :isGame="true"/>
         </div>
         <div class="m-wiki-post-empty" v-if="is_empty">
             <i class="el-icon-s-opportunity"></i>
