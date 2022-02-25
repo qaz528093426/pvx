@@ -3,9 +3,14 @@
     <div class="c-Panel-itemNav flex-center-between">
       <div>
         <Item />
-        <div>物品图标</div>
-        <div>{{ item.name }}</div>
-        <div>需要金钱</div>
+        <div>
+          <img
+            :src="iconLink(item.IconID)"
+            alt=""
+          >
+        </div>
+        <div>{{ item.Name }}</div>
+        <GamePrice :price="setItemsPrice(item.ItemID)" />
       </div>
       <div>
         <el-input-number
@@ -13,66 +18,46 @@
           v-model="item.num"
           :min="1"
         ></el-input-number>
-        <el-button @click="removePanel(item)" size="mini">
+        <el-button
+          @click="removePanel(item)"
+          size="mini"
+        >
           移出购物车
         </el-button>
       </div>
     </div>
-    <!-- <div class="c-Panel-itemList">
-      <div
-
-        class="c-Panel-itemNav flex-center-between"
-      >
-        <div>
-          <Item />
-          <div>物品图标</div>
-          <div>{{ item.name }}</div>
-          <div>需要金钱</div>
-        </div>
-        <div>
-          <el-input-number
-            @change="changeNumber"
-            v-model="item.num"
-            :min="1"
-          ></el-input-number>
-          <el-button @click="removePanel(item)" size="mini">
-            移出购物车
-          </el-button>
-        </div>
-      </div>
-    </div>
-
-    <div class="m-Panel-content">
-      <div class="c-Panel-total">总共：</div>
-    </div>
-    <div class="m-Panel-content">
-      <div class="c-Panel-itemList">
-        <div
-          v-for="item in makingsArr"
-          :key="item.id"
-          class="c-Panel-itemNav flex-center-between"
-        >
-          <div>物品图标</div>
-          <div>{{ `${item.name} x${item.num}` }}</div>
-          <div>需要金钱</div>
-        </div>
-      </div>
-      <div class="c-Panel-total">总共：</div>
-    </div> -->
   </div>
 </template>
 
 <script>
 import Item from "@jx3box/jx3box-editor/src/Item.vue";
+import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
+import GamePrice from "@jx3box/jx3box-common-ui/src/wiki/GamePrice.vue";
+import { getItemsPrice } from "@/service/cooking";
+
 export default {
   name: "Panel",
-  props: ["item"],
-  components: { Item },
+  props: ["item", "serversName"],
+  components: { Item, GamePrice },
   data: function () {
-    return {};
+    return {
+      price: 1234,
+    };
   },
   mounted() {},
   methods: {
+    iconLink,
+    setItemsPrice(id) {
+      getItemsPrice({
+        server: this.serversName,
+        list: id,
+      }).then((res) => {
+        console.log(res.data);
+        return 1234
+        // this.itemArr = res.data;
+      });
+    },
+    // {{helperDomain}}/api/items/price
     removePanel(item) {
       this.$emit("removePanel", item);
     },
