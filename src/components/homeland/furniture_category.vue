@@ -14,7 +14,8 @@
 				</el-select>
 			</el-input>
 			<el-select class="u-select u-margin" v-model="source" slot="prepend" placeholder="来源途径">
-				<el-option v-for="item in categoryData.sourceList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
+				<el-option label="全部" value=""> </el-option>
+				<el-option v-for="item in source_types" :key="item" :label="item" :value="item"> </el-option>
 			</el-select>
 			<el-select class="u-select u-margin" v-model="level" slot="prepend" placeholder="家园等级">
 				<el-option v-for="item in categoryData.levelList" :key="item.level" :label="item.name" :value="item.level"> </el-option>
@@ -28,6 +29,7 @@
 </template>
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box";
+import source_types from '@/assets/data/furniture_source.json'
 export default {
 	name: "Category",
 	data: function () {
@@ -40,6 +42,7 @@ export default {
 			interact: false, //交互
 			set: false, //庐远广记
 			hover: "",
+			source_types,
 		};
 	},
 	props: ["list", "categoryData", "isChange"],

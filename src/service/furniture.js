@@ -9,4 +9,7 @@ function getFurniture(params) {
 function getFurnitureDetail(id) {
 	return $.get(`/house/furniture/${id}`);
 }
-export { getFurniture,getFurnitureDetail };
+function getSetList(id) {
+	return $.get(`/house/set/${id}`);
+}
+export { getFurniture, getFurnitureDetail, getSetList };

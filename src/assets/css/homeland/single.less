@@ -36,62 +36,59 @@
 	}
 }
 
+.u-title {
+	.fz(20px,32px);
+	.bold;
+	.color(#666);
+	cursor: default;
+	background-color: #f5f7fa;
+	border-bottom: 1px solid #eee;
+	padding: 5px 20px;
+	font-family: "KaiTi", "Microsoft YaHei";
+	.u-label {
+		.fz(14px,32px);
+		.color(#8a6d3b);
+
+		.ml(20px);
+	}
+	.u-name {
+		&::before {
+			content: "✥ ";
+		}
+		&::after {
+			content: " ✥";
+		}
+	}
+}
+
 .m-infoBox {
 	.mb(20px);
 	.u-infoImg {
 		.pr;
-		.size(240px);
+		.size(150px);
 		.mr(20px);
 		.r(3px);
+		.flex;
+		align-items: center;
+		justify-content: center;
 		flex-shrink: 0;
 		box-sizing: border-box;
 		// border: 3px inset #f5f7fa;
 		background: #2b3d3d;
 		img {
-			// .full;
-		}
-		.u-price {
-			.lh(30px);
-			.pa;
-			.flex;
-			.rb(-4px,10px);
-			align-items: center;
-			border-radius: 15px 0 0 15px;
-			background: #fafafa;
-			color: #333;
-			font-weight: bold;
-			letter-spacing: 1px;
-			padding: 0 10px;
-			box-shadow: 0 0 5px #aaa;
-			font-family: "KaiTi", "Microsoft YaHei";
-			i {
-				.dbi;
-				background-image: url("@{game_icons}money-44.png");
-				background-size: 16px;
-				.size(16px);
-				.mr(4px);
-			}
+			max-width: 100%;
+			max-height: 100%;
 		}
 	}
 	.u-info-card {
 		.pr;
-		.r(5px);
-		.size(100%,240px);
-		background-color:#f5f7fa;
-		padding: 20px;
-		box-sizing: border-box;
-		border: 1px solid #eee;
+		.size(100%,150px);
+		background-color: #f5f7fa;
+		padding: 10px 20px;
 		.u-title {
-			.fz(22px,2);
-			.bold;
+			.bold; 
+            padding: 10px 0;
 			font-family: "KaiTi", "Microsoft YaHei";
-		}
-		.u-info {
-			.fz(14px,24px);
-			.color(#f58638);
-			i {
-				.mr(5px);
-			}
 		}
 		.u-nature,
 		.u-other {
@@ -144,35 +141,26 @@
 		}
 	}
 }
+.u-info-text,
+.u-info-card {
+	.r(5px);
+	box-sizing: border-box;
+	border: 1px solid #eee;
+}
+.u-info-text {
+	background-color: #f5f7fa;
+	width: 100%;
+	.mb(20px);
+	.fz(14px,24px);
+	.color(#f58638);
+	.u-txt {
+		padding: 10px 20px;
+	}
+}
 
 .m-luYuan {
 	.r(5px);
 	border: 1px solid #eee;
-
-	.u-title {
-		.fz(20px,32px);
-		.bold;
-		.color(#666);
-		cursor: default;
-		background-color: #f5f7fa;
-		border-bottom: 1px solid #eee;
-		padding: 10px 20px;
-		font-family: "KaiTi", "Microsoft YaHei";
-		.u-label {
-			.fz(14px,32px);
-			.color(#8a6d3b);
-
-			.ml(20px);
-		}
-		.u-name {
-			&::before {
-				content: "✥ ";
-			}
-			&::after {
-				content: " ✥";
-			}
-		}
-	}
 
 	.u-box {
 		padding: 10px 20px 10px 20px;
@@ -198,8 +186,28 @@
 	.m-popover {
 		.mr(20px);
 		.el-popover__reference {
-			.size(48px);
+			.size(52px);
 			.pointer;
+		}
+		.u-img {
+			.size(52px);
+			.r(3px);
+			.pointer;
+			background-color: #2b3d3d;
+			box-sizing: border-box;
+			border: 3px inset #ddd;
+			&.quality_2 {
+				border: 3px inset #00d24b;
+			}
+			&.quality_3 {
+				border: 3px inset #007eff;
+			}
+			&.quality_4 {
+				border: 3px inset #ff2dff;
+			}
+			&.quality_5 {
+				border: 3px inset #ffa500;
+			}
 		}
 	}
 }
@@ -207,5 +215,10 @@
 	.u-info {
 		.flex;
 		flex-direction: column;
+        .u-name{
+            .fz(18px);
+            .bold;
+            .mb(10px);
+        }
 	}
 }
