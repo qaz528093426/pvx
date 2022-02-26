@@ -2,7 +2,7 @@
 	<div class="v-homeland-furniture" v-loading="loading">
 		<div class="m-navigation">
 			<el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
-			<div class="u-links">
+			<div class="u-links" v-if="other_id">
 				<a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
 			</div>
 		</div>
@@ -54,7 +54,6 @@
 			</div>
 			<div class="m-extend-relation" v-if="setData">
 				<div class="u-title"><i class="el-icon-star-on"></i>{{ setData.szName }}<el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
-
 				<furnitureSet :data="setData" />
 			</div>
 		</div>
@@ -72,7 +71,7 @@
 </template>
 
 <script>
-import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";
+import { getLink } from "@jx3box/jx3box-common/js/utils";
 import { getFurnitureDetail, getSetList, getFurnitureColor } from "@/service/furniture.js";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import furnitureSet from "@/components/homeland/furniture_set.vue";
@@ -105,9 +104,11 @@ export default {
 		id: function () {
 			return this.$route.params.id;
 		},
+		other_id: function () {
+			return this.data?.__manufactureID;
+		},
 		item_id: function () {
-			// TODO: 修改物品ID
-			return this.pet?.ItemTabType + "_" + this.pet?.ItemTabIndex;
+			return "10_" + this.data?.__manufactureID;
 		},
 		achievement_id: function () {
 			return this.petWiki?.achievement_id;
@@ -161,9 +162,10 @@ export default {
 				this.setData = res.data;
 			});
 		},
-		//
+
+		// 工具函数
+        // ===================
 		getLink,
-		iconLink,
 		// 描述过滤
 		description_filter(value) {
 			let matchs = /text="(.*?)(\\\\\\n)?"/.exec(value);
