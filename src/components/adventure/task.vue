@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
+import { __iconPath ,__ossMirror} from "@jx3box/jx3box-common/data/jx3box";
 import { getAdventureTask } from "@/service/adventure";
 export default {
     name: "task",
@@ -18,7 +18,8 @@ export default {
     components: {},
     data: function () {
         return {
-            imgRoot: __iconPath + "pvx/serendipity/images//",
+            imgRoot: __iconPath + "pvx/serendipity/images/",
+            // imgRoot: __ossMirror + "game/serendipity/images",
             task: "",
         };
     },

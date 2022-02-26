@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import { __iconPath, __imgPath } from "@jx3box/jx3box-common/data/jx3box";
+import { __iconPath, __imgPath,__ossMirror } from "@jx3box/jx3box-common/data/jx3box";
+import {showGamePic} from '@jx3box/jx3box-common/js/utils'
 export default {
     name: "item",
     props: ["item"],
@@ -17,6 +18,7 @@ export default {
     data: function () {
         return {
             imgRoot: __iconPath + "pvx/serendipity/images/",
+            // imgRoot: __ossMirror + "game/serendipity/images/",
         };
     },
     computed: {
@@ -35,7 +37,8 @@ export default {
             return __imgPath + "image/pvx/bg.png";
         },
         titleImg: function () {
-            return __iconPath + "pvx/serendipity/image_ui/luckymeeting7-" + this.item.nOpenFrame + ".png";
+            return __iconPath + "pvx/serendipity/image_ui/luckymeeting7_" + this.item.nOpenFrame + ".png";
+            // return __ossMirror + "game/serendipity/image_ui/luckymeeting7_" + this.item.nOpenFrame + ".png";
         },
         titleStyle: function () {
             return {};
