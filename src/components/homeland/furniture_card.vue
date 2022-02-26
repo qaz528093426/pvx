@@ -5,8 +5,7 @@
 				<img class="u-img" :src="formatImg(item.Path)" alt="" srcset="" />
 				<!-- 是否可交互和染色 -->
 				<span class="u-use" v-if="item.bInteract"></span>
-				<span class="u-dye" v-if="item.nRepresentID"></span>
-				<!-- <span class="u-dye" v-if="item.Architecture"></span> -->
+				<span class="u-dye" v-if="item.__canDye"></span>
 			</div>
 			<div class="m-furniture-detail">
 				<div class="u-name" :class="quality(item.Quality)">{{ item.szName }}</div>

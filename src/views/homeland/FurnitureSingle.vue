@@ -1,19 +1,19 @@
 <template>
     <div class="v-homeland-furniture">
-        <div class="u-navigation">
+        <div class="m-navigation">
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
             <div class="u-links">
                 <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
             </div>
         </div>
 
-        <div class="m-infoBox flex">
-            <div class="u-infoImg">
-                <img :src="formatImg(item.Path)" alt="" />
+        <div class="m-info-box">
+            <div class="u-img">
+                <img :src="formatImg(item.Path)" :alt="item.szName" />
             </div>
 
-            <div class="u-info-card">
-                <div class="u-title">{{ item.szName }}</div>
+            <div class="u-info">
+                <div class="u-info-title">{{ item.szName }}</div>
                 <div class="u-nature">
                     <span class="mr20" v-if="item.Attribute1"><span class="u-label u-blue">观赏</span>{{ item.Attribute1 }}</span>
                     <span class="mr20" v-if="item.Attribute2"><span class="u-label u-pink">实用</span>{{ item.Attribute2 }}</span>
@@ -44,10 +44,10 @@
 
         <div class="m-luYuan" v-if="setData">
             <div class="u-title">
-                <span class="u-name">庐远广记</span><span class="u-label">{{ setData.szName }}</span>
+                <span class="u-name">{{ setData.szName }}</span>
             </div>
             <div class="u-box">
-                <div class="u-score"><span>评分：</span> <el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
+                <div class="u-score"><el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
                 <div class="m-fetters-list">
                     <el-popover class="m-popover" v-for="(item, i) in setData.furnitures" :key="i" placement="top-start" width="200" trigger="hover">
                         <div class="u-info">
@@ -59,9 +59,9 @@
                             <span v-if="item.Attribute5"><span class="u-label u-purple">趣味</span>{{ item.Attribute5 }}</span>
                             <span><span class="u-label">园宅等级：</span>{{ LevelLimit(item.LevelLimit) }}</span>
                         </div>
-                        <div class="u-img" :class="quality(item.Quality)" slot="reference">
-                            <img :src="formatImg(item.Path)" alt="" />
-                        </div>
+                        <router-link class="u-img" :class="quality(item.Quality)" slot="reference" :to="`/${item.dwID}`">
+                            <img :src="formatImg(item.Path)" />
+                        </router-link>
                     </el-popover>
                 </div>
             </div>
@@ -111,6 +111,7 @@ export default {
             return this.$route.params.id;
         },
         item_id: function () {
+            // TODO: 修改物品ID
             return this.pet?.ItemTabType + "_" + this.pet?.ItemTabIndex;
         },
         achievement_id: function () {
