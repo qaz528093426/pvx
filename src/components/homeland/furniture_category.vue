@@ -13,7 +13,7 @@
 					<el-option v-for="item in categoryData.categoryList" :key="item.key" :label="item.name" :value="item.key"> </el-option>
 				</el-select>
 			</el-input>
-			<el-select class="u-select u-margin" v-model="source" slot="prepend" placeholder="家具来源">
+			<el-select class="u-select u-margin" v-model="source" slot="prepend" placeholder="来源途径">
 				<el-option v-for="item in categoryData.sourceList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
 			</el-select>
 			<el-select class="u-select u-margin" v-model="level" slot="prepend" placeholder="家园等级">

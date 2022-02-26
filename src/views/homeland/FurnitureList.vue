@@ -3,8 +3,8 @@
 		<FurnitureHeader @onSearchKey="onSearchKey" />
 		<div class="m-furniture-container flexNormal">
 			<div class="m-furniture-attribute">
-				<span class="u-title" @click="onDefault">全部家具</span>
 				<div class="u-list">
+					<span @click="onDefault" :class="{active : attKey == '-1'}"> 全部</span>
 					<span v-for="(item, i) in category" :key="i" :class="item.id == attKey ? 'active' : ''" @click="onAttKey(item.id)">
 						{{ item.name }}
 					</span>
