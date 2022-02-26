@@ -1,65 +1,75 @@
 <template>
-    <div class="v-homeland-furniture">
-        <div class="u-navigation">
-            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
-            <div class="u-links">
-                <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
-            </div>
-        </div>
+	<div class="v-homeland-furniture">
+		<div class="u-navigation">
+			<el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
+			<div class="u-links">
+				<a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
+			</div>
+		</div>
 
-        <div class="m-infoBox flex">
-            <div class="u-infoImg">
-                <img :src="formatImg(item.Path)" alt="" />
-                <div class="u-price"><i></i>15000</div>
-            </div>
+		<div class="m-infoBox flex">
+			<div class="u-infoImg">
+				<img :src="formatImg(item.Path)" alt="" />
+			</div>
 
 			<div class="u-info-card">
 				<div class="u-title">{{ item.szName }}</div>
-				<div class="u-info" v-html="description_filter(item.szTip)"></div>
 				<div class="u-nature">
-					<span class="mr20"><span class="u-label u-blue">观赏</span>{{ item.Attribute1 }}</span>
-					<span class="mr20"><span class="u-label u-pink">实用</span>{{ item.Attribute2 }}</span>
-					<span class="mr20"><span class="u-label u-yellow">坚固</span>{{ item.Attribute3 }}</span>
-					<span class="mr20"><span class="u-label u-green">风水</span>{{ item.Attribute4 }}</span>
-					<span class="mr20"><span class="u-label u-purple">趣味</span>{{ item.Attribute5 }}</span>
+					<span class="mr20" v-if="item.Attribute1"><span class="u-label u-blue">观赏</span>{{ item.Attribute1 }}</span>
+					<span class="mr20" v-if="item.Attribute2"><span class="u-label u-pink">实用</span>{{ item.Attribute2 }}</span>
+					<span class="mr20" v-if="item.Attribute3"><span class="u-label u-yellow">坚固</span>{{ item.Attribute3 }}</span>
+					<span class="mr20" v-if="item.Attribute4"><span class="u-label u-green">风水</span>{{ item.Attribute4 }}</span>
+					<span class="mr20" v-if="item.Attribute5"><span class="u-label u-purple">趣味</span>{{ item.Attribute5 }}</span>
 				</div>
 				<div class="u-other">
-					<span class="mr20"><span class="u-label">物品来源：</span>{{ item.szSource }}</span>
-					<span class="mr20"><span class="u-label">要求等级：</span>{{ LevelLimit(item.LevelLimit) }}</span>
-					<span class="mr20" v-if="item.SetID"><span class="u-label">套装：</span>浮生昭世</span>
+					<span class="mr20"><span class="u-label">来源：</span>{{ item.szSource }}</span>
+					<span class="mr20"><span class="u-label">园宅等级：</span>{{ LevelLimit(item.LevelLimit) }}</span>
+					<span class="mr20" v-if="setData"><span class="u-label">套装：</span>{{ setData.szName }}</span>
 					<span class="mr20"><span class="u-label">可交互：</span><i :class="item.bInteract ? 'el-icon-check' : 'el-icon-close'"></i></span>
-					<span class="mr20"><span class="u-label">可染色：</span><i class="el-icon-close"></i></span>
+					<span class="mr20"><span class="u-label">可染色：</span><i :class="item.Architecture ? 'el-icon-check' : 'el-icon-close'"></i></span>
 				</div>
 
-                <div class="m-buttons">
-                    <!-- 加入清单 -->
-                    <el-popover class="u-plansBox" placement="bottom" width="160" v-model="addPlans" trigger="manual">
-                        <!-- <div class="u-myPlans" v-for="(item, index) in myPlansList" :key="index" @click="addMyPlans(item)">
+				<div class="m-buttons">
+					<!-- 加入清单 -->
+					<el-popover class="u-plansBox" placement="bottom" width="160" v-model="addPlans" trigger="manual">
+						<!-- <div class="u-myPlans" v-for="(item, index) in myPlansList" :key="index" @click="addMyPlans(item)">
 							<i class="el-icon-caret-right"></i>
 							<span>{{ item.title }}</span>
 						</div> -->
-                        <el-button type="success" size="mini" plain class="u-add-to-item-list" slot="reference" disabled>
-                            <i class="u-el-icon el-icon-shopping-cart-full"></i>
-                            <span class="u-text">加入清单</span>
-                        </el-button>
-                    </el-popover>
-                    <!-- 收藏按钮 -->
-                    <!-- <Fav class="u-collect" post-type="furniture" :post-id="id" /> -->
-                </div>
-            </div>
-        </div>
+						<el-button type="success" size="mini" plain class="u-add-to-item-list" slot="reference" disabled>
+							<i class="u-el-icon el-icon-shopping-cart-full"></i>
+							<span class="u-text">加入清单</span>
+						</el-button>
+					</el-popover>
+					<!-- 收藏按钮 -->
+					<!-- <Fav class="u-collect" post-type="furniture" :post-id="id" /> -->
+				</div>
+			</div>
+		</div>
+		<div class="u-info-text">
+			<div class="u-title"><span class="u-name">家具介绍</span></div>
+			<div class="u-txt" v-html="description_filter(item.szTip)"></div>
+		</div>
 
-		<div class="m-luYuan" v-if="item.SetID">
-			<div class="u-title"><span class="u-name">庐远广记</span><span class="u-label">回廊九曲·江南</span></div>
+		<div class="m-luYuan" v-if="setData">
+			<div class="u-title">
+				<span class="u-name">庐远广记</span><span class="u-label">{{ setData.szName }}</span>
+			</div>
 			<div class="u-box">
-				<div class="u-score"><span>评分：</span> <el-rate class="u-star" v-model="star" disabled></el-rate></div>
+				<div class="u-score"><span>评分：</span> <el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
 				<div class="m-fetters-list">
-					<el-popover class="m-popover" v-for="item in 20" :key="item" placement="top-start" width="200" trigger="hover">
+					<el-popover class="m-popover" v-for="(item, i) in setData.furnitures" :key="i" placement="top-start" width="200" trigger="hover">
 						<div class="u-info">
-							<span v-for="item in 10" :key="item">{{ item }}</span>
+							<span class="u-name">{{ item.szName }}</span>
+							<span v-if="item.Attribute1"><span class="u-label u-blue">观赏</span>{{ item.Attribute1 }}</span>
+							<span v-if="item.Attribute2"><span class="u-label u-pink">实用</span>{{ item.Attribute2 }}</span>
+							<span v-if="item.Attribute3"><span class="u-label u-yellow">坚固</span>{{ item.Attribute3 }}</span>
+							<span v-if="item.Attribute4"><span class="u-label u-green">风水</span>{{ item.Attribute4 }}</span>
+							<span v-if="item.Attribute5"><span class="u-label u-purple">趣味</span>{{ item.Attribute5 }}</span>
+							<span><span class="u-label">园宅等级：</span>{{ LevelLimit(item.LevelLimit) }}</span>
 						</div>
-						<div slot="reference">
-							<img src="https://icon.jx3box.com/icon/7528.png" alt="" />
+						<div class="u-img" :class="quality(item.Quality)" slot="reference">
+							<img :src="formatImg(item.Path)" alt="" />
 						</div>
 					</el-popover>
 				</div>
@@ -70,7 +80,7 @@
 
 <script>
 import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";
-import { getFurnitureDetail } from "@/service/furniture.js";
+import { getFurnitureDetail, getSetList } from "@/service/furniture.js";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { levelList } from "@/assets/data/furniture.json";
 export default {
@@ -82,6 +92,7 @@ export default {
 			addPlans: false,
 			star: 1,
 			item: [],
+			setData: "",
 		};
 	},
 	computed: {
@@ -118,7 +129,6 @@ export default {
 		},
 		// 园宅等级
 		LevelLimit: function (id) {
-			console.log(levelList, id);
 			for (const key in levelList) {
 				if (key == id) {
 					return levelList[key].name;
@@ -126,13 +136,20 @@ export default {
 			}
 			return "";
 		},
+		quality: function (id) {
+			return id ? "quality_" + id : "";
+		},
 		goBack() {
 			this.$router.push({ name: "list" });
 		},
 		getData() {
 			getFurnitureDetail(this.id).then((res) => {
 				this.item = res.data;
-				console.log(this.item);
+				if (res.data.SetID)
+					getSetList(res.data.SetID).then((res) => {
+						this.setData = res.data;
+						console.log(this.item, this.setData);
+					});
 			});
 		},
 	},
