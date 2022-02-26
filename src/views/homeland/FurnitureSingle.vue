@@ -1,5 +1,6 @@
 <template>
 	<div class="v-homeland-furniture">
+		
 		<div class="u-navigation">
 			<el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
 			<div class="u-links">
@@ -32,19 +33,8 @@
 				</div>
 
 				<div class="m-buttons">
-					<!-- 加入清单 -->
-					<el-popover class="u-plansBox" placement="bottom" width="160" v-model="addPlans" trigger="manual">
-						<!-- <div class="u-myPlans" v-for="(item, index) in myPlansList" :key="index" @click="addMyPlans(item)">
-							<i class="el-icon-caret-right"></i>
-							<span>{{ item.title }}</span>
-						</div> -->
-						<el-button type="success" size="mini" plain class="u-add-to-item-list" slot="reference" disabled>
-							<i class="u-el-icon el-icon-shopping-cart-full"></i>
-							<span class="u-text">加入清单</span>
-						</el-button>
-					</el-popover>
 					<!-- 收藏按钮 -->
-					<!-- <Fav class="u-collect" post-type="furniture" :post-id="id" /> -->
+					<Fav class="u-collect" post-type="furniture" :post-id="id" />
 				</div>
 			</div>
 		</div>

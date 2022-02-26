@@ -22,7 +22,7 @@
 			</el-select>
 			<div class="flexNormal">
 				<el-checkbox :checked="interact" v-model="interact">可交互</el-checkbox>
-				<el-checkbox :checked="set" v-model="set">庐远广记</el-checkbox>
+				<el-checkbox :checked="set" v-model="set">庐园广记</el-checkbox>
 			</div>
 		</div>
 	</div>
