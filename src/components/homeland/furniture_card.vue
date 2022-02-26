@@ -4,7 +4,7 @@
 			<div class="m-furniture-image">
 				<img class="u-img" :src="formatImg(item.Path)" alt="" srcset="" />
 				<!-- 是否可交互和染色 -->
-				<span class="u-use" v-if="item.bInteract"></span>
+				<span class="u-use" v-if="item.SetID"></span>
 				<span class="u-dye" v-if="item.bInteract"></span>
 			</div>
 			<div class="m-furniture-detail flex">
@@ -39,13 +39,14 @@ export default {
 		return {};
 	},
 	computed: {},
-
 	methods: {
 		formatImg(link) {
-			link = link.replace(/\\/g, "/").toLowerCase();
-			let reg = /.*?\/homeland(.*?).tga/;
-			let img = link.match(reg);
-			return __iconPath + "pvx/furniture" + img[1] + ".png";
+			let img = link.match(/.*[\/,\\](.*?).tga/);
+			link = link.replace(/\\/g, "/").split(img[1]);
+			let nLink = link[0].split("Homeland");
+
+			if (img[1] == "default") return __iconPath + "pvx/furniture/default/default.png";
+			return __iconPath + "pvx/furniture" + nLink[1] + img[1] + ".png";
 		},
 		toLink(id) {
 			this.$router.push({ name: "single", params: { id } });

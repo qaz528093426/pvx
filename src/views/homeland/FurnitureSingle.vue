@@ -13,7 +13,7 @@
 
 		<div class="m-infoBox flex">
 			<div class="u-infoImg">
-				<img :src="item.img" alt="" />
+				<img :src="formatImg(item.Path)" alt="" />
 				<div class="u-price"><i></i>15000</div>
 			</div>
 
@@ -66,7 +66,7 @@
 <script>
 import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";
 import { getFurnitureDetail } from "@/service/furniture.js";
-
+import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
 	name: "FurnitureSingle",
 	props: [],
@@ -99,6 +99,15 @@ export default {
 			if (matchs && matchs.length > 1) value = matchs[1].trim();
 			if (value) value = value.replace(/\\n/g, "<br>");
 			return value;
+		},
+		formatImg(link) {
+            if(!link) return
+			let img = link.match(/.*[\/,\\](.*?).tga/);
+			link = link.replace(/\\/g, "/").split(img[1]);
+			let nLink = link[0].split("Homeland");
+
+			if (img[1] == "default") return __iconPath + "pvx/furniture/default/default.png";
+			return __iconPath + "pvx/furniture" + nLink[1] + img[1] + ".png";
 		},
 		goBack() {
 			this.$router.push({ name: "list" });
