@@ -46,7 +46,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="u-info-text">
+		<div class="u-info-text" v-if="item.szTip">
 			<div class="u-title"><span class="u-name">家具介绍</span></div>
 			<div class="u-txt" v-html="description_filter(item.szTip)"></div>
 		</div>
