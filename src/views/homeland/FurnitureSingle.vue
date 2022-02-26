@@ -67,7 +67,7 @@
         </div>
 
         <!-- 攻略 -->
-        <div class="m-furniture-wiki">
+        <div class="m-furniture-wiki" v-if="other_id">
             <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="家具攻略"></Wiki>
         </div>
 
