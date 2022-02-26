@@ -1,5 +1,5 @@
 <template>
-	<div class="m-furniture-category" v-if="list.length">
+	<div class="m-furniture-category">
 		<div class="u-tabs flexNormal">
 			<div class="u-item" v-for="item in list" :key="item.id" @click="onQueryKey(item.nCatag2Index)" @mouseenter="hoverCategory(item)" @mouseleave="leaveCategory" :class="item.nCatag2Index == query.key ? 'active' : ''">
 				<span class="u-img" :class="itemClass(item)" :style="itemStyle(item)"></span>
@@ -116,7 +116,7 @@ export default {
 						newObj["nCatag2Index"] = obj[key];
 						break;
 					case "source":
-						newObj["szSource"] = obj[key];
+						obj[key] !== "all" ? (newObj["szSource"] = obj[key]) : "";
 						break;
 					case "score":
 						newObj["Attribute" + obj.select] = obj[key];

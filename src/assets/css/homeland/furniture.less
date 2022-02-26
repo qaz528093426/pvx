@@ -27,7 +27,7 @@
 
 		.el-input__inner {
 			border-radius: 12px;
-			background: #cc819c;
+			background: #0366d6;
 			border: none;
 		}
 
@@ -48,7 +48,7 @@
 			border-radius: 12px;
 
 			&:focus {
-				border: 1px solid #cc819c;
+				border: 1px solid #0366d6;
 			}
 		}
 	}
@@ -56,12 +56,12 @@
 	.u-button {
 		.w(75px);
 		border-radius: 12px;
-		background: #cc819c;
+		background: #0366d6;
 		color: #fff;
 		border: none;
 
 		&:hover {
-			background: #df789d;
+			background: #0366d6;
 		}
 	}
 }
@@ -132,6 +132,8 @@
 			.mr(10px);
 			.flex;
 			.pointer;
+            .bold;
+            .color(#676767);
 			flex-direction: column;
 			.u-img {
 				.pointer;
@@ -143,7 +145,7 @@
 			}
 
 			&:hover {
-				color: #cc819c;
+				color: #0366d6;
 			}
 			.u-icon(@i:0) when (@i <= 18) {
 				.u-iconj(@j:0) when (@j <= 11) {
@@ -204,6 +206,7 @@
 .m-furniture-pages {
     padding: 20px ;
     background-color: #fff;
+    min-height: 300px;
 	.m-archive-more {
 		.db;
 		.w(100%);

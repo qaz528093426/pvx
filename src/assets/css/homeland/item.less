@@ -10,7 +10,10 @@
 		.size(175px);
 		.pr;
 		.ml(10px);
-        .r(5px);
+		.r(5px);
+		.flex;
+		align-items: center;
+		justify-content: center;
 		background: #2b3d3d;
 		transition: 0.2s ease;
 		.u-use,
@@ -32,17 +35,20 @@
 		}
 
 		.u-img {
-			.full;
 			.r(5px);
+			max-width: 100%;
+			max-height: 100%;
 		}
 	}
 
 	.m-furniture-detail {
 		.ml(15px);
-		.w(160px);
+		.size(160px,100%);
+		box-sizing: border-box;
+		padding: 20px 10px 20px 0;
 		flex-direction: column;
 		align-items: flex-start;
-		justify-content: space-around;
+		justify-content: flex-start;
 
 		.u-name {
 			.w(100%);
@@ -54,6 +60,18 @@
 			font-size: 16px;
 			letter-spacing: 1px;
 			font-family: "KaiTi", "Microsoft YaHei";
+			&.quality_2 {
+				color: #00d24b;
+			}
+			&.quality_3 {
+				color: #007eff;
+			}
+			&.quality_4 {
+				color: #ff2dff;
+			}
+			&.quality_5 {
+				color: #ffa500;
+			}
 		}
 
 		.u-nature {
