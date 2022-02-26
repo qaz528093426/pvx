@@ -29,6 +29,8 @@
 					<span class="mr20" v-if="item.SetID"><span class="u-label">套装：</span>浮生昭世</span>
 					<span class="mr20"><span class="u-label">可交互：</span><i :class="item.bInteract ? 'el-icon-check' : 'el-icon-close'"></i></span>
 					<span class="mr20"><span class="u-label">可染色：</span><i class="el-icon-close"></i></span>
+					<!-- MaxAmountPerLand -->
+					<!-- szScaleRange -->
 				</div>
 
                 <div class="m-buttons">
