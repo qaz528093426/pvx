@@ -1,21 +1,17 @@
 <template>
-	<div class="v-homeland-furniture">
-		<div class="u-navigation">
-			<el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
-			<div class="u-links">
-				<a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
-				<template v-if="achievement_id">
-					<em> | </em>
-					<a class="u-link u-achievement" :href="getLink('cj', achievement_id)" target="_blank"><i class="el-icon-trophy"></i>成就信息</a>
-				</template>
-			</div>
-		</div>
+    <div class="v-homeland-furniture">
+        <div class="u-navigation">
+            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
+            <div class="u-links">
+                <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
+            </div>
+        </div>
 
-		<div class="m-infoBox flex">
-			<div class="u-infoImg">
-				<img :src="formatImg(item.Path)" alt="" />
-				<div class="u-price"><i></i>15000</div>
-			</div>
+        <div class="m-infoBox flex">
+            <div class="u-infoImg">
+                <img :src="formatImg(item.Path)" alt="" />
+                <div class="u-price"><i></i>15000</div>
+            </div>
 
 			<div class="u-info-card">
 				<div class="u-title">{{ item.szName }}</div>
@@ -35,23 +31,23 @@
 					<span class="mr20"><span class="u-label">可染色：</span><i class="el-icon-close"></i></span>
 				</div>
 
-				<div class="m-buttons">
-					<!-- 加入清单 -->
-					<el-popover class="u-plansBox" placement="bottom" width="160" v-model="addPlans" trigger="manual">
-						<!-- <div class="u-myPlans" v-for="(item, index) in myPlansList" :key="index" @click="addMyPlans(item)">
+                <div class="m-buttons">
+                    <!-- 加入清单 -->
+                    <el-popover class="u-plansBox" placement="bottom" width="160" v-model="addPlans" trigger="manual">
+                        <!-- <div class="u-myPlans" v-for="(item, index) in myPlansList" :key="index" @click="addMyPlans(item)">
 							<i class="el-icon-caret-right"></i>
 							<span>{{ item.title }}</span>
 						</div> -->
-						<el-button type="success" size="mini" plain class="u-add-to-item-list" slot="reference" disabled>
-							<i class="u-el-icon el-icon-shopping-cart-full"></i>
-							<span class="u-text">加入清单</span>
-						</el-button>
-					</el-popover>
-					<!-- 收藏按钮 -->
-					<Fav class="u-collect" post-type="item" :post-id="id" />
-				</div>
-			</div>
-		</div>
+                        <el-button type="success" size="mini" plain class="u-add-to-item-list" slot="reference" disabled>
+                            <i class="u-el-icon el-icon-shopping-cart-full"></i>
+                            <span class="u-text">加入清单</span>
+                        </el-button>
+                    </el-popover>
+                    <!-- 收藏按钮 -->
+                    <!-- <Fav class="u-collect" post-type="furniture" :post-id="id" /> -->
+                </div>
+            </div>
+        </div>
 
 		<div class="m-luYuan" v-if="item.SetID">
 			<div class="u-title"><span class="u-name">庐远广记</span><span class="u-label">回廊九曲·江南</span></div>
