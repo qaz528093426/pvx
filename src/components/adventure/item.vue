@@ -35,7 +35,7 @@ export default {
             return __imgPath + "image/pvx/bg.png";
         },
         titleImg: function () {
-            return __iconPath + "pvx/serendipity/image_ui/luckymeeting7-" + this.item.nOpenFrame + ".png";
+            return __iconPath + "pvx/serendipity/image_ui/luckymeeting7_" + this.item.nOpenFrame + ".png";
         },
         titleStyle: function () {
             return {};

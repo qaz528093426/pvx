@@ -111,9 +111,6 @@ export default {
         },
     },
     methods: {
-        getPic: function (url) {
-            return __imgPath + url;
-        },
         appendPage: function () {
             this.page += 1;
             this.getPetList(true);
