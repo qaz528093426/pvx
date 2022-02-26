@@ -50,18 +50,21 @@
 
 .m-homeland-posts {
     border: 1px solid #eee;
-	.u-box {
-		.flex;
-		flex-wrap: wrap;
-        padding: 0 20px;
-		.u-item {
-			.lh(40px);
-			.mr(20px);
-			.mb(20px);
-            .pointer;
-			&:hover {
-				text-decoration: underline;
-			}
+	.u-list {
+        padding: 10px;
+	}
+	.u-item {
+		.pointer;
+		.db;
+		&::before{
+			content : '※';
+			color:#999;
+			.mr(10px);
 		}
+		padding:10px;
+		&:hover{
+			background-color:@bg-light;
+		}
+		border-bottom:1px dashed #eee;
 	}
 }
