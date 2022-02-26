@@ -12,7 +12,8 @@ export default {
    components : {},
    data : function(){
        return {
-           data : ''
+           data : '',
+           loading : false,
        }
    },
    computed:{},
@@ -26,8 +27,11 @@ export default {
    },
    methods:{
        loadData : function (){
+           this.loading = true
            getFurnitureMaterials(this.id).then((res) => {
                this.data = res.data
+           }).finally(() => {
+               this.loading = false
            })
        }
    },

@@ -25,7 +25,7 @@
 
 .m-furniture-types {
     padding: 20px;
-    background-color:#f5f7fa;
+    background-color: #f5f7fa;
     .w(120px);
     .u-list {
         .pl(20px);
@@ -51,13 +51,13 @@
 .m-furniture-box {
     flex: 1;
     border-left: 1px solid #dcdfe6;
-    background-color:#fff;
+    background-color: #fff;
 }
 
 .m-furniture-category {
     padding: 20px;
     border-bottom: 1px solid #dcdfe6;
-    background-color:#f5f7fa;
+    background-color: #f5f7fa;
     .active {
         .bold;
         color: @color-link;
@@ -115,7 +115,7 @@
         }
     }
     .u-select {
-        .w(140px);
+        .w(180px);
     }
     .u-margin {
         .mr(20px);
@@ -131,8 +131,36 @@
     .el-input-group__prepend {
         background-color: #fff;
     }
-}
 
+    .u-source,
+    .u-level {
+        .el-input__prefix {
+            left: 1px;
+            top: 1px;
+            .r(5px);
+        }
+
+        .u-prefix {
+            .db;
+            .h(38px);
+            .lh(38px);
+
+            background-color: #f5f7fa;
+            color: #909399;
+
+            border-right: 1px solid #dcdfe6;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+
+            padding: 0 10px;
+            white-space: nowrap;
+        }
+
+        .el-input--prefix .el-input__inner {
+            padding-left: 90px;
+        }
+    }
+}
 
 .m-furniture-list {
     padding: 20px;
@@ -144,8 +172,8 @@
     }
 }
 
-.m-furniture-null{
-    margin:20px;
+.m-furniture-null {
+    margin: 20px;
 }
 
 .m-furniture-pages {
