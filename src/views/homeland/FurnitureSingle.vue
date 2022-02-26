@@ -28,9 +28,9 @@
 					<span class="mr20"><span class="u-label u-purple">趣味</span>{{ item.Attribute5 }}</span>
 				</div>
 				<div class="u-other">
-					<span class="mr20"><span class="u-label">物品来源：</span>园宅会赛</span>
-					<span class="mr20"><span class="u-label">要求等级：</span>1级</span>
-					<span class="mr20"><span class="u-label">套装：</span>浮生昭世</span>
+					<span class="mr20"><span class="u-label">物品来源：</span>{{ item.szSource }}</span>
+					<span class="mr20"><span class="u-label">要求等级：</span>{{ LevelLimit(item.LevelLimit) }}</span>
+					<span class="mr20" v-if="item.SetID"><span class="u-label">套装：</span>浮生昭世</span>
 					<span class="mr20"><span class="u-label">可交互：</span><i :class="item.bInteract ? 'el-icon-check' : 'el-icon-close'"></i></span>
 					<span class="mr20"><span class="u-label">可染色：</span><i class="el-icon-close"></i></span>
 				</div>
@@ -67,6 +67,7 @@
 import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";
 import { getFurnitureDetail } from "@/service/furniture.js";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { levelList } from "@/assets/data/furniture.json";
 export default {
 	name: "FurnitureSingle",
 	props: [],
@@ -100,14 +101,25 @@ export default {
 			if (value) value = value.replace(/\\n/g, "<br>");
 			return value;
 		},
+		// 图片链接转换
 		formatImg(link) {
-            if(!link) return
+			if (!link) return;
 			let img = link.match(/.*[\/,\\](.*?).tga/);
 			link = link.replace(/\\/g, "/").split(img[1]);
 			let nLink = link[0].split("Homeland");
 
 			if (img[1] == "default") return __iconPath + "pvx/furniture/default/default.png";
 			return __iconPath + "pvx/furniture" + nLink[1] + img[1] + ".png";
+		},
+		// 园宅等级
+		LevelLimit: function (id) {
+			console.log(levelList, id);
+			for (const key in levelList) {
+				if (key == id) {
+					return levelList[key].name;
+				}
+			}
+			return "";
 		},
 		goBack() {
 			this.$router.push({ name: "list" });
