@@ -2,9 +2,8 @@
 	.size(380px,200px);
 	.r(8px);
 	.pointer;
-	.color(#3d454d);
+	.color(@color);
 	border: 1px solid #ddd;
-	box-shadow: 0 0 5px #ccc;
 }
 
 .m-furniture-image {
@@ -42,6 +41,7 @@
 }
 
 .m-furniture-item {
+	transition: all 0.1 ease-in-out;
 	.m-furniture-image img{
 		transition: 0.2s ease;
 	}
@@ -52,6 +52,9 @@
 				transform: scale(1.2);
 			}
 		}
+		background-color:#f2f6fb;
+		box-shadow:0 0 8px rgba(0,0,0,.1);
+		border-color:#bdd2e9;
 	}
 }
 
@@ -89,7 +92,8 @@
 	}
 
 	.u-num{
-		.bold;
+		// .bold;
+		// color:#777;
 	}
 
 	.u-nature {
