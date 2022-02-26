@@ -69,9 +69,6 @@ export default {
             let result = extractTextContent(str);
             return result[0]["text"];
         },
-        // TODO:增加羁绊宠物浮层
-        // ItemTabIndex : 22538
-        // ItemTabType: 8
     },
 };
 </script>
