@@ -17,7 +17,11 @@ function getFurnitureColor(id) {
 }
 
 function getFurnitureMaterials(other_id) {
-    return $.get(`/manufacture/furniture/${other_id}`);
+    return $.get(`/manufacture/furniture`,{
+		params : {
+			id : other_id
+		}
+	});
 }
 
 export { getFurniture, getFurnitureDetail, getSetList, getFurnitureColor, getFurnitureMaterials };
