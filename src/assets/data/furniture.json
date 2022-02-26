@@ -1,13 +1,13 @@
 {
 	"categoryList": [
-		{ "key": "1", "name": "风水" },
-		{ "key": "2", "name": "观赏" },
+		{ "key": "1", "name": "观赏" },
+		{ "key": "2", "name": "实用" },
 		{ "key": "3", "name": "坚固" },
-		{ "key": "4", "name": "实用" },
+		{ "key": "4", "name": "风水" },
 		{ "key": "5", "name": "趣味" }
 	],
 	"sourceList": [
-		{ "id": "all", "name": "全部" },
+		{ "id": "", "name": "全部" },
 		{ "id": "1", "name": "园宅币" },
 		{ "id": "2", "name": "活动" },
 		{ "id": "3", "name": "园宅会赛" },
@@ -31,7 +31,7 @@
 		{ "id": "22", "name": "未知" }
 	],
 	"levelList": [
-		{ "level": "all", "name": "全部" },
+		{ "level": "", "name": "全部" },
 		{ "level": 1, "name": "1级" },
 		{ "level": 2, "name": "2级" },
 		{ "level": 3, "name": "3级" },
