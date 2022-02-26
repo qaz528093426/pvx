@@ -13,7 +13,7 @@
 			</div>
 
 			<div class="u-info">
-				<div class="u-info-title">
+				<div class="u-info-title" :class="'quality_' + data.Quality">
 					{{ data.szName }}
 					<i class="u-interact" v-if="data.bInteract"></i>
 				</div>
