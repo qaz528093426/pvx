@@ -53,11 +53,20 @@
 			</div>
 		</div>
 
-		<div class="m-luYuan">
+		<div class="m-luYuan" v-if="item.SetID">
 			<div class="u-title"><span class="u-name">庐远广记</span><span class="u-label">回廊九曲·江南</span></div>
 			<div class="u-box">
 				<div class="u-score"><span>评分：</span> <el-rate class="u-star" v-model="star" disabled></el-rate></div>
-				<div class="m-fetters-list"></div>
+				<div class="m-fetters-list">
+					<el-popover class="m-popover" v-for="item in 20" :key="item" placement="top-start" width="200" trigger="hover">
+						<div class="u-info">
+							<span v-for="item in 10" :key="item">{{ item }}</span>
+						</div>
+						<div slot="reference">
+							<img src="https://icon.jx3box.com/icon/7528.png" alt="" />
+						</div>
+					</el-popover>
+				</div>
 			</div>
 		</div>
 	</div>
