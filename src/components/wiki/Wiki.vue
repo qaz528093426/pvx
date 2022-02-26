@@ -115,7 +115,7 @@ export default {
         },
     },
     watch: {
-        id: {
+        source_id: {
             immediate: true,
             handler(val) {
                 if (val) this.loadData();

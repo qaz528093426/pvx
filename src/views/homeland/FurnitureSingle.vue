@@ -34,7 +34,7 @@
 							<b v-for="item in scaleRange(data.szScaleRange)" :key="item">{{ item }}</b>
 						</span>
 					</span>
-					<span class="u-meta u-meta-dyes"
+					<span class="u-meta u-meta-dyes" v-if="color_list.length"
 						><span class="u-label">染色选项：</span> <span class="u-value"> <i v-for="item in color_list" :key="item" class="u-dye" :style="{ backgroundColor: `rgb(${item})` }"></i> </span
 					></span>
 				</div>
@@ -46,7 +46,7 @@
 			</div>
 		</div>
 
-		<div class="m-extend">
+		<div class="m-extend" v-if="data.szTip || setData">
 			<div class="m-extend-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">家具信息</span></div>
 			<div class="m-extend-desc" v-if="data.szTip">
 				<div class="u-title"><i class="el-icon-star-on"></i>家具介绍</div>
@@ -91,9 +91,6 @@ export default {
 	data: function () {
 		return {
 			type: "furniture",
-			addPlans: false,
-			star: 1,
-
 			loading: false,
 			data: "", // 家具数据
 			setData: "",
@@ -131,7 +128,11 @@ export default {
 			return list;
 		},
 	},
-	watch: {},
+	watch: {
+		id : function (){
+			this.getData()
+		}
+	},
 	methods: {
 		// 数据加载
 		// ==============
