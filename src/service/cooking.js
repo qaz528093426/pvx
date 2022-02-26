@@ -3,7 +3,7 @@ import { $node, $helper } from "@jx3box/jx3box-common/js/https";
 const $n = $node()
 const $h = $helper()
 function getManufactures(obj) {
-  return $n.get(`/manufactures/${obj.type}`, {
+  return $n.get(`/manufactures?type=${obj.type}`, {
     params: obj,
   })
 }

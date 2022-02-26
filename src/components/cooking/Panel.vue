@@ -57,7 +57,6 @@ export default {
         // this.itemArr = res.data;
       });
     },
-    // {{helperDomain}}/api/items/price
     removePanel(item) {
       this.$emit("removePanel", item);
     },

@@ -16,7 +16,7 @@
             :src="iconLink(item.IconID)"
             alt=""
           >
-          {{ item.Name }}
+          {{ `[${item.nLevel}]${item.Name}` }}
           <!-- <Item :item_id="val.ItemID"/> -->
         </div>
       </el-popover>

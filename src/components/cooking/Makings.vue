@@ -1,14 +1,13 @@
 <template>
   <div class="Makings">
+    <!-- <div v-for="item in makingsArr" :key="item.id">
+    </div> -->
     <div class="c-Panel-itemNav flex-center-between">
       <div>
-        <img
-          :src="iconLink(making.IconID)"
-          alt=""
-        >
+        <img :src="iconLink(making['item_info'][0]['IconID'])" alt="" />
       </div>
-      <div>{{ `${making.name} x${item.RequireItemCount}` }}</div>
-      <GamePrice :price="setItemsPrice(making.ItemID)" />
+      <div>{{ `${making.Name} x${item.RequireItemCount}` }}</div>
+      <GamePrice :price="setItemsPrice(making['item_info'][0]['ItemID'])" />
     </div>
   </div>
 </template>
@@ -21,10 +20,13 @@ import { getOther, getItemsPrice } from "@/service/cooking";
 // import Item from "@jx3box/jx3box-editor/src/Item.vue";
 export default {
   name: "Makings",
-  props: ["item", "type", "serversName"],
+  props: ["item", "serversName"],
   watch: {
-    item() {
-      this.getData();
+    item: {
+      deep: true,
+      handler() {
+        this.getData();
+      },
     },
   },
   components: { GamePrice },
@@ -33,14 +35,16 @@ export default {
       making: "",
     };
   },
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   methods: {
     iconLink,
     getData() {
       getOther({
         ids: this.item.RequireItemIndex,
       }).then((res) => {
-        this.making = res.data;
+        this.making = res.data.list[0];
       });
     },
     setItemsPrice(id) {

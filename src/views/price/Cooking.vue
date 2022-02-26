@@ -10,11 +10,7 @@
       :feedbackEnable="true"
       :crumbEnable="false"
     >
-      <img
-        slot="logo"
-        svg-inline
-        :src="getAppIcon('cooking')"
-      />
+      <img slot="logo" svg-inline :src="getAppIcon('cooking')" />
     </Breadcrumb>
     <LeftSidebar>
       <Nav></Nav>
@@ -26,11 +22,7 @@
           <h1 class="u-title">技艺助手</h1>
           <div class="flex-center-between">
             <div class="c-cooking-tabs">
-              <el-radio-group
-                v-model="type"
-                size="medium"
-                @change="changeType"
-              >
+              <el-radio-group v-model="type" size="medium" @change="changeType">
                 <el-radio-button label="tailoring">缝纫</el-radio-button>
                 <el-radio-button label="founding">锻造</el-radio-button>
                 <el-radio-button label="cooking">烹饪</el-radio-button>
@@ -39,10 +31,7 @@
               </el-radio-group>
             </div>
             <div class="c-cooking-servers">
-              <el-select
-                v-model="serversName"
-                placeholder="请选择服务器"
-              >
+              <el-select v-model="serversName" placeholder="请选择服务器">
                 <el-option
                   v-for="item in serversArr"
                   :key="item"
@@ -75,18 +64,13 @@
                   <template slot="title">
                     <span>{{ item.BelongName }}</span>
                   </template>
-                  <div
-                    v-for="val in itemArr"
-                    :key="val.ID"
-                  >
+                  <div v-for="val in itemArr" :key="val.ID">
                     <el-menu-item
                       v-if="val.Belong == item.BelongID"
                       :index="val.ID.toString()"
+                      @click="handleClickItem(val)"
                     >
-                      <ListItem
-                        :item="val"
-                        @addPanel="addPanel"
-                      />
+                      <ListItem :item="val" @addPanel="addPanel" />
                     </el-menu-item>
                   </div>
                 </el-submenu>
@@ -95,31 +79,12 @@
           </div>
           <!-- 内容 -->
           <div class="m-cooking-content">
-            <div
-              class="c-cooking-mainItem flex-column-center"
-              v-if="itemObj"
-            >
-              <div class="u-cooking-itemIcon"></div>
-              <div class="u-cooking-itemName">{{ itemObj.name }}</div>
-              <!-- <div></div> -->
-            </div>
-            <div v-if="itemObj">
-              <div>
-                <span> 货币消耗 </span>
-              </div>
-              <div>
-                <span> 物品消耗 </span>
-              </div>
-            </div>
-            <div></div>
+            <ContentBox :item="itemObj" />
           </div>
           <!-- 购物车 -->
           <div class="m-cooking-panel">
             <div>
-              <div
-                v-for="item in panelArr"
-                :key="item.ItemID"
-              >
+              <div v-for="item in panelArr" :key="item.ItemID">
                 <Panel
                   :item="item"
                   :serversName="serversName"
@@ -129,16 +94,8 @@
               </div>
             </div>
             <div>
-
-              <div
-                v-for="item in makingsArr"
-                :key="item.id"
-              >
-                <Makings
-                  :item="item"
-                  :type="type"
-                  :serversName="serversName"
-                />
+              <div v-for="item in makingsArr" :key="item.id">
+                <Makings :item="item" :serversName="serversName" />
               </div>
             </div>
           </div>
@@ -155,17 +112,18 @@
 import Nav from "@/components/Nav.vue";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getManufactures, getmanufacture } from "@/service/cooking";
+import { getManufactures, getOther } from "@/service/cooking";
 import Panel from "../../components/cooking/Panel.vue";
 import Makings from "../../components/cooking/Makings.vue";
 import ListItem from "../../components/cooking/ListItem.vue";
+import ContentBox from "../../components/cooking/ContentBox.vue";
 import servers_std from "@jx3box/jx3box-data/data/server/server_std.json";
 import servers_origin from "@jx3box/jx3box-data/data/server/server_origin.json";
 
 export default {
   name: "Cooking",
   props: [],
-  components: { Nav, Panel, Makings, ListItem },
+  components: { Nav, Panel, Makings, ListItem, ContentBox },
   data: function () {
     return {
       type: "cooking",
@@ -271,7 +229,23 @@ export default {
         // mode: "simple",
         client: "std",
       }).then((res) => {
-        this.itemArr = res.data;
+        let arr = [];
+        res.data.forEach((item) => {
+          arr.push({
+            Belong: item.Belong, //类型id
+            RequireItem: this.addMakings(item), //素材列表
+            Name: item.Name, //物品名字
+            ItemID: item.ItemID,
+            IconID: item.IconID,
+            ID: item.ID,
+            nLevel: item.nLevel, //需要等级
+            NeedExpertise: item.NeedExpertise || 0, //是否需要专精 1是 其余不是
+            CostVigor: item.CostVigor, //精力消耗
+            szTip: item.szTip, //配方来源
+          });
+        });
+        this.itemArr = arr;
+        this.itemObj = this.itemArr[1];
       });
       this.belongArr.forEach((item) => {
         if (item.ProfessionID == this.ProfessionID) {
@@ -280,6 +254,18 @@ export default {
         }
       });
     }, //获取物品数据
+    addMakings(item) {
+      let arr = [];
+      for (let x = 0; x < 8; x++) {
+        if (item[`RequireItemIndex${x}`]) {
+          arr.push({
+            RequireItemIndex: item[`RequireItemIndex${x}`], //素材 otherID
+            RequireItemCount: item[`RequireItemCount${x}`], //素材需求数量
+          });
+        }
+      }
+      return arr;
+    }, //素材index转换数组
     changeType(e) {
       switch (e) {
         case "cooking":
@@ -303,10 +289,9 @@ export default {
       this.type = e;
       this.getData();
     }, //选择类型
-    handleClickItem(obj) {
-      this.itemObj = {
-        ...obj,
-      };
+    handleClickItem(item) {
+      this.itemObj = item;
+      console.log(this.itemObj);
     }, //选择物品
     remoteMethod(e) {
       this.itemName = e;
@@ -326,6 +311,14 @@ export default {
       // });
     }, //点击增加购物车物品
     addPanel(item) {
+      this.handleClickItem(item);
+      if (this.panelArr.length == 20) {
+        this.$message({
+          message: "购物车已满",
+          type: "warning",
+        });
+        return;
+      }
       let arr = this.panelArr.filter((val) => val.ItemID == item.ItemID);
       // console.log(makingsArr, "makingsArr");
       let obj = {
@@ -342,25 +335,10 @@ export default {
         return;
       }
       this.panelArr.push(obj);
-      // this.AllListArr = [...this.AllListArr, ...arr].sort(
-      //   (a, b) => parseInt(a.id) - parseInt(b.id)
-      // );
-      // console.log(this.AllListArr, "AllListArr");
-      this.makingsArr = this.addMakings(item);
+      this.makingsArr = [...this.makingsArr, ...item.RequireItem].sort(
+        (a, b) => a.RequireItemIndex - b.RequireItemIndex
+      );
     }, //加入购物车
-    addMakings(item) {
-      let arr = [];
-      for (let x = 0; x < 8; x++) {
-        if (item[`RequireItemIndex${x}`]) {
-          arr.push({
-            RequireItemType: item[`RequireItemType${x}`],
-            RequireItemIndex: item[`RequireItemIndex${x}`],
-            RequireItemCount: item[`RequireItemCount${x}`],
-          });
-        }
-      }
-      return arr;
-    }, //添加材料
     showMakings(arr) {
       for (let i = 0; i < arr.length; i++) {
         let item = arr[i];
