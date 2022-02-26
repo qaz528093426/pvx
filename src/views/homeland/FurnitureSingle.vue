@@ -44,10 +44,10 @@
 
         <div class="m-luYuan" v-if="setData">
             <div class="u-title">
-                <span class="u-name">庐远广记</span><span class="u-label">{{ setData.szName }}</span>
+                <span class="u-name">{{ setData.szName }}</span>
             </div>
             <div class="u-box">
-                <div class="u-score"><span>评分：</span> <el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
+                <div class="u-score"><el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
                 <div class="m-fetters-list">
                     <el-popover class="m-popover" v-for="(item, i) in setData.furnitures" :key="i" placement="top-start" width="200" trigger="hover">
                         <div class="u-info">
@@ -59,9 +59,9 @@
                             <span v-if="item.Attribute5"><span class="u-label u-purple">趣味</span>{{ item.Attribute5 }}</span>
                             <span><span class="u-label">园宅等级：</span>{{ LevelLimit(item.LevelLimit) }}</span>
                         </div>
-                        <div class="u-img" :class="quality(item.Quality)" slot="reference">
-                            <img :src="formatImg(item.Path)" alt="" />
-                        </div>
+                        <router-link class="u-img" :class="quality(item.Quality)" slot="reference" :to="`/${item.dwID}`">
+                            <img :src="formatImg(item.Path)" />
+                        </router-link>
                     </el-popover>
                 </div>
             </div>
