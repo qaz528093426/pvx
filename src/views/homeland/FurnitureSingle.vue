@@ -16,32 +16,32 @@
                 <img :src="formatImg(data.Path)" :alt="data.szName" />
             </div>
 
-            <div class="u-info">
-                <div class="u-info-title">
-                    {{ data.szName }}
-                    <i class="u-interact" v-if="data.bInteract"></i>
-                </div>
-                <div class="u-attrs">
-                    <span class="u-attr" v-if="data.Attribute1"><span class="u-label blue">观赏</span>{{ data.Attribute1 }}</span>
-                    <span class="u-attr" v-if="data.Attribute2"><span class="u-label pink">实用</span>{{ data.Attribute2 }}</span>
-                    <span class="u-attr" v-if="data.Attribute3"><span class="u-label yellow">坚固</span>{{ data.Attribute3 }}</span>
-                    <span class="u-attr" v-if="data.Attribute4"><span class="u-label green">风水</span>{{ data.Attribute4 }}</span>
-                    <span class="u-attr" v-if="data.Attribute5"><span class="u-label purple">趣味</span>{{ data.Attribute5 }}</span>
-                </div>
-                <div class="u-metas">
-                    <span class="u-meta"><span class="u-label">来源途径：</span>{{ data.szSource }}</span>
-                    <span class="u-meta"><span class="u-label">园宅等级：</span>{{ data.LevelLimit }}级</span>
-                    <span class="u-meta"><span class="u-label">摆放上限：</span>{{ data.MaxAmountPerLand }}</span>
-                    <span class="u-meta u-meta-scale" v-if="data.szScaleRange"
-                        ><span class="u-label">缩放大小：</span>
-                        <span class="u-value">
-                            <b v-for="item in scaleRange(data.szScaleRange)" :key="item">{{ item }}</b>
-                        </span>
-                    </span>
-                    <span class="u-meta u-meta-dyes" v-if="color_list.length"
-                        ><span class="u-label">染色选项：</span> <span class="u-value"> <i v-for="item in color_list" :key="item" class="u-dye" :style="{ backgroundColor: `rgb(${item})` }"></i> </span
-                    ></span>
-                </div>
+			<div class="u-info">
+				<div class="u-info-title" :class="'quality_' + data.Quality">
+					{{ data.szName }}
+					<i class="u-interact" v-if="data.bInteract"></i>
+				</div>
+				<div class="u-attrs">
+					<span class="u-attr" v-if="data.Attribute1"><span class="u-label blue">观赏</span>{{ data.Attribute1 }}</span>
+					<span class="u-attr" v-if="data.Attribute2"><span class="u-label pink">实用</span>{{ data.Attribute2 }}</span>
+					<span class="u-attr" v-if="data.Attribute3"><span class="u-label yellow">坚固</span>{{ data.Attribute3 }}</span>
+					<span class="u-attr" v-if="data.Attribute4"><span class="u-label green">风水</span>{{ data.Attribute4 }}</span>
+					<span class="u-attr" v-if="data.Attribute5"><span class="u-label purple">趣味</span>{{ data.Attribute5 }}</span>
+				</div>
+				<div class="u-metas">
+					<span class="u-meta"><span class="u-label">来源途径：</span>{{ data.szSource }}</span>
+					<span class="u-meta"><span class="u-label">园宅等级：</span>{{ data.LevelLimit }}级</span>
+					<span class="u-meta"><span class="u-label">摆放上限：</span>{{ data.MaxAmountPerLand }}</span>
+					<span class="u-meta u-meta-scale" v-if="data.szScaleRange"
+						><span class="u-label">缩放大小：</span>
+						<span class="u-value">
+							<b v-for="item in scaleRange(data.szScaleRange)" :key="item">{{ item }}</b>
+						</span>
+					</span>
+					<span class="u-meta u-meta-dyes" v-if="color_list.length"
+						><span class="u-label">染色选项：</span> <span class="u-value"> <i v-for="item in color_list" :key="item" class="u-dye" :style="{ backgroundColor: `rgb(${item})` }"></i> </span
+					></span>
+				</div>
 
                 <div class="m-buttons">
                     <!-- 收藏按钮 -->
