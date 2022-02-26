@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<div class="m-furniture-box">
-				<FurnitureCategory :list="children(attKey)" :categoryData="categoryData" @onCategoryKey="onCategoryKey" />
+				<FurnitureCategory :list="children(attKey)" :isChange="isChange" :categoryData="categoryData" @onCategoryKey="onCategoryKey" />
 				<div class="m-furniture-list flexNormal">
 					<FurnitureCard v-for="(item, index) in list" :key="index" :item="item" />
 				</div>
@@ -49,7 +49,7 @@ export default {
 
 			loading: false,
 			append: false,
-			isCategory: false,
+			isChange: false,
 			client: "std",
 			query: "",
 		};
@@ -61,7 +61,6 @@ export default {
 				sourceList,
 				levelList,
 				categoryList,
-				isCategory: this.isCategory,
 			};
 		},
 		hasNextPage: function () {
@@ -75,13 +74,13 @@ export default {
 		},
 		onCategoryKey: function (obj) {
 			this.query = { ...obj, ...this.params };
-			this.isCategory = false;
+			this.isChange = false;
 			this.getData();
 		},
 		onAttKey: function (val) {
 			this.defaultParams();
 			this.attKey = val;
-			this.isCategory = true;
+			this.isChange = true;
 			this.getData();
 		},
 		getCategory: function () {
@@ -134,6 +133,7 @@ export default {
 		},
 	},
 	created: function () {
+		this.getData();
 		this.getCategory();
 	},
 };
