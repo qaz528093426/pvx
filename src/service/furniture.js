@@ -10,6 +10,9 @@ function getFurnitureDetail(id) {
 	return $.get(`/house/furniture/${id}`);
 }
 function getSetList(id) {
-	return $.get(`/house/set/${id}`);
+	return $.get(`/house/furniture/set/${id}`);
 }
-export { getFurniture, getFurnitureDetail, getSetList };
+function getFurnitureColor(id) {
+	return $.get(`/house/furniture/color/${id}`);
+}
+export { getFurniture, getFurnitureDetail, getSetList, getFurnitureColor };
