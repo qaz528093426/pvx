@@ -52,14 +52,18 @@
 
         <div class="m-extend" v-if="data.szTip || setData">
             <div class="m-extend-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">家具信息</span></div>
-            <div class="m-extend-desc" v-if="data.szTip">
+            <div class="m-extend-content m-extend-desc" v-if="data.szTip">
                 <div class="u-title"><i class="el-icon-star-on"></i>家具介绍</div>
                 <div class="u-txt" v-html="description_filter(data.szTip)"></div>
             </div>
-            <div class="m-extend-relation" v-if="setData">
+            <div class="m-extend-content m-extend-relation" v-if="setData">
                 <div class="u-title"><i class="el-icon-star-on"></i>{{ setData.szName }}<el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
                 <furnitureSet :data="setData" />
             </div>
+			<div class="m-extend-content m-extend-materials" v-if="other_id">
+				<div class="u-title"><i class="el-icon-star-on"></i>合成材料</div>
+				<furnitureMaterials :id="other_id" />
+			</div>
         </div>
 
         <!-- 攻略 -->
@@ -75,13 +79,15 @@
 </template>
 
 <script>
-import { getLink } from "@jx3box/jx3box-common/js/utils";
-import { getFurnitureDetail, getSetList, getFurnitureColor } from "@/service/furniture.js";
-import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import furnitureSet from "@/components/homeland/furniture_set.vue";
 import Wiki from "@/components/wiki/Wiki.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
+import furnitureMaterials from '@/components/homeland/furniture_materials.vue'
 
+import { getLink } from "@jx3box/jx3box-common/js/utils";
+import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
+
+import { getFurnitureDetail, getSetList, getFurnitureColor } from "@/service/furniture.js";
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 
 export default {
@@ -91,6 +97,7 @@ export default {
         Wiki,
         Comment,
         furnitureSet,
+		furnitureMaterials
     },
     data: function () {
         return {
