@@ -42,12 +42,12 @@ module.exports = {
             template: "public/index.html",
             filename: "adventure/index.html",
         },
-        // merchants: {
-        //     title: "商贾云集 - JX3BOX",
-        //     entry: "src/pages/merchants.js",
-        //     template: "public/index.html",
-        //     filename: "merchants/index.html",
-        // },
+        manufacture: {
+            title: "技艺助手 - JX3BOX",
+            entry: "src/pages/manufacture.js",
+            template: "public/index.html",
+            filename: "manufacture/index.html",
+        },
     },
 
     //❤️ Proxy ~

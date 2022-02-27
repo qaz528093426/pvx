@@ -106,7 +106,7 @@ export default {
                         {
                             path: "/pet",
                             label: "宠物大全",
-                            icon: "el-icon-sugar",
+                            icon: "el-icon-files",
                             key: "pet",
                             status: true,
                         },
@@ -134,23 +134,23 @@ export default {
                     ],
                 },
 
-                // {
-                //     key: "merchants",
-                //     label: "商贾",
-                //     index: "4",
-                //     submenus: [
-                //         {
-                //             path: "/merchants/cooking",
-                //             label: "技艺助手",
-                //             icon: "el-icon-sugar",
-                //             key: "cooking",
-                //             status: false,
-                //         },
-                //         // 物价大全
-                //         // 金价走势
-                //         // 万宝楼
-                //     ],
-                // },
+                {
+                    key: "merchants",
+                    label: "商贾",
+                    index: "4",
+                    submenus: [
+                        {
+                            path: "/manufacture",
+                            label: "技艺助手",
+                            icon: "el-icon-sugar",
+                            key: "manufacture",
+                            status: true,
+                        },
+                        // 物价大全
+                        // 金价走势
+                        // 万宝楼
+                    ],
+                },
             ],
         };
     },
