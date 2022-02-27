@@ -4,10 +4,7 @@
       <div>
         <Item />
         <div>
-          <img
-            :src="iconLink(item.IconID)"
-            alt=""
-          >
+          <img :src="iconLink(item.IconID)" alt="" />
         </div>
         <div>{{ item.Name }}</div>
         <GamePrice :price="setItemsPrice(item.ItemID)" />
@@ -18,10 +15,7 @@
           v-model="item.num"
           :min="1"
         ></el-input-number>
-        <el-button
-          @click="removePanel(item)"
-          size="mini"
-        >
+        <el-button @click="removePanel(item)" size="mini">
           移出购物车
         </el-button>
       </div>
@@ -53,7 +47,7 @@ export default {
         list: id,
       }).then((res) => {
         console.log(res.data);
-        return 1234
+        return 1234;
         // this.itemArr = res.data;
       });
     },

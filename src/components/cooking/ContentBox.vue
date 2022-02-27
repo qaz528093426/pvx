@@ -1,12 +1,12 @@
 <template>
-  <div class="ContentBox">
+  <div class="ContentBox" v-if="item">
     <div class="flex-column-center">
       <div
         class="flex-center-center c-cooking-goodsBox"
         :style="`background:url(${
           imgPath +
           `${
-            item.NeedExpertise === 1
+            item.NeedExpertise == 1
               ? +'image/cooking/newcraft3-14.png'
               : 'image/cooking/newcraft3-10.png'
           }`
@@ -20,12 +20,16 @@
     <div>
       <div>
         <span>货币消耗：</span>
-        <span>{{ item.CostVigor }}</span>
+        <span>{{ item.CostVigor }}精力</span>
       </div>
       <div>
         <span>材料消耗：</span>
         <div class="flex-center-between">
-          <div class="flex-column-center" v-for="item in makingArr" :key="item">
+          <div
+            class="flex-column-center"
+            v-for="item in makingArr"
+            :key="item.ItemID"
+          >
             <div
               class="flex-center-center c-cooking-goodsBox"
               :style="`background:url(${imgPath}image/cooking/newcraft3-10.png);background-size: cover;`"

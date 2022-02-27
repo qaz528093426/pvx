@@ -64,7 +64,7 @@
                   <template slot="title">
                     <span>{{ item.BelongName }}</span>
                   </template>
-                  <div v-for="val in itemArr" :key="val.ID">
+                  <div v-for="val in getItemArr()" :key="val.ID">
                     <el-menu-item
                       v-if="val.Belong == item.BelongID"
                       :index="val.ID.toString()"
@@ -94,9 +94,9 @@
               </div>
             </div>
             <div>
-              <div v-for="item in makingsArr" :key="item.id">
-                <Makings :item="item" :serversName="serversName" />
-              </div>
+              <Makings :makings="makingsArr" :serversName="serversName" />
+              <!-- <div v-for="item in makingsArr" :key="item.id">
+              </div> -->
             </div>
           </div>
         </div>
@@ -207,7 +207,6 @@ export default {
         },
       ], //类型列表
       formArr: [], //物品类型表
-      itemArr: [], //物品列表
       itemName: "", //搜索的物品名称
       itemObj: null, //选中物品数据
       panelArr: [], //购物车数据
@@ -233,19 +232,21 @@ export default {
         res.data.forEach((item) => {
           arr.push({
             Belong: item.Belong, //类型id
-            RequireItem: this.addMakings(item), //素材列表
+            RequireItem: this.getMakings(item), //素材列表
             Name: item.Name, //物品名字
             ItemID: item.ItemID,
             IconID: item.IconID,
             ID: item.ID,
-            nLevel: item.nLevel, //需要等级
-            NeedExpertise: item.NeedExpertise || 0, //是否需要专精 1是 其余不是
+            nLevel: item.nLevel || "0", //需要等级
+            NeedExpertise: item.NeedExpertise || "0", //是否需要专精 1是 其余不是
             CostVigor: item.CostVigor, //精力消耗
             szTip: item.szTip, //配方来源
           });
         });
-        this.itemArr = arr;
-        this.itemObj = this.itemArr[1];
+        this.itemObj = arr[1];
+        sessionStorage.setItem("itemArr", JSON.stringify(arr)); //物品列表
+        console.log(this.itemArr, "this.itemArr");
+        
       });
       this.belongArr.forEach((item) => {
         if (item.ProfessionID == this.ProfessionID) {
@@ -254,13 +255,22 @@ export default {
         }
       });
     }, //获取物品数据
-    addMakings(item) {
+    getItemArr(){
+      let arr = []
+      if (sessionStorage.getItem("itemArr")) {
+       arr = JSON.parse(sessionStorage.getItem("itemArr"))
+      }
+      return arr 
+    },
+    getMakings(item) {
       let arr = [];
       for (let x = 0; x < 8; x++) {
         if (item[`RequireItemIndex${x}`]) {
           arr.push({
             RequireItemIndex: item[`RequireItemIndex${x}`], //素材 otherID
             RequireItemCount: item[`RequireItemCount${x}`], //素材需求数量
+            count: item[`RequireItemCount${x}`], //素材需求数量
+            goodsID: item.ItemID,
           });
         }
       }
@@ -299,17 +309,12 @@ export default {
       console.log(e);
     }, //搜索物品
     changePanel(obj) {
-      // this.panelArr.map((item) => {
-      //   if (item.id == obj.item.id) {
-      //     console.log(obj, "val");
-      //     if (obj.currentValue > obj.oldValue) {
-      //       console.log(this.AllListArr, "this.AllListArr");
-      //       this.addMakings(obj.item.children);
-      //     } else {
-      //     }
-      //   }
-      // });
-    }, //点击增加购物车物品
+      this.makingsArr.forEach((val) => {
+        if (val.goodsID == obj.item.ItemID) {
+          val.count = val.RequireItemCount * obj.currentValue;
+        }
+      });
+    }, //调整购物车物品数量
     addPanel(item) {
       this.handleClickItem(item);
       if (this.panelArr.length == 20) {
@@ -326,6 +331,7 @@ export default {
         IconID: item.IconID,
         Name: item.Name,
         num: 1,
+        RequireItem: item.RequireItem,
       };
       if (arr.length > 0) {
         this.$message({
@@ -335,9 +341,8 @@ export default {
         return;
       }
       this.panelArr.push(obj);
-      this.makingsArr = [...this.makingsArr, ...item.RequireItem].sort(
-        (a, b) => a.RequireItemIndex - b.RequireItemIndex
-      );
+      console.log(item.RequireItem, "item.RequireItem==================>");
+      this.makingsArr = [...this.makingsArr, ...item.RequireItem];
     }, //加入购物车
     showMakings(arr) {
       for (let i = 0; i < arr.length; i++) {
@@ -353,18 +358,19 @@ export default {
     },
     removeMakings(arr) {
       console.log(arr);
-      arr.forEach((item) => {
-        console.log(item);
-        this.makingsArr.filter((val) => val.id != item.id);
-        console.log(
-          this.makingsArr.filter((val) => val.id != item.id)
-          // "this.makingsArr.filter((val) => val.id != item.id);"
-        );
+      let list = [];
+      this.makingsArr.forEach((item) => {
+        console.log(item.goodsID, arr[0].goodsID);
+        if (item.goodsID != arr[0].goodsID) {
+          list.push(item);
+        }
       });
-      console.log(this.makingsArr, "removeMakings this.makingsArr");
+      this.makingsArr = list;
+      console.log(this.makingsArr, "this.makingsArr");
     }, //移除材料
     removePanel(data) {
-      // this.removeMakings(data.children);
+      this.removeMakings(data.RequireItem);
+      console.log(data);
       this.panelArr.forEach((item, index) => {
         if (item.ItemID == data.ItemID) {
           console.log(item, "this.panelArr");
