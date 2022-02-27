@@ -1,17 +1,16 @@
 <template>
 	<div class="m-furniture-materials" v-loading="loading">
-		<!-- TODO: 点击跳转对应物品 -->
-		<div class="u-material" v-for="(item, index) in list" :key="index">
-			<img class="u-material-img" :src="`${icon}icon/${item.IconID}.png`" alt="" />
+		<a class="u-material" v-for="(item, index) in list" :key="index" target="_blank" :href="itemLink(item.ID)">
+			<img class="u-material-img" :src="iconLink(item.IconID)"/>
 			<span class="u-material-name">{{ item.Name }}</span>
 			<span class="u-material-count">{{ item._count }}</span>
-		</div>
+		</a>
 	</div>
 </template>
 
 <script>
 import { getFurnitureMaterials, getItemDetail } from "@/service/furniture.js";
-import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
+import {iconLink,getLink} from '@jx3box/jx3box-common/js/utils'
 export default {
 	name: "furnitureMaterials",
 	props: ["id"],
@@ -20,7 +19,6 @@ export default {
 		return {
 			list: [],
 			loading: false,
-			icon: __iconPath,
 		};
 	},
 	computed: {
@@ -69,9 +67,12 @@ export default {
 						_count: counts[i],
 					};
 				});
-				console.log(this.list, "?");
 			});
 		},
+		iconLink,
+		itemLink : function (other_id){
+			return getLink('item','5_' + other_id)
+		}
 	},
 	created: function () {},
 };
@@ -80,13 +81,14 @@ export default {
 <style scoped lang="less">
 .m-furniture-materials {
 	.flex;
+	padding:20px;
 	.u-material {
 		.flex;
 		.pr;
 		.pointer;
 		flex-direction: column;
 		align-items: center;
-		.mr(15px);
+		.mr(20px);
 		.color(@color,@pink);
 		transition: all 0.1s ease-in-out;
 		.u-material-img {
