@@ -23,5 +23,12 @@ function getFurnitureMaterials(other_id) {
 		}
 	});
 }
+// 获取物品详情
+function getItemDetail(params){
+    return $.get(`/other`, {
+        params
+    })
+}
 
-export { getFurniture, getFurnitureDetail, getSetList, getFurnitureColor, getFurnitureMaterials };
+
+export { getFurniture, getFurnitureDetail, getSetList, getFurnitureColor, getFurnitureMaterials,getItemDetail };
