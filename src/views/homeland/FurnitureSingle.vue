@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div class="m-extend" v-if="data.szTip || setData">
+        <div class="m-extend" v-if="has_extend">
             <div class="m-extend-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">家具信息</span></div>
             <div class="m-extend-content m-extend-desc" v-if="data.szTip">
                 <div class="u-title"><i class="el-icon-star-on"></i>家具介绍</div>
@@ -60,14 +60,14 @@
                 <div class="u-title"><i class="el-icon-star-on"></i>{{ setData.szName }}<el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
                 <furnitureSet :data="setData" />
             </div>
-			<div class="m-extend-content m-extend-materials" v-if="other_id">
+			<div class="m-extend-content m-extend-materials" v-if="data.szSource == '生活技能'">
 				<div class="u-title"><i class="el-icon-star-on"></i>合成材料</div>
 				<furnitureMaterials :id="other_id" />
 			</div>
         </div>
 
         <!-- 攻略 -->
-        <div class="m-furniture-wiki">
+        <div class="m-furniture-wiki" v-if="other_id">
             <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="家具攻略"></Wiki>
         </div>
 
@@ -126,6 +126,10 @@ export default {
         },
         set_id: function () {
             return this.data?.SetID;
+        },
+
+        has_extend : function (){
+            return this.data.szTip || this.setData || this.data.szSource == '生活技能'
         },
 
         color_list: function () {

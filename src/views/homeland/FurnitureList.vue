@@ -100,7 +100,6 @@ export default {
     watch: {
         params: {
             handler: function (val) {
-                console.log(val);
                 this.getData();
             },
             deep: true,
