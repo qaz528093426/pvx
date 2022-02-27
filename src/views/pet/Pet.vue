@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="宠物大全" slug="pet" root="/pet" :publishEnable="false" :adminEnable="false" :feedbackEnable="true" :crumbEnable="true">
+        <Breadcrumb name="宠物大全" slug="pet" root="/pet" :feedbackEnable="true" :crumbEnable="true">
             <img slot="logo" svg-inline :src="getAppIcon('pet')" />
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>
@@ -20,7 +20,7 @@
 import Nav from "@/components/Nav.vue";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
-    name: "App",
+    name: "Pet",
     props: [],
     data: function () {
         return {};

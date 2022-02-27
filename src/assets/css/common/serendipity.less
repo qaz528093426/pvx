@@ -10,6 +10,7 @@
         border-bottom: 1px solid #eeeeee;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         .u-label {
             .fz(17px);
             .color(#6c645c);
@@ -21,6 +22,15 @@
                 .mr(4px);
                 .color(#0366d6);
             }
+        }
+
+        .u-server{
+            .ml(10px);
+        }
+
+        .u-more{
+            .fz(13px,20px);
+            .underline(@color-link);
         }
     }
 
@@ -35,6 +45,7 @@
             &:last-child {
                 .mr(0);
             }
+            flex:1;
         }
 
         .u-server {

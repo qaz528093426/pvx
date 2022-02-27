@@ -1,6 +1,6 @@
 <template>
     <div class="v-share-single" v-loading="loading">
-        <singlebox :post="single" :stat="stat" >
+        <singlebox :post="post" :stat="stat" v-loading="loading">
             <div class="m-single-pics" v-if="meta.pics && meta.pics.length">
                 <el-carousel :interval="4000" type="card" arrow="always" height="600px">
                     <el-carousel-item v-for="(item, i) in meta.pics" :key="i">
@@ -10,11 +10,11 @@
                     </el-carousel-item>
                 </el-carousel>
             </div>
-            <div class="u-single-author">作者：<b>{{ origin_author }}</b></div>
+            <div class="u-single-author">
+                作者：<b>{{ origin_author }}</b>
+            </div>
             <div class="m-single-data">
-                <el-divider content-position="left">
-                    独家数据分析
-                </el-divider>
+                <el-divider content-position="left"> 独家数据分析 </el-divider>
                 <facedata v-if="facedata" :data="facedata" />
             </div>
         </singlebox>
@@ -34,26 +34,25 @@ export default {
     data: function () {
         return {
             loading: false,
-            single: "",
-
-            stat: "",
+            post: {},
+            stat: {},
         };
     },
     computed: {
         id: function () {
-            return sessionStorage.getItem("jx3_ShareId") || 0;
+            return this.$route.params.id;
         },
         author_id: function () {
-            return this.single?.post_author || 0;
+            return this.post?.post_author || 0;
         },
         facedata: function () {
-            return this.single?.post_meta?.data || "";
+            return this.post?.post_meta?.data || "";
         },
         meta: function () {
-            return this.single?.post_meta || "";
+            return this.post?.post_meta || "";
         },
         origin_author: function () {
-            return this.single?.post_meta?.author || "匿名";
+            return this.post?.post_meta?.author || "匿名";
         },
     },
     watch: {},
@@ -61,18 +60,20 @@ export default {
         getData() {
             if (this.id) {
                 this.loading = true;
-                getPost(this.id, this)
-                    .then(res => {
-                        this.single = res.data.data;
+                getPost(this.id)
+                    .then((res) => {
+                        this.post = this.$store.state.post = res.data.data;
+                        document.title = this.post.post_title;
                     })
                     .finally(() => {
                         this.loading = false;
                     });
+
+                getStat("share", this.id).then((res) => {
+                    this.stat = res.data;
+                });
+                postStat("share", this.id);
             }
-            getStat("share", this.id).then(res => {
-                this.stat = res.data;
-            });
-            postStat("share", this.id);
         },
     },
     filters: {

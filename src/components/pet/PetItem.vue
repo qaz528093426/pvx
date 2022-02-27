@@ -1,5 +1,6 @@
 <template>
-    <a class="m-pet-item" @click="getLink(petObject.Index)">
+    <router-link class="m-pet-item" :to="'/' + petObject.Index">
+        <!--  @click="getLink(petObject.Index)" -->
         <!--宠物卡片图-->
         <img :src="getImgSrc(petObject.BgPath)" class="u-image" />
         <!--宠物边框图-->
@@ -15,7 +16,7 @@
             {{ petObject.Score || "？" }}
         </div>
         <span class="u-name">{{ petObject.Name }}</span>
-    </a>
+    </router-link>
 </template>
 
 <script>
@@ -28,11 +29,16 @@ export default {
     data: function () {
         return {};
     },
+    computed : {
+        client : function (){
+            return this.$store.state.client
+        }
+    },
     methods: {
         // 获取宠物图片路径
         getImgSrc: function (path) {
             let img_name = path.match(/.*[\/,\\](.*?).tga/);
-            return __iconPath + "pvx/pet/images/" + img_name[1] + ".png";
+            return __iconPath + `pvx/pet/images/${this.client}/` + img_name[1] + ".png";
         },
         // 获取宠物边框图片路径
         getFrameSrc: function (quality) {

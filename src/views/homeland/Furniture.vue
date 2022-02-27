@@ -1,13 +1,15 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="蓝图解析" slug="blueprint" root="/blueprint" :publishEnable="true" :adminEnable="true" :feedbackEnable="true" :crumbEnable="true">
-            <img slot="logo" svg-inline :src="getAppIcon('blueprint')" />
+        <Breadcrumb name="家具大全" slug="furniture" root="/furniture" :feedbackEnable="true" :crumbEnable="false">
+            <img slot="logo" svg-inline :src="getAppIcon('furniture')" />
         </Breadcrumb>
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
             <div class="m-main">
-                蓝图解析器
+                <keep-alive include="FurnitureList">
+                    <router-view></router-view>
+                </keep-alive>
             </div>
             <Footer></Footer>
         </Main>
@@ -18,17 +20,14 @@
 import Nav from "@/components/Nav.vue";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
-    name: "App",
+    name: "Furniture",
     props: [],
     data: function () {
-        return {
-        };
+        return {};
     },
     computed: {},
     methods: { getAppIcon },
-    components: {
-        Nav,
-    },
+    components: { Nav },
 };
 </script>
 

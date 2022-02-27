@@ -7,74 +7,15 @@
             </strong>
         </RightSideMsg>
 
-        <el-menu :default-openeds="['1', '2', '3', '4','5']">
-            <el-submenu index="1">
-                <template slot="title">栉掠</template>
+        <el-menu :default-openeds="['1', '2', '3']">
+            <el-submenu :index="group.index" v-for="group in menus" :key="group.key">
+                <template slot="title">{{group.label}}</template>
                 <el-menu-item-group>
-                    <el-menu-item index="1-1" :class="{ 'is-active': active == 'share' }">
-                        <a href="/share"> <i class="el-icon-download"></i>捏脸分享 </a>
-                    </el-menu-item>
-                    <el-menu-item index="1-2" :class="{ 'is-active': active == 'facedata' }">
-                        <a :href="getAppLink('facedata')"> <i class="el-icon-setting"></i>妆容解析 </a>
-                    </el-menu-item>
-                    <el-menu-item index="1-3" :class="{ 'is-active': active == 'dress' }">
-                        <a :href="getAppLink('dress')" class="disabled"> <i class="el-icon-shopping-bag-1"></i>外观大全 </a>
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-                <template slot="title">家园</template>
-                <el-menu-item-group>
-                    <el-menu-item index="2-1" :class="{ 'is-active': active == 'furniture' }">
-                        <a :href="getAppLink('furniture')"> <i class="el-icon-table-lamp"></i>家具大全 </a>
-                    </el-menu-item>
-                    <el-menu-item index="2-2" :class="{ 'is-active': active == 'flower' }">
-                        <a :href="getAppLink('flower')"> <i class="el-icon-guide"></i>花价查询 </a>
-                    </el-menu-item>
-                    <el-menu-item index="2-3" :class="{ 'is-active': active == 'blueprint' }">
-                        <a :href="getAppLink('blueprint')" class="disabled"> <i class="el-icon-setting"></i>蓝图解析 </a>
-                    </el-menu-item>
-                    <el-menu-item index="2-4">
-                        <a href="https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/" target="_blank"> <i class="el-icon-position"></i>家园蓝图 </a>
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="3">
-                <template slot="title">宠物</template>
-                <el-menu-item-group>
-                    <el-menu-item index="3-1" :class="{ 'is-active': active == 'pet' }">
-                        <a href="/pet"> <i class="el-icon-sugar"></i>宠物大全 </a>
-                    </el-menu-item>
-                    <el-menu-item index="3-2" :class="{ 'is-active': active == 'petmap' }">
-                        <a :href="getAppLink('petmap')" class="disabled"> <i class="el-icon-map-location"></i>宠物地图 </a>
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="4">
-                <template slot="title">奇遇</template>
-                <el-menu-item-group>
-                    <el-menu-item index="4-1" :class="{ 'is-active': active == 'adventure' }">
-                        <a href="/adventure"> <i class="el-icon-files"></i>奇遇大全 </a>
-                    </el-menu-item>
-                    <el-menu-item index="4-2">
-                        <a href="https://j3cx.com/serendipity" target="_blank"> <i class="el-icon-position"></i>奇遇查询 </a>
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="5">
-                <template slot="title">商贾</template>
-                <el-menu-item-group>
-                    <el-menu-item index="5-1" :class="{ 'is-active': active == 'cooking' }">
-                        <a :href="getAppLink('cooking')"> <i class="el-icon-setting"></i>技艺助手 </a>
-                    </el-menu-item>
-                    <el-menu-item index="5-2" :class="{ 'is-active': active == 'price' }">
-                        <a :href="getAppLink('price')"> <i class="el-icon-coin"></i>物价大全 </a>
-                    </el-menu-item>
-                    <el-menu-item index="5-3" :class="{ 'is-active': active == 'gold' }">
-                        <a :href="getAppLink('gold')"> <i class="el-icon-data-line"></i>金价走势 </a>
-                    </el-menu-item>
-                    <el-menu-item index="5-4">
-                        <a href="https://jx3.seasunwbl.com/buyer?t=coin" target="_blank"> <i class="el-icon-position"></i>万宝楼 </a>
+                    <el-menu-item v-for="item in group.submenus" :key="item.key" :class="{ 'is-active': active == item.key }" v-show="item.status">
+                        <a :href="item.path" :target="item.target || '_self'">
+                            <i :class="item.icon"></i>
+                            <span>{{ item.label }}</span>
+                        </a>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
@@ -83,43 +24,152 @@
 </template>
 
 <script>
+import {compact} from 'lodash'
 export default {
     name: "Nav",
     props: [],
     components: {},
     data: function () {
         return {
-            active: "",
+            menus: [
+                {
+                    key: "face",
+                    label: "栉掠",
+                    index: "1",
+                    submenus: [
+                        {
+                            path: "/share",
+                            label: "捏脸分享",
+                            icon: "el-icon-download",
+                            key: "share",
+                            status: true,
+                        },
+                        {
+                            path: "/share/facedata",
+                            label: "妆容解析",
+                            icon: "el-icon-setting",
+                            key: "facedata",
+                            status: true,
+                        },
+                    ],
+                },
+
+                {
+                    key: "homeland",
+                    label: "家园",
+                    index: "2",
+                    submenus: [
+                        {
+                            path: "/furniture",
+                            label: "家具大全",
+                            icon: "el-icon-table-lamp",
+                            key: "furniture",
+                            status: true,
+                        },
+                        {
+                            path: "/homeland/tutorial",
+                            label: "家园指南",
+                            icon: "el-icon-reading",
+                            key: "tutorial",
+                            status: true,
+                        },
+                        {
+                            path: "/homeland/maps",
+                            label: "家园地图",
+                            icon: "el-icon-map-location",
+                            key: "maps",
+                            status: true,
+                        },
+                        {
+                            path: "/homeland/flower",
+                            label: "花价查询",
+                            icon: "el-icon-sunny",
+                            key: "flower",
+                            status: true,
+                        },
+                        {
+                            path: "https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/",
+                            label: "蓝图下载",
+                            icon: "el-icon-position",
+                            key: "blueprint",
+                            status: true,
+                            target:"_blank"
+                        },
+                    ],
+                },
+
+                {
+                    key: "rare",
+                    label: "珍奇",
+                    index: "3",
+                    submenus: [
+                        {
+                            path: "/pet",
+                            label: "宠物大全",
+                            icon: "el-icon-sugar",
+                            key: "pet",
+                            status: true,
+                        },
+                        {
+                            path: "/adventure",
+                            label: "奇遇大全",
+                            icon: "el-icon-files",
+                            key: "adventure",
+                            status: true,
+                        },
+                        {
+                            path: "/horse",
+                            label: "坐骑大全",
+                            icon: "el-icon-files",
+                            key: "horse",
+                            status: false,
+                        },
+                        {
+                            path: "/exterior",
+                            label: "外观大全",
+                            icon: "el-icon-setting",
+                            key: "exterior",
+                            status: false,
+                        },
+                    ],
+                },
+
+                // {
+                //     key: "merchants",
+                //     label: "商贾",
+                //     index: "4",
+                //     submenus: [
+                //         {
+                //             path: "/merchants/cooking",
+                //             label: "技艺助手",
+                //             icon: "el-icon-sugar",
+                //             key: "cooking",
+                //             status: false,
+                //         },
+                //         // 物价大全
+                //         // 金价走势
+                //         // 万宝楼
+                //     ],
+                // },
+            ],
         };
     },
-    computed: {},
-    watch: {},
-    methods: {
-        getAppType: function () {
-            let arr = location.pathname?.split("/");
-            let type = "";
-            for (let str of arr) {
-                if (str && str != "pvx") {
-                    type = str;
-                    break;
-                }
-            }
-            return type;
+    computed: {
+        active: function () {
+            let arr = compact(location.pathname?.split("/"));
+            return arr.length > 1 ? arr[1] : arr[0]
         },
+    },
+    methods: {
         getAppLink: function (appKey) {
             let isDev = location.hostname == "localhost";
             if (isDev) {
                 return `/${appKey}/`;
             } else {
-                return `/pvx/${appKey}/`;
+                return `/pvx/${appKey}`;
             }
         },
     },
-    filters: {},
-    created: function () {
-        this.active = this.getAppType();
-    },
-    mounted: function () {},
 };
 </script>
 
