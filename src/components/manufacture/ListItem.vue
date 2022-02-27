@@ -44,6 +44,3 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
-@import "~@/assets/css/cooking/index.less";
-</style>

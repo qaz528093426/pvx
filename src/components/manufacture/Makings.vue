@@ -15,7 +15,7 @@
 <script>
 import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
 import GamePrice from "@jx3box/jx3box-common-ui/src/wiki/GamePrice.vue";
-import { getOther, getItemsPrice } from "@/service/cooking";
+import { getOther, getItemsPrice } from "@/service/manufacture";
 
 // import Item from "@jx3box/jx3box-editor/src/Item.vue";
 export default {
@@ -98,6 +98,3 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
-@import "~@/assets/css/cooking/index.less";
-</style>

@@ -7,7 +7,7 @@
 
 <script>
 import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
-import { getOther, getItemsPrice } from "@/service/cooking";
+import { getOther, getItemsPrice } from "@/service/manufacture";
 // import Item from "@jx3box/jx3box-editor/src/Item.vue";
 export default {
   name: "GoodsBox",
@@ -24,6 +24,3 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
-@import "~@/assets/css/cooking/index.less";
-</style>

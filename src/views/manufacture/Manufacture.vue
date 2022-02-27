@@ -81,7 +81,7 @@
 import Nav from "@/components/Nav.vue";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getManufactures, getOther } from "@/service/Manufacture";
+import { getManufactures, getOther } from "@/service/manufacture";
 import Panel from "@/components/manufacture/Panel.vue";
 import Makings from "@/components/manufacture/Makings.vue";
 import ListItem from "@/components/manufacture/ListItem.vue";

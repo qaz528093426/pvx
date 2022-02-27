@@ -68,14 +68,14 @@ export default {
                         },
                         {
                             path: "/homeland/tutorial",
-                            label: "家园指南",
+                            label: "建设指南",
                             icon: "el-icon-reading",
                             key: "tutorial",
                             status: true,
                         },
                         {
                             path: "/homeland/maps",
-                            label: "家园地图",
+                            label: "地图一览",
                             icon: "el-icon-map-location",
                             key: "maps",
                             status: true,
@@ -90,7 +90,7 @@ export default {
                         {
                             path: "https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/",
                             label: "蓝图下载",
-                            icon: "el-icon-position",
+                            icon: "el-icon-download",
                             key: "blueprint",
                             status: true,
                             target:"_blank"
@@ -134,23 +134,23 @@ export default {
                     ],
                 },
 
-                {
-                    key: "merchants",
-                    label: "商贾",
-                    index: "4",
-                    submenus: [
-                        {
-                            path: "/manufacture",
-                            label: "技艺助手",
-                            icon: "el-icon-sugar",
-                            key: "manufacture",
-                            status: true,
-                        },
-                        // 物价大全
-                        // 金价走势
-                        // 万宝楼
-                    ],
-                },
+                // {
+                //     key: "merchants",
+                //     label: "商贾",
+                //     index: "4",
+                //     submenus: [
+                //         {
+                //             path: "/manufacture",
+                //             label: "技艺助手",
+                //             icon: "el-icon-sugar",
+                //             key: "manufacture",
+                //             status: false,
+                //         },
+                //         // 物价大全
+                //         // 金价走势
+                //         // 万宝楼
+                //     ],
+                // },
             ],
         };
     },
