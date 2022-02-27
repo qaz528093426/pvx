@@ -1,5 +1,6 @@
 <template>
 	<div class="m-furniture-materials" v-loading="loading">
+		<!-- TODO: 点击跳转对应物品 -->
 		<div class="u-material" v-for="(item, index) in list" :key="index">
 			<img class="u-material-img" :src="`${icon}icon/${item.IconID}.png`" alt="" />
 			<span class="u-material-name">{{ item.Name }}</span>
@@ -86,10 +87,12 @@ export default {
 		flex-direction: column;
 		align-items: center;
 		.mr(15px);
+		.color(@color,@pink);
 		transition: all 0.1s ease-in-out;
 		.u-material-img {
 			.size(48px);
 		}
+
 		.u-material-count {
 			.pa;
 			.rt(0,28px);
@@ -107,9 +110,6 @@ export default {
 			.u-material-img {
 				filter: saturate(120%) brightness(110%);
 				transform: scale(1.04);
-			}
-			.u-material-name {
-				.color(@pink);
 			}
 		}
 	}

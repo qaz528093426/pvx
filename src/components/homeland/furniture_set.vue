@@ -52,11 +52,13 @@ export default {
 <style lang="less" scoped>
 .m-furniture-set {
     .flex;
+    flex-wrap: wrap;
     align-items: center;
     .u-item {
         .db;
         transition: all 0.1s ease-in-out;
         .mr(40px);
+        .mb(20px);
         &:hover {
             filter: brightness(110%) saturate(120%);
             .u-name {
