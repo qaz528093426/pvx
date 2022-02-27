@@ -1,20 +1,20 @@
 <template>
-    <div class="v-homeland-furniture" v-loading="loading">
-        <div class="m-navigation">
-            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
-            <div class="u-links">
-                <a v-if="other_id" class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
-                <a v-if="achieve_id" class="u-link u-achievement" :href="getLink('cj', achieve_id)" target="_blank">
-                    <i class="el-icon-trophy"></i>
-                    成就信息
-                </a>
-            </div>
-        </div>
+	<div class="v-homeland-furniture" v-loading="loading">
+		<div class="m-navigation">
+			<el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
+			<div class="u-links">
+				<a v-if="other_id" class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
+				<a v-if="achieve_id" class="u-link u-achievement" :href="getLink('cj', achieve_id)" target="_blank">
+					<i class="el-icon-trophy"></i>
+					成就信息
+				</a>
+			</div>
+		</div>
 
-        <div class="m-info-box">
-            <div class="u-img">
-                <img :src="formatImg(data.Path)" :alt="data.szName" />
-            </div>
+		<div class="m-info-box">
+			<div class="u-img">
+				<img :src="formatImg(data.Path)" :alt="data.szName" />
+			</div>
 
 			<div class="u-info">
 				<div class="u-info-title" :class="'quality_' + data.Quality">
@@ -43,46 +43,46 @@
 					></span>
 				</div>
 
-                <div class="m-buttons">
-                    <!-- 收藏按钮 -->
-                    <Fav class="u-collect" post-type="furniture" :post-id="id" />
-                </div>
-            </div>
-        </div>
+				<div class="m-buttons">
+					<!-- 收藏按钮 -->
+					<Fav class="u-collect" post-type="furniture" :post-id="id" />
+				</div>
+			</div>
+		</div>
 
-        <div class="m-extend" v-if="has_extend">
-            <div class="m-extend-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">家具信息</span></div>
-            <div class="m-extend-content m-extend-desc" v-if="data.szTip">
-                <div class="u-title"><i class="el-icon-star-on"></i>家具介绍</div>
-                <div class="u-txt" v-html="description_filter(data.szTip)"></div>
-            </div>
-            <div class="m-extend-content m-extend-relation" v-if="setData">
-                <div class="u-title"><i class="el-icon-star-on"></i>{{ setData.szName }}<el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
-                <furnitureSet :data="setData" />
-            </div>
-			<div class="m-extend-content m-extend-materials" v-if="data.szSource == '生活技能'">
+		<div class="m-extend" v-if="has_extend">
+			<div class="m-extend-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">家具信息</span></div>
+			<div class="m-extend-content m-extend-desc" v-if="data.szTip">
+				<div class="u-title"><i class="el-icon-star-on"></i>家具介绍</div>
+				<div class="u-txt" v-html="description_filter(data.szTip)"></div>
+			</div>
+			<div class="m-extend-content m-extend-relation" v-if="setData">
+				<div class="u-title"><i class="el-icon-star-on"></i>{{ setData.szName }}<el-rate class="u-star" v-model="setData.nStars" disabled></el-rate></div>
+				<furnitureSet :data="setData" />
+			</div>
+			<div class="m-extend-content m-extend-materials" v-if="data.szSource == '生活技能' && data.__manufactureID">
 				<div class="u-title"><i class="el-icon-star-on"></i>合成材料</div>
 				<furnitureMaterials :id="other_id" />
 			</div>
-        </div>
+		</div>
 
-        <!-- 攻略 -->
-        <div class="m-furniture-wiki" v-if="other_id">
-            <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="家具攻略"></Wiki>
-        </div>
+		<!-- 攻略 -->
+		<div class="m-furniture-wiki" v-if="other_id">
+			<Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="家具攻略"></Wiki>
+		</div>
 
-        <!-- 评论 -->
-        <div class="m-furniture-comment">
-            <Comment :id="id" :category="type" order="desc" />
-        </div>
-    </div>
+		<!-- 评论 -->
+		<div class="m-furniture-comment">
+			<Comment :id="id" :category="type" order="desc" />
+		</div>
+	</div>
 </template>
 
 <script>
 import furnitureSet from "@/components/homeland/furniture_set.vue";
 import Wiki from "@/components/wiki/Wiki.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
-import furnitureMaterials from '@/components/homeland/furniture_materials.vue'
+import furnitureMaterials from "@/components/homeland/furniture_materials.vue";
 
 import { getLink } from "@jx3box/jx3box-common/js/utils";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
@@ -91,126 +91,126 @@ import { getFurnitureDetail, getSetList, getFurnitureColor } from "@/service/fur
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 
 export default {
-    name: "FurnitureSingle",
-    props: [],
-    components: {
-        Wiki,
-        Comment,
-        furnitureSet,
-		furnitureMaterials
-    },
-    data: function () {
-        return {
-            type: "furniture",
-            loading: false,
-            data: "", // 家具数据
-            setData: "",
-            colorData: "", // 染色数据
-        };
-    },
-    computed: {
-        id: function () {
-            return this.$route.params.id;
-        },
-        other_id: function () {
-            return this.data?.__manufactureID;
-        },
-        item_id: function () {
-            return "10_" + this.data?.__manufactureID;
-        },
-        achieve_id: function () {
-            return this.setData?.dwAchievementID;
-        },
-        represent_id: function () {
-            return this.data?.nRepresentID;
-        },
-        set_id: function () {
-            return this.data?.SetID;
-        },
+	name: "FurnitureSingle",
+	props: [],
+	components: {
+		Wiki,
+		Comment,
+		furnitureSet,
+		furnitureMaterials,
+	},
+	data: function () {
+		return {
+			type: "furniture",
+			loading: false,
+			data: "", // 家具数据
+			setData: "",
+			colorData: "", // 染色数据
+		};
+	},
+	computed: {
+		id: function () {
+			return this.$route.params.id;
+		},
+		other_id: function () {
+			return this.data?.__manufactureID;
+		},
+		item_id: function () {
+			return "10_" + this.data?.__manufactureID;
+		},
+		achieve_id: function () {
+			return this.setData?.dwAchievementID;
+		},
+		represent_id: function () {
+			return this.data?.nRepresentID;
+		},
+		set_id: function () {
+			return this.data?.SetID;
+		},
 
-        has_extend : function (){
-            return this.data.szTip || this.setData || this.data.szSource == '生活技能'
-        },
+		has_extend: function () {
+			return this.data.szTip || this.setData || (this.data.szSource == "生活技能" && this.data.__manufactureID);
+		},
 
-        color_list: function () {
-            let list = [];
+		color_list: function () {
+			let list = [];
 
-            for (const key in this.colorData) {
-                if (key.startsWith("szDetailIndex")) {
-                    this.colorData[key] && list.push(this.colorData[key].replace(/;/g, ","));
-                }
-            }
-            return list;
-        },
-    },
-    watch: {
-        id: function () {
-            this.getData();
-        },
-    },
-    methods: {
-        // 数据加载
-        // ==============
-        getData() {
-            this.loading = true;
-            getFurnitureDetail(this.id)
-                .then((res) => {
-                    this.data = res.data;
+			for (const key in this.colorData) {
+				if (key.startsWith("szDetailIndex")) {
+					this.colorData[key] && list.push(this.colorData[key].replace(/;/g, ","));
+				}
+			}
+			return list;
+		},
+	},
+	watch: {
+		id: function () {
+			this.getData();
+		},
+	},
+	methods: {
+		// 数据加载
+		// ==============
+		getData() {
+			this.loading = true;
+			getFurnitureDetail(this.id)
+				.then((res) => {
+					this.data = res.data;
 
-                    // 发送统计
-                    postStat(this.type, this.id);
-                })
-                .then(() => {
-                    this.represent_id && this.getColorData();
-                    this.set_id && this.getSetData();
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
-        getColorData() {
-            getFurnitureColor(this.represent_id).then((res) => {
-                this.colorData = res.data;
-            });
-        },
-        getSetData() {
-            getSetList(this.set_id).then((res) => {
-                this.setData = res.data;
-            });
-        },
+					// 发送统计
+					postStat(this.type, this.id);
+				})
+				.then(() => {
+					this.represent_id && this.getColorData();
+					this.set_id && this.getSetData();
+				})
+				.finally(() => {
+					this.loading = false;
+				});
+		},
+		getColorData() {
+			getFurnitureColor(this.represent_id).then((res) => {
+				this.colorData = res.data;
+			});
+		},
+		getSetData() {
+			getSetList(this.set_id).then((res) => {
+				this.setData = res.data;
+			});
+		},
 
-        // 工具函数
-        // ===================
-        getLink,
-        // 描述过滤
-        description_filter(value) {
-            let matchs = /text="(.*?)(\\\\\\n)?"/.exec(value);
-            if (matchs && matchs.length > 1) value = matchs[1].trim();
-            if (value) value = value.replace(/\\n/g, "<br>");
-            return value;
-        },
-        // 图片链接转换
-        formatImg(link) {
-            if (!link) return;
-            let img = link.match(/.*[\/,\\](.*?).tga/);
-            link = link.replace(/\\/g, "/").split(img[1]);
-            let nLink = link[0].split("Homeland");
+		// 工具函数
+		// ===================
+		getLink,
+		// 描述过滤
+		description_filter(value) {
+			let matchs = /text="(.*?)(\\\\\\n)?"/.exec(value);
+			if (matchs && matchs.length > 1) value = matchs[1].trim();
+			if (value) value = value.replace(/\\n/g, "<br>");
+			return value;
+		},
+		// 图片链接转换
+		formatImg(link) {
+			if (!link) return;
+			let img = link.match(/.*[\/,\\](.*?).tga/);
+			link = link.replace(/\\/g, "/").split(img[1]);
+			let nLink = link[0].split("Homeland");
 
-            if (img[1] == "default") return __iconPath + "pvx/furniture/default/default.png";
-            return __iconPath + "pvx/furniture" + nLink[1] + img[1] + ".png";
-        },
+			if (img[1] == "default") return __iconPath + "pvx/furniture/default/default.png";
+			return __iconPath + "pvx/furniture" + nLink[1] + img[1] + ".png";
+		},
 
-        scaleRange(str) {
-            return str?.split(";");
-        },
+		scaleRange(str) {
+			return str?.split(";");
+		},
 
-        goBack() {
-            this.$router.push({ name: "list" });
-        },
-    },
-    created: function () {
-        this.getData();
-    },
+		goBack() {
+			this.$router.push({ name: "list" });
+		},
+	},
+	created: function () {
+		this.getData();
+	},
 };
 </script>
 <style lang="less">
