@@ -51,13 +51,6 @@ export default {
                             key: "facedata",
                             status: true,
                         },
-                        {
-                            path: "/exterior",
-                            label: "外观大全",
-                            icon: "el-icon-setting",
-                            key: "exterior",
-                            status: false,
-                        },
                     ],
                 },
 
@@ -100,6 +93,7 @@ export default {
                             icon: "el-icon-position",
                             key: "blueprint",
                             status: true,
+                            target:"_blank"
                         },
                     ],
                 },
@@ -128,6 +122,13 @@ export default {
                             label: "坐骑大全",
                             icon: "el-icon-files",
                             key: "horse",
+                            status: false,
+                        },
+                        {
+                            path: "/exterior",
+                            label: "外观大全",
+                            icon: "el-icon-setting",
+                            key: "exterior",
                             status: false,
                         },
                     ],
