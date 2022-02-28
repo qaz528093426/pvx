@@ -68,9 +68,9 @@
                     <el-menu-item
                       v-if="val.Belong == item.BelongID"
                       :index="val.ID.toString()"
-                      @click="handleClickItem(val)"
+                      @click="handleClickItem(val, 'click')"
                     >
-                      <ListItem :item="val" @addPanel="addPanel" />
+                      <ListItem :item="val" @addPanel="handleClickItem" />
                     </el-menu-item>
                   </div>
                 </el-submenu>
@@ -95,8 +95,6 @@
             </div>
             <div>
               <Makings :makings="makingsArr" :serversName="serversName" />
-              <!-- <div v-for="item in makingsArr" :key="item.id">
-              </div> -->
             </div>
           </div>
         </div>
@@ -225,7 +223,6 @@ export default {
       getManufactures({
         type: this.type,
         name: this.itemName,
-        // mode: "simple",
         client: "std",
       }).then((res) => {
         let arr = [];
@@ -246,7 +243,6 @@ export default {
         this.itemObj = arr[1];
         sessionStorage.setItem("itemArr", JSON.stringify(arr)); //物品列表
         console.log(this.itemArr, "this.itemArr");
-        
       });
       this.belongArr.forEach((item) => {
         if (item.ProfessionID == this.ProfessionID) {
@@ -255,12 +251,12 @@ export default {
         }
       });
     }, //获取物品数据
-    getItemArr(){
-      let arr = []
+    getItemArr() {
+      let arr = [];
       if (sessionStorage.getItem("itemArr")) {
-       arr = JSON.parse(sessionStorage.getItem("itemArr"))
+        arr = JSON.parse(sessionStorage.getItem("itemArr"));
       }
-      return arr 
+      return arr;
     },
     getMakings(item) {
       let arr = [];
@@ -299,9 +295,57 @@ export default {
       this.type = e;
       this.getData();
     }, //选择类型
-    handleClickItem(item) {
+    handleClickItem(item, type) {
+      let arr = [];
+      let val = "";
+      item.RequireItem.forEach((e) => {
+        getOther({
+          ids: e.RequireItemIndex,
+        }).then((res) => {
+          val = res.data.list[0];
+          arr.push({
+            ...e,
+            Price: val.Price,
+            Name: val.Name,
+            ID: val.ID,
+            IconID: val.item_info[0]["IconID"],
+            IdKey: val.item_info[0]["IdKey"],
+            ItemID: val.item_info[0]["ItemID"],
+          });
+          item.RequireItem = arr.sort((a, b) => a.ID - b.ID);
+        });
+      });
+      if (!type || type != "click") {
+        console.log(item.RequireItem, "item.RequireItem==================>");
+        if (this.panelArr.length == 20) {
+          this.$message({
+            message: "购物车已满",
+            type: "warning",
+          });
+          return;
+        }
+        let panelArr = this.panelArr.filter((val) => val.ItemID == item.ItemID);
+        // console.log(makingsArr, "makingsArr");
+        let obj = {
+          ItemID: item.ItemID,
+          IconID: item.IconID,
+          Name: item.Name,
+          num: 1,
+          RequireItem: item.RequireItem,
+        };
+        if (panelArr.length > 0) {
+          this.$message({
+            message: "不可重复添加购物车",
+            type: "warning",
+          });
+          return;
+        }
+        console.log(item, item.RequireItem, "lm");
+        this.panelArr.push(obj);
+        this.makingsArr = [...this.makingsArr, ...item.RequireItem];
+      }
       this.itemObj = item;
-      console.log(this.itemObj);
+      console.log(item, "wm");
     }, //选择物品
     remoteMethod(e) {
       this.itemName = e;

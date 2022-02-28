@@ -27,16 +27,16 @@
         <div class="flex-center-between">
           <div
             class="flex-column-center"
-            v-for="item in makingArr"
-            :key="item.ItemID"
+            v-for="goods in item.RequireItem"
+            :key="goods.ItemID"
           >
             <div
               class="flex-center-center c-cooking-goodsBox"
               :style="`background:url(${imgPath}image/cooking/newcraft3-10.png);background-size: cover;`"
             >
-              <img :src="iconLink(item['item_info'][0]['IconID'])" alt="" />
+              <img :src="iconLink(goods.IconID)" alt="" />
             </div>
-            <div>{{ `${item.Name} x${item.count}` }}</div>
+            <div>{{ `${goods.Name} x${goods.count}` }}</div>
           </div>
         </div>
       </div>
@@ -62,8 +62,6 @@ export default {
     item: {
       deep: true,
       handler() {
-        this.getData();
-        this.makingArr = [];
       },
     },
   },
@@ -79,18 +77,6 @@ export default {
   },
   methods: {
     iconLink,
-    getData() {
-      this.item.RequireItem.forEach((item) => {
-        getOther({
-          ids: item.RequireItemIndex,
-        }).then((res) => {
-          this.makingArr.push({
-            ...res.data.list[0],
-            count: item.RequireItemCount,
-          });
-        });
-      });
-    },
   },
 };
 </script>
