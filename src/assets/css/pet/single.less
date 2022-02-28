@@ -1,158 +1,162 @@
 .m-pet-navigation {
-    .pr;
-    .mb(10px);
+	.pr;
+	.mb(10px);
 }
 
 .m-pet-links {
-    .pa;
-    .rt(0);
+	.pa;
+	.rt(0);
 
-    .u-link {
-        .fz(14px);
+	.u-link {
+		.fz(14px);
 
-        i {
-            .mr(2px);
-            .y;
-        }
+		i {
+			.mr(2px);
+			.y;
+		}
 
-        .underline(@color-link);
-    }
+		.underline(@color-link);
+	}
 
-    em {
-        margin: 0 5px;
-    }
+	em {
+		margin: 0 5px;
+	}
 }
 
 .m-pet-content {
-    justify-content: space-between;
-    margin-bottom: 30px;
+	justify-content: space-between;
+	margin-bottom: 30px;
 
-    .m-pet-card {
-        .mb(0);
-    }
+	.m-pet-card {
+		.mb(0);
+	}
 }
 
 .m-pet-info {
-    flex: 1;
-    min-height: 476px - 20px;
-    background: #f5f7fa;
-    border-radius: 15px;
-    padding: 10px 30px;
-    font-size: 18px;
-    letter-spacing: 2px;
+	flex: 1;
+	min-height: 476px - 20px;
+	background: #f5f7fa;
+	border-radius: 15px;
+	padding: 10px 30px;
+	font-size: 18px;
+	letter-spacing: 2px;
 
-    .u-title {}
+	.u-title {
+	}
 
-    .u-name {}
+	.u-name {
+	}
 
-    .u-type {
-        .fz(14px);
+	.u-type {
+		.fz(14px);
 
-        &:before {
-            content: "(";
-        }
+		&:before {
+			content: "(";
+		}
 
-        &:after {
-            content: ")";
-        }
+		&:after {
+			content: ")";
+		}
 
-        .ml(10px);
-    }
+		.ml(10px);
+	}
 
-    .u-stars {
-        .fz(18px);
-        .ml(10px);
-        color: #fbc324;
-    }
+	.u-stars {
+		.fz(18px);
+		.ml(10px);
+		color: #fbc324;
+	}
 
-    .u-metas {
-        border-top: 1px dashed #ddd;
-        margin-top: 10px;
-        padding-top: 10px;
-    }
+	.u-metas {
+		border-top: 1px dashed #ddd;
+		margin-top: 10px;
+		padding-top: 10px;
+	}
 
-    .u-meta {
-        .lh(2.5);
-    }
+	.u-meta {
+		.lh(2.5);
+	}
 
-    .u-meta-label {
-        .bold;
-    }
+	.u-meta-label {
+		.bold;
+	}
 
-    .u-shop {
-        i {
-            .dbi;
-            // .y(1px);
-        }
-    }
+	.u-shop {
+		i {
+			.dbi;
+			// .y(1px);
+		}
+	}
 
-    .u-price {
-        display: inline-flex;
-    }
+	.u-price {
+		display: inline-flex;
+	}
 
-    .u-price-item {
-        display: inline-flex;
-        align-items: center;
+	.u-price-item {
+		display: inline-flex;
+		align-items: center;
 
-        i {
-            .size(24px);
-        }
+		i {
+			.size(24px);
+		}
 
-        .fz(15px);
-    }
+		.fz(15px);
+	}
 
-    .u-rewards {
-        .mr(10px);
-    }
+	.u-rewards {
+		.mr(10px);
+	}
 
-    .u-icon-rewards {
-        background: url("@{game_icons}exteriorbox3-16.png") no-repeat 0 0;
-    }
+	.u-icon-rewards {
+		background: url("@{game_icons}exteriorbox3-16.png") no-repeat 0 0;
+	}
 
-    .u-icon-coin {
-        background: url("@{game_icons}money-121.png") no-repeat 0 0;
-    }
+	.u-icon-coin {
+		background: url("@{game_icons}money-121.png") no-repeat 0 0;
+	}
 }
 
 .m-pet-wiki {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 .m-pet-skills {
-    display: flex;
+	display: flex;
 
-    .u-skill {
-        .mr(10px);
-        .pointer;
-    }
+	.u-skill {
+		.mr(10px);
+		.pointer;
+	}
 }
 
 .m-pet-skill {
-    border-radius: 3px;
-    border: 1px solid #132221;
-    background: rgba(#132221f3);
-    padding: 10px;
+	border-radius: 3px;
+	border: 1px solid #132221;
+	background: rgba(#132221f3);
+	padding: 10px;
 
-    .u-skill-name {
-        color: #ff0;
-    }
+	.u-skill-name {
+		color: #ff0;
+	}
 
-    .u-skill-desc {
-        color: #eee;
-    }
+	.u-skill-desc {
+		color: #eee;
+	}
 }
 
 @media screen and (max-width: @phone) {
-    .m-pet-content {
-        justify-content: center;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
-        .m-pet-card {
-            .mb(15px);
-            .mr(0);
-        }
-    }
-    .m-pet-info{
-        width:100%;
-    }
+	.m-pet-content {
+		justify-content: center;
+		margin-bottom: 15px;
+		flex-wrap: wrap;
+		.m-pet-card {
+			.mb(15px);
+			.mr(0);
+		}
+	}
+	.m-pet-info {
+		width: 100%;
+	}
 }
+
+

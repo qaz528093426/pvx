@@ -1,13 +1,14 @@
 <template>
-    <div class="m-serendipity" v-if="title">
+    <div class="m-serendipity" v-if="title" v-loading="loading">
         <div class="u-title">
             <span class="u-label">
                 <i class="el-icon-present"></i>
                 触发记录
+                <el-select v-model="server" placeholder="区服" size="small" class="u-server" @change="changeServer">
+                    <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
+                </el-select>
             </span>
-            <el-select v-model="server" placeholder="区服" size="small" class="u-select" @change="changeServer">
-                <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
-            </el-select>
+            <a class="u-more" href="https://j3cx.com/serendipity" target="_blank">查看更多 &raquo;</a>
         </div>
         <ul class="u-list" v-if="list && list.length > 0">
             <li class="u-header">
@@ -40,6 +41,7 @@ export default {
             servers,
             server: "长安城",
             list: [],
+            loading: false,
         };
     },
     computed: {
@@ -55,13 +57,18 @@ export default {
     },
     methods: {
         loadSerendipity() {
-            getSerendipity(this.params).then((res) => {
-                this.list = res.data.data.data;
-            });
+            this.loading = true;
+            getSerendipity(this.params)
+                .then((res) => {
+                    this.list = res.data.data.data;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
-        changeServer(){
+        changeServer() {
             this.loadSerendipity();
-        }
+        },
     },
     filters: {
         wikiDate: function (val) {

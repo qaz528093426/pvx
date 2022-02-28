@@ -28,12 +28,17 @@ export default {
     data: function () {
         return {};
     },
+    computed : {
+        client : function (){
+            return this.$store.state.client
+        }
+    },
     methods: {
         // 获取宠物图片路径
         getImgSrc: function (path) {
             if (path) {
                 let img_name = path.match(/.*[\/,\\](.*?).tga/);
-                return __iconPath + "pvx/pet/images/" + img_name[1] + ".png";
+                return __iconPath + `pvx/pet/images/${this.client}/` + img_name[1] + ".png";
             }
         },
         // 获取宠物边框图片路径

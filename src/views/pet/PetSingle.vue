@@ -1,12 +1,12 @@
 <template>
-    <div class="v-pet-single">
+    <div class="v-pet-single" v-if="pet" v-loading="loading">
         <div class="m-pet-navigation">
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
             <div class="m-pet-links">
-                <a class="u-link u-item" :href="getLink('item', item_id)"><i class="el-icon-collection-tag"></i>物品信息</a>
+                <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
                 <template v-if="achievement_id">
                     <em> | </em>
-                    <a class="u-link u-achievement" :href="getLink('cj', achievement_id)"><i class="el-icon-trophy"></i>成就信息</a>
+                    <a class="u-link u-achievement" :href="getLink('cj', achievement_id)" target="_blank"><i class="el-icon-trophy"></i>成就信息</a>
                 </template>
             </div>
         </div>
@@ -23,8 +23,8 @@
 
                 <!-- 宠物技能 -->
                 <div class="m-pet-skills">
-                    <div class="u-skill" v-for="(skill, index) in petWiki.skills" :key="index">
-                        <el-popover :key="index" trigger="hover" popper-class="m-pet-skill" :visible-arrow="false" placement="top">
+                    <div class="u-skill" v-for="(skill, index) in petSkills" :key="index">
+                        <el-popover trigger="hover" popper-class="m-pet-skill" :visible-arrow="false" placement="top">
                             <div class="u-skill-pop">
                                 <div class="u-skill-name">{{ skill.Name }}</div>
                                 <div class="u-skill-desc">{{ skill.Desc }}</div>
@@ -38,9 +38,11 @@
                     <div class="u-meta u-score"><span class="u-meta-label">宠物分数：</span>{{ pet.Score }}</div>
                     <div class="u-meta u-desc">
                         <span class="u-meta-label">宠物说明：</span>
-                        <template v-for="item in getPetDesc(pet.Desc)">
-                            <div :key="item.text" v-html="item.text"></div>
-                        </template>
+                        <span class="u-meta-value">
+                            <template v-for="(item, index) in getPetDesc(pet.Desc)">
+                                <span :key="index" v-html="item.text"></span>
+                            </template>
+                        </span>
                     </div>
                     <div class="u-meta u-source">
                         <span class="u-meta-label">获取线索：</span>
@@ -64,39 +66,53 @@
                 </div>
             </div>
         </div>
-        <div class="m-pet-wiki" v-if="petWiki">
-            <detail :achievement_id="petWiki.achievement_id" :item_id="item_id" title="宠物攻略"></detail>
+        <!-- 宠物羁绊 -->
+        <div class="m-pet-fetters" v-if="medalList && medalList.length">
+            <div class="u-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">宠物羁绊</span></div>
+            <!-- 羁绊信息 -->
+            <petFetters :info="item" v-for="item in medalList" :key="item.ID" />
         </div>
-        <!-- <div class="m-pet-serendipity">
-            <Serendipity :title="title"/>
-        </div> -->
+
+        <!-- 宠物攻略 -->
+        <div class="m-pet-wiki">
+            <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="宠物攻略"></Wiki>
+        </div>
+        <div class="m-pvx-comment">
+            <Comment :id="id" :category="type" order="desc" />
+        </div>
     </div>
 </template>
 
 <script>
-import { getPet, getShopInfo } from "@/service/pet";
-import { getWiki } from "@/service/wiki";
+import { getPet, getPets, getShopInfo, getPetSkill, getSkill } from "@/service/pet";
 import { getPetLucky } from "@/service/pet";
 import petCard from "@/components/pet/PetCard.vue";
-import Detail from "@/components/wiki/Detail.vue";
+import petFetters from "@/components/pet/PetFetters.vue";
+import Wiki from "@/components/wiki/Wiki.vue";
 import petType from "@/assets/data/pet_type.json";
 import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
-// import Serendipity from "@/components/common/serendipity.vue";
+import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
+import { postStat } from "@jx3box/jx3box-common/js/stat.js";
+
 export default {
     name: "PetSingle",
     props: [],
     components: {
         petCard,
-        Detail,
-        // Serendipity,
+        petFetters,
+        Wiki,
+        Comment,
     },
     data: function () {
         return {
-            pet: {},
-            petWiki: '',
+            type : 'pet',
+            pet: "",
+            petSkills: [],
             shopInfo: "",
             luckyList: [],
+            medalList: [],
+            loading: false,
         };
     },
     computed: {
@@ -107,30 +123,76 @@ export default {
             return this.pet?.ItemTabType + "_" + this.pet?.ItemTabIndex;
         },
         achievement_id: function () {
-            return this.petWiki.achievement_id;
+            return this.petWiki?.achievement_id;
         },
         client: function () {
             return this.$store.state.client;
         },
-        title : function (){
-            return this.pet.Name
-        }
+        title: function () {
+            return this.pet?.Name;
+        },
+        params: function () {
+            return {
+                client: this.client,
+            };
+        },
     },
-    watch: {},
+    watch: {
+        id() {
+            this.getPetInfo();
+        },
+    },
     methods: {
         // 获取宠物详情
         getPetInfo: function () {
-            getPet(this.id).then((res) => {
-                this.pet = res.data;
-                this.getPetWiki();
-                this.getShopInfo();
-            });
+            this.loading = true;
+            getPet(this.id, this.params)
+                .then((res) => {
+                    this.pet = res.data;
+                    this.medalList = res.data.medal_list;
+                    this.loadPetSkills(res.data.__skills);
+                    this.getShopInfo();
+                    this.getPetMedal();
+                })
+                .finally(() => {
+                    this.loading = false;
+                    postStat(this.type, this.id);
+                });
         },
         // 获取宠物技能信息
-        getPetWiki: function () {
-            this.item_id && getWiki("item", this.item_id).then((res) => {
-                this.petWiki = res?.data?.data?.source?.pet;
-            });
+        loadPetSkills: function (data) {
+            const levelIds = [];
+            const skillIds = [];
+
+            this.petSkills = [];
+
+            for (const key in data) {
+                // 技能等级
+                if (key.startsWith('Level') && data[key]) {
+                    levelIds.push(data[key])
+                }
+                // 技能id
+                if (key.startsWith('SkillID') && data[key]) {
+                    skillIds.push(data[key])
+                }
+            }
+
+            getSkill({
+                ids: skillIds.join(','),
+                client: this.client
+            }).then(skillRes => {
+
+                levelIds.forEach((level, index) => {
+                    let skills = skillRes.data.filter(skill => skill.Level === level);
+
+                    const skill = skills.find(_skill => _skill.SkillID === skillIds[index]);
+
+                    if (skill) {
+                        this.petSkills.push(skill)
+                    }
+                })
+
+            })
         },
         // 获取宠物商城价格
         getShopInfo() {
@@ -190,6 +252,29 @@ export default {
             });
         },
         getLink,
+        // 获取宠物羁绊的宠物
+        getPetMedal() {
+            const ids = new Set();
+            // 将每个羁绊的宠物id取出来
+            this.medalList.forEach((item) => {
+                item.pets = [];
+                for (const key in item) {
+                    if (key.includes("PetIndex") && item[key]) {
+                        item.pets = [...item.pets, item[key]];
+                        ids.add(item[key]);
+                    }
+                }
+            });
+            getPets({ ids: [...ids].join(","), client: this.client }).then((res) => {
+                const list = res.data.list;
+                // 将羁绊的宠物放入对应的羁绊中
+                this.medalList.map((item) => {
+                    const petList = list.filter((pet) => item.pets.includes(pet.Index));
+                    this.$set(item, "petList", petList);
+                    return item;
+                });
+            });
+        },
     },
     filters: {
         iconLink,

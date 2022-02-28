@@ -7,8 +7,9 @@
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
             <div class="m-main">
-                <ShareSingle v-if="id"></ShareSingle>
-                <ShareList v-else></ShareList>
+                <keep-alive include="ShareList">
+                    <router-view></router-view>
+                </keep-alive>
             </div>
             <Footer></Footer>
         </Main>
@@ -18,22 +19,17 @@
 <script>
 import Nav from "@/components/Nav.vue";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
-import { getAppId } from "@/utils/common";
-import ShareList from "./ShareList.vue";
-import ShareSingle from "./ShareSingle.vue";
 export default {
     name: "App",
     props: [],
     data: function () {
-        return {
-            id: getAppId(),
-        };
+        return {};
     },
     computed: {},
     methods: { getAppIcon },
-    components: { Nav, ShareList, ShareSingle },
+    components: { Nav },
     created() {
-        sessionStorage.setItem("jx3_ShareId", this.id);
+        // sessionStorage.setItem("jx3_ShareId", this.id);
     },
 };
 </script>

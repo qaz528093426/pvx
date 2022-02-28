@@ -23,7 +23,7 @@
         </div>
         <div class="m-pet-content" v-if="petList && petList.length > 0">
             <div class="m-pet-list flex">
-                <pet-item v-for="pet in petList" :key="pet.index" :petObject="pet" :lucky="luckyList"></pet-item>
+                <pet-item v-for="pet in petList" :key="pet.Index" :petObject="pet" :lucky="luckyList"></pet-item>
             </div>
             <el-button class="m-archive-more m-pet-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
             <el-pagination
@@ -111,9 +111,6 @@ export default {
         },
     },
     methods: {
-        getPic: function (url) {
-            return __imgPath + url;
-        },
         appendPage: function () {
             this.page += 1;
             this.getPetList(true);

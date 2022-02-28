@@ -1,9 +1,9 @@
 <template>
-    <div class="v-adventure-single" v-if="id">
+    <div class="v-adventure-single" v-if="id" v-loading="loading">
         <div class="m-adventure-navigation">
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
             <div class="m-trigger-links">
-                <a class="u-link u-achievement" :href="getLink('cj', achieve_id)">
+                <a class="u-link u-achievement" :href="getLink('cj', achieve_id)" target="_blank">
                     <i class="el-icon-trophy"></i>
                     成就信息
                 </a>
@@ -13,35 +13,43 @@
         <div class="m-adventure-content">
             <task :id="id" />
         </div>
-        <div class="m-adventure-wiki">
-            <detail :achievement_id="achieve_id" title="奇遇攻略"></detail>
+        <div class="m-adventure-wiki" v-if="achieve_id">
+            <Wiki source_type="achievement" :source_id="achieve_id" :type="type" :id="id" title="奇遇攻略"></Wiki>
         </div>
         <div class="m-adventure-serendipity">
             <Serendipity :title="title" />
+        </div>
+        <div class="m-pvx-comment">
+            <Comment :id="id" :category="type" order="desc" />
         </div>
     </div>
 </template>
 
 <script>
 import { getLink } from "@jx3box/jx3box-common/js/utils";
-import Detail from "@/components/wiki/Detail.vue";
+import Wiki from "@/components/wiki/Wiki.vue";
 import { getAdventure, getSerendipityAchievementIds } from "@/service/adventure";
 import task from "@/components/adventure/task.vue";
 import Serendipity from "@/components/common/serendipity.vue";
+import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
+import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 export default {
     name: "adventureSingle",
     props: [],
     components: {
-        Detail,
+        Wiki,
         task,
         Serendipity,
+        Comment,
     },
     data: function () {
         return {
+            type: "adventure",
             achieve_id: "",
             data: "",
             task: [],
             isPet: true,
+            loading: false,
         };
     },
     computed: {
@@ -52,27 +60,39 @@ export default {
             return this.data?.szName;
         },
     },
-    watch: {},
+    watch: {
+        id: {
+            immediate: true,
+            handler: function (val) {
+                if (val) {
+                    this.getData();
+                }
+            },
+        },
+    },
     methods: {
         getLink,
         goBack() {
             this.$router.push({ name: "list" });
         },
-        gerData() {
-            getAdventure(this.id).then(res => {
-                this.isPet = false;
-                this.data = res.data;
-            });
-            getSerendipityAchievementIds().then(res => {
+        getData() {
+            this.loading = true;
+            getAdventure(this.id)
+                .then((res) => {
+                    this.isPet = false;
+                    this.data = res.data;
+                })
+                .finally(() => {
+                    this.loading = false;
+                    postStat(this.type, this.id);
+                });
+            getSerendipityAchievementIds().then((res) => {
                 this.achieve_id = res.data[this.id];
             });
         },
     },
-    filters: {},
-    created: function () {
-        this.gerData();
+    mounted: function () {
     },
-    mounted: function () {},
 };
 </script>
 

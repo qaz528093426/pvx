@@ -1,114 +1,103 @@
 <template>
-    <div id="app">
-        <Header></Header>
-        <Breadcrumb name="花价查询" slug="flower" root="/pvx/flower" :feedbackEnable="true" :crumbEnable="true">
-            <img slot="logo" svg-inline :src="getIcon('flower')" />
-        </Breadcrumb>
-        <LeftSidebar>
-            <Nav />
-        </LeftSidebar>
-        <Main class="m-flower" :withoutRight="true" v-loading="loading">
-            <div class="m-flower-container">
-                <h1 class="m-flower-title">全区服小区花价查询</h1>
-                <el-divider class="m-flower-desc">精准数据·居家种田好帮手</el-divider>
+    <div class="m-flower">
+        <div class="m-flower-container">
+            <h1 class="m-flower-title">全区服小区花价查询</h1>
+            <el-divider class="m-flower-desc">精准数据·居家种田好帮手</el-divider>
 
-                <div class="m-flower-search">
-                    <el-row :gutter="20">
-                        <el-col :span="7">
-                            <el-select class="u-server" v-model="current_server" filterable placeholder="请选择服务器">
-                                <el-option v-for="item in servers" :key="item" :label="item" :value="item"> </el-option>
-                            </el-select>
-                        </el-col>
-                        <el-col :span="7">
-                            <el-select class="u-server" v-model="current_map" filterable placeholder="请选择小区">
-                                <el-option v-for="item in maps" :key="item" :label="item" :value="item"> </el-option>
-                            </el-select>
-                        </el-col>
-                        <el-col :span="7">
-                            <el-select class="u-type" v-model="type" placeholder="请选择花型">
-                                <el-option label="全部" value=""></el-option>
-                                <el-option v-for="item in types" :key="item.name" :label="item.name" :value="item.key"> </el-option>
-                            </el-select>
-                        </el-col>
-                        <el-col :span="3">
-                            <el-button class="u-button" type="primary" icon="el-icon-search" :disabled="isGuest" @click="loadData">查询</el-button>
+            <div class="m-flower-search">
+                <el-row :gutter="20">
+                    <el-col :span="7">
+                        <el-select class="u-server" v-model="current_server" filterable placeholder="请选择服务器">
+                            <el-option v-for="item in servers" :key="item" :label="item" :value="item"> </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="7">
+                        <el-select class="u-server" v-model="current_map" filterable placeholder="请选择小区">
+                            <el-option v-for="item in maps" :key="item" :label="item" :value="item"> </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="7">
+                        <el-select class="u-type" v-model="type" placeholder="请选择花型">
+                            <el-option label="全部" value=""></el-option>
+                            <el-option v-for="item in types" :key="item.name" :label="item.name" :value="item.key"> </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="3">
+                        <el-button class="u-button" type="primary" icon="el-icon-search" :disabled="isGuest" @click="loadData">查询</el-button>
+                    </el-col>
+                </el-row>
+            </div>
+
+            <div class="m-flower-all">
+                <div class="m-flower-result" v-if="isTraditional">
+                    <el-row :gutter="40" v-if="rank && rank.length">
+                        <el-col :span="12" class="u-flower" v-for="(item, i) in rank" :key="i" :class="{ isHidden: item.isHidden }">
+                            <span class="u-title">
+                                <span class="u-name">{{ item.name }}</span>
+                                <span class="u-icons">
+                                    <i class="u-icon" v-for="(icon, key) in flowers[item.name]" :key="key">
+                                        <el-tooltip effect="dark" :content="icon.color" placement="top">
+                                            <img :src="icon.icon | iconURL" :alt="icon.color" />
+                                        </el-tooltip>
+                                    </i>
+                                </span>
+                            </span>
+                            <div class="u-desc">
+                                当前最高分线 :
+                                <span
+                                    class="u-line"
+                                    v-for="(line, i) in item.line"
+                                    :key="line + i"
+                                    title="点击快速复制"
+                                    v-clipboard:copy="line"
+                                    v-clipboard:success="onCopy"
+                                    v-clipboard:error="onError"
+                                    ><b>{{ line }}</b
+                                    >线</span
+                                >
+                                <span class="u-price">价格 : 1.5倍率</span>
+                            </div>
                         </el-col>
                     </el-row>
                 </div>
-
-                <div class="m-flower-all">
-                    <div class="m-flower-result" v-if="isTraditional">
-                        <el-row :gutter="40" v-if="rank && rank.length">
-                            <el-col :span="12" class="u-flower" v-for="(item, i) in rank" :key="i" :class="{ isHidden: item.isHidden }">
-                                <span class="u-title">
-                                    <span class="u-name">{{ item.name }}</span>
-                                    <span class="u-icons">
-                                        <i class="u-icon" v-for="(icon, key) in flowers[item.name]" :key="key">
-                                            <el-tooltip effect="dark" :content="icon.color" placement="top">
-                                                <img :src="icon.icon | iconURL" :alt="icon.color" />
-                                            </el-tooltip>
-                                        </i>
-                                    </span>
+                <div class="m-flower-result" v-else>
+                    <el-row :gutter="40" v-if="data && data.length">
+                        <el-col :span="12" class="u-flower" v-for="(item, i) in data" :key="i" :class="{ isHidden: item.isHidden }">
+                            <span class="u-title">
+                                <span class="u-name">{{ item.name }}</span>
+                                <span class="u-icons">
+                                    <i class="u-icon" v-for="(icon, key) in flowers[item._name]" :key="key">
+                                        <el-tooltip effect="dark" :content="icon.color" placement="top">
+                                            <img :src="icon.icon | iconURL" :alt="icon.color" />
+                                        </el-tooltip>
+                                    </i>
                                 </span>
-                                <div class="u-desc">
-                                    当前最高分线 :
-                                    <span
-                                        class="u-line"
-                                        v-for="(line, i) in item.line"
-                                        :key="line + i"
-                                        title="点击快速复制"
-                                        v-clipboard:copy="line"
-                                        v-clipboard:success="onCopy"
-                                        v-clipboard:error="onError"
-                                        ><b>{{ line }}</b
-                                        >线</span
-                                    >
-                                    <span class="u-price">价格 : 1.5倍率</span>
-                                </div>
-                            </el-col>
-                        </el-row>
-                    </div>
-                    <div class="m-flower-result" v-else>
-                        <el-row :gutter="40" v-if="data && data.length">
-                            <el-col :span="12" class="u-flower" v-for="(item, i) in data" :key="i" :class="{ isHidden: item.isHidden }">
-                                <span class="u-title">
-                                    <span class="u-name">{{ item.name }}</span>
-                                    <span class="u-icons">
-                                        <i class="u-icon" v-for="(icon, key) in flowers[item._name]" :key="key">
-                                            <el-tooltip effect="dark" :content="icon.color" placement="top">
-                                                <img :src="icon.icon | iconURL" :alt="icon.color" />
-                                            </el-tooltip>
-                                        </i>
-                                    </span>
-                                </span>
-                                <div class="u-desc">
-                                    当前最高分线 :
-                                    <span
-                                        class="u-line"
-                                        v-for="(branch, i) in item.branch"
-                                        :key="branch + i"
-                                        title="点击快速复制"
-                                        v-clipboard:copy="branch.number"
-                                        v-clipboard:success="onCopy"
-                                        v-clipboard:error="onError"
-                                        ><b>{{ branch.number }}</b
-                                        >线</span
-                                    >
-                                    <span class="u-price">价格 : 1.5倍率</span>
-                                </div>
-                            </el-col>
-                        </el-row>
-                    </div>
+                            </span>
+                            <div class="u-desc">
+                                当前最高分线 :
+                                <span
+                                    class="u-line"
+                                    v-for="(branch, i) in item.branch"
+                                    :key="branch + i"
+                                    title="点击快速复制"
+                                    v-clipboard:copy="branch.number"
+                                    v-clipboard:success="onCopy"
+                                    v-clipboard:error="onError"
+                                    ><b>{{ branch.number }}</b
+                                    >线</span
+                                >
+                                <span class="u-price">价格 : 1.5倍率</span>
+                            </div>
+                        </el-col>
+                    </el-row>
                 </div>
             </div>
-            <Footer></Footer>
-        </Main>
+        </div>
     </div>
 </template>
 
 <script>
 import User from "@jx3box/jx3box-common/js/user";
-import Nav from "@/components/Nav.vue";
 import { getFlower, getFlowerRank } from "@/service/flower";
 import { setFlowerServer, getProfile } from "@/service/server";
 import { showDate as dateFormat } from "@jx3box/jx3box-common/js/moment";
@@ -414,13 +403,14 @@ export default {
                 this.current_server = localStorage.getItem("flower_server") || "蝶恋花";
             }
         }
+
+        console.log(11);
     },
     components: {
-        Nav,
     },
 };
 </script>
 
 <style lang="less">
-@import "~@/assets/css/house/flower.less";
+@import "~@/assets/css/homeland/flower.less";
 </style>

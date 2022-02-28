@@ -2,7 +2,7 @@ import { $node } from "@jx3box/jx3box-common/js/https";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import axios from "axios";
 // const $ = axios.create({
-//     baseURL : 'http://localhost:7002/'
+//     baseURL : 'http://localhost:9002/'
 // })
 const $ = $node()
 
@@ -12,16 +12,16 @@ function getPets(params) {
     });
 }
 
-function getPet(petid, client = "std") {
+function getPet(petid, params) {
     return $.get(`/pet/${petid}`, {
-        params: {
-            client,
-        },
+        params
     });
 }
 
-function getPetSkill(petid) {
-    return $.get(`/pet/${petid}/skill`);
+function getPetSkill(petid,  params) {
+    return $.get(`/pet/${petid}/skill`,{
+        params
+    });
 }
 
 function getShopInfo({ item_type, item_id, client = "std" }) {
@@ -38,4 +38,10 @@ function getPetLucky() {
     return axios.get(__iconPath + "pvx/pet/output/pet_lucky.json");
 }
 
-export { getPets, getPet, getPetSkill, getShopInfo, getPetLucky };
+function getSkill(params) {
+    return $.get('/skills', {
+        params
+    })
+}
+
+export { getPets, getPet, getPetSkill, getShopInfo, getPetLucky, getSkill };
