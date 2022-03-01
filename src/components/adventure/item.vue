@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { __iconPath, __imgPath, __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
+import {__imgPath} from '@jx3box/jx3box-common/data/jx3box.json'
 export default {
 	name: "item",
 	props: ["item"],
@@ -17,7 +17,6 @@ export default {
 	components: {},
 	data: function () {
 		return {
-			imgRoot: __iconPath + "pvx/serendipity/images/",
 		};
 	},
 	computed: {
@@ -36,8 +35,7 @@ export default {
 			return __imgPath + "image/pvx/bg.png";
 		},
 		titleImg: function () {
-			return __iconPath + "pvx/serendipity/image_ui/luckymeeting7_" + this.item.nOpenFrame + ".png";
-			// return __ossMirror + "game/serendipity/image_ui/luckymeeting7_" + this.item.nOpenFrame + ".png";
+			return this.__imgRoot + `image_ui/${this.client}/luckymeeting7_` + this.item.nOpenFrame + ".png";
 		},
 		titleStyle: function () {
 			return {};
