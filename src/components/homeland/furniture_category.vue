@@ -94,7 +94,7 @@ export default {
 					img = el.attr.icon;
 				}
 			});
-			return img !== "" ? { backgroundImage: "url(" + this.__imgRoot + "image/game/homeland/" + img + ")" } : "";
+			return img !== "" ? { backgroundImage: "url(" + __imgPath + "image/game/homeland/" + img + ")" } : "";
 		},
 
 		hoverCategory(item) {

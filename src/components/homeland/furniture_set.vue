@@ -37,13 +37,19 @@ export default {
             return id ? "quality_" + id : "";
         },
         formatImg(link) {
-            if (!link) return;
-            let img = link.match(/.*[\/,\\](.*?).tga/);
-            link = link.replace(/\\/g, "/").split(img[1]);
-            let nLink = link[0].split("Homeland");
+            // if (!link) return;
+            // let img = link.match(/.*[\/,\\](.*?).tga/);
+            // link = link.replace(/\\/g, "/").split(img[1]);
+            // let nLink = link[0].split("Homeland");
 
-            if (img[1] == "default") return this.__imgRoot + "homeland/default/default.png";
-            return this.__imgRoot + "homeland" + nLink[1].toLowerCase() + img[1].toLowerCase() + ".png";
+            // if (img[1] == "default") return this.__imgRoot + "homeland/default/default.png";
+            // return this.__imgRoot + "homeland" + nLink[1].toLowerCase() + img[1].toLowerCase() + ".png";
+            			if (!link) return;
+			let img = link.toLowerCase().match(/.*[\/,\\]homeland(.*?).tga/);
+			let name = img[1].replace(/\\/g, "/");
+
+			if (img[1] == "default") return this.__imgRoot + "homeland/std/default/default.png";
+			return this.__imgRoot + "homeland/std" + name + ".png";
         },
     },
     created() {},

@@ -23,7 +23,7 @@ export default {
     props: [],
     provide : {
         __imgRoot : __imgPath + 'homeland/',
-        __dataRoot : __dataPath + 'homeland/'
+        __dataRoot : __dataPath + 'pvx/'
     },
     data: function () {
         return {

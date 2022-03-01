@@ -92,7 +92,7 @@ import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 export default {
 	name: "FurnitureSingle",
 	props: [],
-	inject : ['__imgRoot'],
+	inject: ["__imgRoot"],
 	components: {
 		Wiki,
 		Comment,
@@ -192,12 +192,11 @@ export default {
 		// 图片链接转换
 		formatImg(link) {
 			if (!link) return;
-			let img = link.match(/.*[\/,\\](.*?).tga/);
-			link = link.replace(/\\/g, "/").split(img[1]);
-			let nLink = link[0].split("Homeland");
+			let img = link.toLowerCase().match(/.*[\/,\\]homeland(.*?).tga/);
+			let name = img[1].replace(/\\/g, "/");
 
 			if (img[1] == "default") return this.__imgRoot + "homeland/std/default/default.png";
-			return this.__imgRoot + "homeland/std" + nLink[1].toLowerCase() + img[1].toLowerCase() + ".png";
+			return this.__imgRoot + "homeland/std" + name + ".png";
 		},
 
 		scaleRange(str) {

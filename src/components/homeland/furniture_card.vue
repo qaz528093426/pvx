@@ -35,19 +35,25 @@ import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
 	name: "Card",
 	props: ["item"],
-	inject : ['__imgRoot'],
+	inject: ["__imgRoot"],
 	data: function () {
 		return {};
 	},
 	computed: {},
 	methods: {
 		formatImg(link) {
-			let img = link.match(/.*[\/,\\](.*?).tga/);
-			link = link.replace(/\\/g, "/").split(img[1]);
-			let nLink = link[0].split("Homeland");
+			// let img = link.match(/.*[\/,\\](.*?).tga/);
+			// link = link.replace(/\\/g, "/").split(img[1]);
+			// let nLink = link[0].split("Homeland");
 
-			if (img[1] == "default") return this.__imgRoot + "homeland/default/default.png";
-			return this.__imgRoot + "homeland" + nLink[1].toLowerCase() + img[1].toLowerCase() + ".png";
+			// if (img[1] == "default") return this.__imgRoot + "homeland/default/default.png";
+			// return this.__imgRoot + "homeland" + nLink[1].toLowerCase() + img[1].toLowerCase() + ".png";
+			if (!link) return;
+			let img = link.toLowerCase().match(/.*[\/,\\]homeland(.*?).tga/);
+			let name = img[1].replace(/\\/g, "/");
+
+			if (img[1] == "default") return this.__imgRoot + "homeland/std/default/default.png";
+			return this.__imgRoot + "homeland/std" + name + ".png";
 		},
 		toLink(id) {
 			this.$router.push({ name: "single", params: { id } });

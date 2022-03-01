@@ -30,7 +30,7 @@ export default {
     },
     provide : {
         __imgRoot : __imgPath + 'homeland/',
-        __dataRoot : __dataPath + 'homeland/'
+        __dataRoot : __dataPath + 'pvx/'
     },
     computed: {},
     methods: { getAppIcon },
