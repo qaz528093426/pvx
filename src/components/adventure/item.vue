@@ -18,7 +18,6 @@ export default {
 	data: function () {
 		return {
 			imgRoot: __iconPath + "pvx/serendipity/images/",
-			// imgRoot: __ossMirror + "game/serendipity/images/",
 		};
 	},
 	computed: {
