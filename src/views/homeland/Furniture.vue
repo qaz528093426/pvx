@@ -19,7 +19,7 @@
 <script>
 import Nav from "@/components/Nav.vue";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath,__dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Furniture",
     props: [],
@@ -30,6 +30,7 @@ export default {
     },
     provide : {
         __imgRoot : __imgPath + 'homeland/',
+        __dataRoot : __dataPath + 'homeland/'
     },
     computed: {},
     methods: { getAppIcon },
