@@ -85,7 +85,6 @@ import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import furnitureMaterials from "@/components/homeland/furniture_materials.vue";
 
 import { getLink } from "@jx3box/jx3box-common/js/utils";
-import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 
 import { getFurnitureDetail, getSetList, getFurnitureColor } from "@/service/furniture.js";
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
@@ -93,6 +92,7 @@ import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 export default {
 	name: "FurnitureSingle",
 	props: [],
+	inject : ['__imgRoot'],
 	components: {
 		Wiki,
 		Comment,
@@ -196,8 +196,8 @@ export default {
 			link = link.replace(/\\/g, "/").split(img[1]);
 			let nLink = link[0].split("Homeland");
 
-			if (img[1] == "default") return __iconPath + "pvx/furniture/default/default.png";
-			return __iconPath + "pvx/furniture" + nLink[1] + img[1] + ".png";
+			if (img[1] == "default") return this.__imgRoot + "homeland/std/default/default.png";
+			return this.__imgRoot + "homeland/std" + nLink[1].toLowerCase() + img[1].toLowerCase() + ".png";
 		},
 
 		scaleRange(str) {

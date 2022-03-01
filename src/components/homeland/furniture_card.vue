@@ -35,6 +35,7 @@ import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
 	name: "Card",
 	props: ["item"],
+	inject : ['__imgRoot'],
 	data: function () {
 		return {};
 	},
@@ -45,8 +46,8 @@ export default {
 			link = link.replace(/\\/g, "/").split(img[1]);
 			let nLink = link[0].split("Homeland");
 
-			if (img[1] == "default") return __iconPath + "pvx/furniture/default/default.png";
-			return __iconPath + "pvx/furniture" + nLink[1] + img[1] + ".png";
+			if (img[1] == "default") return this.__imgRoot + "homeland/default/default.png";
+			return this.__imgRoot + "homeland" + nLink[1].toLowerCase() + img[1].toLowerCase() + ".png";
 		},
 		toLink(id) {
 			this.$router.push({ name: "single", params: { id } });
