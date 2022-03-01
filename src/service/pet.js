@@ -35,7 +35,7 @@ function getShopInfo({ item_type, item_id, client = "std" }) {
 }
 
 function getPetLucky() {
-    return axios.get(__iconPath + "pvx/pet/output/pet_lucky.json");
+    return axios.get(__dataPath + "pvx/pet/output/pet_lucky.json");
 }
 
 function getSkill(params) {

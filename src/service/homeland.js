@@ -1,8 +1,8 @@
 import axios from "axios";
-import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
 
 const $ = axios.create({
-	baseURL: __iconPath + "pvx/house/output/",
+	baseURL: __dataPath + "pvx/house/output/",
 });
 
 // 获取房屋升级需求表
