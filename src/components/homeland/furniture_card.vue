@@ -42,12 +42,6 @@ export default {
 	computed: {},
 	methods: {
 		formatImg(link) {
-			// let img = link.match(/.*[\/,\\](.*?).tga/);
-			// link = link.replace(/\\/g, "/").split(img[1]);
-			// let nLink = link[0].split("Homeland");
-
-			// if (img[1] == "default") return this.__imgRoot + "homeland/default/default.png";
-			// return this.__imgRoot + "homeland" + nLink[1].toLowerCase() + img[1].toLowerCase() + ".png";
 			if (!link) return;
 			let img = link.toLowerCase().match(/.*[\/,\\]homeland(.*?).tga/);
 			let name = img[1].replace(/\\/g, "/");

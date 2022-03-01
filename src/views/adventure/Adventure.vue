@@ -24,7 +24,7 @@ export default {
     name: "App",
     provide : {
         __imgRoot : __imgPath + 'adventure/',
-        __dataRoot : __dataPath + 'pet/'
+        __dataRoot : __dataPath + 'pvx/'
     },
     data: function () {
         return {};

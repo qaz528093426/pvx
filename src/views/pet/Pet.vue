@@ -24,7 +24,7 @@ export default {
     name: "Pet",
     provide : {
         __imgRoot : __imgPath + 'pet/',
-        __dataRoot : __dataPath + 'pet/'
+        __dataRoot : __dataPath + 'pvx/'
     },
     data: function () {
         return {};
