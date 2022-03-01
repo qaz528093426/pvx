@@ -37,7 +37,11 @@ export default {
 	props: ["item"],
 	inject: ["__imgRoot"],
 	data: function () {
-		return {};
+		return {
+			client: function () {
+				return this.$store.state.client;
+			},
+		};
 	},
 	computed: {},
 	methods: {
@@ -46,8 +50,8 @@ export default {
 			let img = link.toLowerCase().match(/.*[\/,\\]homeland(.*?).tga/);
 			let name = img[1].replace(/\\/g, "/");
 
-			if (img[1] == "default") return this.__imgRoot + "homeland/std/default/default.png";
-			return this.__imgRoot + "homeland/std" + name + ".png";
+			if (img[1] == "default") return this.__imgRoot + `homeland/${this.client}` + "/default/default.png";
+			return this.__imgRoot + `homeland/${this.client}` + name + ".png";
 		},
 		toLink(id) {
 			this.$router.push({ name: "single", params: { id } });
