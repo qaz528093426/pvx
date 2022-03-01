@@ -82,8 +82,8 @@ export default {
 		},
 
 		// 显示日常图标
-		showGamePic: function (index) {
-			return this.__imgRoot + "jyplay/std/seasonfurniture_" + index + ".png";
+		showGamePic: function (index) { 
+			return __imgPath + "/image/game/homeland/seasonfurniture_" + index + ".png";
 		},
 
 		// 显示活动介绍
