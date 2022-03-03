@@ -1,7 +1,7 @@
 <template>
 	<div class="m-pet-card">
 		<!--宠物卡片图-->
-		<img :src="getImgSrc(petObject.BgPath)" class="u-image" />
+		<img :src="getImgSrc(petObject.BgPath)" class="u-image" @error="replaceByDefault" />
 		<!--宠物边框图-->
 		<img :src="getFrameSrc(petObject.Quality)" class="u-frame" />
 		<!-- 宠物星级 -->
@@ -27,14 +27,19 @@ export default {
 	},
 	inject: ["__imgRoot"],
 	data: function () {
-		return {};
+		return {
+			
+		};
 	},
 	computed: {
 		client: function () {
 			return this.$store.state.client;
-		},
+		}
 	},
 	methods: {
+		replaceByDefault(e) {
+			e.target.src = this.__imgRoot + 'pets/' + this.client + '/3d_bg.png'
+		},
 		// 获取宠物图片路径
 		getImgSrc: function (path) {
 			if (path) {

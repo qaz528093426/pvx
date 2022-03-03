@@ -2,7 +2,7 @@
 	<router-link class="m-pet-item" :to="'/' + petObject.Index">
 		<!--  @click="getLink(petObject.Index)" -->
 		<!--宠物卡片图-->
-		<img :src="getImgSrc(petObject.BgPath)" class="u-image" />
+		<img :src="getImgSrc(petObject.BgPath)" class="u-image" @error="replaceByDefault" />
 		<!--宠物边框图-->
 		<img :src="getFrameSrc(petObject.Quality)" class="u-frame" />
 		<!-- 宠物星级 -->
@@ -36,6 +36,9 @@ export default {
 		},
 	},
 	methods: {
+		replaceByDefault(e) {
+			e.target.src = this.__imgRoot + 'pets/' + this.client + '/3d_bg.png'
+		},
 		// 获取宠物图片路径
 		getImgSrc: function (path) {
 			let img_name = path.match(/.*[\/,\\](.*?).tga/);
