@@ -15,7 +15,7 @@
 		<div class="u-score flex">
 			{{ petObject.Score || "？" }}
 		</div>
-		<span class="u-name">{{ petObject.Name }}</span>
+		<div class="u-name">{{ petObject.Name }}</div>
 	</router-link>
 </template>
 

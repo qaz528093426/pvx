@@ -94,6 +94,7 @@ import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
+import dayjs from 'dayjs'
 
 export default {
     name: "PetSingle",
@@ -246,8 +247,7 @@ export default {
         getPetLucky: function () {
             getPetLucky().then((res) => {
                 let data = res.data.std;
-                let rawDate = new Date();
-                let dateIndex = rawDate.getMonth() + 1 + "" + rawDate.getDate();
+                let dateIndex = dayjs(new Date()).format('MDD')
                 this.luckyList = data[dateIndex];
             });
         },
