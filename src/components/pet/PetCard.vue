@@ -27,18 +27,16 @@ export default {
 	},
 	inject: ["__imgRoot"],
 	data: function () {
-		return {
-			
-		};
+		return {};
 	},
 	computed: {
 		client: function () {
 			return this.$store.state.client;
-		}
+		},
 	},
 	methods: {
 		replaceByDefault(e) {
-			e.target.src = this.__imgRoot + 'pets/' + this.client + '/3d_bg.png'
+			e.target.src = this.__imgRoot + "pets/" + this.client + "/3d_bg.png";
 		},
 		// 获取宠物图片路径
 		getImgSrc: function (path) {
@@ -70,6 +68,7 @@ export default {
 		},
 		// 判断福缘
 		getLucky: function (index) {
+			if (this.client !== "std") return false;
 			if (index) {
 				return this.lucky?.indexOf(index.toString()) != -1;
 			}
