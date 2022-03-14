@@ -1,71 +1,82 @@
+.m-manufacture-header {
+	padding: 20px 0;
+	user-select: none;
+	h1 {
+		.x;
+	}
+	.u-tabs {
+		.flex;
+		justify-content: center;
+		align-items: center;
+		.u-tab {
+			.w(90px);
+			.pt(78px);
+			.x;
+			.fz(22px);
+			.bold;
+			background-image: url("@{img_path}image/cooking/manufacture.png");
+			background-repeat: no-repeat;
+			font-family: KaiTi, Microsoft YaHei;
+			margin: 0 20px;
+			color: @color;
+		}
+		.active {
+			color: @pink;
+		}
+		.u-tab0 {
+			background-position: -90px 0;
+		}
+		.u-tab1 {
+			background-position: -270px 0;
+		}
+		.u-tab2 {
+			background-position: -450px 0;
+		}
+		.u-tab3 {
+			background-position: -630px 0;
+		}
+		.u-tab4 {
+			background-position: -810px 0;
+		}
 
-.flex-start-between{
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+		.u-tab0.active,
+		.u-tab0:hover {
+			background-position: -0 0;
+		}
+		.u-tab1.active,
+		.u-tab1:hover {
+			background-position: -180px 0;
+		}
+		.u-tab2.active,
+		.u-tab2:hover {
+			background-position: -360px 0;
+		}
+		.u-tab3.active,
+		.u-tab3:hover {
+			background-position: -540px 0;
+		}
+		.u-tab4.active,
+		.u-tab4:hover {
+			background-position: -720px 0;
+		}
+		.u-tab0,
+		.u-tab1,
+		.u-tab2,
+		.u-tab3,
+		.u-tab4 {
+			&:hover {
+				.pointer;
+				filter: brightness(120%);
+			}
+		}
+	}
 }
-.flex-center-between{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.flex-center-center{
-    display: flex;
-    align-items: center;
+
+.m-manufacture-main {
+	.flex;
     justify-content: center;
-}
-.flex-column-center{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.m-cooking-main{
-    padding: 20px 30px;
-    .m-cooking-side{
-
-    }
-    .m-cooking-content{
-        width: 100%;
-        max-width: 700px;
-        padding: 25px 10px;
-        border: #dcdfe6 solid 1px;
-        border-radius: 10px;
-        .c-cooking-goodsBox{
-            width: 80px;
-            height: 80px;
-        }
-    }
-    .m-cooking-panel{
-        width: 100%;
-        max-width: 500px;
-        padding: 25px 10px;
-        border: #dcdfe6 solid 1px;
-        border-radius: 10px;
-    }
-}
-.Header{//头部
-    .c-cooking-tabs{}
-    .c-cooking-servers{}
-}
-.Panel{ //购物车
-    width: 500px;
-    .m-Panel-content{
-        border: 1px solid #dcdfe6;
-        border-radius: 10px;
-        margin: 10px 0;
-    }
-    .c-Panel-itemList{
-        padding: 15px 8px 5px;
-        border-bottom: 1px solid #dcdfe6;
-        .c-Panel-itemNav{
-            border-radius: 6px;
-            padding: 10px 5px;
-            margin: 10px 0;
-            background-color: #dcdfe6;
-        }
-    }
-    .c-Panel-total{
-        padding: 8px;
-    }  
-
+	box-sizing: border-box;
+	margin: 0 10px;
+	padding: 20px 0;
+	border-top: 3px double #eee;
 }
