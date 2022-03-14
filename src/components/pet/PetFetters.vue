@@ -46,7 +46,6 @@ export default {
     },
     computed: {
         id: function () {
-            	console.log(this.info, "???");
             return this.$route.params.id;
         }
     },
