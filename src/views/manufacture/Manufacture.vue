@@ -12,7 +12,7 @@
 			<div class="m-manufacture-header">
 				<h1>技艺助手</h1>
 				<div class="u-tabs">
-					<span v-for="(item, index) in craft_types" :key="index" class="u-tab" :class="[`u-tab${index}`, craft_index == index ? 'active' : '']" @click="changeCraft(index, item.name)">{{ item.name }}</span>
+					<span v-for="(item, index) in craft_types" :key="index" class="u-tab" :class="[`u-tab${index}`, craft_index == index ? 'active' : '']" @click="changeCraft(index)">{{ item.name }}</span>
 				</div>
 			</div>
 			<!-- 展示 -->
@@ -46,19 +46,20 @@ export default {
 
 			// 自设
 			craft_index: 0,
-			craft_type: "缝纫",
-			make_width: 100,
+			make_width: 1,
 		};
 	},
 	computed: {
+		craft() {
+			return this.craft_types[this.craft_index];
+		},
 		make_props() {
 			let data = {
-				type: this.craft_type,
+				craft: this.craft,
 				client: this.client,
 			};
 			return data;
 		},
-
 		client() {
 			return this.$store.state.client;
 		},
@@ -68,9 +69,8 @@ export default {
 		getAppIcon,
 
 		// 切换技艺类别
-		changeCraft(i, name) {
+		changeCraft(i) {
 			this.craft_index = i;
-			this.craft_type = name;
 		},
 
 		width() {

@@ -1,83 +1,9 @@
 {
 	"craft_types": [
-		{ "key": "tailoring", "name": "缝纫", "client": "all" },
-		{ "key": "cooking", "name": "烹饪", "client": "all" },
-		{ "key": "medicine", "name": "制药", "client": "all" },
-		{ "key": "founding", "name": "锻造", "client": "all" },
-		{ "key": "furniture", "name": "梓匠", "client": "std" }
-	],
-	"craft_Arr": [
-		{
-			"name": "回复类食品",
-			"id": "10",
-			"professionID": "4",
-			"children": []
-		},
-		{
-			"name": "辅助类食品",
-			"id": "20",
-			"professionID": "4",
-			"children": []
-		},
-		{
-			"name": "增强类食品",
-			"id": "30",
-			"professionID": "4",
-			"children": []
-		},
-		{
-			"name": "特殊食品",
-			"id": "40",
-			"professionID": "4",
-			"children": []
-		},
-		{
-			"name": "烹饪材料",
-			"id": "50",
-			"professionID": "4",
-			"children": []
-		},
-		{
-			"name": "宴席",
-			"id": "60",
-			"professionID": "4",
-			"children": []
-		},
-		{
-			"name": "帽子",
-			"id": "10",
-			"professionID": "5",
-			"children": []
-		},
-		{
-			"name": "上衣",
-			"id": "20",
-			"professionID": "5",
-			"children": []
-		},
-		{
-			"name": "裤子",
-			"id": "30",
-			"professionID": "5",
-			"children": []
-		},
-		{
-			"name": "鞋",
-			"id": "40",
-			"professionID": "5",
-			"children": []
-		},
-		{
-			"name": "腰带",
-			"id": "50",
-			"professionID": "5",
-			"children": []
-		},
-		{
-			"name": "护手",
-			"id": "60",
-			"professionID": "5",
-			"children": []
-		}
+		{ "key": "tailoring", "name": "缝纫", "ProfessionID": "5", "client": "all" },
+		{ "key": "cooking", "name": "烹饪", "ProfessionID": "4", "client": "all" },
+		{ "key": "medicine", "name": "制药", "ProfessionID": "7", "client": "all" },
+		{ "key": "founding", "name": "锻造", "ProfessionID": "6", "client": "all" },
+		{ "key": "furniture", "name": "梓匠", "ProfessionID": "15", "client": "std" }
 	]
 }

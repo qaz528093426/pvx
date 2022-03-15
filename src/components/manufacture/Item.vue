@@ -1,8 +1,8 @@
 <template>
 	<div class="m-item" @click="changeItem">
 		<div class="u-name" slot="reference">
-			<img class="u-img" :src="iconLink(item.IconID)" :alt="item.Name" />
-			<div :class="`u-quality--${item.Quality}`">{{ item.Name }}</div>
+			<img class="u-img" :src="iconLink(IconID)" :alt="item.Name" />
+			<div :class="`u-quality--${Quality}`">{{ item.Name }}</div>
 		</div>
 
 		<div class="u-btn">
@@ -19,25 +19,29 @@ import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
 	name: "Item",
 	props: ["item"],
-	watch: {},
-	components: {},
 	data: function () {
 		return {
 			num: 1,
 		};
 	},
-	mounted() {},
+	computed: {
+		Quality() {
+			return this.item.Quality || 1;
+		},
+		IconID() {
+			return this.item.IconID || 1;
+		},
+	},
 	methods: {
 		iconLink,
 		changeNum(i) {
-			console.log(i, "changeNum");
+			this.num = i;
 		},
 		changeItem() {
-			console.log(";;");
-			this.$emit("changeItem", {});
+			this.$emit("changeItem", { count: this.num, ...this.item });
 		},
 		addCart() {
-			console.log("add");
+			this.$emit("changeItem", { add: true, count: this.num, ...this.item });
 		},
 	},
 };
@@ -66,12 +70,12 @@ export default {
 	}
 	&:hover {
 		filter: brightness(120%);
-        .u-add{
-            .db;
-        }
+		.u-add {
+			.db;
+		}
 	}
 	.u-add {
-        .none;
+		.none;
 		.pa;
 		.lh(42px);
 		.r(5px);
