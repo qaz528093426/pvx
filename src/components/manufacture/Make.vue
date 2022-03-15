@@ -16,14 +16,14 @@
 								<span>{{ item.BelongName }}</span>
 							</div>
 							<template v-if="list_index == index && item.list">
-								<div class="u-child" v-for="(child, k) in item.list" :key="k" @click="addToPlan(item, k)">
-									<div class="u-label">
+								<div class="u-child" v-for="(child, k) in item.list" :key="k">
+									<div class="u-label" @click="showItem(item)">
 										<img class="u-img" :src="iconLink(child.IconID)" :alt="child.Name" />
 										<span :class="`u-quality--${child.Quality}`">{{ child.Name }}</span>
 									</div>
 									<div class="u-btn">
-										<el-input-number v-model.number="child.count" :min="1" size="mini"></el-input-number>
-										<el-button icon="el-icon-shopping-cart-2" size="mini" type="success"></el-button>
+										<el-input-number v-model="child.count" :min="1" size="mini"></el-input-number>
+										<el-button icon="el-icon-shopping-cart-2" size="mini" type="success" @click.stop="addCart(child)"></el-button>
 									</div>
 								</div>
 							</template>
@@ -34,14 +34,14 @@
 				<template v-else>
 					<div class="u-child-title">搜索结果</div>
 					<template v-if="search_list.length">
-						<div class="u-child" v-for="(item, k) in search_list" :key="k" @click="addToPlan(item, k)">
-							<div class="u-label">
+						<div class="u-child" v-for="(item, k) in search_list" :key="k">
+							<div class="u-label" @click="showItem(item)">
 								<img class="u-img" :src="iconLink(item.IconID)" :alt="item.Name" />
-								<span :class="`u-quality--${item.Quality}`">{{ item.Name }}{{ item.count }}</span>
+								<span :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
 							</div>
 							<div class="u-btn">
-								<el-input-number v-model.number="item.count" :min="1" size="mini"></el-input-number>
-								<el-button icon="el-icon-shopping-cart-2" size="mini" type="success"></el-button>
+								<el-input-number v-model="item.count" :min="1" size="mini"></el-input-number>
+								<el-button icon="el-icon-shopping-cart-2" size="mini" type="success" @click.stop="addCart(item)"></el-button>
 							</div>
 						</div>
 					</template>
@@ -85,7 +85,7 @@ export default {
 
 			list: [],
 			all_list: [],
-			craft_list: [],
+			craft_group: "",
 			search_list: [],
 
 			list_index: 0,
@@ -104,39 +104,32 @@ export default {
 		data: {
 			deep: true,
 			immediate: true,
-			handler: function (val) {
+			handler: function () {
 				this.loadData();
 			},
 		},
 		search(val) {
 			let _list = [];
 			this.all_list.filter((item) => {
-				if (item.Name.indexOf(val) != -1) _list.push({ ...item, count: 1 });
+				if (item.Name.indexOf(val) != -1) _list.push(item);
 			});
 			this.search_list = _list;
 		},
 	},
 	methods: {
-		// 数据
+		// 数据获取和处理
 		// ==========================
 		// 加载craft_type对应的所有数据
 		loadData() {
 			getManufactures(this.params)
 				.then((res) => {
-					this.all_list = res.data;
-					let list = this.changeList();
-					list.forEach((item) => {
-						this.all_list.forEach((el) => {
-							if (item.BelongID == el.Belong) {
-								item.list.push({ ...el, count: 1 });
-							}
-						});
+					this.all_list = res.data.map((item) => {
+						item.count = 1;
+						return item;
 					});
-					let _list = [];
-					list.forEach((item) => {
-						if (item.list.length) return _list.push(item);
-					});
-					this.list = _list;
+				})
+				.then(() => {
+					if (this.craft_group) this.toList();
 				})
 				.finally(() => {
 					this.list_index = 0;
@@ -146,43 +139,58 @@ export default {
 		},
 		// 获取全部技艺分类
 		getCraftType() {
-			getCraftJson().then((res) => {
-				this.craft_list = this.data?.client == "std" ? res.data.std : res.data.origin;
+			getCraftJson()
+				.then((res) => {
+					let craft_group = this.data?.client == "std" ? res.data.std : res.data.origin;
+					this.craft_group = this.craftGroup(craft_group);
+				})
+				.then(() => {
+					this.toList();
+				});
+		},
+		// craft_list配方分组
+		craftGroup(list) {
+			let _list = [];
+			let _obj = {};
+			list.forEach((item) => {
+				if (!_obj[item.ProfessionID]) {
+					var _arr = [];
+					_arr.push({ ...item, list: [] });
+					_list.push(_arr);
+					_obj[item.ProfessionID] = item;
+				} else {
+					_list.forEach((el) => {
+						if (el[0].ProfessionID == item.ProfessionID) {
+							el.push({ ...item, list: [] });
+						}
+					});
+				}
 			});
+			return _list;
+		},
+
+		// 根据craft_list显示list, 过滤空分组
+		toList() {
+			let list = [];
+			this.craft_group.forEach((el) =>
+				el.forEach((item) => {
+					if (item.ProfessionID == this.data.craft.ProfessionID) list.push(item);
+				})
+			);
+			this.list = list
+				.map((item) => {
+					item.list = this.all_list.filter((el) => {
+						if (item.BelongID == el.Belong) return el;
+					});
+					return item;
+				})
+				.filter((item) => item.list.length);
 		},
 		// 获取单个配方的信息
 		getItem() {
 			getManufactureItem(this.craft.key, this.item_id).then((res) => {
 				this.item = res.data;
 			});
-		},
-		// 改变list的技能组别
-		changeList(list = this.craft_list) {
-			let _list = [];
-			let _obj = {};
-			list.forEach((item) => {
-				if (!_obj[item.ProfessionID]) {
-					var _arr = [];
-					_arr.push(item);
-					_list.push(_arr);
-					_obj[item.ProfessionID] = item;
-				} else {
-					_list.forEach((el) => {
-						if (el[0].ProfessionID == item.ProfessionID) {
-							el.push(item);
-						}
-					});
-				}
-			});
-
-			_list = _list.filter((item) => {
-				item = item.map((el) => {
-					el.list = [];
-					return el;
-				});
-				return this.data.craft.ProfessionID == item[0].ProfessionID;
-			});
-			return _list[0];
 		},
 
 		// 交互
@@ -192,7 +200,15 @@ export default {
 			if (this.list_index == i) return (this.list_index = -1);
 			this.list_index = i;
 		},
-		addToPlan() {},
+		// 选择展示对应配方信息
+		showItem() {
+			console.log("showItem");
+		},
+		// 加入购物车
+		addCart() {
+			console.log("addCart");
+		},
+
 		iconLink,
 	},
 	created: function () {
