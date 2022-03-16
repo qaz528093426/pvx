@@ -7,7 +7,6 @@
 		</div>
 
 		<span class="u-name" :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
-		<span class="u-price u-interval">游戏金额：100</span>
 		<div class="u-info u-interval">
 			<span>需求等级:{{ item.nLevel || "未知" }}</span>
 			<span>消耗精力:{{ item.CostVigor }}</span>
@@ -28,7 +27,7 @@
 						<span :class="`u-quality--${el.Quality}`"> {{ el.Name }}</span>
 						<span class="u-num">数量：x {{ el.count }}</span>
 					</div>
-					<div class="u-price u-interval">[{{server}}] 昨日平均价格:<GamePrice class="u-price-num" :price="el.Price" /></div>
+					<div class="u-price u-interval">[{{ server }}] 昨日平均价格:<GamePrice class="u-price-num" :price="el.Price" /></div>
 					<span class="u-interval">
 						<span class="u-desc" v-for="text in textFilter(el.item_info.Desc)" :key="text">{{ text }}</span>
 					</span>
@@ -66,7 +65,7 @@ export default {
 		},
 		server: {
 			deep: true,
-			handler: function (val) { 
+			handler: function (val) {
 				this.getItemPrice();
 			},
 		},
@@ -124,11 +123,12 @@ export default {
 		// 获取价格
 		getItemPrice() {
 			if (this.item.child.length) {
-				let arr = [...new Set(this.item.child, { id: this.item.ID, price_id: this.item.CreateItemType1 + "_" + this.item.CreateItemIndex1 })];
+				let arr = [...this.item.child, { id: this.item.ID, price_id: this.item.CreateItemType1 + "_" + this.item.CreateItemIndex1 }];
 				let _ids = arr.map((item) => item.id);
 				getItemsPrice({ ids: _ids.join(), client: this.$store.state.client }).then((res) => {
 					let _list = res.data;
 					let _arr = [];
+					let _child = [];
 					if (!_list.length) {
 						arr.forEach((item) => {
 							_arr.push(item.price_id);
@@ -143,6 +143,7 @@ export default {
 							arr.forEach((item) => {
 								if (item.id == el.ItemIndex) {
 									item.Price = el.Price;
+									_child.push(item);
 								}
 							});
 						});
@@ -155,6 +156,7 @@ export default {
 									arr.forEach((item) => {
 										if (_game[key].item_id == item.price_id) {
 											item.Price = _game[key].avg_price;
+											_child.push(item);
 										}
 									});
 								}
