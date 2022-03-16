@@ -1,100 +1,96 @@
 .m-manufacture-header {
-	padding: 20px 0;
-	user-select: none;
-	h1 {
-		.x;
-	}
-	.u-tabs {
-		.flex;
-		justify-content: center;
-		align-items: center;
-		.u-tab {
-			.w(90px);
-			.pt(78px);
-			.x;
-			.fz(22px);
-			.bold;
-			background-image: url("@{img_path}image/cooking/manufacture.png");
-			background-repeat: no-repeat;
-			font-family: KaiTi, Microsoft YaHei;
-			margin: 0 20px;
-			color: @color;
-		}
-		.active {
-			color: @pink;
-		}
-		.u-tab0 {
-			background-position: -90px 0;
-		}
-		.u-tab1 {
-			background-position: -270px 0;
-		}
-		.u-tab2 {
-			background-position: -450px 0;
-		}
-		.u-tab3 {
-			background-position: -630px 0;
-		}
-		.u-tab4 {
-			background-position: -810px 0;
-		}
+    padding: 20px 0;
+    user-select: none;
+    .x;
 
-		.u-tab0.active,
-		.u-tab0:hover {
-			background-position: -0 0;
-		}
-		.u-tab1.active,
-		.u-tab1:hover {
-			background-position: -180px 0;
-		}
-		.u-tab2.active,
-		.u-tab2:hover {
-			background-position: -360px 0;
-		}
-		.u-tab3.active,
-		.u-tab3:hover {
-			background-position: -540px 0;
-		}
-		.u-tab4.active,
-		.u-tab4:hover {
-			background-position: -720px 0;
-		}
-		.u-tab0,
-		.u-tab1,
-		.u-tab2,
-		.u-tab3,
-		.u-tab4 {
-			&:hover {
-				.pointer;
-				filter: brightness(120%);
-			}
-		}
-	}
+    .u-tabs {
+        background-color: @bg-light;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        .r(4px);
+        border: 1px solid #eee;
+
+        .u-tab {
+            .w(90px);
+            .pt(78px);
+            .x;
+            .fz(15px);
+            .bold;
+            background-image: url("@{img_path}image/cooking/manufacture.png");
+            background-repeat: no-repeat;
+            // font-family: KaiTi, Microsoft YaHei;
+            margin: 0 20px;
+            color: @color;
+        }
+        .active {
+            color: @color-link;
+        }
+        .u-tab0 {
+            background-position: -90px 0;
+        }
+        .u-tab1 {
+            background-position: -270px 0;
+        }
+        .u-tab2 {
+            background-position: -450px 0;
+        }
+        .u-tab3 {
+            background-position: -630px 0;
+        }
+        .u-tab4 {
+            background-position: -810px 0;
+        }
+
+        .u-tab0.active,
+        .u-tab0:hover {
+            background-position: -0 0;
+        }
+        .u-tab1.active,
+        .u-tab1:hover {
+            background-position: -180px 0;
+        }
+        .u-tab2.active,
+        .u-tab2:hover {
+            background-position: -360px 0;
+        }
+        .u-tab3.active,
+        .u-tab3:hover {
+            background-position: -540px 0;
+        }
+        .u-tab4.active,
+        .u-tab4:hover {
+            background-position: -720px 0;
+        }
+        .u-tab0,
+        .u-tab1,
+        .u-tab2,
+        .u-tab3,
+        .u-tab4 {
+            &:hover {
+                .pointer;
+                filter: brightness(120%);
+            }
+        }
+    }
+
+    .u-settings {
+        .mt(10px);
+    }
 }
 
 .m-manufacture-main {
-	.flex;
-	justify-content: center;
-	box-sizing: border-box;
-	margin: 0 10px;
-	padding: 20px 0;
-	border-top: 3px double #eee;
-	.u-manufacture-main {
-		.mr(10px);
-		padding: 0 10px;
-		box-sizing: border-box;
-		.m-server {
-			width: 100%;
-		}
-		.m-content {
-			.flex;
-            
+    .flex;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0 20px;
+    padding: 20px 0;
+    // border-top: 1px solid #eee;
 	.r(5px);
-            padding: 20px;
-            box-sizing: border-box;
-            border: 1px solid #dcdfe6;
-            background-color: #fafafa;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-		}
-	}
+	padding: 20px;
+	box-sizing: border-box;
+	border: 1px solid @border-hr;
+	background-color: @bg-light;
+
 }

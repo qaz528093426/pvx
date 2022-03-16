@@ -25,7 +25,7 @@ module.exports = {
             filename: "homeland/index.html",
         },
         furniture: {
-            title: "家园建设 - JX3BOX",
+            title: "家具大全 - JX3BOX",
             entry: "src/pages/furniture.js",
             template: "public/index.html",
             filename: "furniture/index.html",
@@ -42,7 +42,7 @@ module.exports = {
             template: "public/index.html",
             filename: "adventure/index.html",
         },
-        manufacture: {
+        manufacture : {
             title: "技艺助手 - JX3BOX",
             entry: "src/pages/manufacture.js",
             template: "public/index.html",
