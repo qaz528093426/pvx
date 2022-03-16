@@ -8,9 +8,9 @@
 
 		<span class="u-name" :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
 		<div class="u-info u-interval">
-			<span>需求等级:{{ item.nLevel || "未知" }}</span>
-			<span>消耗精力:{{ item.CostVigor }}</span>
-			<span>经验值:{{ item.Exp }}</span>
+			<span>需求等级: <b>{{ item.nLevel || "未知" }}</b></span>
+			<span>消耗精力: <b>{{ item.CostVigor }}</b></span>
+			<span>经验值: <b>{{ item.Exp }}</b></span>
 		</div>
 		<template v-if="item.szTip">
 			<span class="u-desc" v-for="text in textFilter(item.szTip)" :key="text">{{ text }}</span>
@@ -27,10 +27,10 @@
 						<span :class="`u-quality--${el.Quality}`"> {{ el.Name }}</span>
 						<span class="u-num">数量：x {{ el.count }}</span>
 					</div>
-					<div class="u-price u-interval">[{{ server }}] 昨日平均价格:<GamePrice class="u-price-num" :price="el.Price" /></div>
-					<span class="u-interval">
+					<div class="u-price">[{{server}}] 昨日平均价格:<GamePrice class="u-price-num" :price="el.Price" /></div>
+					<!-- <span class="u-interval">
 						<span class="u-desc" v-for="text in textFilter(el.item_info.Desc)" :key="text">{{ text }}</span>
-					</span>
+					</span> -->
 				</div>
 			</div>
 		</div>

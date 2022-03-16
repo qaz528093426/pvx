@@ -1,16 +1,26 @@
 <template>
-	<div class="m-manufacture-make">
+	<div class="m-manufacture-make" v-loading="loading">
 		<div class="m-list">
 			<!-- 搜索框 -->
 			<el-input class="u-input" v-model.lazy="search" :placeholder="`搜索${data.craft.name}配方`"> <el-button slot="prepend" icon="el-icon-search"></el-button></el-input>
 			<!-- 默认展示 & 无搜索 -->
 			<template v-if="!search">
-				<template v-if="list && list.length">
-					<div class="u-list" v-for="(item, index) in list" :key="index">
-						<div class="u-title" @click="showList(index)">
-							<i :class="list_index == index ? 'el-icon-caret-bottom' : 'el-icon-caret-right'"></i>
-							<span>{{ item.BelongName }}</span>
+				<el-collapse class="u-list" v-model="list_index" accordion v-if="list && list.length">
+					<el-collapse-item v-for="(item, index) in list" :key="index" :title="item.BelongName" :name="index">
+						<div class="u-child" :class="item_id == child.ID ? 'active' : ''" v-for="(child, k) in item.list" :key="k" @click="toEmit({ id: child.ID })">
+							<div class="u-label">
+								<img class="u-img" :src="iconLink(child.IconID)" :alt="child.Name" />
+								<span :class="`u-quality--${child.Quality}`">{{ child.Name }}</span>
+							</div>
+							<div class="u-btn">
+								<el-input-number v-model="child.count" :min="1" size="mini"></el-input-number>
+								<el-button icon="el-icon-shopping-cart-2" size="mini" type="success" @click.stop="toEmit({ id: child.ID, add: true })"></el-button>
+							</div>
 						</div>
+					</el-collapse-item>
+				</el-collapse>
+				<!-- <div class="u-list" v-for="(item, index) in list" :key="index">
+						
 						<template v-if="list_index == index && item.list">
 							<div class="u-child" v-for="(child, k) in item.list" :key="k" @click="toEmit({ id: child.ID })">
 								<div class="u-label">
@@ -23,8 +33,7 @@
 								</div>
 							</div>
 						</template>
-					</div>
-				</template>
+					</div> -->
 			</template>
 			<!-- 有搜索展示 -->
 			<template v-else>
@@ -51,13 +60,12 @@ import { getManufactures, getCraftJson } from "@/service/manufacture";
 import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
 export default {
 	name: "make",
-	props: ["data"],
+	props: ["data", "item_id"],
 	components: {},
 	data: function () {
 		return {
+            loading:false,
 			search: "",
-			item_id: "",
-			item: "",
 
 			list: [],
 			all_list: [],
@@ -93,6 +101,7 @@ export default {
 		// ==========================
 		// 加载craft_type对应的所有数据
 		loadData() {
+            this.loading =true
 			getManufactures(this.params)
 				.then((res) => {
 					this.all_list = res.data.map((item) => {
@@ -161,11 +170,7 @@ export default {
 
 		// 交互
 		// ===================
-		// 展开组别，显示详细配方
-		showList(i) {
-			if (this.list_index == i) return (this.list_index = -1);
-			this.list_index = i;
-		},
+
 		// 发送emit
 		toEmit(data) {
 			this.$emit("makeEmit", data);
