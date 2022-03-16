@@ -26,11 +26,11 @@
             <!-- 展示 -->
             <div class="m-manufacture-main">
                 <!-- 左侧 & 可制作模块 -->
-                <Make :data="make_props" @makeEmit="makeEmit" />
+                <Make class="u-left" :data="make_props" @makeEmit="makeEmit" />
                 <!-- 中间 & 配方展示 -->
-                <Recipe :id="item_id" :craft="craft.key" :server="server" />
+                <Recipe class="u-middle" :id="item_id" :craft="craft.key" :server="server" />
                 <!-- 右侧 & 购物车计算 -->
-                <Cart />
+                <Cart class="u-right" />
             </div>
             <Footer></Footer>
         </Main>
