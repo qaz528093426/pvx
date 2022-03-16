@@ -38,11 +38,22 @@
 
 	.u-info.u-interval {
 		span {
-			.mr(10px);
-			.ml(10px);
+			margin: 0 10px;
 		}
 	}
-
+	.u-price {
+		.fz(13px);
+		opacity: 0.9;
+		.u-price-num,
+		.u-null {
+			.bold;
+			.ml(10px);
+			color: #c00;
+		}
+		.u-null {
+			color: #d00;
+		}
+	}
 	.u-desc {
 		.fz(13px,1.5);
 		opacity: 0.8;
@@ -75,18 +86,13 @@
 					.pl(20px);
 				}
 			}
-			.u-price {
-				.fz(13px);
-				opacity: 0.9;
-				.u-price-num {
-					.bold;
-					.ml(10px);
-					color: #c00;
-				}
-			}
 		}
 		&:last-child {
 			border-bottom: 0;
 		}
 	}
+}
+
+.u-icon-popper {
+	padding: 0;
 }
