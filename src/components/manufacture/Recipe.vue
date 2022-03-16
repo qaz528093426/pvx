@@ -42,7 +42,7 @@
 						<span :class="`u-quality--${el.Quality}`"> {{ el.Name }}</span>
 						<span class="u-num">数量：x {{ el.count }}</span>
 					</div>
-					<div class="u-price">[{{ server }}] 昨日平均价格:<GamePrice class="u-price-num" :price="el.Price" /></div>
+					<div class="u-price">[{{ server }}] 昨日平均价格:<GamePrice v-if="el.Price" class="u-price-num" :price="el.Price" /><span class="u-null" v-else>暂无数据</span></div>
 					<!-- <span class="u-interval">
 						<span class="u-desc" v-for="text in textFilter(el.item_info.Desc)" :key="text">{{ text }}</span>
 					</span> -->
