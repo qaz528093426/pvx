@@ -2,7 +2,7 @@
 	<div class="m-manufacture-cart">
 		<div class="u-title">
 			<i class="el-icon-coin"></i>
-			<span>生产物品-金额计算</span>
+			<span>生产物品-金额预算</span>
 		</div>
 		<div class="u-item" v-for="(item, index) in cart_list" :key="index">
 			<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
@@ -18,7 +18,9 @@
 					<span class="u-name" :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
 					<span class="u-price"> <GamePrice class="u-price-num" :price="item.all_price" /> </span>
 				</div>
-				<div class="u-item-exp">消耗精力值：<b>{{ item.Exp * item.count }}</b></div>
+				<div class="u-item-exp">
+					消耗精力值：<b>{{ item.Exp * item.count }}</b>
+				</div>
 				<div class="u-child" v-for="(child, k) in item.child" :key="k">
 					<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
 						<Item :item_id="child.price_id" />
@@ -28,7 +30,7 @@
 						</div>
 					</el-popover>
 
-					<GamePrice v-if="child.Price" class="u-price-num" :price="child.Price" />
+					<GamePrice v-if="child.Price" class="u-price-num" :price="child.allPrice * item.count" />
 					<span v-else class="u-null">-</span>
 				</div>
 				<div class="u-item-num">
@@ -69,13 +71,13 @@ export default {
 		add_item: {
 			deep: true,
 			handler: function (list) {
-				this.list.push(list);
+				if (list) this.list.push(list);
 			},
 		},
 		list: {
 			deep: true,
 			handler: function (list) {
-				this.toList(list);
+				if (list.length) this.toList(list);
 			},
 		},
 	},
@@ -113,13 +115,13 @@ export default {
 				let _price = 0;
 				item.child?.forEach((el) => {
 					if (el.Price == undefined) el.Price = 0;
-					_price = el.Price + _price;
+					el.allPrice = el.Price * el.count;
+					_price = el.allPrice + _price;
 				});
 				item.all_price = _price * item.count;
 				return item;
 			});
 			this.cart_list = _list;
-			console.log(_list);
 		},
 	},
 	created: function () {},
