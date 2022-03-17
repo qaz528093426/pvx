@@ -13,27 +13,12 @@
 								<span :class="`u-quality--${child.Quality}`">{{ child.Name }}</span>
 							</div>
 							<div class="u-btn">
-								<el-input-number v-model="child.count" :min="1" size="mini"></el-input-number>
-								<el-button icon="el-icon-shopping-cart-2" size="mini" type="success" @click.stop="toEmit({ id: child.ID, add: true })"></el-button>
+								<el-input-number v-model="child.count" :min="1" size="mini" @click.stop.native></el-input-number>
+								<el-button icon="el-icon-plus" size="mini" type="success" @click.stop="toEmit({ id: child.ID, add: child })"></el-button>
 							</div>
 						</div>
 					</el-collapse-item>
 				</el-collapse>
-				<!-- <div class="u-list" v-for="(item, index) in list" :key="index">
-						
-						<template v-if="list_index == index && item.list">
-							<div class="u-child" v-for="(child, k) in item.list" :key="k" @click="toEmit({ id: child.ID })">
-								<div class="u-label">
-									<img class="u-img" :src="iconLink(child.IconID)" :alt="child.Name" />
-									<span :class="`u-quality--${child.Quality}`">{{ child.Name }}</span>
-								</div>
-								<div class="u-btn">
-									<el-input-number v-model="child.count" :min="1" size="mini"></el-input-number>
-									<el-button icon="el-icon-shopping-cart-2" size="mini" type="success" @click.stop="toEmit({ id: child.ID, add: true })"></el-button>
-								</div>
-							</div>
-						</template>
-					</div> -->
 			</template>
 			<!-- 有搜索展示 -->
 			<template v-else>
@@ -46,7 +31,7 @@
 						</div>
 						<div class="u-btn">
 							<el-input-number v-model="item.count" :min="1" size="mini"></el-input-number>
-							<el-button icon="el-icon-shopping-cart-2" size="mini" type="success" @click.stop="toEmit({ id: item.ID, add: true })"></el-button>
+							<el-button icon="el-icon-plus" size="mini" type="success" @click.stop="toEmit({ id: item.ID, add: item })"></el-button>
 						</div>
 					</div>
 				</template>
@@ -64,7 +49,7 @@ export default {
 	components: {},
 	data: function () {
 		return {
-            loading:false,
+			loading: false,
 			search: "",
 
 			list: [],
@@ -101,7 +86,7 @@ export default {
 		// ==========================
 		// 加载craft_type对应的所有数据
 		loadData() {
-            this.loading =true
+			this.loading = true;
 			getManufactures(this.params)
 				.then((res) => {
 					this.all_list = res.data.map((item) => {

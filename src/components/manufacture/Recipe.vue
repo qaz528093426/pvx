@@ -2,7 +2,7 @@
 	<div class="m-manufacture-recipe" v-if="item">
 		<!-- 配方信息展示 -->
 
-		<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false"  trigger="hover">
+		<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
 			<Item :item_id="item_type_id" />
 			<div class="u-img" slot="reference">
 				<div class="u-border" :style="{ backgroundImage: item_border(item.Quality), opacity: item.Quality == 5 ? 0.9 : 1 }"></div>
@@ -71,9 +71,10 @@ export default {
 	computed: {
 		item_price() {
 			let num = 0;
-			this.item.child.forEach((el) => {
+			this.item.child?.forEach((el) => {
 				if (el.id == this.item.CreateItemIndex1) num = el.Price;
 			});
+
 			return num;
 		},
 		item_type_id() {
@@ -94,6 +95,14 @@ export default {
 			deep: true,
 			handler: function (val) {
 				this.getItemPrice();
+			},
+		},
+		item_price: {
+			deep: true,
+			handler: function (val) {
+				let { Exp, Name, Quality, CreateItemIndex1, IconID, ID } = this.item;
+				let _obj = { child: this.child, Exp, Name, Quality, CreateItemIndex1, IconID, ID, item_price: val, item_type_id: this.item_type_id };
+				this.$store.commit("replaceItem", _obj);
 			},
 		},
 	},
