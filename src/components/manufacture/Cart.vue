@@ -18,6 +18,7 @@
 					<span class="u-name" :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
 					<span class="u-price"> <GamePrice class="u-price-num" :price="item.all_price" /> </span>
 				</div>
+				<div class="u-item-exp">消耗精力值：<b>{{ item.Exp * item.count }}</b></div>
 				<div class="u-child" v-for="(child, k) in item.child" :key="k">
 					<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
 						<Item :item_id="child.price_id" />
