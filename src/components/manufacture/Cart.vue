@@ -1,8 +1,8 @@
 <template>
 	<div class="m-manufacture-cart">
 		<div class="u-title">
-			<i class="el-icon-coin"></i>
-			<span>生产物品-金额预算</span>
+			<i class="el-icon-box"></i>
+			<span>成本计算</span>
 		</div>
 		<div class="u-item" v-for="(item, index) in cart_list" :key="index">
 			<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">

@@ -5,7 +5,7 @@
 			<el-input class="u-input" v-model.lazy="search" :placeholder="`搜索${data.craft.name}配方`"> <el-button slot="prepend" icon="el-icon-search"></el-button></el-input>
 			<!-- 默认展示 & 无搜索 -->
 			<template v-if="!search">
-				<el-collapse class="u-list" v-model="list_index" accordion v-if="list && list.length">
+				<el-collapse class="u-list" v-model="list_index" v-if="list && list.length">
 					<el-collapse-item v-for="(item, index) in list" :key="index" :title="item.BelongName" :name="index">
 						<div class="u-child" :class="item_id == child.ID ? 'active' : ''" v-for="(child, k) in item.list" :key="k" @click="toEmit({ id: child.ID })">
 							<div class="u-label">

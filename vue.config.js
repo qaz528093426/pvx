@@ -46,7 +46,7 @@ module.exports = {
             title: "技艺助手 - JX3BOX",
             entry: "src/pages/manufacture.js",
             template: "public/index.html",
-            filename: "manufacture/index.html",
+            filename: "pvg/manufacture/index.html",
         },
     },
 

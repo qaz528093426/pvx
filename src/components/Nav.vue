@@ -140,7 +140,7 @@ export default {
 					index: "4",
 					submenus: [
 						{
-							path: "/manufacture",
+							path: "/pvg/manufacture",
 							label: "技艺助手",
 							icon: "el-icon-sugar",
 							key: "manufacture",

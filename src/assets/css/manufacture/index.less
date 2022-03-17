@@ -1,107 +1,164 @@
 .m-manufacture-header {
-	padding: 20px 0;
-	user-select: none;
-	.x;
+    // padding: 20px 0;
+    // .x;
+    display: flex;
+    align-items: flex-end;
 
+    .u-title {
+        margin: 0;
+		font-weight: 300;
+    }
+
+    .u-settings {
+        .ml(10px);
+    }
+
+    .u-servers {
+        .el-input__prefix {
+            left: 1px;
+            top: 1px;
+            .r(5px);
+        }
+        .el-input--prefix .el-input__inner {
+            padding-left: 150px;
+            width: 280px;
+        }
+
+        .u-prefix {
+            .db;
+            .h(30px);
+            .lh(30px);
+
+            background-color: #f5f7fa;
+            color: #909399;
+
+            border-right: 1px solid #dcdfe6;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+
+            padding: 0 10px;
+            white-space: nowrap;
+        }
+    }
+
+	padding-bottom:10px;
+	border-bottom:1px solid #eee;
+}
+
+.m-manufacture-sidebar{
+
+	border-right: 1px solid @border-hr;
+	
 	.u-tabs {
-		background-color: @bg-light;
-		display: inline-flex;
-		justify-content: center;
-		align-items: center;
-		padding: 20px;
-		.r(4px);
-		border: 1px solid #eee;
 
-		.u-tab {
-			.w(90px);
-			.pt(78px);
-			.x;
-			.fz(15px);
-			.bold;
-			background-image: url("@{img_path}image/cooking/manufacture.png");
-			background-repeat: no-repeat;
-			// font-family: KaiTi, Microsoft YaHei;
-			margin: 0 20px;
-			color: @color;
-		}
-		.active {
-			color: @color-link;
-		}
-		.u-tab0 {
-			background-position: -90px 0;
-		}
-		.u-tab1 {
-			background-position: -270px 0;
-		}
-		.u-tab2 {
-			background-position: -450px 0;
-		}
-		.u-tab3 {
-			background-position: -630px 0;
-		}
-		.u-tab4 {
-			background-position: -810px 0;
-		}
+		// TODO:待修改
+		zoom : 0.5;
 
-		.u-tab0.active,
-		.u-tab0:hover {
-			background-position: -0 0;
-		}
-		.u-tab1.active,
-		.u-tab1:hover {
-			background-position: -180px 0;
-		}
-		.u-tab2.active,
-		.u-tab2:hover {
-			background-position: -360px 0;
-		}
-		.u-tab3.active,
-		.u-tab3:hover {
-			background-position: -540px 0;
-		}
-		.u-tab4.active,
-		.u-tab4:hover {
-			background-position: -720px 0;
-		}
-		.u-tab0,
-		.u-tab1,
-		.u-tab2,
-		.u-tab3,
-		.u-tab4 {
-			&:hover {
-				.pointer;
-				filter: brightness(120%);
-			}
-		}
-	}
+		.mb(20px);
+        user-select: none;
+        background-color: @bg-light;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        .r(4px);
+        border: 1px solid #eee;
 
-	.u-settings {
-		.mt(10px);
-	}
+
+        .u-tab {
+            .w(90px);
+            .pt(78px);
+            .x;
+            .fz(15px);
+            .bold;
+            background-image: url("@{img_path}image/cooking/manufacture.png");
+            background-repeat: no-repeat;
+            // font-family: KaiTi, Microsoft YaHei;
+            margin: 0 20px;
+            color: @color;
+        }
+        .active {
+            color: @color-link;
+        }
+        .u-tab0 {
+            background-position: -90px 0;
+        }
+        .u-tab1 {
+            background-position: -270px 0;
+        }
+        .u-tab2 {
+            background-position: -450px 0;
+        }
+        .u-tab3 {
+            background-position: -630px 0;
+        }
+        .u-tab4 {
+            background-position: -810px 0;
+        }
+
+        .u-tab0.active,
+        .u-tab0:hover {
+            background-position: -0 0;
+        }
+        .u-tab1.active,
+        .u-tab1:hover {
+            background-position: -180px 0;
+        }
+        .u-tab2.active,
+        .u-tab2:hover {
+            background-position: -360px 0;
+        }
+        .u-tab3.active,
+        .u-tab3:hover {
+            background-position: -540px 0;
+        }
+        .u-tab4.active,
+        .u-tab4:hover {
+            background-position: -720px 0;
+        }
+        .u-tab0,
+        .u-tab1,
+        .u-tab2,
+        .u-tab3,
+        .u-tab4 {
+            &:hover {
+                .pointer;
+                filter: brightness(120%);
+            }
+        }
+    }
 }
 
 .m-manufacture-main {
-	.flex;
-	justify-content: center;
-	box-sizing: border-box;
-	margin: 0 20px;
-	padding: 20px 0;
-	min-width: 1500px;
-	.r(5px);
-	padding: 20px;
-	box-sizing: border-box;
-	border: 1px solid @border-hr;
-	background-color: @bg-light;
+    .flex;
+	.mt(10px);
+    box-sizing: border-box;
+    min-width: 1500px;
+    overflow-x: auto;
+    .r(5px);
+    box-sizing: border-box;
+    min-height: calc(100vh - @header-height - @bread-height - 100px);
+}
 
-	.u-left {
-		flex-shrink: 0;
-		flex-basis: 420px;
-	}
+.m-manufacture-sidebar {
+	flex-shrink: 0;
+	flex-basis: 420px;
+}
+
+.m-manufacture-content{
+	display: flex;
+	padding:0 20px;
+	gap:20px;
+	flex-grow: 1;
+
 	.u-middle {
-		flex: 1;
-	}
-	.u-right {
-		flex-shrink: 0;
-		flex-basis: 420px;
-	}
+        flex: 0 0 600px;
+		background-color:@bg-light;
+		.r(4px);
+		padding:40px 100px;
+		border:1px solid #eee;
+    }
+    .u-right {
+		flex: 1 0 420px;
+    }
 }
