@@ -85,10 +85,12 @@ export default {
 		id: {
 			deep: true,
 			immediate: true,
-			handler: function () {
-				getManufactureItem(this.craft, this.id).then((res) => {
-					this.item = this.procData(res.data);
-				});
+			handler: function (val) {
+				if (val) {
+					getManufactureItem(this.craft, this.id).then((res) => {
+						this.item = this.procData(res.data);
+					});
+				}
 			},
 		},
 		server: {
@@ -144,6 +146,7 @@ export default {
 		// 根据提取id获取对应数据
 		getChildData(arr) {
 			let _arr = arr.map((item) => item.id);
+			if (!_arr.length) return;
 			getOther({ client: this.$store.state.client, ids: _arr.join(), per: _arr.length }).then((res) => {
 				let list = res.data.list;
 				list = list.map((item) => {

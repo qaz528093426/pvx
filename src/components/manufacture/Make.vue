@@ -7,7 +7,7 @@
 			<template v-if="!search">
 				<el-collapse class="u-list" v-model="list_index" v-if="list && list.length">
 					<el-collapse-item v-for="(item, index) in list" :key="index" :title="item.BelongName" :name="index">
-						<div class="u-child" :class="item_id == child.ID ? 'active' : ''" v-for="(child, k) in item.list" :key="k" @click="toEmit({ id: child.ID })">
+						<div class="u-child" :class="item_id == child.ID || first_id == child.ID ? 'active' : ''" v-for="(child, k) in item.list" :key="k" @click="toEmit({ id: child.ID })">
 							<div class="u-label">
 								<img class="u-img" :src="iconLink(child.IconID)" :alt="child.Name" />
 								<span :class="`u-quality--${child.Quality}`">{{ child.Name }}</span>
@@ -24,7 +24,7 @@
 			<template v-else>
 				<div class="u-child-title">搜索结果</div>
 				<template v-if="search_list.length">
-					<div class="u-child" v-for="(item, k) in search_list" :key="k" @click="toEmit({ id: item.ID })">
+					<div class="u-child" :class="item_id == item.ID || first_id == item.ID ? 'active' : ''" v-for="(item, k) in search_list" :key="k" @click="toEmit({ id: item.ID })">
 						<div class="u-label">
 							<img class="u-img" :src="iconLink(item.IconID)" :alt="item.Name" />
 							<span :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
@@ -58,6 +58,7 @@ export default {
 			craft_group: "",
 
 			list_index: 0,
+			first_id: "",
 		};
 	},
 	computed: {
@@ -79,6 +80,16 @@ export default {
 				if (item.Name.indexOf(val) != -1) _list.push(item);
 			});
 			this.search_list = _list;
+		},
+		item_id(val) {
+			if (val) this.first_id = "";
+		},
+		first_id: {
+			deep: true,
+			immediate: true,
+			handler: function (val) {
+				if (!this.item_id) this.$emit("makeEmit", { id: val });
+			},
 		},
 	},
 	methods: {
@@ -151,6 +162,7 @@ export default {
 					return item;
 				})
 				.filter((item) => item.list.length);
+			this.first_id = this.list[0]?.list[0]?.ID;
 		},
 
 		// 交互
