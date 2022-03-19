@@ -4,7 +4,7 @@
 			<i class="el-icon-box"></i>
 			<span>成本计算</span>
 		</div>
-		<div class="u-item" v-for="(item, index) in cart_list" :key="index">
+		<div class="u-item" v-for="(item, index) in list" :key="index">
 			<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
 				<Item :item_id="item.item_type_id" />
 				<div class="u-img" slot="reference">
@@ -14,8 +14,8 @@
 			</el-popover>
 
 			<div class="u-info">
-				<div class="u-line">
-					<span class="u-name" :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
+				<div class="u-line u-name" :class="`u-quality--${item.Quality}`">{{ item.Name }}</div>
+				<div>
 					<span class="u-price"> <GamePrice class="u-price-num" :price="item.all_price" /> </span>
 				</div>
 				<div class="u-item-exp">
@@ -48,39 +48,17 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import Item from "@jx3box/jx3box-editor/src/Item.vue";
 export default {
 	name: "cart",
-	props: ["add_item"],
+	props: ["data"],
 	components: { GamePrice, Item },
 	data: function () {
-		return {
-			list: [],
-			cart_list: [],
-		};
+		return {};
 	},
 	computed: {
-		item() {
-			return this.$store.state.cart_item;
+		list() {
+			return this.data.list;
 		},
 	},
-	watch: {
-		item: {
-			deep: true,
-			handler: function (obj) {
-				if (this.add_item) this.list.push(obj);
-			},
-		},
-		add_item: {
-			deep: true,
-			handler: function (list) {
-				if (list) this.list.push(list);
-			},
-		},
-		list: {
-			deep: true,
-			handler: function (list) {
-				if (list.length) this.toList(list);
-			},
-		},
-	},
+	watch: {},
 	methods: {
 		iconLink,
 		// icon边框
@@ -95,33 +73,6 @@ export default {
 				default:
 					return "";
 			}
-		},
-		// 过滤重复的item
-		toList(list) {
-			let _obj = {};
-			let _list = [];
-			list.forEach((item) => {
-				if (!_obj[item.ID]) {
-					_obj[item.ID] = item;
-				} else {
-					_obj[item.ID] = Object.assign(_obj[item.ID], item);
-				}
-			});
-
-			for (const key in _obj) {
-				_list.push(_obj[key]);
-			}
-			_list = _list.map((item) => {
-				let _price = 0;
-				item.child?.forEach((el) => {
-					if (el.Price == undefined) el.Price = 0;
-					el.allPrice = el.Price * el.count;
-					_price = el.allPrice + _price;
-				});
-				item.all_price = _price * item.count;
-				return item;
-			});
-			this.cart_list = _list;
 		},
 	},
 	created: function () {},

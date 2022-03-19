@@ -5,18 +5,9 @@
 			<el-input class="u-input" v-model.lazy="search" :placeholder="`搜索${data.craft.name}配方`"> <el-button slot="prepend" icon="el-icon-search"></el-button></el-input>
 			<!-- 默认展示 & 无搜索 -->
 			<template v-if="!search">
-				<el-collapse class="u-list" v-model="list_index" v-if="list && list.length">
-					<el-collapse-item v-for="(item, index) in list" :key="index" :title="item.BelongName" :name="index">
-						<div class="u-child" :class="item_id == child.ID || first_id == child.ID ? 'active' : ''" v-for="(child, k) in item.list" :key="k" @click="toEmit({ id: child.ID })">
-							<div class="u-label">
-								<img class="u-img" :src="iconLink(child.IconID)" :alt="child.Name" />
-								<span :class="`u-quality--${child.Quality}`">{{ child.Name }}</span>
-							</div>
-							<div class="u-btn">
-								<el-input-number v-model="child.count" :min="1" size="mini" @click.stop.native></el-input-number>
-								<el-button icon="el-icon-plus" size="mini" type="success" @click.stop="toEmit({ id: child.ID, add: child })"></el-button>
-							</div>
-						</div>
+				<el-collapse class="u-list" v-model="collapse" v-if="craft_list && craft_list.length">
+					<el-collapse-item v-for="(item, index) in craft_list" :key="index" :title="item.BelongName" :name="index">
+						<MakeItem :class="item_id == child.ID ? 'active' : ''" :item="child" v-for="(child, k) in item.list" :key="k" @toEmit="toEmit" />
 					</el-collapse-item>
 				</el-collapse>
 			</template>
@@ -24,16 +15,7 @@
 			<template v-else>
 				<div class="u-child-title">搜索结果</div>
 				<template v-if="search_list.length">
-					<div class="u-child" :class="item_id == item.ID || first_id == item.ID ? 'active' : ''" v-for="(item, k) in search_list" :key="k" @click="toEmit({ id: item.ID })">
-						<div class="u-label">
-							<img class="u-img" :src="iconLink(item.IconID)" :alt="item.Name" />
-							<span :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
-						</div>
-						<div class="u-btn">
-							<el-input-number v-model="item.count" :min="1" size="mini"></el-input-number>
-							<el-button icon="el-icon-plus" size="mini" type="success" @click.stop="toEmit({ id: item.ID, add: item })"></el-button>
-						</div>
-					</div>
+					<MakeItem :class="item_id == item.ID ? 'active' : ''" :item="item" v-for="(item, k) in search_list" :key="k" @toEmit="toEmit" />
 				</template>
 				<div v-else class="u-null"><i class="el-icon-warning"></i> 没有搜索到对应配方</div>
 			</template>
@@ -41,144 +23,104 @@
 	</div>
 </template>
 <script>
-import { getManufactures, getCraftJson } from "@/service/manufacture";
+import { getManufactures } from "@/service/manufacture";
 import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
+import MakeItem from "@/components/manufacture/MakeItem.vue";
 export default {
 	name: "make",
-	props: ["data", "item_id"],
-	components: {},
+	props: ["data"],
+	components: { MakeItem },
 	data: function () {
 		return {
 			loading: false,
 			search: "",
 
-			list: [],
-			all_list: [],
+			list_data: {},
+			all_data: {},
 			search_list: [],
-			craft_group: "",
+			craft_list: [],
 
-			list_index: 0,
-			first_id: "",
+			collapse: 0,
+			item_id: 0,
 		};
 	},
 	computed: {
+		craft_key() {
+			return this.data.craft.key;
+		},
 		params() {
-			return { client: this.data.client, type: this.data.craft.key, mode: "simple" };
+			return { client: this.data.client, type: this.craft_key, mode: "simple" };
 		},
 	},
 	watch: {
-		data: {
-			deep: true,
-			immediate: true,
-			handler: function () {
-				this.loadData();
-			},
-		},
 		search(val) {
 			let _list = [];
-			this.all_list.filter((item) => {
+			this.all_data[this.craft_key].forEach((item) => {
 				if (item.Name.indexOf(val) != -1) _list.push(item);
 			});
 			this.search_list = _list;
 		},
-		item_id(val) {
-			if (val) this.first_id = "";
-		},
-		first_id: {
+		"data.serve": {
 			deep: true,
-			immediate: true,
-			handler: function (val) {
-				if (!this.item_id) this.$emit("makeEmit", { id: val });
+			handler: function () {
+				this.loadData();
 			},
 		},
 	},
 	methods: {
 		// 数据获取和处理
 		// ==========================
-		// 加载craft_type对应的所有数据
+		// 获取数据
 		loadData() {
 			this.loading = true;
-			getManufactures(this.params)
-				.then((res) => {
-					this.all_list = res.data.map((item) => {
-						item.count = 1;
-						return item;
-					});
-				})
-				.then(() => {
-					if (this.craft_group) this.toList();
-				})
-				.finally(() => {
-					this.list_index = 0;
-					this.search = "";
-					this.loading = false;
-				});
-		},
-		// 获取全部技艺分类
-		getCraftType() {
-			getCraftJson()
-				.then((res) => {
-					let craft_group = this.data?.client == "std" ? res.data.std : res.data.origin;
-					this.craft_group = this.craftGroup(craft_group);
-				})
-				.then(() => {
-					this.toList();
-				});
-		},
-		// craft_list配方分组
-		craftGroup(list) {
-			let _list = [];
-			let _obj = {};
-			list.forEach((item) => {
-				if (!_obj[item.ProfessionID]) {
-					var _arr = [];
-					_arr.push({ ...item, list: [] });
-					_list.push(_arr);
-					_obj[item.ProfessionID] = item;
-				} else {
-					_list.forEach((el) => {
-						if (el[0].ProfessionID == item.ProfessionID) {
-							el.push({ ...item, list: [] });
-						}
-					});
-				}
-			});
-			return _list;
-		},
+			if (this.list_data[this.craft_key]) return this.showList();
 
-		// 根据craft_list显示list, 过滤空分组
-		toList() {
-			let list = [];
-			this.craft_group.forEach((el) =>
-				el.forEach((item) => {
-					if (item.ProfessionID == this.data.craft.ProfessionID) list.push(item);
-				})
-			);
-			this.list = list
-				.map((item) => {
-					item.list = this.all_list.filter((el) => {
-						if (item.BelongID == el.Belong) return el;
-					});
+			getManufactures(this.params).then((res) => {
+				let _data = res.data;
+				_data = _data.map((item) => {
+					item.count = 1;
 					return item;
-				})
-				.filter((item) => item.list.length);
-			this.first_id = this.list[0]?.list[0]?.ID;
+				});
+				let _list = this.data.craft_group;
+				let _obj = {};
+				_data.forEach((item) => {
+					if (!_obj[item.Belong]) {
+						_obj[item.Belong] = [item];
+					} else {
+						_obj[item.Belong].push(item);
+					}
+				});
+
+				this.list_data[this.craft_key] = _list
+					.map((item) => {
+						for (const key in _obj) {
+							if (item.BelongID == key) item.list = _obj[key];
+						}
+						return item;
+					})
+					.filter((item) => item.list.length);
+				this.all_data[this.craft_key] = _data;
+				this.showList();
+			});
+		},
+        // 展示列表并选择列表第一个作为显示
+		showList() {
+			this.item_id = this.list_data[this.craft_key][0].list[0].ID;
+			this.craft_list = this.list_data[this.craft_key];
+			this.$emit("toEmit", { id: this.item_id });
+			this.loading = false;
+			this.search = "";
 		},
 
 		// 交互
 		// ===================
-
 		// 发送emit
 		toEmit(data) {
-			this.$emit("makeEmit", data);
+			this.item_id = data.id;
+			this.$emit("toEmit", data);
 		},
-
 		iconLink,
 	},
-	created: function () {
-		this.getCraftType();
-	},
-	mounted: function () {},
 };
 </script>
 <style lang="less">

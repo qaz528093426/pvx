@@ -22,16 +22,16 @@
 					<div class="m-manufacture-sidebar">
 						<!-- 分类 -->
 						<div class="u-tabs">
-							<span v-for="(item, index) in craft_types" :key="index" class="u-tab" :class="[`u-tab${index}`, craft_index == index ? 'active' : '']" @click="changeCraft(index)">{{ item.name }}</span>
+							<span v-for="(item, index) in craft_types" :key="index" class="u-tab" :class="[`u-tab${index}`, profession_id == item.ProfessionID ? 'active' : '']" @click="changeCraft(item.ProfessionID, item.key)">{{ item.name }}</span>
 						</div>
 						<!-- 左侧 & 可制作模块 -->
-						<Make class="u-left" :data="make_props" :item_id="item_id" @makeEmit="makeEmit" />
+						<Make class="u-left" :data="make_props" @toEmit="makeEmit" />
 					</div>
 					<div class="m-manufacture-content">
 						<!-- 中间 & 配方展示 -->
-						<Recipe class="u-middle" :id="item_id" :craft="craft.key" :server="server" />
+						<Recipe class="u-middle" :data="recipe_props" @toEmit="recipeEmit" />
 						<!-- 右侧 & 购物车计算 -->
-						<Cart class="u-right" :add_item="add_item" />
+						<Cart class="u-right" :data="cart_props" />
 					</div>
 				</div>
 			</div>
@@ -45,6 +45,7 @@ import servers_std from "@jx3box/jx3box-data/data/server/server_std.json";
 import servers_origin from "@jx3box/jx3box-data/data/server/server_origin.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { craft_types } from "@/assets/data/manufacture.json";
+import { getCraftJson } from "@/service/manufacture";
 import Nav from "@/components/Nav.vue";
 import Recipe from "@/components/manufacture/Recipe.vue";
 import Make from "@/components/manufacture/Make.vue";
@@ -52,7 +53,7 @@ import Cart from "@/components/manufacture/Cart.vue";
 
 export default {
 	name: "Manufacture",
-	components: { Nav, Make, Cart, Recipe },
+	components: { Nav, Make, Recipe, Cart },
 	data: function () {
 		return {
 			// 引用数据
@@ -60,11 +61,11 @@ export default {
 
 			// 自设
 			server: "蝶恋花",
-			craft_index: 0,
-			make_width: 1,
-			item_id: "",
+			profession_id: 5,
+			craft_key: "tailoring",
 			cart_list: [],
-			add_item: "",
+			craft_group: [],
+			item_id: "",
 		};
 	},
 	computed: {
@@ -78,31 +79,80 @@ export default {
 		isStd() {
 			return this.client == "std";
 		},
-		craft() {
-			return this.craft_types[this.craft_index];
-		},
 		make_props() {
-			let data = {
-				craft: this.craft,
+			let _list = this.craft_group.filter((item) => {
+				if (this.profession_id == item[0].ProfessionID) return item;
+			});
+			let craft = this.craft_types.filter((item) => {
+				if (item.key == this.craft_key) return item;
+			});
+			let _data = {
 				client: this.client,
+				craft: craft[0],
+				craft_group: _list[0],
 			};
-			return data;
+			return _data;
+		},
+		recipe_props() {
+			let _data = {
+				client: this.client,
+				item_id: this.item_id,
+				craft_key: this.craft_key,
+				server: this.server,
+			}; 
+			return _data;
+		},
+		cart_props() {
+			let _data = {
+				list: this.cart_list,
+			};
+			return _data;
 		},
 	},
-
 	methods: {
 		// 切换技艺类别
-		changeCraft(i) {
-			this.craft_index = i;
+		changeCraft(i, key) {
+			this.profession_id = i;
+			this.craft_key = key;
+			this.item_id = "";
 		},
-		// make传值
+		// 获取全部技艺分类并分组
+		getCraftType() {
+			getCraftJson().then((res) => {
+				let craft_group = this.client == "std" ? res.data.std : res.data.origin;
+				let _list = [];
+				let _obj = {};
+				craft_group.forEach((item) => {
+					if (!_obj[item.ProfessionID]) {
+						var _arr = [];
+						_arr.push({ ...item, list: [] });
+						_list.push(_arr);
+						_obj[item.ProfessionID] = item;
+					} else {
+						_list.forEach((el) => {
+							if (el[0].ProfessionID == item.ProfessionID) {
+								el.push({ ...item, list: [] });
+							}
+						});
+					}
+				});
+
+				this.craft_group = _list;
+			});
+		},
+
+		// 子组件传值
 		makeEmit(e) {
 			this.item_id = e.id;
-			this.add_item = e.add;
+			if (e.add) this.cart_list.push(Object.assign({ count: e.count }, this.recipe_item));
+		},
+		recipeEmit(e) {
+			this.recipe_item = e;
 		},
 	},
-	watch: {},
-	mounted() {},
+	created() {
+		this.getCraftType();
+	},
 };
 </script>
 

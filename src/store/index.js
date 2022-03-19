@@ -6,13 +6,8 @@ Vue.use(Vuex);
 let store = {
 	state: {
 		client: location.href.includes("origin") ? "origin" : "std",
-		cart_item: "",
 	},
-	mutations: {
-		replaceItem(state, data) {
-			state.cart_item = data;
-		},
-	},
+	mutations: {},
 	getters: {},
 	actions: {},
 	modules: {},
