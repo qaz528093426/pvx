@@ -87,7 +87,6 @@ export default {
 			this.first = true;
 			getManufactureItem(data.craft_key, data.item_id)
 				.then((res) => {
-					console.log(res);
 					res.data.children = [];
 					res.data.child_list = [];
 					let _res = this.processor(res.data);
@@ -105,7 +104,7 @@ export default {
 				if (key === "" || key === null || key === undefined) {
 					delete data[item];
 				}
-			}); 
+			});
 			// 提取合成id，并拼合组成对应物品id和数量
 			let _type = [];
 			let _list = [];

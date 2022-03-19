@@ -31,7 +31,7 @@
 						<!-- 中间 & 配方展示 -->
 						<Recipe class="u-middle" :data="recipe_props" @toEmit="recipeEmit" />
 						<!-- 右侧 & 购物车计算 -->
-						<Cart class="u-right" :data="cart_props" />
+						<Cart class="u-right" :list="cart_list" />
 					</div>
 				</div>
 			</div>
@@ -66,6 +66,8 @@ export default {
 			cart_list: [],
 			craft_group: [],
 			item_id: "",
+			recipe_item: "",
+			add: false,
 		};
 	},
 	computed: {
@@ -86,27 +88,19 @@ export default {
 			let craft = this.craft_types.filter((item) => {
 				if (item.key == this.craft_key) return item;
 			});
-			let _data = {
+			return {
 				client: this.client,
 				craft: craft[0],
 				craft_group: _list[0],
 			};
-			return _data;
 		},
 		recipe_props() {
-			let _data = {
+			return {
 				client: this.client,
 				item_id: this.item_id,
 				craft_key: this.craft_key,
 				server: this.server,
-			}; 
-			return _data;
-		},
-		cart_props() {
-			let _data = {
-				list: this.cart_list,
 			};
-			return _data;
 		},
 	},
 	methods: {
@@ -142,12 +136,24 @@ export default {
 		},
 
 		// 子组件传值
-		makeEmit(e) {
-			this.item_id = e.id;
-			if (e.add) this.cart_list.push(Object.assign({ count: e.count }, this.recipe_item));
+		makeEmit(data) {
+			this.item_id = data.id;
+			if (data.add) this.add = data;
 		},
-		recipeEmit(e) {
-			this.recipe_item = e;
+		recipeEmit(data) {
+			this.recipe_item = data;
+		},
+	},
+	watch: {
+		add(obj) {
+			if (obj && this.item_id == this.recipe_item.ID) this.cart_list.push(Object.assign({ count: obj.count }, this.recipe_item));
+		},
+		recipe_item: {
+			deep: true,
+			immediate: true,
+			handler: function (obj) {
+				if (obj && this.add && this.item_id == obj.ID) this.cart_list.push(Object.assign({ count: this.add.count }, obj));
+			},
 		},
 	},
 	created() {
