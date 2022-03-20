@@ -9,18 +9,16 @@
 				<div class="u-header">
 					<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
 						<Item :item_id="item.item_type_id" />
-						<div class="u-img" slot="reference">
+						<div class="u-header-inner" slot="reference">
 							<div class="u-border" :style="{ backgroundImage: item_border(item.Quality), opacity: item.Quality == 5 ? 0.9 : 1 }"></div>
-							<img :src="iconLink(item.IconID)" :alt="item.Name" />
+							<img class="u-img" :src="iconLink(item.IconID)" :alt="item.Name" />
+                            <span class="u-title" :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
 						</div>
 					</el-popover>
-					<div class="u-title">
-						<span :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
-					</div>
 				</div>
 
 				<div class="u-info">
-					<el-divider content-position="left">合成需要材料</el-divider>
+					<el-divider content-position="left"><i class="el-icon-box"></i> 合成需要材料</el-divider>
 					<div class="u-children">
 						<div class="u-child" v-for="(child, k) in item.child_list" :key="k">
 							<el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
@@ -42,26 +40,30 @@
 						<el-input-number v-model="item.count" :min="1" size="mini"></el-input-number>
 					</div>
 					<div class="u-item-num">
-						<span>消耗精力值：</span> <b>{{ item.Exp * item.count }}</b>
+						<span><i class="el-icon-sunny"></i> 消耗精力值：</span> <b>{{ item.Exp * item.count }}</b>
 					</div>
 					<div class="u-item-num">
-						<span>合计金额：</span>
+						<span><i class="el-icon-coin"></i> 小计金额：</span>
 						<span class="u-price"> <GamePrice class="u-price-num" :price="item.all_price * item.count" /> </span>
 					</div>
 				</div>
 			</div>
 		</template>
 
-		<div class="u-item-null" v-else>- 暂未添加生产配方 -</div>
+		<div class="m-null" v-else>- 暂未添加生产配方 -</div>
+
 		<div class="m-all" v-if="all_exp">
-			<div class="u-num">
-				<span>所有配方消耗精力值：</span>
-				<b>{{ all_exp }}</b>
-			</div>
-			<div class="u-num u-price">
-				<span>- 所有配方价格 合计 -</span>
-				<GamePrice v-if="all_price" class="u-price-num" :price="all_price" />
-			</div>
+            <div class="u-label">总计</div>
+			<div class="u-value">
+                <div class="u-num">
+                    <span><i class="el-icon-sunny"></i> 消耗精力值：</span>
+                    <b>{{ all_exp }}</b>
+                </div>
+                <div class="u-num u-price">
+                    <span><i class="el-icon-coin"></i> 消耗金钱：</span>
+                    <GamePrice v-if="all_price" class="u-price-num" :price="all_price" />
+                </div>
+            </div>
 		</div>
 	</div>
 </template>

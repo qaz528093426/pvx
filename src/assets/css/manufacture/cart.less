@@ -1,5 +1,5 @@
 .m-manufacture-cart {
-	padding: 20px 0 20px 20px;
+	padding: 0 0 20px 20px;
 	box-sizing: border-box;
 	border-left: 1px solid @border-hr;
 	.m-title {
@@ -18,88 +18,92 @@
 			border-bottom: 0;
 		}
 		.u-header {
-			.flex;
-			padding: 10px 10px 0 10px;
-			justify-content: space-between;
-			box-sizing: border-box;
-			.u-img {
-				.mr(10px);
-				.size(48px);
-				flex-shrink: 0;
-			}
-			.u-title {
-				.flex;
-				width: 100%;
-				flex-direction: column;
-				.u-exp {
-					.fz(13px,3);
-					opacity: 0.8;
-					text-align: right;
-				}
-			}
+			padding: 10px 2px 5px 2px;
+            .u-header-inner{
+                .flex;
+            }
+            .u-img {
+                .mr(10px);
+                .size(24px);
+            }
+            .u-title {
+                .fz(14px,24px);
+                .bold;
+            }
 		}
+        .u-info {
+            .el-divider{
+                margin-top:10px;
+                margin-bottom:10px;
+            }
+            .el-divider__text{
+                color:#999;
+                .fz(12px);
+            }
+            .u-children {
+                .ml(1em);
+                .pt(10px);
+            }
+            .u-child {
+                .flex;
+                align-items: center;
+                justify-content: space-between;
+                .mb(5px);
+                &:hover{
+                    background-color:@bg-gray;
+                }
+                .u-img {
+                    .flex;
+                    align-items: center;
+                    .w(60px);
+                    img {
+                        .size(24px);
+                    }
+                    span {
+                        .fz(12px);
+                        .ml(5px);
+                        opacity: 0.8;
+                    }
+                }
+                .c-game-price {
+                    .fz(12px);
+                }
+            }
+            .u-item-num {
+                .flex;
+                .fz(13px);
+                .pt(10px);
+                justify-content: flex-end;
+                align-items: center;
+            }
+        }
 	}
-	.u-info {
-		.el-divider--horizontal {
-			margin: 10px 0;
-			.el-divider__text {
-				padding: 0 10px;
-			}
-		}
-		.u-children {
-			.ml(1em);
-			.pt(10px);
-		}
-	}
-	.u-child {
-		.flex;
-		align-items: center;
-		justify-content: space-between;
-		.mb(5px);
-		.u-img {
-			.flex;
-			align-items: center;
-			.w(60px);
-			img {
-				.size(24px);
-			}
-			span {
-				.fz(12px);
-				.ml(5px);
-				opacity: 0.8;
-			}
-		}
-		.c-game-price {
-			.fz(12px);
-		}
-	}
-	.u-item-num {
-		.flex;
-		.fz(13px);
-		.pt(10px);
-		justify-content: flex-end;
-		align-items: center;
-	}
-	.u-item-null {
-		.lh(100px);
-		.fz(18px);
-		.bold;
+
+    .m-null {
+		padding:200px 0;
+		.fz(15px);
 		.x;
-		opacity: 0.6;
-		user-select: none;
+        color:#999;
 	}
 	.m-all {
-		.r(3px);
-		padding: 10px;
+        display: flex;
+		padding: 10px 0;
+        justify-content: space-between;
 
+        .u-label{
+            .bold;
+        }
+        .u-value{
+            .fz(13px,2);
+            b,.u-price-num span{color:#c00;.bold;}
+        }
 		.u-num {
 			.flex;
 			justify-content: flex-end;
-			.lh(2em);
 		}
-		.u-price {
-			flex-direction: column;
-			align-items: flex-end;
-		}
+		// .u-price {
+		// 	flex-direction: column;
+		// 	align-items: flex-end;
+		// }
 	}
 }
