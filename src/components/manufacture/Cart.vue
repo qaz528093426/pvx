@@ -6,6 +6,9 @@
         </div>
         <template v-if="cart_list && cart_list.length">
             <div class="m-item" v-for="(item, index) in cart_list" :key="index">
+                <div class="u-del" @click="toEmit({ del: item.ID })">
+                    <span>移除配方</span><i class="el-icon-delete"></i>
+                </div>
                 <div class="u-header">
                     <el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
                         <Item :item_id="item.item_type_id" />
@@ -136,6 +139,10 @@ export default {
                 item.all_price = _price;
                 return item;
             });
+        },
+        // 移除
+        toEmit(data) {
+            this.$emit("toEmit", data);
         },
         // icon边框
         item_border(id) {

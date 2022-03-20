@@ -48,7 +48,7 @@
                         <!-- 中间 & 配方展示 -->
                         <Recipe class="u-middle" :data="recipe_props" @toEmit="isEmit" />
                         <!-- 右侧 & 购物车计算 -->
-                        <Cart class="u-right" :list="cart_list" />
+                        <Cart class="u-right" :list="cart_list" @toEmit="isEmit" />
                     </div>
                 </div>
             </div>
@@ -160,10 +160,11 @@ export default {
 
         // 子组件传值
         isEmit(data) {
-            this.item_id = data.id;
+            if (data.id) this.item_id = data.id;
             if (data.count) this.count = data.count;
-            this.add = data.add;
+            if (data.add) this.add = data.add;
             if (data.item) this.addToCart(data.item, data);
+            if (data.del) this.cart_list = this.cart_list.filter((item) => item.ID !== data.del);
         },
         // 加入购物车
         addToCart(obj, data) {
