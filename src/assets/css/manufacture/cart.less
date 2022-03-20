@@ -1,105 +1,116 @@
 .m-manufacture-cart {
-	padding: 20px 0 20px 20px;
-	box-sizing: border-box;
-	border-left: 1px solid @border-hr;
-	.m-title {
-		.bold;
-		.fz(20px,2.5);
-		border-bottom: 3px double #eee;
-		i {
-			.mr(5px);
-		}
-	}
-	.m-item {
-		padding: 10px 0;
-		border-bottom: 1px solid #dcdfe6;
-		&:last-child {
-            background-color: #f00;
-			border-bottom: 0;
-		}
-		.u-header {
-			.flex;
-			padding: 10px 10px 0 10px;
-			justify-content: space-between;
-			box-sizing: border-box;
-			.u-img {
-				.mr(10px);
-				.size(48px);
-				flex-shrink: 0;
-			}
-			.u-title {
-				.flex;
-				width: 100%;
-				flex-direction: column;
-				.u-exp {
-					.fz(13px,3);
-					opacity: 0.8;
-					text-align: right;
-				}
-			}
-		}
-	}
-	.u-info {
-		.el-divider--horizontal {
-			margin: 10px 0;
-			.el-divider__text {
-				padding: 0 10px;
-			}
-		}
-		.u-children {
-			.ml(1em);
-			.pt(10px);
-		}
-	}
-	.u-child {
-		.flex;
-		align-items: center;
-		justify-content: space-between;
-		.mb(5px);
-		.u-img {
-			.flex;
-			align-items: center;
-			.w(60px);
-			img {
-				.size(24px);
-			}
-			span {
-				.fz(12px);
-				.ml(5px);
-				opacity: 0.8;
-			}
-		}
-		.c-game-price {
-			.fz(12px);
-		}
-	}
-	.u-item-num {
-		.flex;
-		.fz(13px);
-		.pt(10px);
-		justify-content: flex-end;
-		align-items: center;
-	}
-	.u-item-null {
-		.lh(100px);
-		.fz(18px);
-		.bold;
-		.x;
-		opacity: 0.6;
-		user-select: none;
-	}
-	.m-all {
-		.r(3px);
-		padding: 10px;
+    padding: 20px 0 20px 20px;
+    box-sizing: border-box;
+    border-left: 1px solid @border-hr;
+    .m-title {
+        .bold;
+        .fz(20px,2.5);
+        border-bottom: 3px double #eee;
+        i {
+            .mr(5px);
+        }
+    }
+    .m-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #dcdfe6;
+        &:last-child {
+            border-bottom: 0;
+        }
+        .u-header {
+            .flex;
+            padding: 10px  ;
+            justify-content: space-between;
+            box-sizing: border-box;
+            .u-title {
+                .flex;
+                width: 100%;
+                flex-direction: column;
+                .u-exp {
+                    .fz(13px,3);
+                    opacity: 0.8;
+                    text-align: right;
+                }
+            }
+        }
+        .u-img {
+            .pr;
+            .size(48px);
+            .r(5px);
+            .clip;
+            .mr(10px);
+            flex-shrink: 0;
+            img {
+                .full;
+            }
+            .u-border {
+                .pa;
+                .lt(0,0);
+                .size(100%);
+                box-sizing: border-box;
+                background-size: contain;
+                .z(2);
+            }
+        }
+    }
+    .u-info {
+        .el-divider--horizontal {
+            margin: 10px 0;
+            .el-divider__text {
+                padding: 0 10px;
+            }
+        }
+        .u-children {
+            .ml(1em);
+            .pt(10px);
+        }
+    }
+    .u-child {
+        .flex;
+        align-items: center;
+        justify-content: space-between;
+        .mb(5px);
+        .u-img {
+            .flex;
+            align-items: center;
+            .w(60px);
+            .h(24px);
+            img {
+                .size(24px);
+            }
+            span {
+                .fz(12px);
+                .ml(5px);
+                opacity: 0.8;
+            }
+        }
+        .c-game-price {
+            .fz(12px);
+        }
+    }
+    .u-item-num {
+        .flex;
+        .fz(13px);
+        .pt(10px);
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .u-item-null {
+        .lh(100px);
+        .fz(18px);
+        .bold;
+        .x;
+        opacity: 0.6;
+        user-select: none;
+    }
+    .m-all {
+        .r(3px);
+        padding: 10px;
 
-		.u-num {
-			.flex;
-			justify-content: flex-end;
-			.lh(2em);
-		}
-		.u-price {
-			flex-direction: column;
-			align-items: flex-end;
-		}
-	}
+        .u-num {
+            .flex;
+            .bold;
+            .lh(2em);
+            justify-content: flex-end;
+        }
+    }
 }

@@ -1,43 +1,60 @@
 <template>
-	<div id="app">
-		<Header></Header>
-		<Breadcrumb name="技艺助手" slug="cooking" root="/manufacture" :publishEnable="false" :adminEnable="false" :feedbackEnable="true" :crumbEnable="false"> </Breadcrumb>
-		<LeftSidebar>
-			<Nav></Nav>
-		</LeftSidebar>
-		<Main :withoutRight="true">
-			<div class="m-main">
-				<div class="m-manufacture-header">
-					<h1 class="u-title">技艺助手</h1>
-					<div class="u-settings" v-if="isStd">
-						<div class="u-servers">
-							<el-select v-model="server" placeholder="请选择" size="small">
-								<span slot="prefix" class="u-prefix"><i class="el-icon-coin"></i> 价格参考服务器</span>
-								<el-option v-for="item in server_list" :key="item" :label="item" :value="item"> </el-option>
-							</el-select>
-						</div>
-					</div>
-				</div>
-				<div class="m-manufacture-main">
-					<div class="m-manufacture-sidebar">
-						<!-- 分类 -->
-						<div class="u-tabs">
-							<span v-for="(item, index) in craft_types" :key="index" class="u-tab" :class="[`u-tab${index}`, profession_id == item.ProfessionID ? 'active' : '']" @click="changeCraft(item.ProfessionID, item.key)">{{ item.name }}</span>
-						</div>
-						<!-- 左侧 & 可制作模块 -->
-						<Make class="u-left" :data="make_props" @toEmit="makeEmit" />
-					</div>
-					<div class="m-manufacture-content">
-						<!-- 中间 & 配方展示 -->
-						<Recipe class="u-middle" :data="recipe_props" @toEmit="recipeEmit" />
-						<!-- 右侧 & 购物车计算 -->
-						<Cart class="u-right" :list="cart_list" />
-					</div>
-				</div>
-			</div>
-			<Footer></Footer>
-		</Main>
-	</div>
+    <div id="app">
+        <Header></Header>
+        <Breadcrumb
+            name="技艺助手"
+            slug="cooking"
+            root="/manufacture"
+            :publishEnable="false"
+            :adminEnable="false"
+            :feedbackEnable="true"
+            :crumbEnable="false"
+        >
+        </Breadcrumb>
+        <LeftSidebar>
+            <Nav></Nav>
+        </LeftSidebar>
+        <Main :withoutRight="true">
+            <div class="m-main">
+                <div class="m-manufacture-header">
+                    <h1 class="u-title">技艺助手</h1>
+                    <div class="u-settings" v-if="isStd">
+                        <div class="u-servers">
+                            <el-select v-model="server" placeholder="请选择" size="small">
+                                <span slot="prefix" class="u-prefix"><i class="el-icon-coin"></i> 价格参考服务器</span>
+                                <el-option v-for="item in server_list" :key="item" :label="item" :value="item">
+                                </el-option>
+                            </el-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-manufacture-main">
+                    <div class="m-manufacture-sidebar">
+                        <!-- 分类 -->
+                        <div class="u-tabs">
+                            <span
+                                v-for="(item, index) in craft_types"
+                                :key="index"
+                                class="u-tab"
+                                :class="[`u-tab${index}`, profession_id == item.ProfessionID ? 'active' : '']"
+                                @click="changeCraft(item.ProfessionID, item.key)"
+                                >{{ item.name }}</span
+                            >
+                        </div>
+                        <!-- 左侧 & 可制作模块 -->
+                        <Make class="u-left" :data="make_props" @toEmit="isEmit" />
+                    </div>
+                    <div class="m-manufacture-content">
+                        <!-- 中间 & 配方展示 -->
+                        <Recipe class="u-middle" :data="recipe_props" @toEmit="isEmit" />
+                        <!-- 右侧 & 购物车计算 -->
+                        <Cart class="u-right" :list="cart_list" />
+                    </div>
+                </div>
+            </div>
+            <Footer></Footer>
+        </Main>
+    </div>
 </template>
 
 <script>
@@ -52,113 +69,119 @@ import Make from "@/components/manufacture/Make.vue";
 import Cart from "@/components/manufacture/Cart.vue";
 
 export default {
-	name: "Manufacture",
-	components: { Nav, Make, Recipe, Cart },
-	data: function () {
-		return {
-			// 引用数据
-			craft_types,
+    name: "Manufacture",
+    components: { Nav, Make, Recipe, Cart },
+    data: function () {
+        return {
+            // 引用数据
+            craft_types,
 
-			// 自设
-			server: "蝶恋花",
-			profession_id: 5,
-			craft_key: "tailoring",
-			cart_list: [],
-			craft_group: [],
-			item_id: "",
-			recipe_item: "",
-			add: false,
-		};
-	},
-	computed: {
-		// 服务器
-		server_list() {
-			return this.client == "std" ? servers_std : servers_origin;
-		},
-		client() {
-			return this.$store.state.client;
-		},
-		isStd() {
-			return this.client == "std";
-		},
-		make_props() {
-			let _list = this.craft_group.filter((item) => {
-				if (this.profession_id == item[0].ProfessionID) return item;
-			});
-			let craft = this.craft_types.filter((item) => {
-				if (item.key == this.craft_key) return item;
-			});
-			return {
-				client: this.client,
-				craft: craft[0],
-				craft_group: _list[0],
-			};
-		},
-		recipe_props() {
-			return {
-				client: this.client,
-				item_id: this.item_id,
-				craft_key: this.craft_key,
-				server: this.server,
-			};
-		},
-	},
-	methods: {
-		// 切换技艺类别
-		changeCraft(i, key) {
-			this.profession_id = i;
-			this.craft_key = key;
-			this.item_id = "";
-		},
-		// 获取全部技艺分类并分组
-		getCraftType() {
-			getCraftJson().then((res) => {
-				let craft_group = this.client == "std" ? res.data.std : res.data.origin;
-				let _list = [];
-				let _obj = {};
-				craft_group.forEach((item) => {
-					if (!_obj[item.ProfessionID]) {
-						var _arr = [];
-						_arr.push({ ...item, list: [] });
-						_list.push(_arr);
-						_obj[item.ProfessionID] = item;
-					} else {
-						_list.forEach((el) => {
-							if (el[0].ProfessionID == item.ProfessionID) {
-								el.push({ ...item, list: [] });
-							}
-						});
-					}
-				});
+            // 自设
+            server: "蝶恋花",
+            profession_id: 5,
+            craft_key: "tailoring",
+            craft_group: [],
 
-				this.craft_group = _list;
-			});
-		},
+            cart_item: "",
 
-		// 子组件传值
-		makeEmit(data) {
-			this.item_id = data.id;
-			if (data.add) this.add = data;
-		},
-		recipeEmit(data) {
-			this.recipe_item = data;
-		},
-	},
-	watch: {
-		add(obj) {
-			if (obj && this.item_id == this.recipe_item.ID) this.cart_list.push(Object.assign({ count: obj.count }, this.recipe_item));
-		},
-		recipe_item: {
-			deep: true,
-			immediate: true,
-			handler: function (obj) {
-				if (obj && this.add && this.item_id == obj.ID) this.cart_list.push(Object.assign({ count: this.add.count }, obj));
-			},
-		},
-	},
-	created() {
-		this.getCraftType();
-	},
+            // 传值
+            item_id: "",
+            add: false,
+            count: 0,
+            cart_list: [],
+        };
+    },
+    computed: {
+        // 服务器
+        server_list() {
+            return this.client == "std" ? servers_std : servers_origin;
+        },
+        client() {
+            return this.$store.state.client;
+        },
+        isStd() {
+            return this.client == "std";
+        },
+        make_props() {
+            let _list = this.craft_group.filter((item) => {
+                if (this.profession_id == item[0].ProfessionID) return item;
+            });
+            let craft = this.craft_types.filter((item) => {
+                if (item.key == this.craft_key) return item;
+            });
+            return {
+                client: this.client,
+                craft: craft[0],
+                craft_group: _list[0],
+            };
+        },
+        recipe_props() {
+            return {
+                count: this.count || 1,
+                add: this.add,
+                client: this.client,
+                item_id: this.item_id,
+                craft_key: this.craft_key,
+                server: this.server,
+            };
+        },
+    },
+    methods: {
+        // 切换技艺类别
+        changeCraft(i, key) {
+            this.profession_id = i;
+            this.craft_key = key;
+            this.item_id = "";
+        },
+        // 获取全部技艺分类并分组
+        getCraftType() {
+            getCraftJson().then((res) => {
+                let craft_group = this.client == "std" ? res.data.std : res.data.origin;
+                let _list = [];
+                let _obj = {};
+                craft_group.forEach((item) => {
+                    if (!_obj[item.ProfessionID]) {
+                        var _arr = [];
+                        _arr.push({ ...item, list: [] });
+                        _list.push(_arr);
+                        _obj[item.ProfessionID] = item;
+                    } else {
+                        _list.forEach((el) => {
+                            if (el[0].ProfessionID == item.ProfessionID) {
+                                el.push({ ...item, list: [] });
+                            }
+                        });
+                    }
+                });
+
+                this.craft_group = _list;
+            });
+        },
+
+        // 子组件传值
+        isEmit(data) {
+            this.item_id = data.id;
+            if (data.count) this.count = data.count;
+            this.add = data.add;
+            if (data.item) this.addToCart(data.item, data);
+        },
+        // 加入购物车
+        addToCart(obj, data) {
+            if (data.add) return;
+            let _obj = Object.assign({}, obj);
+            this.cart_list.some((item) => item.ID == obj.ID)
+                ? this.cart_list.forEach((item) => {
+                      if (item.ID == obj.ID) item.count += this.count;
+                  })
+                : this.cart_list.push(_obj);
+
+            this.count = 0;
+        },
+    },
+    watch: {},
+    created() {
+        this.getCraftType();
+    },
 };
 </script>
 
