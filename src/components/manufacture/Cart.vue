@@ -70,6 +70,7 @@
             <div class="u-num">精力值： {{ all_exp }}</div>
             <div class="u-num">价格： <GamePrice v-if="all_price" class="u-price-num" :price="all_price" /></div>
         </div>
+        <CreatePlan :list="cart_list" />
     </div>
 </template>
 <script>
@@ -77,10 +78,11 @@ import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
 import GamePrice from "@jx3box/jx3box-common-ui/src/wiki/GamePrice.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import Item from "@jx3box/jx3box-editor/src/Item.vue";
+import CreatePlan from "@/components/manufacture/CreatePlan.vue";
 export default {
     name: "cart",
     props: ["list"],
-    components: { GamePrice, Item },
+    components: { GamePrice, Item, CreatePlan },
     data: function () {
         return {
             cart_list: [],
