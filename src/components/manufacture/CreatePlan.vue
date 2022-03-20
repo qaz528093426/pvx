@@ -1,5 +1,5 @@
 <template>
-    <div class="m-create-plan" v-if="list">
+    <div class="m-create-plan" v-if="list.length">
         <el-button type="success" icon="el-icon-document-checked" @click="setMyPlan">保存至我的清单</el-button>
     </div>
 </template>
