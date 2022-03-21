@@ -96,7 +96,7 @@ export default {
         },
         recipe_props() {
             return {
-                count: this.count || 1,
+                count: this.count,
                 add: this.add,
                 client: this.client,
                 item_id: this.item_id,
@@ -139,22 +139,22 @@ export default {
 
         // 子组件传值
         isEmit(data) {
-            if (data.id) this.item_id = data.id;
+            this.add = data.add || false;
             if (data.count) this.count = data.count;
-            if (data.add) this.add = data.add;
+            if (data.id) this.item_id = data.id;
             if (data.item) this.addToCart(data.item, data);
             if (data.del) this.cart_list = this.cart_list.filter((item) => item.ID !== data.del);
         },
         // 加入购物车
-        addToCart(obj, data) {
+        addToCart(obj, data, count = this.count) {
             if (data.add) return;
             let _obj = Object.assign({}, obj);
             this.cart_list.some((item) => item.ID == obj.ID)
                 ? this.cart_list.forEach((item) => {
-                      if (item.ID == obj.ID) item.count += this.count;
+                      console.log("11");
+                      if (item.ID == obj.ID) item.count += count;
                   })
                 : this.cart_list.push(_obj);
-
             this.count = 0;
         },
     },

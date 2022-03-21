@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="m-add">
-            <el-input-number v-model="item.count" :min="1"></el-input-number>
+            <el-input-number v-model="item.count" :min="1" @click.stop.native></el-input-number>
             <el-button icon="el-icon-plus" type="success" @click="toEmit({ id: item.ID, item, count: item.count })">
             </el-button>
         </div>
@@ -119,7 +119,7 @@ export default {
                 .then((res) => {
                     res.data.children = [];
                     res.data.child_list = [];
-                    res.data.count = this.data.count;
+                    res.data.count = 1;
                     let _res = this.processor(res.data);
                     this.item = _res;
                     this.item.item_type_id = this.item_ids.price_id;
@@ -283,11 +283,14 @@ export default {
         data: {
             deep: true,
             handler: function (new_data, old_data) {
-                new_data.item_id !== old_data.item_id
-                    ? this.loadItem(new_data)
-                    : new_data.add && new_data.add !== old_data.add
-                    ? this.toEmit({ id: this.item.ID, item: this.item, add: false, name: "loadItem" })
-                    : "";
+                if (new_data.item_id !== old_data.item_id) {
+                    this.loadItem(new_data);
+                } else {
+                    if (new_data.add && new_data.add !== old_data.add) {
+                        this.item.count = new_data.count;
+                        this.toEmit({ id: this.item.ID, item: this.item, add: false, name: "loadItem" });
+                    }
+                }
             },
         },
         item: {
