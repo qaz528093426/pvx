@@ -56,7 +56,7 @@
                                 <div class="u-img" slot="reference">
                                     <img :src="iconLink(child.item_info.IconID)" :alt="child.Name" />
                                     <span
-                                        >x <b>{{ child.count }}</b></span
+                                        >x <b>{{ child.count * item.count }}</b></span
                                     >
                                 </div>
                             </el-popover>
