@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="u-item-num">
-                        <span>数量：</span>
+                        <span>制作次数：</span>
                         <el-input-number v-model="item.count" :min="1" size="mini"></el-input-number>
                     </div>
                     <div class="u-item-num">
