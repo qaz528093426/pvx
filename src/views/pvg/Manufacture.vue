@@ -52,14 +52,10 @@ export default {
     components: { Make, Recipe, Cart },
     data: function () {
         return {
-            // 引用数据
-
-            // 自设
             server: "蝶恋花",
             profession_id: 5,
             craft_key: "tailoring",
             craft_group: [],
-
             cart_item: "",
 
             // 传值
@@ -75,7 +71,6 @@ export default {
         },
         // 服务器
         server_list() {
-            console.log(servers_origin, "?");
             return this.client == "std" ? servers_std : servers_origin;
         },
         client() {
@@ -165,9 +160,10 @@ export default {
             this.count = 0;
         },
     },
-    watch: {},
+
     created() {
         this.getCraftType();
+        this.server = this.client == "std" ? "蝶恋花" : "缘起稻香";
     },
 };
 </script>
