@@ -2,9 +2,9 @@
     <div id="app">
         <Header></Header>
         <Breadcrumb
-            name="商贾"
-            slug="pvg"
-            root="/pvg"
+            :name="name"
+            :slug="slug"
+            :root="'/pvg/' + slug"
             :publishEnable="false"
             :adminEnable="false"
             :feedbackEnable="true"
@@ -25,9 +25,20 @@
 import Nav from "@/components/Nav.vue";
 export default {
     name: "Index",
-    components : {
-        Nav
-    }
+    components: {
+        Nav,
+    },
+    data: function () {
+        return {};
+    },
+    computed: {
+        slug: function () {
+            return this.$route.name;
+        },
+        name: function () {
+            return this.$route.meta.name;
+        },
+    },
 };
 </script>
 

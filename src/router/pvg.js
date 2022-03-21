@@ -6,8 +6,10 @@ const Index = () => import("@/views/pvg/Index.vue");
 const Manufacture = () => import("@/views/pvg/Manufacture.vue");
 
 const routes = [
-    { name: "index", path: "/", component: Index },
-    { name: "manufacture", path: "/manufacture", component: Manufacture },
+    { name: "index", path: "/", component: Index ,meta : {}},
+    { name: "manufacture", path: "/manufacture", component: Manufacture,meta : {
+        name : '技艺助手'
+    } },
 ];
 
 const router = new VueRouter({
