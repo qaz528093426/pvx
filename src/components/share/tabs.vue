@@ -4,7 +4,13 @@
             <el-tab-pane :label="item"></el-tab-pane>
         </el-tabs> -->
         <div class="u-tabs">
-            <div class="u-tab-item" v-for="(item, i) in subtypes" :key="i" @click="clickTabs(i)" :class="i == activeIndex ? 'active' : ''">
+            <div
+                class="u-tab-item"
+                v-for="(item, i) in subtypes"
+                :key="i"
+                @click="clickTabs(i)"
+                :class="i == activeIndex ? 'active' : ''"
+            >
                 <img class="u-icon-img" :src="getThumbnail(item)" :alt="item" />
                 <span class="u-tabs-span">{{ item }}</span>
             </div>
@@ -41,35 +47,34 @@ export default {
         };
     },
     computed: {
-        params: function () {
-            let params = {};
-            params.mark = this.mark;
-            params.subtype = this.subtype;
-            return params;
+        params() {
+            return {
+                mark: this.mark,
+                subtype: this.subtype,
+            };
         },
     },
     methods: {
         //切换数据
- 
         clickTabs(i) {
             this.activeIndex = i;
             this.subtype = this.subtypes[i];
-            this.onShareList();
         },
         toMark(val) {
             this.mark = val;
-            this.onShareList();
-        },
-        onShareList() {
-            this.$emit("onShareData", this.params);
         },
         getThumbnail: function (filename) {
             return __imgPath + "image/face/" + filename + ".jpg";
         },
     },
-    created: function () {
-        this.onShareList();
+    watch: {
+        params: {
+            deep: true,
+            immediate: true,
+            handler: function (obj) {
+                this.$emit("onShareData", obj);
+            },
+        },
     },
-    mounted: function () {},
 };
 </script>

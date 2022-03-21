@@ -6,7 +6,15 @@
             <div class="m-share-list">
                 <ShareItem v-for="(item, index) in list" :key="index" :item="item" />
             </div>
-            <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+            <el-button
+                class="m-archive-more"
+                v-show="hasNextPage"
+                type="primary"
+                @click="appendPage"
+                :loading="loading"
+                icon="el-icon-arrow-down"
+                >加载更多</el-button
+            >
             <el-pagination
                 class="m-archive-pages"
                 background
@@ -30,14 +38,14 @@ import ShareItem from "@/components/share/item.vue";
 import { getPosts } from "@/service/share";
 export default {
     name: "shareList",
-    props: [],
     components: { ShareSearch, ShareTabs, ShareItem },
     data: function () {
         return {
             loading: false,
             list: [],
-            post: "",
             search: "",
+            mark: "",
+            subtype: "",
 
             page: 1, //当前页数
             total: 1, //总条目数
@@ -53,38 +61,34 @@ export default {
             return "没有找到相关的捏脸";
         },
         params: function () {
-            return {
+            let _params = {
                 per: this.per,
                 sticky: 1,
-                page: this.page || 1,
+                page: this.page,
                 type: "share",
             };
+            if (this.search) _params.search = this.search;
+            if (this.mark && this.mark !== "all") _params.mark = this.mark;
+            if (this.subtype && this.subtype !== "全部") _params.subtype = this.subtype;
+            return _params;
         },
         hasNextPage: function () {
             return this.pages > 1 && this.page < this.total;
         },
     },
     methods: {
-        onShareData(params) {
+        onShareData(data) {
+            this.mark = data.mark;
+            this.subtype = data.subtype;
             this.page = 1;
-            this.post = Object.assign(this.params, params);
-            this.getData();
         },
         onSearchKey(search) {
-            if (!search) return delete this.post.search;
-            this.post = Object.assign(this.params, search);
-            this.getData();
+            this.search = search;
         },
         // 获取数据
         getData() {
             this.loading = true;
-
-            let params = this.post;
-            if (params.mark == "all") delete params.mark;
-            if (params.subtype == "全部") delete params.subtype;
-            params.page = this.page;
-
-            getPosts(params, this)
+            getPosts(this.params, this)
                 .then((res) => {
                     if (this.appendMode) {
                         this.list = this.list.concat(res.data.data.list);
@@ -102,16 +106,22 @@ export default {
         },
         changePage(i) {
             this.page = i;
-            this.getData();
         },
         appendPage: function () {
             this.appendMode = true;
             this.page = this.page + 1;
-            this.getData();
         },
     },
-    mounted : function (){
-    }
+    watch: {
+        params: {
+            deep: true,
+            immediate: true,
+            handler: function (obj) {
+                if (obj) this.getData();
+            },
+        },
+    },
+    mounted: function () {},
 };
 </script>
 

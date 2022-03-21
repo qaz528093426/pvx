@@ -12,7 +12,6 @@
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "search",
-    props: [],
     data: function () {
         return {
             search: "",
@@ -28,9 +27,5 @@ export default {
             this.$emit("onSearchKey", val);
         },
     },
-    methods: {},
-    filters: {},
-    created: function () {},
-    mounted: function () {},
 };
 </script>
