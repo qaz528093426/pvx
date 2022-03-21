@@ -122,7 +122,9 @@ export default {
             },
         },
     },
-    mounted: function () {},
+    mounted: function () {
+        console.log(this.type)
+    },
 };
 </script>
 
