@@ -1,5 +1,10 @@
 <template>
     <div class="v-share-single" v-loading="loading">
+        <div class="m-navigation">
+            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain
+                >返回列表</el-button
+            >
+        </div>
         <singlebox :post="post" :stat="stat" v-loading="loading">
             <div class="m-single-pics" v-if="meta.pics && meta.pics.length">
                 <el-carousel :interval="4000" type="card" arrow="always" height="600px">
@@ -74,6 +79,9 @@ export default {
                 });
                 postStat("share", this.id);
             }
+        },
+        goBack() {
+            this.$router.push({ name: "list" });
         },
     },
     filters: {
