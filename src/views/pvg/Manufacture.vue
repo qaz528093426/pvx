@@ -53,7 +53,6 @@ export default {
     data: function () {
         return {
             // 引用数据
-            craft_types,
 
             // 自设
             server: "蝶恋花",
@@ -71,8 +70,12 @@ export default {
         };
     },
     computed: {
+        craft_types() { 
+            return craft_types[this.client];
+        },
         // 服务器
         server_list() {
+            console.log(servers_origin, "?");
             return this.client == "std" ? servers_std : servers_origin;
         },
         client() {
