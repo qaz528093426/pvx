@@ -1,11 +1,11 @@
 <template>
     <div class="m-share-item">
-        <a class="u-face" :href="item.ID | postLink">
+        <router-link class="u-face" :to="'/' + item.ID">
             <i class="u-img">
                 <img class="u-pic" :src="showThumb(imgLink)" loading="lazy" />
             </i>
             <span class="u-author">@{{ author }}</span>
-        </a>
+        </router-link>
         <span class="u-op" v-if="isEditor">
             <i
                 class="u-op-hot"
@@ -90,11 +90,6 @@ export default {
         },
         showBanner: function (val) {
             return showMinibanner(val);
-        },
-    },
-    filters: {
-        postLink: function (val) {
-            return location.origin + "/share/" + val;
         },
     },
 };
