@@ -1,4 +1,4 @@
-import { $node, $helper } from "@jx3box/jx3box-common/js/https";
+import { $node, $helper ,$cms} from "@jx3box/jx3box-common/js/https";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import axios from "axios";
 const $n = $node();
@@ -30,4 +30,8 @@ function getItemsPrice(params) {
 function getAuction(params) {
 	return $h.get(`/api/items/price`, { params });
 }
-export { getManufactures, getManufactureItem, getCraftJson, getOther, getItemsPrice, getAuction };
+// 新增清单
+function addMyPlans(params) {
+	return $cms().post(`/api/cms/app/item_plan`, params);
+}
+export { getManufactures, getManufactureItem, getCraftJson, getOther, getItemsPrice, getAuction,addMyPlans };

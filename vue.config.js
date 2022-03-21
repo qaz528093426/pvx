@@ -42,11 +42,11 @@ module.exports = {
             template: "public/index.html",
             filename: "adventure/index.html",
         },
-        manufacture : {
-            title: "技艺助手 - JX3BOX",
-            entry: "src/pages/manufacture.js",
+        pvg : {
+            title: "商贾奇才 - JX3BOX",
+            entry: "src/pages/pvg.js",
             template: "public/index.html",
-            filename: "pvg/manufacture/index.html",
+            filename: "pvg/index.html",
         },
     },
 
