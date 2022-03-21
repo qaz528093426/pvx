@@ -108,6 +108,7 @@ export default {
     methods: {
         // 切换技艺类别
         changeCraft(i, key) {
+            if (this.craft_key == key) return;
             this.profession_id = i;
             this.craft_key = key;
             this.item_id = "";
@@ -143,11 +144,10 @@ export default {
             if (data.count) this.count = data.count;
             if (data.id) this.item_id = data.id;
             if (data.item) this.addToCart(data.item, data);
-            if (data.del) { 
+            if (data.del) {
                 data.del == -1
                     ? this.cart_list.splice(0, this.cart_list.length)
                     : (this.cart_list = this.cart_list.filter((item) => item.ID !== data.del));
-
             }
         },
         // 加入购物车

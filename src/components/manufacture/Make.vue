@@ -79,7 +79,7 @@ export default {
             });
             this.search_list = _list;
         },
-        "data.serve": {
+        data: {
             deep: true,
             handler: function () {
                 this.loadData();
@@ -136,7 +136,7 @@ export default {
         // 发送emit
         toEmit(data) {
             this.item_id = data.id;
-            this.$emit("toEmit", data); 
+            this.$emit("toEmit", data);
         },
         iconLink,
     },
