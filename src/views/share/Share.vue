@@ -7,7 +7,7 @@
         <LeftSidebar><Nav></Nav></LeftSidebar>
         <Main :withoutRight="true">
             <div class="m-main">
-                <keep-alive include="ShareList">
+                <keep-alive include="shareList">
                     <router-view></router-view>
                 </keep-alive>
             </div>

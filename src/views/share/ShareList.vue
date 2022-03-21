@@ -29,7 +29,7 @@ import ShareTabs from "@/components/share/tabs.vue";
 import ShareItem from "@/components/share/item.vue";
 import { getPosts } from "@/service/share";
 export default {
-    name: "ShareList",
+    name: "shareList",
     props: [],
     components: { ShareSearch, ShareTabs, ShareItem },
     data: function () {

@@ -70,7 +70,7 @@ export default {
         };
     },
     computed: {
-        craft_types() { 
+        craft_types() {
             return craft_types[this.client];
         },
         // 服务器

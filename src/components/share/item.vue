@@ -1,15 +1,33 @@
 <template>
     <div class="m-share-item">
-        <a class="u-face" target="_blank" :href="item.ID | postLink">
+        <a class="u-face" :href="item.ID | postLink">
             <i class="u-img">
                 <img class="u-pic" :src="showThumb(imgLink)" loading="lazy" />
             </i>
             <span class="u-author">@{{ author }}</span>
         </a>
         <span class="u-op" v-if="isEditor">
-            <i class="u-op-hot" title="设为热门" :class="{ on: hasMark(item, 'newbie') }" @click="setMark(item, 'newbie')">♥</i>
-            <i class="u-op-rec" title="设为推荐" :class="{ on: hasMark(item, 'advanced') }" @click="setMark(item, 'advanced')">✿</i>
-            <i class="u-op-star" title="设为精选" :class="{ on: hasMark(item, 'recommended') }" @click="setMark(item, 'recommended')">★</i>
+            <i
+                class="u-op-hot"
+                title="设为热门"
+                :class="{ on: hasMark(item, 'newbie') }"
+                @click="setMark(item, 'newbie')"
+                >♥</i
+            >
+            <i
+                class="u-op-rec"
+                title="设为推荐"
+                :class="{ on: hasMark(item, 'advanced') }"
+                @click="setMark(item, 'advanced')"
+                >✿</i
+            >
+            <i
+                class="u-op-star"
+                title="设为精选"
+                :class="{ on: hasMark(item, 'recommended') }"
+                @click="setMark(item, 'recommended')"
+                >★</i
+            >
         </span>
         <span class="u-op u-readOnly" v-else>
             <i class="u-op-hot" :class="{ on: hasMark(item, 'newbie') }" v-if="hasMark(item, 'newbie')">♥</i>

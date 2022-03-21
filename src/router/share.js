@@ -10,12 +10,12 @@ const routes = [
     { name: "list", path: "/", component: ShareList },
     { name: "single", path: "/:id(\\d+)", component: ShareSingle },
 
-    { name: "parse", path: "/facedata", component: FaceParse },
+    { name: "parse", path: "/facedata", component: FaceParse},
 ];
 
 const router = new VueRouter({
     mode: "history",
-    base: '/share',
+    base: "/share",
     routes,
 });
 
