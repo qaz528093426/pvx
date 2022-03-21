@@ -1,10 +1,20 @@
 <template>
     <div class="m-manufacture-cart">
         <div class="m-title">
-            <i class="el-icon-box"></i>
-            <span>成本计算</span>
+            <div class="u-label"><i class="el-icon-box"></i> <span>成本计算</span></div>
+            <el-button
+                v-if="cart_list.length"
+                class="u-del"
+                type="info"
+                plain
+                size="mini"
+                @click="toEmit({ del: -1 })"
+                icon="el-icon-delete"
+                @toEmit="toEmit"
+                >全部清空</el-button
+            >
         </div>
-        <template v-if="cart_list && cart_list.length">
+        <template v-if="cart_list.length">
             <div class="m-item" v-for="(item, index) in cart_list" :key="index">
                 <div class="u-header">
                     <el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
@@ -157,6 +167,7 @@ export default {
         },
         // 移除
         toEmit(data) {
+            this.cart_list = [];
             this.$emit("toEmit", data);
         },
         // icon边框

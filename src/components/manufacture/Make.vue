@@ -136,8 +136,7 @@ export default {
         // 发送emit
         toEmit(data) {
             this.item_id = data.id;
-            this.$emit("toEmit", data);
-            console.log(data,"make");
+            this.$emit("toEmit", data); 
         },
         iconLink,
     },

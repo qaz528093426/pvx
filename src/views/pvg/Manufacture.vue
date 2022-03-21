@@ -143,7 +143,12 @@ export default {
             if (data.count) this.count = data.count;
             if (data.id) this.item_id = data.id;
             if (data.item) this.addToCart(data.item, data);
-            if (data.del) this.cart_list = this.cart_list.filter((item) => item.ID !== data.del);
+            if (data.del) { 
+                data.del == -1
+                    ? this.cart_list.splice(0, this.cart_list.length)
+                    : (this.cart_list = this.cart_list.filter((item) => item.ID !== data.del));
+
+            }
         },
         // 加入购物车
         addToCart(obj, data, count = this.count) {
@@ -151,7 +156,6 @@ export default {
             let _obj = Object.assign({}, obj);
             this.cart_list.some((item) => item.ID == obj.ID)
                 ? this.cart_list.forEach((item) => {
-                      console.log("11");
                       if (item.ID == obj.ID) item.count += count;
                   })
                 : this.cart_list.push(_obj);
