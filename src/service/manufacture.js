@@ -5,18 +5,21 @@ const $n = $node();
 const $h = $helper();
 
 // 获取技艺分组分类
-function getCraftJson() {
-	return axios.get(`${__iconPath}pvx/manufacture/output/craft_belong.json`).then((res) => {
-		return res;
-	});
+async function getCraftJson() {
+	const res = await axios.get(`${__iconPath}pvx/manufacture/output/craft_belong.json`);
+    return res;
 }
 // 获取技艺某种类型的列表
 function getManufactures(params) {
 	return $n.get("/manufactures", { params });
 }
 // 获取技艺某种类型的单个详细信息
-function getManufactureItem(type, id) {
-	return $n.get(`/manufacture/${type}/${id}`);
+function getManufactureItem(type, id, client = "std") {
+	return $n.get(`/manufacture/${type}/${id}`, {
+        params: {
+            client
+        }
+    });
 }
 // 根据ids获取对应信息
 function getOther(params) {

@@ -122,7 +122,7 @@ export default {
             this.loading = true;
             this.first = true;
             this.item_id = data.item_id;
-            getManufactureItem(data.craft_key, data.item_id)
+            getManufactureItem(data.craft_key, data.item_id, data.client)
                 .then((res) => {
                     res.data.children = [];
                     res.data.child_list = [];
