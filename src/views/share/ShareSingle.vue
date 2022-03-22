@@ -141,7 +141,7 @@ export default {
             return this.stat?.views || "-";
         },
         previewSrcList: function () {
-            return this.meta?.pics.map((item) => item.url);
+            return this.meta?.pics.map((item) => resolveImagePath(item.url));
         },
     },
     watch: {},
