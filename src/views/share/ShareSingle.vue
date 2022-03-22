@@ -39,7 +39,7 @@
         <div class="m-single-pics" v-if="meta.pics && meta.pics.length">
             <el-carousel :interval="4000" type="card" arrow="always" height="600px">
                 <el-carousel-item v-for="(item, i) in meta.pics" :key="i">
-                    <div class="m-face-pic">
+                    <div class="m-face-pic" @click="showOriginImage(i)">
                         <el-image
                             fit="contain"
                             :src="showImage(item.url)"
@@ -173,6 +173,9 @@ export default {
         showImage: function (val) {
             return resolveImagePath(val);
         },
+        showOriginImage : function (i){
+            console.log(i)
+        }
     },
 
     created: function () {
