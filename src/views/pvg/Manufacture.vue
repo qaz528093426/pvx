@@ -162,8 +162,7 @@ export default {
     },
 
     created() {
-        this.getCraftType();
-        this.server = this.client == "std" ? "蝶恋花" : "缘起稻香";
+        this.getCraftType(); 
     },
 };
 </script>

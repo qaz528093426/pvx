@@ -96,6 +96,7 @@ export default {
 
             getManufactures(this.params).then((res) => {
                 let _data = res.data;
+
                 _data = _data.map((item) => {
                     item.count = 1;
                     return item;
@@ -118,7 +119,7 @@ export default {
                         return item;
                     })
                     .filter((item) => item.list.length);
-                this.all_data[this.craft_key] = _data;
+                this.all_data[this.craft_key] = _data; 
                 this.showList();
             });
         },

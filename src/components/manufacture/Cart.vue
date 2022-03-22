@@ -55,9 +55,7 @@
                                 <Item :item_id="child.price_id" />
                                 <div class="u-img" slot="reference">
                                     <img :src="iconLink(child.item_info.IconID)" :alt="child.Name" />
-                                    <span
-                                        >x <b>{{ child.count * item.count }}</b></span
-                                    >
+                                    <span>{{ child.Name }}x <b>{{ child.count * item.count }}</b></span>
                                 </div>
                             </el-popover>
 

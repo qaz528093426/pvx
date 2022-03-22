@@ -13,7 +13,7 @@
         </el-popover>
 
         <span class="u-name" :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
-        <div class="u-price u-interval">
+        <div class="u-price u-interval" v-if="data.client == 'std'">
             [{{ data.server }}] 昨日平均价格:<GamePrice
                 v-if="item.Price"
                 class="u-price-num"
@@ -183,8 +183,8 @@ export default {
                     this.first = false;
                 });
         },
-        // 获取价格
-        getPrice(list) {
+        // 获取正式服价格
+        getStdPrice(list) {
             let arr = [...list, this.item_ids];
             arr = arr.map((item) => {
                 this.item.children.forEach((el) => {
@@ -242,6 +242,10 @@ export default {
                     });
                 }
             });
+        },
+        // 获取怀旧服价格
+        getOriginPrice(list) {
+             let arr = [...list, this.item_ids]; 
         },
         // 提交数据
         toEmit(data) {
@@ -304,7 +308,9 @@ export default {
             deep: true,
             immediate: true,
             handler: function (list) {
-                if (list && list.length && this.item.children) this.getPrice(list);
+                if (list && list.length && this.item.children) {
+                    this.data.client == "std" ? this.getStdPrice(list) : this.getOriginPrice(list);
+                }
             },
         },
     },
