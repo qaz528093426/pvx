@@ -7,7 +7,7 @@
         <div class="u-btn">
             <el-input-number v-model="item.count" :min="1" size="mini" @click.stop.native></el-input-number>
             <el-button
-                icon="el-icon-plus"
+                icon="el-icon-shopping-cart-2"
                 size="mini"
                 type="success"
                 @click.stop="toEmit({ id: item.ID, add: true, count: item.count })"
