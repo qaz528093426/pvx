@@ -59,9 +59,16 @@
                         <span :class="`u-quality--${el.Quality}`"> {{ el.Name }}</span>
                         <span class="u-num">数量：x {{ el.count }}</span>
                     </div>
-                    <div class="u-price">
+                    <div class="u-price" v-if="data.client == 'std'">
                         {{ el.game_price ? "[NPC出售] 价格：" : `[${data.server}] 昨日平均价格：` }}
                         <GamePrice v-if="el.Price" class="u-price-num" :price="el.Price" /><span class="u-null" v-else
+                            >暂无数据</span
+                        >
+                    </div>
+                    <div class="u-price" v-else>
+                        [NPC出售] 价格：<GamePrice v-if="el.Price" class="u-price-num" :price="el.Price" /><span
+                            class="u-null"
+                            v-else
                             >暂无数据</span
                         >
                     </div>
@@ -245,7 +252,51 @@ export default {
         },
         // 获取怀旧服价格
         getOriginPrice(list) {
-             let arr = [...list, this.item_ids]; 
+            let arr = [...list, this.item_ids];
+            arr = arr.map((item) => {
+                this.item.children.forEach((el) => {
+                    if (item.ID == el.id) item = Object.assign(item, el);
+                });
+                return item;
+            });
+            let _ids = arr.map((item) => item.id);
+            getItemsPrice({ ids: _ids.join(), client: this.$store.state.client }).then((res) => {
+                let _list = res.data;
+                let _arr = [];
+                if (_list) {
+                    _list = _list.map((item) => {
+                        return {
+                            id: item.ItemIndex,
+                            Price: item.Price,
+                            Name: item.Name,
+                            game_price: true,
+                        };
+                    });
+                    _arr = arr.filter((item) => {
+                        return !_list.some((el) => el.id == item.id) ? item : "";
+                    });
+                } else {
+                    _arr = arr;
+                }
+                arr = arr
+                    .map((item) => {
+                        _list.forEach((el) => {
+                            if (el.id == item.id || el.price_id == item.price_id) item = Object.assign(el, item);
+                        });
+                        return item;
+                    })
+                    .filter((item) => {
+                        if (item.id == this.item.CreateItemIndex1) {
+                            this.item = Object.assign(this.item, item);
+                        } else {
+                            return item;
+                        }
+                    });
+                console.log(_arr, arr);
+                this.item.child_list = arr;
+                if (this.data.add)
+                    this.toEmit({ id: this.item.ID, item: this.item, add: false, name: "getItemsPrice" });
+            });
         },
         // 提交数据
         toEmit(data) {
