@@ -262,22 +262,14 @@ export default {
             let _ids = arr.map((item) => item.id);
             getItemsPrice({ ids: _ids.join(), client: this.data.client }).then((res) => {
                 let _list = res.data;
-                let _arr = [];
-                if (_list) {
-                    _list = _list.map((item) => {
-                        return {
-                            id: item.ItemIndex,
-                            Price: item.Price,
-                            Name: item.Name,
-                            game_price: true,
-                        };
-                    });
-                    _arr = arr.filter((item) => {
-                        return !_list.some((el) => el.id == item.id) ? item : "";
-                    });
-                } else {
-                    _arr = arr;
-                }
+                _list = _list.map((item) => {
+                    return {
+                        id: item.ItemIndex,
+                        Price: item.Price,
+                        Name: item.Name,
+                        game_price: true,
+                    };
+                });
                 arr = arr
                     .map((item) => {
                         _list.forEach((el) => {
@@ -291,7 +283,7 @@ export default {
                         } else {
                             return item;
                         }
-                    }); 
+                    });
                 this.item.child_list = arr;
                 if (this.data.add)
                     this.toEmit({ id: this.item.ID, item: this.item, add: false, name: "getItemsPrice" });
