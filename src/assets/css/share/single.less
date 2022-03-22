@@ -1,6 +1,7 @@
 .m-header {
     h2 {
-        .fz(32px,2);
+        .fz(32px,1.5);
+        .pb(10px);
         font-weight: 300;
         margin: 0;
         letter-spacing: 0.5px;
@@ -9,15 +10,27 @@
         .color(#888);
         font-weight: 300;
     }
+    a {
+        &:hover {
+            border-bottom: 1px solid #0366d6;
+        }
+    }
     .u-info {
         .flex;
-        .fz(13px,20px);
+        .fz(12px);
+        height: 20px;
         align-items: center;
     }
     .u-info-margin {
+        .flex;
         .mr(15px);
+        align-items: center;
         i {
+            .fz(16px);
             .mr(5px);
+            &.u-label-client {
+                .fz(12px,20px);
+            }
         }
     }
     .u-client {
@@ -30,8 +43,9 @@
             color: #f0b400;
         }
     }
-    .u-label {
+    .u-label-client {
         margin-right: 5px;
+        color: #666;
         background-color: #eee;
         padding: 0 5px;
         border-radius: 2px;

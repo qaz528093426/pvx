@@ -8,27 +8,27 @@
         <div class="m-header">
             <h2>{{ title }}</h2>
             <div class="u-info">
-                <div class="u-author u-info-margin">
+                <div class="u-info-margin">
                     <i class="el-icon-user-solid"></i>
                     <a class="u-name" target="_blank" :href="author_link">{{ author_name }}</a>
                 </div>
-                <div class="u-meta u-info-margin">
-                    <i class="u-label">适用客户端</i>
-                    <span class="u-value u-client" :class="client">{{ showClientLabel(client) }}</span>
+                <div class="u-info-margin">
+                    <i class="u-label-client">适用客户端</i>
+                    <span class="u-client" :class="client">{{ showClientLabel(client) }}</span>
                 </div>
-                <span class="u-podate u-info-margin">
+                <span class="u-info-margin">
                     <i class="el-icon-date"> </i>
                     <time>{{ post_date }}</time>
                 </span>
-                <span class="u-modate u-info-margin">
+                <span class="u-info-margin">
                     <i class="el-icon-date"> </i>
                     <time>{{ update_date }}</time>
                 </span>
-                <span class="u-views u-info-margin">
+                <span class="u-info-margin">
                     <i class="el-icon-view"></i>
                     {{ views }}
                 </span>
-                <a class="u-edit u-info-margin" :href="edit_link" v-if="canEdit">
+                <a class="u-info-margin" :href="edit_link" v-if="canEdit">
                     <i class="u-icon-edit el-icon-edit-outline"></i>
                     <span>编辑</span>
                 </a>
@@ -46,18 +46,18 @@
             </el-carousel>
         </div>
         <div class="u-single-author">
-            作者：<b>{{ author_name }}</b>
+            作者：<b>{{ origin_author }}</b>
         </div>
         <div class="m-single-data">
             <el-divider content-position="left"> 独家数据分析 </el-divider>
             <facedata v-if="facedata" :data="facedata" />
         </div>
         <!-- 点赞 -->
-        <Thx class="m-thx" :postId="id" postType="share" :adminBoxcoinEnable="false" :userBoxcoinEnable="false" />
+        <Thx class="m-thx" :postId="id" :postType="post_type" :adminBoxcoinEnable="false" :userBoxcoinEnable="false" />
         <!-- 评论 -->
         <div>
             <el-divider content-position="left">讨论</el-divider>
-            <Comment :id="id" category="share" />
+            <Comment :id="id" :category="post_type" />
         </div>
     </div>
 </template>
@@ -95,11 +95,26 @@ export default {
         author_id: function () {
             return this.post?.post_author || 0;
         },
+        author_name: function () {
+            return this.post?.author || "匿名";
+        },
+        author_link: function () {
+            return authorLink(this.post?.post_author);
+        },
+        edit_link: function () {
+            return editLink(this.post?.post_type, this.post?.ID);
+        },
+        origin_author: function () {
+            return this.post?.post_meta?.author || "匿名";
+        },
         facedata: function () {
             return this.post?.post_meta?.data || "";
         },
         meta: function () {
             return this.post?.post_meta || "";
+        },
+        post_type: function () {
+            return this.post?.post_type || "share";
         },
         title() {
             return this.post.title || "无标题";
@@ -116,15 +131,6 @@ export default {
         update_date: function () {
             return showDate(new Date(this.post?.post_modified));
         },
-        author_link: function () {
-            return authorLink(this.post?.post_author);
-        },
-        author_name: function () {
-            return this.post?.author || "匿名";
-        },
-        edit_link: function () {
-            return editLink(this.post?.post_type, this.post?.ID);
-        },
         views: function () {
             return this.stat?.views || "-";
         },
@@ -138,7 +144,6 @@ export default {
                     .then((res) => {
                         this.post = this.$store.state.post = res.data.data;
                         document.title = this.post.post_title;
-                        console.log(this.post);
                     })
                     .finally(() => {
                         this.loading = false;
