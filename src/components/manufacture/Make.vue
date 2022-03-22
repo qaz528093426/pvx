@@ -119,12 +119,12 @@ export default {
                         return item;
                     })
                     .filter((item) => item.list.length);
-                this.all_data[this.craft_key] = _data; 
+                this.all_data[this.craft_key] = _data;
                 this.showList();
             });
         },
         // 展示列表并选择列表第一个作为显示
-        showList() {
+        showList() { 
             this.item_id = this.list_data[this.craft_key][0].list[0].ID;
             this.craft_list = this.list_data[this.craft_key];
             this.$emit("toEmit", { id: this.item_id });

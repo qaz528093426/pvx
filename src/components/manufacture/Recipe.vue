@@ -260,7 +260,7 @@ export default {
                 return item;
             });
             let _ids = arr.map((item) => item.id);
-            getItemsPrice({ ids: _ids.join(), client: this.$store.state.client }).then((res) => {
+            getItemsPrice({ ids: _ids.join(), client: this.data.client }).then((res) => {
                 let _list = res.data;
                 let _arr = [];
                 if (_list) {
@@ -291,8 +291,7 @@ export default {
                         } else {
                             return item;
                         }
-                    });
-                console.log(_arr, arr);
+                    }); 
                 this.item.child_list = arr;
                 if (this.data.add)
                     this.toEmit({ id: this.item.ID, item: this.item, add: false, name: "getItemsPrice" });
