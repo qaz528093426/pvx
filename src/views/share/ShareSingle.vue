@@ -80,7 +80,6 @@ import { editLink, authorLink } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "single",
-    props: [],
     components: { facedata, Comment },
     data: function () {
         return {
@@ -123,7 +122,7 @@ export default {
             return this.post?.post_type || "share";
         },
         title() {
-            return this.post.title || "无标题";
+            return this.post?.post_title || "无标题";
         },
         canEdit: function () {
             return this.post?.post_author == User.getInfo().uid || User.isEditor();
