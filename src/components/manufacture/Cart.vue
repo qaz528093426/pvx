@@ -55,7 +55,9 @@
                                 <Item :item_id="child.price_id" />
                                 <div class="u-img" slot="reference">
                                     <img :src="iconLink(child.item_info.IconID)" :alt="child.Name" />
-                                    <span>{{ child.Name }}x <b>{{ child.count * item.count }}</b></span>
+                                    <span
+                                        >{{ child.Name }}x <b>{{ child.count * item.count }}</b></span
+                                    >
                                 </div>
                             </el-popover>
 
@@ -68,7 +70,7 @@
                         <el-input-number v-model="item.count" :min="1" size="mini"></el-input-number>
                     </div>
                     <div class="u-item-num">
-                        <span><i class="el-icon-sunny"></i> 消耗精力值：</span> <b>{{ item.Exp * item.count }}</b>
+                        <span><i class="el-icon-sunny"></i> 消耗精力值：</span> <b>{{ item.CostVigor * item.count }}</b>
                     </div>
                     <div class="u-item-num">
                         <span><i class="el-icon-coin"></i> 小计金额：</span>
@@ -119,7 +121,7 @@ export default {
             if (!this.cart_list.length) return 0;
             let _num = 0;
             let _list = this.cart_list.map((item) => {
-                return { exp: item.Exp, count: item.count };
+                return { exp: item.CostVigor, count: item.count };
             });
             _list.forEach((item) => {
                 _num += item.count * item.exp;
