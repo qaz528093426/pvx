@@ -60,13 +60,13 @@
                         <span class="u-num">数量：x {{ el.count }}</span>
                     </div>
                     <div class="u-price" v-if="data.client == 'std'">
-                        {{ el.game_price ? "[NPC出售] 价格：" : `[${data.server}] 昨日平均价格：` }}
+                        {{ el.game_price ? "[NPC出售] 单价：" : `[${data.server}] 昨日平均单价：` }}
                         <GamePrice v-if="el.Price" class="u-price-num" :price="el.Price" /><span class="u-null" v-else
                             >暂无数据</span
                         >
                     </div>
                     <div class="u-price" v-else>
-                        [NPC出售] 价格：<GamePrice v-if="el.Price" class="u-price-num" :price="el.Price" /><span
+                        [NPC出售] 单价：<GamePrice v-if="el.Price" class="u-price-num" :price="el.Price" /><span
                             class="u-null"
                             v-else
                             >暂无数据</span
@@ -77,7 +77,11 @@
         </div>
         <div class="m-add">
             <el-input-number v-model="item.count" :min="1" @click.stop.native></el-input-number>
-            <el-button icon="el-icon-shopping-cart-2" type="success" @click="toEmit({ id: item.ID, item, count: item.count })">
+            <el-button
+                icon="el-icon-shopping-cart-2"
+                type="success"
+                @click="toEmit({ id: item.ID, item, count: item.count })"
+            >
             </el-button>
         </div>
     </div>
@@ -336,6 +340,7 @@ export default {
                         this.item.count = new_data.count;
                         this.toEmit({ id: this.item.ID, item: this.item, add: false, name: "loadItem" });
                     }
+                    if (new_data.server !== old_data.server) this.loadItem(new_data);
                 }
             },
         },

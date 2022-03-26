@@ -31,7 +31,7 @@
                 <!-- 中间 & 配方展示 -->
                 <Recipe class="u-middle" :data="recipe_props" @toEmit="isEmit" />
                 <!-- 右侧 & 购物车计算 -->
-                <Cart class="u-right" :list="cart_list" @toEmit="isEmit" />
+                <Cart class="u-right" :list="cart_list" :server="server" @toEmit="isEmit" />
             </div>
         </div>
     </div>
@@ -160,7 +160,6 @@ export default {
             this.count = 0;
         },
     },
-
     created() {
         this.getCraftType();
     },
