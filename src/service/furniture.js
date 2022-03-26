@@ -1,4 +1,5 @@
 import { $node } from "@jx3box/jx3box-common/js/https";
+import axios from 'axios';
 const $ = $node();
 
 function getFurniture(params) {

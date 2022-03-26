@@ -30,6 +30,7 @@
                     :list="children(attKey)"
                     :isChange="isChange"
                     :categoryData="categoryData"
+                    :furniture="furniture"
                     @onCategoryKey="onCategoryKey"
                     @match="setMatch"
                     ref="furnitureCategory"
@@ -99,6 +100,7 @@ export default {
             isChange: false,
             client: "std",
             query: "",
+            matchQuery: ""
         };
     },
     computed: {
@@ -148,7 +150,7 @@ export default {
     },
     methods: {
         onCategoryKey: function (obj) {
-            this.query = obj;
+            this.query = this.match ? {...this.matchQuery, ...obj} : obj;
             this.isChange = false;
         },
         onAttKey: function (val) {
@@ -252,17 +254,17 @@ export default {
                 if (this.furniture?.length) {
                     let query = {};
                     // 属性加分
-                    let desc = this.furniture?.find((item) => item.name === "Text_Des");
+                    // let desc = this.furniture?.find((item) => item.name === "Text_Des");
                     // 类型
                     let classify = this.furniture?.find((item) => item.name === "Text_Classify");
 
-                    if (desc) {
+                    /* if (desc) {
                         let category = categoryList.find((item) => desc.text.includes(item.name));
 
                         if (category) {
                             query[`Attribute${category.key}`] = 1;
                         }
-                    }
+                    } */
 
                     if (classify) {
                         let temp = [];
@@ -281,7 +283,9 @@ export default {
                     }
                     query.isMatch = 1;
 
-                    this.query = query;
+                    this.matchQuery = query;
+
+                    this.onCategoryKey({})
                 }
             }
         },

@@ -16,7 +16,7 @@
         </div>
 
         <div class="u-box flexNormal">
-            <el-input
+            <!-- <el-input
                 :disabled="match"
                 class="u-input u-margin"
                 v-model="score"
@@ -32,13 +32,24 @@
                     >
                     </el-option>
                 </el-select>
-            </el-input>
-            <el-select :disabled="match" class="u-source u-select u-margin" v-model="source" slot="prepend" placeholder="来源途径">
+            </el-input> -->
+            <el-select class="u-source u-select u-margin" v-model="select" slot="prepend" placeholder="来源途径">
+                <span slot="prefix" class="u-prefix">排序方式</span>
+                <el-option label="不限制" value=""></el-option>
+                <el-option
+                        v-for="item in categoryData.categoryList"
+                        :key="item.key"
+                        :label="item.name"
+                        :value="item.key"
+                    >
+                </el-option>
+            </el-select>
+            <el-select class="u-source u-select u-margin" v-model="source" slot="prepend" placeholder="来源途径" clearable>
                 <span slot="prefix" class="u-prefix">来源途径</span>
                 <el-option label="全部" value=""></el-option>
                 <el-option v-for="item in source_types" :key="item" :label="item" :value="item"> </el-option>
             </el-select>
-            <el-select :disabled="match" class="u-level u-select u-margin" v-model="level" slot="prepend" placeholder="家园等级">
+            <el-select class="u-level u-select u-margin" v-model="level" slot="prepend" placeholder="家园等级">
                 <span slot="prefix" class="u-prefix">家园等级</span>
                 <el-option
                     v-for="item in categoryData.levelList"
@@ -49,9 +60,18 @@
                 </el-option>
             </el-select>
             <div class="flexNormal">
-                <el-checkbox :disabled="match" :checked="interact" v-model="interact">可交互</el-checkbox>
-                <el-checkbox :disabled="match" :checked="set" v-model="set">庐园广记</el-checkbox>
-                <el-checkbox v-model="match" @change="matchChange">园宅会赛</el-checkbox>
+                <el-checkbox :checked="interact" v-model="interact">可交互</el-checkbox>
+                <el-checkbox :checked="set" v-model="set">庐园广记</el-checkbox>
+                <el-checkbox v-model="match" @change="matchChange">
+                    园宅会赛
+                    <el-popover trigger="hover" v-if="matchFurniture" popper-class="m-match-furniture-pop">
+                        <div>
+                            <div class="u-header">本次园宅会赛家具</div>
+                            {{ matchFurniture.text }}
+                        </div>
+                        <i class="el-icon-info" slot="reference"></i>
+                    </el-popover>
+                </el-checkbox>
             </div>
         </div>
     </div>
@@ -64,8 +84,8 @@ export default {
     data: function () {
         return {
             key: "", // 二级分类
-            score: "", // 分值
-            select: "1", // 属性 风水，观赏，使用，坚固，趣味
+            // score: "", // 分值
+            select: "", // 属性 风水，观赏，使用，坚固，趣味
             source: "", // 来源
             level: "", // 等级
             interact: false, //交互
@@ -75,7 +95,7 @@ export default {
             match: false, // 园宅会赛
         };
     },
-    props: ["list", "categoryData", "isChange"],
+    props: ["list", "categoryData", "isChange", "furniture"],
     inject: ["__imgRoot"],
     computed: {
         itemClass() {
@@ -100,7 +120,7 @@ export default {
         query() {
             return {
                 key: this.key,
-                score: this.score,
+                // score: this.score,
                 select: this.select,
                 source: this.source,
                 level: this.level,
@@ -108,6 +128,9 @@ export default {
                 set: this.set,
             };
         },
+        matchFurniture() {
+            return this.furniture && this.furniture.find(item => item.name === 'Text_Classify') || ''
+        }
     },
     methods: {
         onQueryKey(id) {
@@ -134,7 +157,7 @@ export default {
         defaultQuery() {
             this.key = "";
             this.score = "";
-            this.select = "1";
+            this.select = "";
             this.source = "";
             this.level = "";
             this.interact = false;
@@ -152,8 +175,10 @@ export default {
                     case "source":
                         obj[key] !== "all" ? (newObj["szSource"] = obj[key]) : "";
                         break;
-                    case "score":
-                        newObj["Attribute" + obj.select] = obj[key];
+                    case "select":
+                        if (obj.select) {
+                            newObj["Attribute" + obj.select] = 1;
+                        }
                         break;
                     case "level":
                         newObj["LevelLimit"] = obj[key];
@@ -185,8 +210,6 @@ export default {
         query: {
             handler: function (obj) {
                 this.$emit("onCategoryKey", this.toParams(obj));
-
-                if (this.match) this.match = false;
             },
             deep: true,
         },
