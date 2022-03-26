@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="u-info">
-                    <el-divider content-position="left"><i class="el-icon-box"></i> 合成需要材料</el-divider>
+                    <el-divider content-position="left">[ {{server}} ] - <i class="el-icon-box"></i> 材料成本统计</el-divider>
                     <div class="u-children">
                         <div class="u-child" v-for="(child, k) in item.child_list" :key="k">
                             <el-popover
@@ -109,7 +109,7 @@ import Item from "@jx3box/jx3box-editor/src/Item.vue";
 import CreatePlan from "@/components/manufacture/CreatePlan.vue";
 export default {
     name: "cart",
-    props: ["list"],
+    props: ["list", "server"],
     components: { GamePrice, Item, CreatePlan },
     data: function () {
         return {
@@ -147,6 +147,9 @@ export default {
             handler: function (list) {
                 if (list.length) this.toRepeated(list);
             },
+        },
+        server() {
+            this.toEmit({ del: -1 });
         },
     },
     methods: {
