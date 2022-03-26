@@ -28,7 +28,7 @@ function getFurnitureCategory() {
 
 // 园宅会赛
 function getFurnitureMatch(params){
-    return $team().get(`/api/team/share-ui/get/today`, {
+    return $team({mute:true}).get(`/api/team/share-ui/get/today`, {
         params
     })
 }
