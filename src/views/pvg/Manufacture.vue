@@ -162,7 +162,7 @@ export default {
     },
 
     created() {
-        this.getCraftType(); 
+        this.getCraftType();
     },
 };
 </script>

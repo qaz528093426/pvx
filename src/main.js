@@ -15,24 +15,9 @@ Vue.use(JX3BOX_UI);
 // import router from "./router";
 // import store from "./store";
 
-Vue.prototype.$addStorageEvent = function (key, data) {
-	// 创建一个StorageEvent事件
-	var newStorageEvent = document.createEvent("StorageEvent");
-	const storage = {
-		setItem: function (k, val) {
-			localStorage.setItem(k, val);
-			// 初始化创建的事件
-			newStorageEvent.initStorageEvent("setItem", false, false, k, null, val, null, null);
-			// 派发对象
-			window.dispatchEvent(newStorageEvent);
-		},
-	};
-	return storage.setItem(key, data);
-};
-
 import App from "./App.vue";
 new Vue({
-	// router,
-	// store,
-	render: (h) => h(App),
+    // router,
+    // store,
+    render: (h) => h(App),
 }).$mount("#app");
