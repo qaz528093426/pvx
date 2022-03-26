@@ -1,12 +1,8 @@
 import { $node } from "@jx3box/jx3box-common/js/https";
-import axios from 'axios';
 const $ = $node();
 
 function getFurniture(params) {
-    const $1 = axios.create({
-        baseURL: 'http://localhost:9002'
-    })
-    return $1.get("/house/furniture", {
+    return $.get("/house/furniture", {
         params: params,
     });
 }
