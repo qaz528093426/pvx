@@ -1,5 +1,6 @@
 import axios from "axios";
 import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { $team } from '@jx3box/jx3box-common/js/https';
 
 const $ = axios.create({
 	baseURL: __dataPath + "pvx/homeland/output/",
@@ -25,4 +26,11 @@ function getFurnitureCategory() {
 	return $.get("homeland_category.json");
 }
 
-export { getHomelandLevelUp, getHomelandGame, getHomelandCoord, getFurnitureCategory };
+// 园宅会赛
+function getFurnitureMatch(params){
+    return $team().get(`/api/team/share-ui/get/today`, {
+        params
+    })
+}
+
+export { getHomelandLevelUp, getHomelandGame, getHomelandCoord, getFurnitureCategory, getFurnitureMatch };

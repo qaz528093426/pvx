@@ -10,28 +10,49 @@
         </div>
 
         <div class="m-furniture-container flexNormal">
-
             <div class="m-furniture-types">
                 <div class="u-list">
                     <span class="u-item" @click="onDefault" :class="{ active: attKey == '-1' }"> 全部</span>
-                    <span class="u-item" v-for="(item, i) in category" :key="i" :class="item.id == attKey ? 'active' : ''" @click="onAttKey(item.id)">
+                    <span
+                        class="u-item"
+                        v-for="(item, i) in category"
+                        :key="i"
+                        :class="item.id == attKey ? 'active' : ''"
+                        @click="onAttKey(item.id)"
+                    >
                         {{ item.name }}
                     </span>
                 </div>
             </div>
 
             <div class="m-furniture-box">
-
-                <FurnitureCategory :list="children(attKey)" :isChange="isChange" :categoryData="categoryData" @onCategoryKey="onCategoryKey" />
+                <FurnitureCategory
+                    :list="children(attKey)"
+                    :isChange="isChange"
+                    :categoryData="categoryData"
+                    @onCategoryKey="onCategoryKey"
+                    @match="setMatch"
+                    ref="furnitureCategory"
+                />
 
                 <div class="m-furniture-list flexNormal" v-if="list.length">
                     <FurnitureCard v-for="(item, index) in list" :key="index" :item="item" />
                 </div>
 
-                <div class="m-furniture-null" v-else><el-alert center title="没有对应的家具" show-icon type="info"> </el-alert></div>
+                <div class="m-furniture-null" v-else>
+                    <el-alert center title="没有对应的家具" show-icon type="info"> </el-alert>
+                </div>
 
                 <div class="m-furniture-pages">
-                    <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+                    <el-button
+                        class="m-archive-more"
+                        v-show="hasNextPage"
+                        type="primary"
+                        @click="appendPage"
+                        :loading="loading"
+                        icon="el-icon-arrow-down"
+                        >加载更多</el-button
+                    >
                     <el-pagination
                         class="m-archive-pages"
                         background
@@ -51,10 +72,11 @@
 <script>
 import FurnitureCategory from "@/components/homeland/furniture_category.vue";
 import FurnitureCard from "@/components/homeland/furniture_card.vue";
-import { getFurnitureCategory } from "@/service/homeland.js";
+import { getFurnitureCategory, getFurnitureMatch } from "@/service/homeland.js";
 import { getFurniture } from "@/service/furniture.js";
 import { categoryCss } from "@/assets/data/furniture.json";
 import { sourceList, levelList, categoryList } from "@/assets/data/furniture.json";
+import dayjs from "dayjs";
 export default {
     name: "FurnitureList",
     components: { FurnitureCategory, FurnitureCard },
@@ -64,6 +86,8 @@ export default {
             attKey: -1,
             category: [],
             list: [],
+            furniture: [],
+            match: false,
 
             page: 1,
             per: 20,
@@ -96,6 +120,20 @@ export default {
             if (Object.keys(this.query).length) params = { ...this.query, ...params };
             return params;
         },
+        categoryFlat: function () {
+            let arr = [];
+
+            Object.entries(categoryCss).forEach(([key, value]) => {
+                value.forEach((item) => {
+                    arr.push({
+                        ...item,
+                        pId: ~~key,
+                    });
+                });
+            });
+
+            return arr;
+        },
     },
     watch: {
         params: {
@@ -104,6 +142,9 @@ export default {
             },
             deep: true,
         },
+        match(val) {
+            this.handleMatch(val)
+        }
     },
     methods: {
         onCategoryKey: function (obj) {
@@ -111,6 +152,7 @@ export default {
             this.isChange = false;
         },
         onAttKey: function (val) {
+            this.$refs.furnitureCategory.setMatch(false)
             this.defaultParams();
             this.attKey = val;
             this.isChange = true;
@@ -121,6 +163,8 @@ export default {
             });
         },
         onDefault: function () {
+            this.$refs.furnitureCategory.setMatch(false)
+            this.query = "";
             this.defaultParams();
         },
         getData() {
@@ -134,10 +178,112 @@ export default {
                     this.pages = res.data.pages;
                     this.total = res.data.total;
                     this.append = false;
+                    // 从首页跳转过来
+                    if (this.$route.query?.match) {
+                        this.$nextTick(() => {
+                            this.$refs.furnitureCategory.setMatch(true)
+                            this.match = true
+
+                            this.$router.push({ name: this.$route.name, query: {} })
+                        })
+                    }
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        setMatch(val) {
+            this.match = val
+        },
+        setFurniture(res) {
+            let data = [];
+                const now = dayjs().hour();
+                // 大于7取today，否则取yestoday
+                if (now < 7) {
+                    data = res?.data?.data?.yestoday || [];
+                } else {
+                    data =
+                        (res?.data?.data?.today?.length && res?.data?.data?.today) || res?.data?.data?.yestoday || [];
+                }
+
+                try {
+                    data.forEach((item) => {
+                        let content = (item.content && JSON.parse(item.content)) || "";
+
+                        content && this.furniture.push(content);
+                    });
+                } catch (e) {
+                    this.furniture = [];
+                }
+        },
+        // 园宅会赛
+        loadFurniture: function () {
+            try {
+                let furniture = sessionStorage.getItem('furniture')
+
+                furniture = furniture && JSON.parse(furniture);
+
+                if (furniture) {
+                    this.setFurniture(furniture)
+                } else {
+                    const params = {
+                        type: "homeland",
+                        subtype: "furniture",
+                        client_language: "zhcn_hd",
+                        region: "电信五区",
+                        server: "梦江南",
+                    };
+                    getFurnitureMatch(params).then((res) => {
+                        this.setFurniture(res)
+
+                        sessionStorage.setItem('furniture', JSON.stringify(res))
+                    });
+                }
+            } catch(e) {
+                console.error(e);
+                this.furniture = []
+            }
+        },
+        // 处理园宅会赛
+        handleMatch(val) {
+            if (!val) {
+                this.onDefault();
+            } else {
+                if (this.furniture?.length) {
+                    let query = {};
+                    // 属性加分
+                    let desc = this.furniture?.find((item) => item.name === "Text_Des");
+                    // 类型
+                    let classify = this.furniture?.find((item) => item.name === "Text_Classify");
+
+                    if (desc) {
+                        let category = categoryList.find((item) => desc.text.includes(item.name));
+
+                        if (category) {
+                            query[`Attribute${category.key}`] = 1;
+                        }
+                    }
+
+                    if (classify) {
+                        let temp = [];
+                        classify = classify.text.split("、");
+
+                        classify.forEach((item) => {
+                            let _temp = this.categoryFlat.find((c) => item.includes(c.name));
+                            if (_temp) {
+                                temp.push({
+                                    nCatag1Index: _temp.pId,
+                                    nCatag2Index: _temp.id,
+                                });
+                            }
+                        });
+                        query["match"] = JSON.stringify(temp);
+                    }
+                    query.isMatch = 1;
+
+                    this.query = query;
+                }
+            }
         },
         defaultParams() {
             this.attKey = -1;
@@ -163,6 +309,7 @@ export default {
     created: function () {
         this.getData();
         this.getCategory();
+        this.loadFurniture();
     },
 };
 </script>
