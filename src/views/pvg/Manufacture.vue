@@ -25,7 +25,7 @@
                     >
                 </div>
                 <!-- 左侧 & 可制作模块 -->
-                <Make class="u-left" :data="make_props" @toEmit="isEmit" />
+                <Make class="u-left" :data="make_props" :id="item_id" @toEmit="isEmit" />
             </div>
             <div class="m-manufacture-content">
                 <!-- 中间 & 配方展示 -->
@@ -137,7 +137,7 @@ export default {
         },
 
         // 子组件传值
-        isEmit(data) {
+        isEmit(data) { 
             this.add = data.add || false;
             if (data.count) this.count = data.count;
             if (data.id) this.item_id = data.id;

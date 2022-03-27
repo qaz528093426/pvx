@@ -47,7 +47,7 @@ import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
 import MakeItem from "@/components/manufacture/MakeItem.vue";
 export default {
     name: "make",
-    props: ["data"],
+    props: ["data", "id"],
     components: { MakeItem },
     data: function () {
         return {
@@ -124,10 +124,12 @@ export default {
             });
         },
         // 展示列表并选择列表第一个作为显示
-        showList() { 
-            this.item_id = this.list_data[this.craft_key][0].list[0].ID;
+        showList() {
             this.craft_list = this.list_data[this.craft_key];
-            this.$emit("toEmit", { id: this.item_id });
+            if (!this.id) {
+                this.item_id = this.list_data[this.craft_key][0].list[0].ID;
+                this.$emit("toEmit", { id: this.item_id });
+            }
             this.loading = false;
             this.search = "";
         },
@@ -136,6 +138,7 @@ export default {
         // ===================
         // 发送emit
         toEmit(data) {
+            console.log(data, "make");
             this.item_id = data.id;
             this.$emit("toEmit", data);
         },
