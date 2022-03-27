@@ -58,8 +58,8 @@
             <el-divider content-position="left"> 独家数据分析 </el-divider>
             <facedata v-if="facedata" :data="facedata" />
         </div>
-        <!-- 点赞 -->
-        <Thx class="m-thx" :postId="id" :postType="post_type" :adminBoxcoinEnable="false" :userBoxcoinEnable="false" />
+        <!-- 点赞 --> 
+        <Thx class="m-thx" :postId="id" :postType="post_type" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true"/>
         <!-- 评论 -->
         <div>
             <el-divider content-position="left">讨论</el-divider>
@@ -97,6 +97,7 @@ export default {
         id: function () {
             return this.$route.params.id;
         },
+ 
         author_id: function () {
             return this.post?.post_author || 0;
         },
