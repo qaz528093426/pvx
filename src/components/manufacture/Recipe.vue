@@ -297,6 +297,7 @@ export default {
         // 提交数据
         toEmit(data) {
             this.$emit("toEmit", data);
+            this.item.count = 1;
         },
         // 描述过滤
         textFilter(str) {
