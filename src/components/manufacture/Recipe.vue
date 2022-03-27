@@ -126,11 +126,12 @@ export default {
             this.loading = true;
             this.first = true;
             this.item_id = data.item_id;
+            let _count = data.count;
             getManufactureItem(data.craft_key, data.item_id, data.client)
                 .then((res) => {
                     res.data.children = [];
                     res.data.child_list = [];
-                    res.data.count = 1;
+                    res.data.count = _count || 1;
                     let _res = this.processor(res.data);
                     this.item = _res;
                     this.item.item_type_id = this.item_ids.price_id;
