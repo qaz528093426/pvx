@@ -56,7 +56,7 @@
 
                 <div class="u-info">
                     <div class="u-name u-interval">
-                        <span :class="`u-quality--${el.Quality}`"> {{ el.Name }}</span>
+                        <span v-if="el.item_info" :class="`u-quality--${el.Quality}`"> {{ el.item_info.Name }}</span>
                         <span class="u-num">数量：x {{ el.count }}</span>
                     </div>
                     <div class="u-price" v-if="data.client == 'std'">
