@@ -205,6 +205,7 @@ export default {
                 return item;
             });
             let _ids = arr.map((item) => item.id);
+            console.log(arr);
             getItemsPrice({ ids: _ids.join(), client: this.$store.state.client }).then((res) => {
                 let _list = res.data;
                 let _arr = [];
@@ -297,6 +298,7 @@ export default {
         // 提交数据
         toEmit(data) {
             this.$emit("toEmit", data);
+            this.item.count = 1;
         },
         // 描述过滤
         textFilter(str) {

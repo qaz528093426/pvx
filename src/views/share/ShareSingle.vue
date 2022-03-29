@@ -12,7 +12,7 @@
                     <i class="el-icon-user-solid"></i>
                     <a class="u-name" target="_blank" :href="author_link">{{ author_name }}</a>
                 </div>
-                <div class="u-info-margin">
+                <div class="u-info-client u-info-margin">
                     <i class="u-label-client">适用客户端</i>
                     <span class="u-client" :class="client">{{ showClientLabel(client) }}</span>
                 </div>
@@ -20,7 +20,7 @@
                     <i class="el-icon-date"> </i>
                     <time>{{ post_date }}</time>
                 </span>
-                <span class="u-info-margin">
+                <span class="u-info-date u-info-margin">
                     <i class="el-icon-date"> </i>
                     <time>{{ update_date }}</time>
                 </span>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="m-single-pics" v-if="meta.pics && meta.pics.length">
-            <el-carousel :interval="4000" type="card" arrow="always" height="600px">
+            <el-carousel class="m-carousel" :interval="4000" type="card" arrow="always">
                 <el-carousel-item v-for="(item, i) in meta.pics" :key="i">
                     <div class="m-face-pic" @click="showOriginImage(i)">
                         <el-image
@@ -59,7 +59,14 @@
             <facedata v-if="facedata" :data="facedata" />
         </div>
         <!-- 点赞 -->
-        <Thx class="m-thx" :postId="id" :postType="post_type" :adminBoxcoinEnable="false" :userBoxcoinEnable="false" />
+        <Thx
+            class="m-thx"
+            :postId="id"
+            :postType="post_type"
+            :userId="author_id"
+            :adminBoxcoinEnable="true"
+            :userBoxcoinEnable="true"
+        />
         <!-- 评论 -->
         <div>
             <el-divider content-position="left">讨论</el-divider>
@@ -97,6 +104,7 @@ export default {
         id: function () {
             return this.$route.params.id;
         },
+
         author_id: function () {
             return this.post?.post_author || 0;
         },
@@ -172,9 +180,9 @@ export default {
         showImage: function (val) {
             return resolveImagePath(val);
         },
-        showOriginImage : function (i){
-            console.log(i)
-        }
+        showOriginImage: function (i) {
+            console.log(i);
+        },
     },
 
     created: function () {
