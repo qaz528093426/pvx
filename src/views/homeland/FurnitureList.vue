@@ -78,6 +78,8 @@ import { getFurniture } from "@/service/furniture.js";
 import { categoryCss } from "@/assets/data/furniture.json";
 import { sourceList, levelList, categoryList } from "@/assets/data/furniture.json";
 import dayjs from "dayjs";
+import isoWeek from 'dayjs/plugin/isoWeek';
+dayjs.extend(isoWeek);
 export default {
     name: "FurnitureList",
     components: { FurnitureCategory, FurnitureCard },
@@ -198,25 +200,13 @@ export default {
             this.match = val
         },
         setFurniture(res) {
-            let data = [];
-                const now = dayjs().hour();
-                // 大于7取today，否则取yestoday
-                if (now < 7) {
-                    data = res?.data?.data?.yestoday || [];
-                } else {
-                    data =
-                        (res?.data?.data?.today?.length && res?.data?.data?.today) || res?.data?.data?.yestoday || [];
-                }
+            let data = res.data.data;
 
-                try {
-                    data.forEach((item) => {
-                        let content = (item.content && JSON.parse(item.content)) || "";
-
-                        content && this.furniture.push(content);
-                    });
-                } catch (e) {
-                    this.furniture = [];
-                }
+            try {
+                this.furniture = data
+            } catch (e) {
+                this.furniture = [];
+            }
         },
         // 园宅会赛
         loadFurniture: function () {
@@ -229,16 +219,14 @@ export default {
                     this.setFurniture(furniture)
                 } else {
                     const params = {
-                        type: "homeland",
-                        subtype: "furniture",
-                        client_language: "zhcn_hd",
-                        region: "电信五区",
-                        server: "梦江南",
+                        subtypes: "category,property,next_match",
+                        start: dayjs().startOf('isoWeek').format('YYYY-MM-DD'),
+                        end: dayjs().endOf('isoWeek').format('YYYY-MM-DD')
                     };
                     getFurnitureMatch(params).then((res) => {
                         this.setFurniture(res)
 
-                        sessionStorage.setItem('furniture', JSON.stringify(res))
+                        res.data?.data?.length && sessionStorage.setItem('furniture', JSON.stringify(res))
                     });
                 }
             } catch(e) {
@@ -253,22 +241,13 @@ export default {
             } else {
                 if (this.furniture?.length) {
                     let query = {};
-                    // 属性加分
-                    // let desc = this.furniture?.find((item) => item.name === "Text_Des");
                     // 类型
-                    let classify = this.furniture?.find((item) => item.name === "Text_Classify");
+                    let classify = this.furniture?.find((item) => item.subtype === "category");
 
-                    /* if (desc) {
-                        let category = categoryList.find((item) => desc.text.includes(item.name));
-
-                        if (category) {
-                            query[`Attribute${category.key}`] = 1;
-                        }
-                    } */
 
                     if (classify) {
                         let temp = [];
-                        classify = classify.text.split("、");
+                        classify = classify.content.split("、");
 
                         classify.forEach((item) => {
                             let _temp = this.categoryFlat.find((c) => item.includes(c.name));

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { $team } from '@jx3box/jx3box-common/js/https';
+import { $team, $cms } from '@jx3box/jx3box-common/js/https';
 
 const $ = axios.create({
 	baseURL: __dataPath + "pvx/homeland/output/",
@@ -28,7 +28,10 @@ function getFurnitureCategory() {
 
 // 园宅会赛
 function getFurnitureMatch(params){
-    return $team({mute:true}).get(`/api/team/share-ui/get/today`, {
+    /* return $team({mute:true}).get(`/api/team/share-ui/get/today`, {
+        params
+    }) */
+    return $cms({mute: true}).get(`/api/cms/game/furniture/match`, {
         params
     })
 }
