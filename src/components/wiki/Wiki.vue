@@ -21,7 +21,7 @@
                         <i class="el-icon-edit"></i>
                         本次修订由 <b>{{ user_name }}</b> 提交于{{ updated_at }}
                     </div>
-                    <Thx class="m-thx" :postId="id" :postType="type" :adminBoxcoinEnable="false" :userBoxcoinEnable="false" />
+                    <Thx class="m-thx" :postId="id" :postType="type" :postTitle="source_title" :adminBoxcoinEnable="false" :userBoxcoinEnable="false" />
                 </template>
             </WikiPanel>
 
@@ -49,7 +49,7 @@ export default {
         WikiRevisions,
         Article,
     },
-    props: ["title", "source_type", "source_id", "type", "id"],
+    props: ["title", "source_type", "source_id", "type", "id","source_title"],
     data() {
         return {
             wiki_post: null,

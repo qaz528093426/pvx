@@ -63,6 +63,7 @@
             class="m-thx"
             :postId="id"
             :postType="post_type"
+            :postTitle="title"
             :userId="author_id"
             :adminBoxcoinEnable="true"
             :userBoxcoinEnable="true"

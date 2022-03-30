@@ -75,7 +75,7 @@
 
         <!-- 宠物攻略 -->
         <div class="m-pet-wiki">
-            <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="宠物攻略"></Wiki>
+            <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="宠物攻略" :source_title="title"></Wiki>
         </div>
         <div class="m-pvx-comment">
             <Comment :id="id" :category="type" order="desc" />
