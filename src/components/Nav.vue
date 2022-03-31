@@ -7,7 +7,7 @@
 			</strong>
 		</RightSideMsg>
 
-		<el-menu :default-openeds="['1', '2', '3', '4']">
+		<el-menu :default-openeds="['1', '2', '3']">
 			<el-submenu :index="group.index" v-for="group in menus" :key="group.key">
 				<template slot="title">{{ group.label }}</template>
 				<el-menu-item-group>
@@ -55,54 +55,17 @@ export default {
 				},
 
 				{
-					key: "homeland",
-					label: "家园",
+					key: "rare",
+					label: "珍奇",
 					index: "2",
 					submenus: [
-						{
+                        {
 							path: "/furniture",
 							label: "家具大全",
-							icon: "el-icon-table-lamp",
+							icon: "el-icon-files",
 							key: "furniture",
 							status: true,
 						},
-						{
-							path: "/homeland/tutorial",
-							label: "建设指南",
-							icon: "el-icon-reading",
-							key: "tutorial",
-							status: true,
-						},
-						{
-							path: "/homeland/maps",
-							label: "地图一览",
-							icon: "el-icon-map-location",
-							key: "maps",
-							status: true,
-						},
-						{
-							path: "/homeland/flower",
-							label: "花价查询",
-							icon: "el-icon-sunny",
-							key: "flower",
-							status: true,
-						},
-						{
-							path: "https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/",
-							label: "蓝图下载",
-							icon: "el-icon-download",
-							key: "blueprint",
-							status: true,
-							target: "_blank",
-						},
-					],
-				},
-
-				{
-					key: "rare",
-					label: "珍奇",
-					index: "3",
-					submenus: [
 						{
 							path: "/pet",
 							label: "宠物大全",
@@ -137,7 +100,7 @@ export default {
 				{
 					key: "merchants",
 					label: "商贾",
-					index: "4",
+					index: "3",
 					submenus: [
 						{
 							path: "/pvg/manufacture",
@@ -149,6 +112,43 @@ export default {
 						// 物价大全
 						// 金价走势
 						// 万宝楼
+					],
+				},
+
+                {
+					key: "homeland",
+					label: "其它",
+					index: "4",
+					submenus: [
+						{
+							path: "/homeland/tutorial",
+							label: "家园建设",
+							icon: "el-icon-reading",
+							key: "tutorial",
+							status: true,
+						},
+						{
+							path: "/homeland/maps",
+							label: "家园地图",
+							icon: "el-icon-map-location",
+							key: "maps",
+							status: true,
+						},
+						{
+							path: "/homeland/flower",
+							label: "家园花价",
+							icon: "el-icon-sunny",
+							key: "flower",
+							status: true,
+						},
+						{
+							path: "https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/",
+							label: "家园蓝图",
+							icon: "el-icon-download",
+							key: "blueprint",
+							status: true,
+							target: "_blank",
+						},
 					],
 				},
 			],
