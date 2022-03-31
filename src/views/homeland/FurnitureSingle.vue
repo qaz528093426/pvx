@@ -45,7 +45,7 @@
 
 				<div class="m-buttons">
 					<!-- 收藏按钮 -->
-					<Fav class="u-collect" post-type="furniture" :post-id="id" />
+					<Fav class="u-collect" post-type="furniture" :post-id="id" :post-title="data && data.szName" />
 				</div>
 			</div>
 		</div>
