@@ -67,7 +67,7 @@
                     <el-popover trigger="hover" v-if="matchFurniture" popper-class="m-match-furniture-pop">
                         <div>
                             <div class="u-header">本次园宅会赛家具</div>
-                            {{ matchFurniture.content }}
+                            {{ matchFurniture.content | formatMatchFurniture }}
                         </div>
                         <i class="el-icon-info" slot="reference"></i>
                     </el-popover>
@@ -217,5 +217,10 @@ export default {
             if (val) this.defaultQuery();
         },
     },
+    filters: {
+        formatMatchFurniture(val) {
+            return val.replace('+', "");
+        },
+    }
 };
 </script>
