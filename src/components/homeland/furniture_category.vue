@@ -62,12 +62,12 @@
             <div class="flexNormal">
                 <el-checkbox :checked="interact" v-model="interact">可交互</el-checkbox>
                 <el-checkbox :checked="set" v-model="set">庐园广记</el-checkbox>
-                <el-checkbox v-model="match" @change="matchChange">
+                <el-checkbox v-model="match" @change="matchChange" :disabled="!matchFurniture">
                     园宅会赛
                     <el-popover trigger="hover" v-if="matchFurniture" popper-class="m-match-furniture-pop">
                         <div>
                             <div class="u-header">本次园宅会赛家具</div>
-                            {{ matchFurniture.text }}
+                            {{ matchFurniture.content }}
                         </div>
                         <i class="el-icon-info" slot="reference"></i>
                     </el-popover>
@@ -129,7 +129,7 @@ export default {
             };
         },
         matchFurniture() {
-            return this.furniture && this.furniture.find(item => item.name === 'Text_Classify') || ''
+            return this.furniture && this.furniture.find(item => item.subtype === 'category') || ''
         }
     },
     methods: {
