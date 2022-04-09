@@ -78,8 +78,9 @@ import { getFurniture } from "@/service/furniture.js";
 import { categoryCss } from "@/assets/data/furniture.json";
 import { sourceList, levelList, categoryList } from "@/assets/data/furniture.json";
 import dayjs from "dayjs";
-import isoWeek from 'dayjs/plugin/isoWeek';
+import isoWeek from "dayjs/plugin/isoWeek";
 dayjs.extend(isoWeek);
+
 export default {
     name: "FurnitureList",
     components: { FurnitureCategory, FurnitureCard },
@@ -102,7 +103,7 @@ export default {
             isChange: false,
             client: "std",
             query: "",
-            matchQuery: ""
+            matchQuery: "",
         };
     },
     computed: {
@@ -147,16 +148,16 @@ export default {
             deep: true,
         },
         match(val) {
-            this.handleMatch(val)
-        }
+            this.handleMatch(val);
+        },
     },
     methods: {
         onCategoryKey: function (obj) {
-            this.query = this.match ? {...this.matchQuery, ...obj} : obj;
+            this.query = this.match ? { ...this.matchQuery, ...obj } : obj;
             this.isChange = false;
         },
         onAttKey: function (val) {
-            this.$refs.furnitureCategory.setMatch(false)
+            this.$refs.furnitureCategory.setMatch(false);
             this.defaultParams();
             this.attKey = val;
             this.isChange = true;
@@ -167,7 +168,7 @@ export default {
             });
         },
         onDefault: function () {
-            this.$refs.furnitureCategory.setMatch(false)
+            this.$refs.furnitureCategory.setMatch(false);
             this.query = "";
             this.defaultParams();
         },
@@ -185,11 +186,11 @@ export default {
                     // 从首页跳转过来
                     if (this.$route.query?.match) {
                         this.$nextTick(() => {
-                            this.$refs.furnitureCategory.setMatch(true)
-                            this.match = true
+                            this.$refs.furnitureCategory.setMatch(true);
+                            this.match = true;
 
-                            this.$router.push({ name: this.$route.name, query: {} })
-                        })
+                            this.$router.push({ name: this.$route.name, query: {} });
+                        });
                     }
                 })
                 .finally(() => {
@@ -197,13 +198,13 @@ export default {
                 });
         },
         setMatch(val) {
-            this.match = val
+            this.match = val;
         },
         setFurniture(res) {
             let data = res.data.data;
 
             try {
-                this.furniture = data
+                this.furniture = data;
             } catch (e) {
                 this.furniture = [];
             }
@@ -211,27 +212,27 @@ export default {
         // 园宅会赛
         loadFurniture: function () {
             try {
-                let furniture = sessionStorage.getItem('furniture')
+                let furniture = sessionStorage.getItem("furniture");
 
                 furniture = furniture && JSON.parse(furniture);
 
                 if (furniture) {
-                    this.setFurniture(furniture)
+                    this.setFurniture(furniture);
                 } else {
                     const params = {
                         subtypes: "category,property,next_match",
-                        start: dayjs().startOf('isoWeek').format('YYYY-MM-DD'),
-                        end: dayjs().endOf('isoWeek').format('YYYY-MM-DD')
+                        start: dayjs().startOf("isoWeek").format("YYYY-MM-DD"),
+                        end: dayjs().endOf("isoWeek").format("YYYY-MM-DD"),
                     };
                     getFurnitureMatch(params).then((res) => {
-                        this.setFurniture(res)
+                        this.setFurniture(res);
 
-                        res.data?.data?.length && sessionStorage.setItem('furniture', JSON.stringify(res))
+                        res.data?.data?.length && sessionStorage.setItem("furniture", JSON.stringify(res));
                     });
                 }
-            } catch(e) {
+            } catch (e) {
                 console.error(e);
-                this.furniture = []
+                this.furniture = [];
             }
         },
         // 处理园宅会赛
@@ -243,7 +244,6 @@ export default {
                     let query = {};
                     // 类型
                     let classify = this.furniture?.find((item) => item.subtype === "category");
-
 
                     if (classify) {
                         let temp = [];
@@ -264,7 +264,7 @@ export default {
 
                     this.matchQuery = query;
 
-                    this.onCategoryKey({})
+                    this.onCategoryKey({});
                 }
             }
         },
