@@ -7,7 +7,7 @@
 			</strong>
 		</RightSideMsg>
 
-		<el-menu :default-openeds="['1', '2', '3']">
+		<el-menu :default-openeds="['1', '2', '3', '4']">
 			<el-submenu :index="group.index" v-for="group in menus" :key="group.key">
 				<template slot="title">{{ group.label }}</template>
 				<el-menu-item-group>

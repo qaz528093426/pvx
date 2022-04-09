@@ -13,25 +13,14 @@
         </div>
         <div class="m-manufacture-main">
             <div class="m-manufacture-sidebar">
-                <!-- 分类 -->
-                <div class="u-tabs">
-                    <span
-                        v-for="(item, index) in craft_types"
-                        :key="index"
-                        class="u-tab"
-                        :class="[`u-tab${index}`, profession_id == item.ProfessionID ? 'active' : '']"
-                        @click="changeCraft(item.ProfessionID, item.key)"
-                        >{{ item.name }}</span
-                    >
-                </div>
-                <!-- 左侧 & 可制作模块 -->
-                <Make class="u-left" :data="make_props" :id="item_id" @toEmit="isEmit" />
+                <!-- 左侧 & 可制作配方 -->
+                <Make class="u-left" @toEmit="isEmit" />
             </div>
             <div class="m-manufacture-content">
                 <!-- 中间 & 配方展示 -->
                 <Recipe class="u-middle" :data="recipe_props" @toEmit="isEmit" />
                 <!-- 右侧 & 购物车计算 -->
-                <Cart class="u-right" :list="cart_list" :server="server" @toEmit="isEmit" />
+                <Cart class="u-right" :data="cart_props" @toEmit="isEmit" />
             </div>
         </div>
     </div>
@@ -41,8 +30,7 @@
 import servers_std from "@jx3box/jx3box-data/data/server/server_std.json";
 import servers_origin from "@jx3box/jx3box-data/data/server/server_origin.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { craft_types } from "@/assets/data/manufacture.json";
-import { getCraftJson } from "@/service/manufacture";
+
 import Recipe from "@/components/manufacture/Recipe.vue";
 import Make from "@/components/manufacture/Make.vue";
 import Cart from "@/components/manufacture/Cart.vue";
@@ -53,22 +41,15 @@ export default {
     data: function () {
         return {
             server: "蝶恋花",
-            profession_id: 5,
-            craft_key: "tailoring",
-            craft_group: [],
-            cart_item: "",
-
-            // 传值
+            craft_key: "",
             item_id: "",
-            add: false,
             count: 0,
             cart_list: [],
+            cache_data: {},
+            my_prices: {},
         };
     },
     computed: {
-        craft_types() {
-            return craft_types[this.client];
-        },
         // 服务器
         server_list() {
             return this.client == "std" ? servers_std : servers_origin;
@@ -79,93 +60,95 @@ export default {
         isStd() {
             return this.client == "std";
         },
-        make_props() {
-            let _list = this.craft_group.filter((item) => {
-                if (this.profession_id == item[0].ProfessionID) return item;
-            });
-            let craft = this.craft_types.filter((item) => {
-                if (item.key == this.craft_key) return item;
-            });
-            return {
-                client: this.client,
-                craft: craft[0],
-                craft_group: _list[0],
-            };
+        item() {
+            return this.cacheItemData(this.cache_data[this.server][this.item_id]);
         },
         recipe_props() {
-            return {
-                count: this.count,
-                add: this.add,
+            let _data = {
                 client: this.client,
                 item_id: this.item_id,
-                craft_key: this.craft_key,
                 server: this.server,
+                craft_key: this.craft_key,
+                my_prices: this.my_prices,
+            };
+            if (this.item) _data.item = this.item;
+            if (this.count) _data.count = this.count;
+            return _data;
+        },
+        cart_props() {
+            return {
+                list: this.cart_list,
+                server: this.server,
+                my_prices: this.my_prices,
             };
         },
     },
     methods: {
-        // 切换技艺类别
-        changeCraft(i, key) {
-            if (this.craft_key == key) return;
-            this.profession_id = i;
-            this.craft_key = key;
-            this.item_id = "";
-        },
-        // 获取全部技艺分类并分组
-        getCraftType() {
-            getCraftJson().then((res) => {
-                let craft_group = this.client == "std" ? res.data.std : res.data.origin;
-                let _list = [];
-                let _obj = {};
-                craft_group.forEach((item) => {
-                    if (!_obj[item.ProfessionID]) {
-                        var _arr = [];
-                        _arr.push({ ...item, list: [] });
-                        _list.push(_arr);
-                        _obj[item.ProfessionID] = item;
-                    } else {
-                        _list.forEach((el) => {
-                            if (el[0].ProfessionID == item.ProfessionID) {
-                                el.push({ ...item, list: [] });
-                            }
-                        });
-                    }
-                });
-
-                this.craft_group = _list;
-            });
-        },
-
         // 子组件传值
-        isEmit(data) { 
-            this.add = data.add || false;
-            if (data.count) this.count = data.count;
-            if (data.id) this.item_id = data.id;
-            if (data.item) this.addToCart(data.item, data);
-            if (data.del) {
-                data.del == -1
+        isEmit(data) {
+            let { id, count, craft_key, my_price, item, del } = data;
+            this.item_id = id || this.item_id;
+            this.count = count || 0;
+            if (craft_key) this.craft_key = craft_key;
+            if (my_price) this.cachePrice(my_price);
+            if (item) this.cache_data[this.server][item.ID] = item;
+            count && item ? this.addToCart(item, count) : "";
+            if (del) {
+                del == -1
                     ? this.cart_list.splice(0, this.cart_list.length)
-                    : (this.cart_list = this.cart_list.filter((item) => item.ID !== data.del));
+                    : (this.cart_list = this.cart_list.filter((item) => item.ID !== del));
             }
         },
+
         // 加入购物车
-        addToCart(obj, data, count = this.count) {
-            if (data.add) return;
-            let _obj = Object.assign({}, obj);
+        addToCart(obj, count) {
             this.cart_list.some((item) => item.ID == obj.ID)
                 ? this.cart_list.forEach((item) => {
-                      if (item.ID == obj.ID) item.count += count;
+                      if (item.ID == obj.ID) {
+                          item.children = obj.children;
+                          item.item.count += count;
+                      }
                   })
-                : this.cart_list.push(_obj);
+                : this.cart_list.push(obj);
             this.count = 0;
         },
+        // 更新已获取过的物品
+        cacheItemData(item) {
+            if (!item) return;
+            let data = this.my_prices;
+            if (data[item.ID]) item.Price = data[item.ID].Price;
+            item.children = item.children.map((el) => {
+                if (data[el.id]) el.Price = data[el.id].Price;
+                return el;
+            });
+            return item;
+        },
+        // 更新物品价格
+        cachePrice(my_price) {
+            this.my_prices[my_price.id] = my_price;
+            let _prices = this.my_prices;
+            if (this.cart_list.length)
+                this.cart_list = this.cart_list.map((item) => {
+                    if (_prices[item.ID]) item.Price = _prices[item.ID].Price;
+                    item.children.map((el) => {
+                        if (_prices[el.id]) el.Price = _prices[el.id].Price;
+                        return el;
+                    });
+                    return item;
+                });
+        },
     },
-    created() {
-        this.getCraftType();
+    watch: {
+        server: {
+            immediate: true,
+            handler: function (val) {
+                if (!this.cache_data[val]) this.cache_data[val] = {};
+            },
+        },
     },
 };
 </script>
 
 <style lang="less">
-@import "~@/assets/css/manufacture/index.less";
+    @import "~@/assets/css/manufacture/index.less";
 </style>
