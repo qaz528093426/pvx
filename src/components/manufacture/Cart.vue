@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <CreatePlan :list="cart_list" />
+        <CreatePlan :list="cart_list" @toEmit="toEmit" />
     </div>
 </template>
 <script>

@@ -60,13 +60,13 @@
 import { getManufactureItem, getOther, getItemsPrice, getAuction } from "@/service/manufacture";
 import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-
+import GamePrice from "@jx3box/jx3box-common-ui/src/wiki/GamePrice.vue";
 import Item from "@jx3box/jx3box-editor/src/Item.vue";
 import PriceItem from "@/components/manufacture/PriceItem.vue";
 export default {
     name: "Recipe",
     props: ["data"],
-    components: { Item, PriceItem },
+    components: { Item, PriceItem, GamePrice },
     data: function () {
         return {
             loading: false,
