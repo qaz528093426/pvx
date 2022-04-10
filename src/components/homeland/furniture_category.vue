@@ -66,7 +66,7 @@
                     园宅会赛
                     <el-popover trigger="hover" v-if="matchFurniture" popper-class="m-match-furniture-pop">
                         <div>
-                            <div class="u-header">本次园宅会赛家具</div>
+                            <div class="u-header">本周园宅会赛：</div>
                             <div>{{ matchProperty.content }}</div>
                             <div>{{ matchFurniture.content | formatMatchFurniture }}</div>
                         </div>

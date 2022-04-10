@@ -8,12 +8,13 @@
             <img :src="`${img}/yin.png`" alt="银" />
             <el-input class="u-input" type="number" size="mini" v-model="my_Price.tong"></el-input>
             <img :src="`${img}/tong.png`" alt="铜" />
-            <el-button class="u-button" size="mini" @click="inputPrice">添加</el-button>
+            <el-button class="u-button" size="mini" @click="inputPrice">确定</el-button>
         </div>
         <template slot="reference">
             <div class="m-price-item">
                 <GamePrice v-if="data.Price" class="u-price-num" :price="data.Price" />
                 <span class="u-null" v-else>暂无价格</span>
+                <i class="u-edit el-icon-edit" title="修改价格"></i>
             </div>
         </template>
     </el-popover>
@@ -67,6 +68,10 @@ export default {
             .fz(13px);
             color: #d00;
             opacity: 0.9;
+        }
+        .u-edit{
+            .ml(5px);
+            color:#08cfd9;
         }
     }
     .m-add-price {

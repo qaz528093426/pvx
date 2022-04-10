@@ -40,11 +40,11 @@
                     </div>
                     <div class="u-price" v-if="data.client == 'std'">
                         {{ el.game_price ? "[NPC出售] 单价：" : `[${data.server}] 昨日平均单价：` }}
-                        <PriceItem :data="{Price:el.Price,Name:el.Name,id:el.ID}" @toEmit="isPrice" />
+                        <PriceItem :data="{Price:el.Price,Name:el.Name,id:el.ID}" @toEmit="isPrice"/>
                     </div>
                     <div class="u-price" v-else>
                         [NPC出售] 单价：
-                        <PriceItem :data="{Price:el.Price,Name:el.Name,id:el.ID}" @toEmit="isPrice" />
+                        <PriceItem :data="{Price:el.Price,Name:el.Name,id:el.ID}" @toEmit="isPrice"/>
                     </div>
                 </div>
             </div>
