@@ -33,7 +33,7 @@
                     </el-option>
                 </el-select>
             </el-input> -->
-            <el-select class="u-source u-select u-margin" v-model="select" slot="prepend" placeholder="来源途径">
+            <el-select class="u-source u-select u-margin" v-model="select" slot="prepend" placeholder="排序方式">
                 <span slot="prefix" class="u-prefix">排序方式</span>
                 <el-option label="不限制" value=""></el-option>
                 <el-option
@@ -67,7 +67,8 @@
                     <el-popover trigger="hover" v-if="matchFurniture" popper-class="m-match-furniture-pop">
                         <div>
                             <div class="u-header">本次园宅会赛家具</div>
-                            {{ matchFurniture.content | formatMatchFurniture }}
+                            <div>{{ matchProperty.content }}</div>
+                            <div>{{ matchFurniture.content | formatMatchFurniture }}</div>
                         </div>
                         <i class="el-icon-info" slot="reference"></i>
                     </el-popover>
@@ -130,7 +131,10 @@ export default {
         },
         matchFurniture() {
             return this.furniture && this.furniture.find(item => item.subtype === 'category') || ''
-        }
+        },
+        matchProperty() {
+            return this.furniture && this.furniture.find(item => item.subtype === 'property') || ''
+        },
     },
     methods: {
         onQueryKey(id) {
@@ -201,6 +205,11 @@ export default {
         matchChange(val) {
             this.defaultQuery();
             this.$emit("match", val);
+
+            if (val) {
+                let _select = this.categoryData.categoryList.find(item => this.matchProperty?.content.includes(item.name));
+                if (_select) this.select = _select.key;
+            }
         },
         setMatch(val) {
             this.match = val
