@@ -95,8 +95,8 @@ export default {
             post: {},
             stat: {},
             client_map: {
-                std: "正式服",
-                origin: "怀旧服",
+                std: "重制",
+                origin: "缘起",
                 all: "双端",
             },
         };

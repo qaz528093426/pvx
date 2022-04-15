@@ -14,7 +14,7 @@
                 </template>
                 <template slot="body">
                     <div class="m-wiki-compatible" v-if="compatible">
-                        <i class="el-icon-warning-outline"></i> 暂无怀旧服攻略，以下为正式服攻略，仅作参考，<a class="s-link" :href="publish_url">参与修订</a>。
+                        <i class="el-icon-warning-outline"></i> 暂无缘起攻略，以下为重制攻略，仅作参考，<a class="s-link" :href="publish_url">参与修订</a>。
                     </div>
                     <Article :content="wiki_post.post.content" />
                     <div class="m-wiki-signature">
@@ -94,20 +94,20 @@ export default {
             if (this.client == "std") {
                 WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
                     this.wiki_post = res?.data?.data;
-                    console.log("获取正式服攻略");
+                    console.log("获取重制攻略");
                 });
             } else {
                 WikiPost.newest(this.source_type, this.source_id, 1, "origin")
                     .then((res) => {
                         this.wiki_post = res?.data?.data;
-                        console.log("获取怀旧服攻略");
+                        console.log("获取缘起攻略");
                     })
                     .then(() => {
                         if (!this.post_content) {
                             WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
                                 this.wiki_post = res?.data?.data;
                                 this.compatible = true;
-                                console.log("兼容：获取正式服攻略");
+                                console.log("兼容：获取重制攻略");
                             });
                         }
                     });
