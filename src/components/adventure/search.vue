@@ -15,21 +15,18 @@
 <script>
 export default {
     name: "search",
-    props: [],
-    components: {},
     data: function () {
         return {
             search: "",
             marks: [
-                { name: "全部奇遇", type: "all", id: '' },
-                { name: "绝世奇遇", type: "bPerfect", id: 1 },
-                { name: "普通奇遇", type: "nClassify", id: 2 },
-                { name: "宠物奇遇", type: "nClassify", id: 1 },
+                { name: "全部奇遇", type: "all" },
+                { name: "绝世奇遇", type: "perfect" },
+                { name: "普通奇遇", type: "normal" },
+                { name: "宠物奇遇", type: "pet" },
             ],
             index: 0,
         };
     },
-    computed: {},
     methods: {
         changeMark(i) {
             this.index = i;
@@ -37,9 +34,9 @@ export default {
         },
         jointParams() {
             let params = {};
-            const item = this.marks[this.index]
-            if (item.id) {
-                params[item.type] = item.id;
+            const item = this.marks[this.index];
+            if (item.type !== "all") {
+                params.type = item.type;
             }
             if (this.search) params.name = this.search;
             this.$emit("onSearch", params);
@@ -49,6 +46,6 @@ export default {
         search() {
             this.jointParams();
         },
-    }
+    },
 };
 </script>
