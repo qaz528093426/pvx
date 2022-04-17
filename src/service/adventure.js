@@ -1,13 +1,9 @@
-import { axios, $team } from "@jx3box/jx3box-common/js/https";
+import { $node, axios, $team } from "@jx3box/jx3box-common/js/https";
 import { __dataPath } from "@jx3box/jx3box-common/data/jx3box";
-
-const $node = axios.create({
-    baseURL: `http://localhost:7002/`
-})
 
 // 获取奇遇列表
 function getAdventures(params) {
-    return $node.get(`/serendipities`, {
+    return $node().get(`/serendipities`, {
         params,
     });
 }
