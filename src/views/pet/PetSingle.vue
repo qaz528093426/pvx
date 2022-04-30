@@ -73,12 +73,10 @@
             <petFetters :info="item" v-for="item in medalList" :key="item.ID" />
         </div>
         <!-- 宠物地图 -->
-        <div class="m-pet-map" v-if="mapExist">
+        <div class="m-pet-map" v-show="mapDisplay">
             <div class="u-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">宠物地图</span></div>
             <!-- 地图组件 -->
-            <div class="u-warpper">
-                <pet-map :petId="parseInt(id)" />
-            </div>
+            <pet-map :petId="parseInt(id)" @loaded="mapLoaded"/>
         </div>
         <!-- 宠物攻略 -->
         <div class="m-pet-wiki">
@@ -102,8 +100,7 @@ import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 import dayjs from 'dayjs';
-import PetMap from 'petmap/src/components/PetMap.vue';
-import PetPOIs from 'petmap/src/assets/data/PetPOIs.json';
+import PetMap from '@jx3box/jx3box-petmap/src/components/PetMap.vue';
 
 export default {
     name: "PetSingle",
@@ -123,6 +120,7 @@ export default {
             shopInfo: "",
             luckyList: [],
             medalList: [],
+            mapDisplay: false,
             loading: false,
         };
     },
@@ -146,9 +144,6 @@ export default {
             return {
                 client: this.client,
             };
-        },
-        mapExist: function () {
-            return PetPOIs[`${this.id}`] != undefined;
         }
     },
     watch: {
@@ -288,6 +283,9 @@ export default {
                 });
             });
         },
+        mapLoaded(visible) {
+            this.mapDisplay = visible;
+        }
     },
     filters: {
         iconLink,
