@@ -14,6 +14,7 @@
     "@jx3box/jx3box-common": "^7.1.1",
     "@jx3box/jx3box-common-ui": "^5.6.4",
     "@jx3box/jx3box-facedat": "^2.3.1",
+    "@jx3box/jx3box-petmap": "^0.1.5",
     "axios": "^0.19.2",
     "core-js": "^3.4.3",
     "dayjs": "^1.10.7",

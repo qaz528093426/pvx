@@ -72,7 +72,12 @@
             <!-- 羁绊信息 -->
             <petFetters :info="item" v-for="item in medalList" :key="item.ID" />
         </div>
-
+        <!-- 宠物地图 -->
+        <div class="m-pet-map" v-show="mapDisplay">
+            <div class="u-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">宠物地图</span></div>
+            <!-- 地图组件 -->
+            <pet-map :petId="parseInt(id)" @loaded="mapLoaded"/>
+        </div>
         <!-- 宠物攻略 -->
         <div class="m-pet-wiki">
             <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="宠物攻略" :source_title="title"></Wiki>
@@ -94,7 +99,8 @@ import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
+import PetMap from '@jx3box/jx3box-petmap/src/components/PetMap.vue';
 
 export default {
     name: "PetSingle",
@@ -104,6 +110,7 @@ export default {
         petFetters,
         Wiki,
         Comment,
+        PetMap
     },
     data: function () {
         return {
@@ -113,6 +120,7 @@ export default {
             shopInfo: "",
             luckyList: [],
             medalList: [],
+            mapDisplay: false,
             loading: false,
         };
     },
@@ -136,7 +144,7 @@ export default {
             return {
                 client: this.client,
             };
-        },
+        }
     },
     watch: {
         id() {
@@ -275,6 +283,9 @@ export default {
                 });
             });
         },
+        mapLoaded(visible) {
+            this.mapDisplay = visible;
+        }
     },
     filters: {
         iconLink,
@@ -293,4 +304,5 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/pet/single.less";
+@import "~@/assets/css/pet/map.less";
 </style>
