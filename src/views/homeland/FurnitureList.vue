@@ -201,7 +201,7 @@ export default {
             this.match = val;
         },
         setFurniture(res) {
-            let data = res.data.data;
+            let data = res.data.data.filter(item => item);
 
             try {
                 this.furniture = data;
