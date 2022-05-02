@@ -21,8 +21,8 @@
                 </div>
             </div>
         </div>
-        <div class="m-pet-content" v-if="petList && petList.length > 0">
-            <div class="m-pet-list flex">
+        <div class="m-pet-content" v-if="petList && petList.length">
+            <div class="m-pet-list">
                 <pet-item v-for="pet in petList" :key="pet.Index" :petObject="pet" :lucky="luckyList"></pet-item>
             </div>
             <el-button class="m-archive-more m-pet-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
@@ -61,7 +61,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 16, //每页条目
+            per: 18, //每页条目
 
             Type,
             Source,

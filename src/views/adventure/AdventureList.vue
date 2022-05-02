@@ -34,7 +34,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 16, //每页条目
+            per: 15, //每页条目
 
             appendMode: false,
             school: "2",
