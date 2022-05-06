@@ -73,42 +73,50 @@
             .x;
             .fz(15px);
             .bold;
+            .pointer;
             filter: grayscale(100%);
-            background-image: url("@{img_path}image/cooking/manufacture-small.png");
             background-repeat: no-repeat;
+            background-size: 42px;
+            background-position: top center;
             margin: 0 17px;
             .pt(39px);
             color: @color;
+            &:hover {
+                filter: grayscale(0);
+            }
         }
-
         .active {
             color: @color-link;
             filter: grayscale(0);
         }
         .u-tab0 {
-            background-position: 0 0;
+            background-image: url("@{img_path}image/cooking/newcraft1-37.png");
+            &:hover {
+                background-image: url("@{img_path}image/cooking/newcraft1-38.png");
+            }
         }
         .u-tab1 {
-            background-position: -45px 0;
+            background-image: url("@{img_path}image/cooking/newcraft1-45.png");
+            &:hover {
+                background-image: url("@{img_path}image/cooking/newcraft1-46.png");
+            }
         }
         .u-tab2 {
-            background-position: -90px 0;
+            background-image: url("@{img_path}image/cooking/newcraft1-65.png");
+            &:hover {
+                background-image: url("@{img_path}image/cooking/newcraft1-67.png");
+            }
         }
         .u-tab3 {
-            background-position: -135px 0;
-        }
-        .u-tab4 {
-            background-position: -180px 0;
-        }
-
-        .u-tab0,
-        .u-tab1,
-        .u-tab2,
-        .u-tab3,
-        .u-tab4 {
+            background-image: url("@{img_path}image/cooking/newcraft1-69.png");
             &:hover {
-                .pointer;
-                filter: brightness(120%);
+                background-image: url("@{img_path}image/cooking/newcraft1-70.png");
+            }
+        }
+        .u-tab4 {
+            background-image: url("@{img_path}image/cooking/newcraft1-91.png");
+            &:hover {
+                background-image: url("@{img_path}image/cooking/newcraft1-92.png");
             }
         }
     }
