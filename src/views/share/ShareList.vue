@@ -88,9 +88,6 @@ export default {
                     this.loading = false;
                 });
         },
-        changePage(i) {
-            this.page = i;
-        },
         appendPage: function () {
             this.appendMode = true;
             this.page = this.page + 1;
