@@ -6,25 +6,8 @@
             <div class="m-share-list">
                 <ShareItem v-for="(item, index) in list" :key="index" :item="item" />
             </div>
-            <el-button
-                class="m-archive-more"
-                v-show="hasNextPage"
-                type="primary"
-                @click="appendPage"
-                :loading="loading"
-                icon="el-icon-arrow-down"
-                >加载更多</el-button
-            >
-            <el-pagination
-                class="m-archive-pages"
-                background
-                layout="total, prev, pager, next, jumper"
-                :hide-on-single-page="true"
-                :page-size="per"
-                :total="total"
-                :current-page.sync="page"
-                @current-change="changePage"
-            ></el-pagination>
+            <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+            <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page"></el-pagination>
         </template>
 
         <el-alert v-else class="m-archive-null" :title="title" type="info" center show-icon></el-alert>
@@ -73,7 +56,7 @@ export default {
             return _params;
         },
         hasNextPage: function () {
-            return this.pages > 1 && this.page < this.total;
+            return this.pages > 1 && this.page < this.pages;
         },
     },
     methods: {
@@ -84,6 +67,7 @@ export default {
         },
         onSearchKey(search) {
             this.search = search;
+            this.page = 1;
         },
         // 获取数据
         getData() {
@@ -126,5 +110,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "~@/assets/css/share/list.less";
+    @import "~@/assets/css/share/list.less";
 </style>
