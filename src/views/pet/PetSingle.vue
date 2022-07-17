@@ -4,9 +4,11 @@
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain
                 >返回列表</el-button
             >
-            <el-input placeholder="请输入宠物名字搜索" v-model="search" class="u-input">
-                <el-button slot="append" icon="el-icon-search" @click="toSearch"></el-button>
+            <el-input placeholder="请输入宠物名字搜索" v-model="search" class="u-input" @keyup.enter.native="goSearch">
+                <el-button slot="append" icon="el-icon-search" @click="goSearch"></el-button>
             </el-input>
+        </div>
+        <div class="m-pet-content flex">
             <div class="m-pet-links">
                 <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"
                     ><i class="el-icon-collection-tag"></i>物品信息</a
@@ -18,8 +20,6 @@
                     >
                 </template>
             </div>
-        </div>
-        <div class="m-pet-content flex">
             <petCard :petObject="pet" :lucky="luckyList"></petCard>
             <div class="m-pet-info">
                 <h1 class="u-title">
@@ -312,7 +312,7 @@ export default {
         mapLoaded(visible) {
             this.mapDisplay = visible;
         },
-        toSearch() {
+        goSearch() {
             this.$router.push({ name: "list", params: { search: this.search } });
         },
         iconLink,
