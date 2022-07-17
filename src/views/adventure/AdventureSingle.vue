@@ -1,7 +1,12 @@
 <template>
     <div class="v-adventure-single" v-if="id" v-loading="loading">
         <div class="m-adventure-navigation">
-            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
+            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain
+                >返回列表</el-button
+            >
+            <el-input placeholder="请输入奇遇或宠物名字搜索" v-model="search" class="u-input">
+                <el-button slot="append" icon="el-icon-search" @click="toSearch"></el-button>
+            </el-input>
             <div class="m-trigger-links">
                 <a class="u-link u-achievement" :href="getLink('cj', achieve_id)" target="_blank">
                     <i class="el-icon-trophy"></i>
@@ -14,7 +19,14 @@
             <task :id="id" />
         </div>
         <div class="m-adventure-wiki" v-if="achieve_id">
-            <Wiki source_type="achievement" :source_id="achieve_id" :type="type" :id="id" title="奇遇攻略" :source_title="title"></Wiki>
+            <Wiki
+                source_type="achievement"
+                :source_id="achieve_id"
+                :type="type"
+                :id="id"
+                title="奇遇攻略"
+                :source_title="title"
+            ></Wiki>
         </div>
         <div class="m-adventure-serendipity">
             <Serendipity :title="title" />
@@ -50,6 +62,7 @@ export default {
             task: [],
             isPet: true,
             loading: false,
+            search: "",
         };
     },
     computed: {
@@ -90,9 +103,11 @@ export default {
                 this.achieve_id = res.data[this.id];
             });
         },
+        toSearch() {
+            this.$router.push({ name: "list", params: { search: this.search } });
+        },
     },
-    mounted: function () {
-    },
+    mounted: function () {},
 };
 </script>
 

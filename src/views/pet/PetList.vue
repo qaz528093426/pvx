@@ -10,10 +10,12 @@
                         <el-radio v-for="item in Type" :key="item.type" :label="item.class">{{ item.name }}</el-radio>
                     </el-radio-group>
                     <el-select class="u-type u-type-select" v-model="petType" placeholder="宠物种类">
-                        <el-option v-for="item in Type" :key="item.type" :label="item.name" :value="item.class"> </el-option>
+                        <el-option v-for="item in Type" :key="item.type" :label="item.name" :value="item.class">
+                        </el-option>
                     </el-select>
                     <el-select class="u-source" v-model="petSource" placeholder="获取来源">
-                        <el-option v-for="item in Source" :key="item.source" :label="item.name" :value="item.source"> </el-option>
+                        <el-option v-for="item in Source" :key="item.source" :label="item.name" :value="item.source">
+                        </el-option>
                     </el-select>
                 </div>
                 <div class="m-pet-search flex">
@@ -25,7 +27,15 @@
             <div class="m-pet-list">
                 <pet-item v-for="pet in petList" :key="pet.Index" :petObject="pet" :lucky="luckyList"></pet-item>
             </div>
-            <el-button class="m-archive-more m-pet-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+            <el-button
+                class="m-archive-more m-pet-more"
+                v-show="hasNextPage"
+                type="primary"
+                @click="appendPage"
+                :loading="loading"
+                icon="el-icon-arrow-down"
+                >加载更多</el-button
+            >
             <el-pagination
                 class="m-archive-pages m-pet-pages"
                 background
@@ -47,7 +57,7 @@ import { getPets, getPetLucky } from "@/service/pet";
 import Type from "@/assets/data/pet_type.json";
 import Source from "@/assets/data/pet_source.json";
 import petItem from "@/components/pet/PetItem.vue";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 export default {
     name: "PetList",
     props: [],
@@ -109,6 +119,9 @@ export default {
                 this.getPetList();
             },
         },
+        $route(obj) {
+            if (obj.params.search) this.petName = obj.params.search;
+        },
     },
     methods: {
         appendPage: function () {
@@ -142,7 +155,7 @@ export default {
         getPetLucky: function () {
             getPetLucky().then((res) => {
                 let data = res.data.std;
-                let dateIndex = dayjs(new Date()).format('MDD')
+                let dateIndex = dayjs(new Date()).format("MDD");
                 this.luckyList = data[dateIndex];
             });
         },

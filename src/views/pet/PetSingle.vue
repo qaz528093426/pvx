@@ -1,12 +1,21 @@
 <template>
     <div class="v-pet-single" v-if="pet" v-loading="loading">
         <div class="m-pet-navigation">
-            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain>返回列表</el-button>
+            <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain
+                >返回列表</el-button
+            >
+            <el-input placeholder="请输入宠物名字搜索" v-model="search" class="u-input">
+                <el-button slot="append" icon="el-icon-search" @click="toSearch"></el-button>
+            </el-input>
             <div class="m-pet-links">
-                <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"><i class="el-icon-collection-tag"></i>物品信息</a>
+                <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"
+                    ><i class="el-icon-collection-tag"></i>物品信息</a
+                >
                 <template v-if="achievement_id">
                     <em> | </em>
-                    <a class="u-link u-achievement" :href="getLink('cj', achievement_id)" target="_blank"><i class="el-icon-trophy"></i>成就信息</a>
+                    <a class="u-link u-achievement" :href="getLink('cj', achievement_id)" target="_blank"
+                        ><i class="el-icon-trophy"></i>成就信息</a
+                    >
                 </template>
             </div>
         </div>
@@ -29,7 +38,12 @@
                                 <div class="u-skill-name">{{ skill.Name }}</div>
                                 <div class="u-skill-desc">{{ skill.Desc }}</div>
                             </div>
-                            <img slot="reference" class="u-skill-icon" :src="skill.IconID | iconLink" :alt="skill.Name" />
+                            <img
+                                slot="reference"
+                                class="u-skill-icon"
+                                :src="iconLink(skill.IconID)"
+                                :alt="skill.Name"
+                            />
                         </el-popover>
                     </div>
                 </div>
@@ -47,7 +61,7 @@
                     <div class="u-meta u-source">
                         <span class="u-meta-label">获取线索：</span>
                         <template v-for="item in getPetDesc(pet.OutputDes)">
-                            <span :key="item.text">{{ item.text | cleanResourceText }}</span>
+                            <span :key="item.text">{{ cleanResourceText(item.text) }}</span>
                         </template>
                     </div>
                     <div class="u-meta u-shop" v-if="shopInfo.RewardsPrice || shopInfo.CoinPrice">
@@ -68,19 +82,32 @@
         </div>
         <!-- 宠物羁绊 -->
         <div class="m-pet-fetters" v-if="medalList && medalList.length">
-            <div class="u-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">宠物羁绊</span></div>
+            <div class="u-header">
+                <img class="u-icon" svg-inline src="../../assets/img/achievement.svg" />
+                <span class="u-txt">宠物羁绊</span>
+            </div>
             <!-- 羁绊信息 -->
             <petFetters :info="item" v-for="item in medalList" :key="item.ID" />
         </div>
         <!-- 宠物地图 -->
         <div class="m-pet-map" v-show="mapDisplay">
-            <div class="u-header"><img class="u-icon" svg-inline src="../../assets/img/achievement.svg" /> <span class="u-txt">宠物地图</span></div>
+            <div class="u-header">
+                <img class="u-icon" svg-inline src="../../assets/img/achievement.svg" />
+                <span class="u-txt">宠物地图</span>
+            </div>
             <!-- 地图组件 -->
-            <pet-map :petId="parseInt(id)" @loaded="mapLoaded"/>
+            <pet-map :petId="parseInt(id)" @loaded="mapLoaded" />
         </div>
         <!-- 宠物攻略 -->
         <div class="m-pet-wiki">
-            <Wiki source_type="item" :source_id="item_id" :type="type" :id="id" title="宠物攻略" :source_title="title"></Wiki>
+            <Wiki
+                source_type="item"
+                :source_id="item_id"
+                :type="type"
+                :id="id"
+                title="宠物攻略"
+                :source_title="title"
+            ></Wiki>
         </div>
         <div class="m-pvx-comment">
             <Comment :id="id" :category="type" order="desc" />
@@ -99,8 +126,8 @@ import petSource from "@/assets/data/pet_source.json";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
-import dayjs from 'dayjs';
-import PetMap from '@jx3box/jx3box-petmap/src/components/PetMap.vue';
+import dayjs from "dayjs";
+import PetMap from "@jx3box/jx3box-petmap/src/components/PetMap.vue";
 
 export default {
     name: "PetSingle",
@@ -110,11 +137,11 @@ export default {
         petFetters,
         Wiki,
         Comment,
-        PetMap
+        PetMap,
     },
     data: function () {
         return {
-            type : 'pet',
+            type: "pet",
             pet: "",
             petSkills: [],
             shopInfo: "",
@@ -122,6 +149,7 @@ export default {
             medalList: [],
             mapDisplay: false,
             loading: false,
+            search: "",
         };
     },
     computed: {
@@ -144,7 +172,7 @@ export default {
             return {
                 client: this.client,
             };
-        }
+        },
     },
     watch: {
         id() {
@@ -177,31 +205,29 @@ export default {
 
             for (const key in data) {
                 // 技能等级
-                if (key.startsWith('Level') && data[key]) {
-                    levelIds.push(data[key])
+                if (key.startsWith("Level") && data[key]) {
+                    levelIds.push(data[key]);
                 }
                 // 技能id
-                if (key.startsWith('SkillID') && data[key]) {
-                    skillIds.push(data[key])
+                if (key.startsWith("SkillID") && data[key]) {
+                    skillIds.push(data[key]);
                 }
             }
 
             getSkill({
-                ids: skillIds.join(','),
-                client: this.client
-            }).then(skillRes => {
-
+                ids: skillIds.join(","),
+                client: this.client,
+            }).then((skillRes) => {
                 levelIds.forEach((level, index) => {
-                    let skills = skillRes.data.filter(skill => skill.Level === level);
+                    let skills = skillRes.data.filter((skill) => skill.Level === level);
 
-                    const skill = skills.find(_skill => _skill.SkillID === skillIds[index]);
+                    const skill = skills.find((_skill) => _skill.SkillID === skillIds[index]);
 
                     if (skill) {
-                        this.petSkills.push(skill)
+                        this.petSkills.push(skill);
                     }
-                })
-
-            })
+                });
+            });
         },
         // 获取宠物商城价格
         getShopInfo() {
@@ -255,7 +281,7 @@ export default {
         getPetLucky: function () {
             getPetLucky().then((res) => {
                 let data = res.data.std;
-                let dateIndex = dayjs(new Date()).format('MDD')
+                let dateIndex = dayjs(new Date()).format("MDD");
                 this.luckyList = data[dateIndex];
             });
         },
@@ -285,9 +311,10 @@ export default {
         },
         mapLoaded(visible) {
             this.mapDisplay = visible;
-        }
-    },
-    filters: {
+        },
+        toSearch() {
+            this.$router.push({ name: "list", params: { search: this.search } });
+        },
         iconLink,
         cleanResourceText: function (str) {
             return str && str.startsWith("获取线索：") ? str.replace("获取线索：", "") : str;

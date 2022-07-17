@@ -150,6 +150,9 @@ export default {
         match(val) {
             this.handleMatch(val);
         },
+        $route(obj) {
+            if (obj.params.search) this.search = obj.params.search;
+        },
     },
     methods: {
         onCategoryKey: function (obj) {
@@ -201,7 +204,7 @@ export default {
             this.match = val;
         },
         setFurniture(res) {
-            let data = res.data.data.filter(item => item);
+            let data = res.data.data.filter((item) => item);
 
             try {
                 this.furniture = data;
