@@ -13,7 +13,6 @@ let store = {
         item: {},
         itemData: {},
         priceData: {},
-        myPrice: {},
         auctionPrice: {},
         cartList: [],
         childrenList: [],
@@ -56,7 +55,16 @@ let store = {
         },
         // 自定义价格
         toMyPrice(state, { id, Price }) {
-            Vue.set(state.myPrice, id, Price);
+            state.priceData = Object.assign({}, state.priceData, { [id]: Price });
+            console.log(state.cartList);
+            if (state.cartList.length)
+                state.cartList = state.cartList.map((item) => {
+                    item.childrenList = item.childrenList.map((el) => {
+                        if (el.ID == id) el.Price = Price;
+                        return el;
+                    });
+                    return item;
+                });
         },
     },
 
@@ -103,11 +111,11 @@ let store = {
         //添加物品进购物车
         toAddCart(ctx, { count }) {
             const state = ctx.state;
-            let { item, childrenList, myPrice, auctionPrice } = state;
+            let { item, childrenList, priceData, auctionPrice } = state;
             item.childrenList = childrenList.map((child) => {
                 if (!child.Price) {
                     if (auctionPrice[child.price_id]) child.Price = auctionPrice[child.price_id];
-                    if (myPrice[child.id]) child.Price = myPrice[child.id];
+                    if (priceData[child.id]) child.Price = priceData[child.id];
                 }
                 return child;
             });

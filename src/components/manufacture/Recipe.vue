@@ -64,7 +64,7 @@
                         {{ el.game_price ? "[NPC出售] 单价：" : `[${server}] 昨日平均单价：` }}
                         <PriceItem
                             :data="{
-                                Price: myPrice[el.ID] || el.Price || price[el.price_id],
+                                Price: priceData[el.ID] || el.Price || price[el.price_id],
                                 Name: el.Name,
                                 id: el.ID,
                             }"
@@ -72,7 +72,7 @@
                     </div>
                     <div class="u-price" v-else>
                         [NPC出售] 单价：
-                        <PriceItem :data="{ Price: myPrice[el.ID] || el.Price, Name: el.Name, id: el.ID }" />
+                        <PriceItem :data="{ Price: priceData[el.ID] || el.Price, Name: el.Name, id: el.ID }" />
                     </div>
                 </div>
             </div>
@@ -111,7 +111,6 @@ export default {
             "craft_key",
             "priceData",
             "itemData",
-            "myPrice",
             "cartList",
             "childrenList",
             "hasItems",
@@ -227,6 +226,13 @@ export default {
         count(count) {
             this.item.count = count;
             this.$store.commit("toState", { item: this.item });
+        },
+        priceData: {
+            deep: true,
+            immediate:true,
+            handler: function (val) {
+                console.log(val);
+            },
         },
     },
     created: function () {},

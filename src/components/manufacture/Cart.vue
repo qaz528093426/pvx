@@ -126,7 +126,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["server", "myPrice"]),
+        ...mapState(["server"]),
         cartList: {
             get() {
                 let list = this.$store.state.cartList.map((item, key) => {
