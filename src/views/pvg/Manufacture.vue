@@ -14,13 +14,13 @@
         <div class="m-manufacture-main">
             <div class="m-manufacture-sidebar">
                 <!-- 左侧 & 可制作配方 -->
-                <Make class="u-left" @toEmit="isEmit" />
+                <Make class="u-left" />
             </div>
             <div class="m-manufacture-content">
                 <!-- 中间 & 配方展示 -->
-                <Recipe class="u-middle" :data="recipe_props" @toEmit="isEmit" />
+                <Recipe class="u-middle" />
                 <!-- 右侧 & 购物车计算 -->
-                <Cart class="u-right" :data="cart_props" @toEmit="isEmit" />
+                <Cart class="u-right" />
             </div>
         </div>
     </div>
@@ -63,86 +63,85 @@ export default {
         item() {
             return this.cacheItemData(this.cache_data[this.server][this.item_id]);
         },
-        recipe_props() {
-            let _data = {
-                client: this.client,
-                item_id: this.item_id,
-                server: this.server,
-                craft_key: this.craft_key,
-                my_prices: this.my_prices,
-            };
-            if (this.item) _data.item = this.item;
-            if (this.count) _data.count = this.count;
-            return _data;
-        },
-        cart_props() {
-            return {
-                list: this.cart_list,
-                server: this.server,
-                my_prices: this.my_prices,
-            };
-        },
+        // recipe_props() {
+        //     let _data = {
+        //         client: this.client,
+        //         item_id: this.item_id,
+        //         server: this.server,
+        //         craft_key: this.craft_key,
+        //         my_prices: this.my_prices,
+        //     };
+        //     if (this.item) _data.item = this.item;
+        //     if (this.count) _data.count = this.count;
+        //     return _data;
+        // },
+        // cart_props() {
+        //     return {
+        //         list: this.cart_list,
+        //         server: this.server,
+        //         my_prices: this.my_prices,
+        //     };
+        // },
     },
     methods: {
         // 子组件传值
-        isEmit(data) {
-            let { id, count, craft_key, my_price, item, del } = data;
-            this.item_id = id || this.item_id;
-            this.count = count || 0;
-            if (craft_key) this.craft_key = craft_key;
-            if (my_price) this.cachePrice(my_price);
-            if (item) this.cache_data[this.server][item.ID] = item;
-            count && item ? this.addToCart(item, count) : "";
-            if (del) {
-                del == -1
-                    ? this.cart_list.splice(0, this.cart_list.length)
-                    : (this.cart_list = this.cart_list.filter((item) => item.ID !== del));
-            }
-        },
-
-        // 加入购物车
-        addToCart(obj, count) {
-            this.cart_list.some((item) => item.ID == obj.ID)
-                ? this.cart_list.forEach((item) => {
-                      if (item.ID == obj.ID) {
-                          item.children = obj.children;
-                          item.item.count += count;
-                      }
-                  })
-                : this.cart_list.push(obj);
-            this.count = 0;
-        },
-        // 更新已获取过的物品
-        cacheItemData(item) {
-            if (!item) return;
-            let data = this.my_prices;
-            if (data[item.ID]) item.Price = data[item.ID].Price;
-            item.children = item.children.map((el) => {
-                if (data[el.id]) el.Price = data[el.id].Price;
-                return el;
-            });
-            return item;
-        },
-        // 更新物品价格
-        cachePrice(my_price) {
-            this.my_prices[my_price.id] = my_price;
-            let _prices = this.my_prices;
-            if (this.cart_list.length)
-                this.cart_list = this.cart_list.map((item) => {
-                    if (_prices[item.ID]) item.Price = _prices[item.ID].Price;
-                    item.children.map((el) => {
-                        if (_prices[el.id]) el.Price = _prices[el.id].Price;
-                        return el;
-                    });
-                    return item;
-                });
-        },
+        // isEmit(data) {
+        //     let { id, count, craft_key, my_price, item, del } = data;
+        //     this.item_id = id || this.item_id;
+        //     this.count = count || 0;
+        //     if (craft_key) this.craft_key = craft_key;
+        //     if (my_price) this.cachePrice(my_price);
+        //     if (item) this.cache_data[this.server][item.ID] = item;
+        //     count && item ? this.addToCart(item, count) : "";
+        //     if (del) {
+        //         del == -1
+        //             ? this.cart_list.splice(0, this.cart_list.length)
+        //             : (this.cart_list = this.cart_list.filter((item) => item.ID !== del));
+        //     }
+        // },
+        // // 加入购物车
+        // addToCart(obj, count) {
+        //     this.cart_list.some((item) => item.ID == obj.ID)
+        //         ? this.cart_list.forEach((item) => {
+        //               if (item.ID == obj.ID) {
+        //                   item.children = obj.children;
+        //                   item.item.count += count;
+        //               }
+        //           })
+        //         : this.cart_list.push(obj);
+        //     this.count = 0;
+        // },
+        // // 更新已获取过的物品
+        // cacheItemData(item) {
+        //     if (!item) return;
+        //     let data = this.my_prices;
+        //     if (data[item.ID]) item.Price = data[item.ID].Price;
+        //     item.children = item.children.map((el) => {
+        //         if (data[el.id]) el.Price = data[el.id].Price;
+        //         return el;
+        //     });
+        //     return item;
+        // },
+        // // 更新物品价格
+        // cachePrice(my_price) {
+        //     this.my_prices[my_price.id] = my_price;
+        //     let _prices = this.my_prices;
+        //     if (this.cart_list.length)
+        //         this.cart_list = this.cart_list.map((item) => {
+        //             if (_prices[item.ID]) item.Price = _prices[item.ID].Price;
+        //             item.children.map((el) => {
+        //                 if (_prices[el.id]) el.Price = _prices[el.id].Price;
+        //                 return el;
+        //             });
+        //             return item;
+        //         });
+        // },
     },
     watch: {
         server: {
             immediate: true,
             handler: function (val) {
-                if (!this.cache_data[val]) this.cache_data[val] = {};
+                this.$store.commit("toState", { server: val });
             },
         },
     },
@@ -150,5 +149,5 @@ export default {
 </script>
 
 <style lang="less">
-    @import "~@/assets/css/manufacture/index.less";
+@import "~@/assets/css/manufacture/index.less";
 </style>

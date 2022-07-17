@@ -2,50 +2,87 @@
     <div class="m-manufacture-cart">
         <div class="m-title">
             <div class="u-label"><i class="el-icon-box"></i> <span>成本计算</span></div>
-            <el-button v-if="cart_list.length" class="u-del" type="info" plain size="mini" @click="toEmit({ del: -1 })" icon="el-icon-delete">全部清空</el-button>
+            <el-button
+                v-if="cartList.length"
+                class="u-del"
+                type="info"
+                plain
+                size="mini"
+                icon="el-icon-delete"
+                @click="clientCart(0)"
+                >全部清空</el-button
+            >
         </div>
-        <template v-if="cart_list.length">
-            <div class="m-item" v-for="(item, index) in cart_list" :key="index">
+        <template v-if="cartList.length">
+            <div class="m-item" v-for="(item, index) in cartList" :key="index">
                 <div class="u-header">
                     <el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
-                        <Item :item_id="item.item.price_id" />
+                        <Item :item_id="item.item_key" />
                         <div class="u-header-inner" slot="reference">
-                            <div class="u-border" :style="{
+                            <div
+                                class="u-border"
+                                :style="{
                                     backgroundImage: item_border(item.Quality),
                                     opacity: item.Quality == 5 ? 0.9 : 1,
-                                }"></div>
+                                }"
+                            ></div>
                             <img class="u-img" :src="iconLink(item.IconID)" :alt="item.Name" />
                             <span class="u-title" :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
                         </div>
                     </el-popover>
-                    <el-button class="u-del" type="info" plain size="mini" @click="toEmit({ del: item.ID })" icon="el-icon-delete">移除</el-button>
+                    <el-button
+                        class="u-del"
+                        type="info"
+                        plain
+                        size="mini"
+                        icon="el-icon-delete"
+                        @click="clientCart(item.ID)"
+                        >移除</el-button
+                    >
                 </div>
 
                 <div class="u-info">
-                    <el-divider content-position="left">[ {{data.server}} ] - <i class="el-icon-box"></i> 材料成本统计</el-divider>
+                    <el-divider content-position="left"
+                        >[ {{ server }} ] - <i class="el-icon-box"></i> 材料成本统计</el-divider
+                    >
                     <div class="u-children">
-                        <div class="u-child" v-for="(child, k) in item.children" :key="k">
-                            <el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
+                        <div class="u-child" v-for="(child, k) in item.childrenList" :key="k">
+                            <el-popover
+                                popper-class="u-icon-popper"
+                                placement="right"
+                                :visible-arrow="false"
+                                trigger="hover"
+                            >
                                 <Item :item_id="child.price_id" />
                                 <div class="u-img" slot="reference">
                                     <img :src="iconLink(child.item_info.IconID)" :alt="child.Name" />
-                                    <span>{{ child.Name }}x <b>{{ child.count * item.item.count }}</b></span>
+                                    <span
+                                        >{{ child.Name }}x <b>{{ child.count * item.count }}</b></span
+                                    >
                                 </div>
                             </el-popover>
-                            <PriceItem class="u-price-num" :data="{Price:child.Price * child.count * item.item.count,Name:child.Name,id:child.ID}" @toEmit="isPrice" />
+                            <PriceItem
+                                class="u-price-num"
+                                :data="{
+                                    Price: child.Price * child.count * item.count,
+                                    Name: child.Name,
+                                    id: child.ID,
+                                }"
+                            />
                         </div>
                     </div>
                     <div class="u-item-num">
                         <span>制作次数：</span>
-                        <el-input-number v-model="item.item.count" :min="1" size="mini"></el-input-number>
+                        <el-input-number v-model="counts[index]" size="mini"></el-input-number>
                     </div>
                     <div class="u-item-num">
-                        <span><i class="el-icon-sunny"></i> 消耗精力值：</span> <b>{{ item.CostVigor * item.item.count }}</b>
+                        <span><i class="el-icon-sunny"></i> 消耗精力值：</span>
+                        <b>{{ item.CostVigor * item.count }}</b>
                     </div>
                     <div class="u-item-num">
                         <span><i class="el-icon-coin"></i> 小计金额：</span>
                         <span class="u-price">
-                            <GamePrice class="u-price-num" :price="itemPrice(item)" />
+                            <GamePrice class="u-price-num" :price="item.allPrice * item.count" />
                         </span>
                     </div>
                 </div>
@@ -54,27 +91,28 @@
 
         <div class="m-null" v-else>- 暂未添加生产配方 -</div>
 
-        <div class="m-all" v-if="all_exp">
+        <div class="m-all" v-if="allExp">
             <div class="u-label">总计</div>
             <div class="u-value">
                 <div class="u-num">
                     <span><i class="el-icon-sunny"></i> 消耗精力值：</span>
-                    <b>{{ all_exp }}</b>
+                    <b>{{ allExp }}</b>
                 </div>
                 <div class="u-num u-price">
                     <span><i class="el-icon-coin"></i> 消耗金钱：</span>
-                    <GamePrice v-if="all_price" class="u-price-num" :price="all_price" />
+                    <GamePrice v-if="allPrice" class="u-price-num" :price="allPrice" />
                 </div>
             </div>
         </div>
 
-        <CreatePlan :list="cart_list" @toEmit="toEmit" />
+        <CreatePlan :list="cartList" />
     </div>
 </template>
 <script>
 import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
 import GamePrice from "@jx3box/jx3box-common-ui/src/wiki/GamePrice.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { mapState } from "vuex";
 import Item from "@jx3box/jx3box-editor/src/Item.vue";
 import PriceItem from "@/components/manufacture/PriceItem.vue";
 import CreatePlan from "@/components/manufacture/CreatePlan.vue";
@@ -84,68 +122,74 @@ export default {
     components: { GamePrice, Item, CreatePlan, PriceItem },
     data: function () {
         return {
-            cart_list: [],
+            counts: {},
         };
     },
     computed: {
-        all_exp() {
-            if (!this.cart_list.length) return 0;
+        ...mapState(["server", "myPrice"]),
+        cartList: {
+            get() {
+                let list = this.$store.state.cartList.map((item, key) => {
+                    let sum = 0;
+                    item.childrenList = item.childrenList.map((el) => {
+                        sum += ~~el.Price * el.count;
+                        return el;
+                    });
+                    item.allPrice = sum;
+                    return item;
+                });
+                return list;
+            },
+            set(arr) {
+                this.$store.commit("toState", { cartList: arr });
+            },
+        },
+        allExp() {
+            if (!this.cartList.length) return 0;
             let _num = 0;
-            let _list = this.cart_list.map((el) => {
-                return { exp: el.CostVigor, count: el.item.count };
+            let _list = this.cartList.map((el) => {
+                return { exp: el.CostVigor, count: el.count };
             });
             _list.forEach((item) => {
                 _num += item.count * item.exp;
             });
             return _num;
         },
-        all_price() {
-            if (!this.cart_list.length) return 0;
+        allPrice() {
+            if (!this.cartList.length) return 0;
             let _num = 0;
-            let _list = this.cart_list.map((item) => {
-                let _prices = 0;
-                item.children.forEach((el) => {
-                    if (!el.Price) el.Price = 0;
-                    _prices += el.Price * el.count;
-                });
-                return { price: _prices, count: item.item.count };
-            });
-            _list.forEach((item) => {
-                _num += item.count * item.price;
+            this.cartList.forEach((item) => {
+                _num += item.allPrice * item.count;
             });
             return _num;
         },
     },
     watch: {
-        "data.list": {
+        cartList: {
             deep: true,
-            handler: function (list) {
-                this.cart_list = list;
+            immediate: true,
+            handler: function (arr) {
+                arr.forEach((item, key) => {
+                    this.$set(this.counts, key, item.count);
+                });
             },
         },
-        "data.server"() {
-            this.toEmit({ del: -1 });
+        counts: {
+            deep: true,
+            handler: function (obj) {
+                let arr = this.cartList;
+                Object.keys(obj).forEach((index) => {
+                    arr[index].count = obj[index];
+                });
+                this.cartList = arr;
+            },
         },
     },
     methods: {
         iconLink,
-        // 改价
-        isPrice(data) {
-            this.$emit("toEmit", { my_price: data });
-        },
         // 移除
-        toEmit(data) {
-            if (data.del) this.cart_list = [];
-            this.$emit("toEmit", data);
-        },
-        // 获取总价
-        itemPrice(item) {
-            let _num = 0;
-            item.children.forEach((el) => {
-                if (!el.Price) el.Price = 0;
-                _num += el.Price * el.count * item.item.count;
-            });
-            return _num;
+        clientCart(id) {
+            this.cartList = id ? this.cartList.filter((item) => item.ID !== id) : [];
         },
         // icon边框
         item_border(id) {
@@ -164,5 +208,5 @@ export default {
 };
 </script>
 <style lang="less">
-    @import "~@/assets/css/manufacture/cart.less";
+@import "~@/assets/css/manufacture/cart.less";
 </style>

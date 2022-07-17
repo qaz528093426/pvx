@@ -64,7 +64,7 @@ export default {
 							label: "家具大全",
 							icon: "el-icon-files",
 							key: "furniture",
-							status: true,
+							status: false,
 						},
 						{
 							path: "/pet",
@@ -78,7 +78,7 @@ export default {
 							label: "奇遇大全",
 							icon: "el-icon-files",
 							key: "adventure",
-							status: true,
+							status: false,
 						},
 						{
 							path: "/horse",
@@ -115,42 +115,42 @@ export default {
 					],
 				},
 
-                {
-					key: "homeland",
-					label: "其它",
-					index: "4",
-					submenus: [
-						{
-							path: "/homeland/tutorial",
-							label: "家园建设",
-							icon: "el-icon-reading",
-							key: "tutorial",
-							status: true,
-						},
-						{
-							path: "/homeland/maps",
-							label: "家园地图",
-							icon: "el-icon-map-location",
-							key: "maps",
-							status: true,
-						},
-						{
-							path: "/homeland/flower",
-							label: "家园花价",
-							icon: "el-icon-sunny",
-							key: "flower",
-							status: true,
-						},
-						{
-							path: "https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/",
-							label: "家园蓝图",
-							icon: "el-icon-download",
-							key: "blueprint",
-							status: true,
-							target: "_blank",
-						},
-					],
-				},
+                // {
+				// 	key: "homeland",
+				// 	label: "其它",
+				// 	index: "4",
+				// 	submenus: [
+				// 		{
+				// 			path: "/homeland/tutorial",
+				// 			label: "家园建设",
+				// 			icon: "el-icon-reading",
+				// 			key: "tutorial",
+				// 			status: true,
+				// 		},
+				// 		{
+				// 			path: "/homeland/maps",
+				// 			label: "家园地图",
+				// 			icon: "el-icon-map-location",
+				// 			key: "maps",
+				// 			status: true,
+				// 		},
+				// 		{
+				// 			path: "/homeland/flower",
+				// 			label: "家园花价",
+				// 			icon: "el-icon-sunny",
+				// 			key: "flower",
+				// 			status: true,
+				// 		},
+				// 		{
+				// 			path: "https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/",
+				// 			label: "家园蓝图",
+				// 			icon: "el-icon-download",
+				// 			key: "blueprint",
+				// 			status: true,
+				// 			target: "_blank",
+				// 		},
+				//   ],
+				// },
 			],
 		};
 	},
