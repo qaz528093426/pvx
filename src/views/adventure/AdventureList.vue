@@ -1,5 +1,5 @@
 <template>
-    <div class="v-adventure-List" v-loading="loading">
+    <div class="v-adventure-List" v-loading="loading" ref="listRef">
         <div class="m-adventure-header">
             <div class="u-title"></div>
             <AdventureSearch :hasSearch="hasSearch" @onSearch="onSearch" />
@@ -80,6 +80,9 @@ export default {
         $route(obj) {
             if (obj.params.search) this.hasSearch = obj.params.search;
         },
+        per(val) {
+            console.log(val);
+        },
     },
     methods: {
         getData() {
@@ -134,12 +137,18 @@ export default {
             this.search = params;
             this.getData();
         },
+        // 按宽度显示个数
+        showCount() {
+            const listWidth = this.$refs.listRef?.clientWidth;
+            this.per = Math.floor(listWidth / 300) * 4;
+        },
     },
     mounted: function () {
         // User.isLogin() &&
         //     getUserSchool().then(res => {
         //         if (res.data.data.list) this.school = schoolImgID[res.data.data.list[0].mount];
         //     });
+        this.showCount();
         this.getData();
     },
 };

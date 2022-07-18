@@ -1,6 +1,6 @@
 <template>
     <div class="v-pet-list" v-loading="loading">
-        <div class="m-pet-header flex">
+        <div class="m-pet-header flex" ref="listRef">
             <div class="m-pet-title flex">
                 <i class="u-logo"></i>
             </div>
@@ -71,7 +71,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 18, //每页条目
+            per: "", //每页条目
 
             Type,
             Source,
@@ -114,7 +114,6 @@ export default {
         },
         params: {
             deep: true,
-            immediate: true,
             handler: function () {
                 this.getPetList();
             },
@@ -159,9 +158,16 @@ export default {
                 this.luckyList = data[dateIndex];
             });
         },
+        // 按宽度显示个数
+        showCount() {
+            const listWidth = this.$refs.listRef?.clientWidth;
+            this.per = Math.floor(listWidth / 260) * 4;
+        },
     },
-    created: function () {
+    mounted: function () {
+        this.showCount();
         this.getPetLucky();
+        this.getPetList();
     },
 };
 </script>
