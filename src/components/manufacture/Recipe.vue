@@ -5,6 +5,7 @@
             <Item :item_id="item.price_id" />
             <div class="u-img" slot="reference">
                 <div class="u-border" :style="{ backgroundImage: item_border(item.Quality), opacity: item.Quality == 5 ? 0.9 : 1 }"></div>
+                <span class="u-amount" v-if="item.CreateItemMin1 != item.CreateItemMax1">{{item.CreateItemMin1}}~{{item.CreateItemMax1}}</span>
                 <img :src="iconLink(item.IconID)" :alt="item.Name" />
             </div>
         </el-popover>
