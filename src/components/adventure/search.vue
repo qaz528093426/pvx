@@ -15,6 +15,7 @@
 <script>
 export default {
     name: "search",
+    props: ["hasSearch"],
     data: function () {
         return {
             search: "",
@@ -43,8 +44,11 @@ export default {
         },
     },
     watch: {
-        search() {
+        search(val) {
             this.jointParams();
+        },
+        hasSearch(val) {
+            this.search = val;
         },
     },
 };

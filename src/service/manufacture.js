@@ -1,8 +1,7 @@
-import { $node, $helper, $cms } from "@jx3box/jx3box-common/js/https";
+import { $node, $cms, $next } from "@jx3box/jx3box-common/js/https";
 import { __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import axios from "axios";
 const $n = $node();
-const $h = $helper();
 
 // 获取技艺分组分类
 async function getCraftJson() {
@@ -30,11 +29,11 @@ function getItemsPrice(params) {
     return $n.get(`/craft/price`, { params });
 }
 // 获取交易行物品价格
-function getAuction(params) {
-    return $h.get(`/api/items/price`, { params });
+function getAuctionPrice(params) {
+    return $next().get(`/api/item-price/list`, { params });
 }
 // 新增清单
 function addMyPlans(params) {
     return $cms().post(`/api/cms/app/item_plan`, params);
 }
-export { getManufactures, getManufactureItem, getCraftJson, getOther, getItemsPrice, getAuction, addMyPlans };
+export { getManufactures, getManufactureItem, getCraftJson, getOther, getItemsPrice, getAuctionPrice, addMyPlans };

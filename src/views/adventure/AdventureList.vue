@@ -1,8 +1,8 @@
 <template>
-    <div class="v-adventure-List" v-loading="loading">
+    <div class="v-adventure-List" v-loading="loading" ref="listRef">
         <div class="m-adventure-header">
             <div class="u-title"></div>
-            <AdventureSearch @onSearch="onSearch" />
+            <AdventureSearch :hasSearch="hasSearch" @onSearch="onSearch" />
         </div>
         <div class="m-adventure-list" v-if="list && list.length > 0">
             <AdventureItem v-for="(item, i) in list" :key="i" :item="item" />
@@ -11,8 +11,24 @@
             <el-alert title="没有对应的奇遇，请重新查找" type="info" center show-icon />
         </div>
 
-        <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage" icon="el-icon-arrow-down">加载更多</el-button>
-        <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
+        <el-button
+            class="m-archive-more"
+            v-show="hasNextPage"
+            type="primary"
+            @click="appendPage"
+            icon="el-icon-arrow-down"
+            >加载更多</el-button
+        >
+        <el-pagination
+            class="m-archive-pages"
+            background
+            layout="total, prev, pager, next, jumper"
+            :hide-on-single-page="true"
+            :page-size="per"
+            :total="total"
+            :current-page.sync="page"
+            @current-change="changePage"
+        ></el-pagination>
     </div>
 </template>
 
@@ -34,11 +50,12 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 16, //每页条目
+            per: 15, //每页条目
 
             appendMode: false,
             school: "2",
             search: {},
+            hasSearch: "",
         };
     },
     computed: {
@@ -53,21 +70,28 @@ export default {
         },
         newList: function () {
             let list = [];
-            this.list.forEach(e => {
+            this.list.forEach((e) => {
                 list.push(this.toSpecial(e));
             });
             return list;
         },
     },
-    watch: {},
+    watch: {
+        $route(obj) {
+            if (obj.params.search) this.hasSearch = obj.params.search;
+        },
+        per(val) {
+            console.log(val);
+        },
+    },
     methods: {
         getData() {
             this.loading = true;
             let params = { ...this.params, ...this.search };
             getAdventures(params)
-                .then(res => {
+                .then((res) => {
                     let list = [];
-                    res.data.list.forEach(e => {
+                    res.data.list.forEach((e) => {
                         // list.push(e);
                         list.push(this.toSpecial(e));
                     });
@@ -84,12 +108,17 @@ export default {
         toSpecial(data) {
             if (data.szOpenRewardPath) {
                 let str = data.szOpenRewardPath;
-                if (str?.indexOf("weapon") !== -1) str = "ui/Image/Adventure/reward/Open/weapon/school_" + this.school + "_Open.tga";
+                if (str?.indexOf("weapon") !== -1)
+                    str = "ui/Image/Adventure/reward/Open/weapon/school_" + this.school + "_Open.tga";
                 if (str?.indexOf("camp") !== -1) {
-                    data.bHide ? (str = "ui/Image/Adventure/reward/Open/camp/camp_2_Open.tga") : (str = "ui/Image/Adventure/reward/Open/camp/camp_0_Open.tga");
+                    data.bHide
+                        ? (str = "ui/Image/Adventure/reward/Open/camp/camp_2_Open.tga")
+                        : (str = "ui/Image/Adventure/reward/Open/camp/camp_0_Open.tga");
                 }
-                if (str?.indexOf("zzwg") !== -1) str = "ui/Image/Adventure/reward/Open/zzwg/school_" + this.school + "_Open.tga";
-                if (str?.indexOf("jcs") !== -1) str = "ui/Image/Adventure/reward/Open/jcs/school_" + this.school + "_Open.tga";
+                if (str?.indexOf("zzwg") !== -1)
+                    str = "ui/Image/Adventure/reward/Open/zzwg/school_" + this.school + "_Open.tga";
+                if (str?.indexOf("jcs") !== -1)
+                    str = "ui/Image/Adventure/reward/Open/jcs/school_" + this.school + "_Open.tga";
                 data.szOpenRewardPath = str;
             }
             return data;
@@ -108,15 +137,20 @@ export default {
             this.search = params;
             this.getData();
         },
+        // 按宽度显示个数
+        showCount() {
+            const listWidth = this.$refs.listRef?.clientWidth;
+            this.per = Math.floor(listWidth / 300) * 4;
+        },
     },
-    created: function () {
+    mounted: function () {
         // User.isLogin() &&
         //     getUserSchool().then(res => {
         //         if (res.data.data.list) this.school = schoolImgID[res.data.data.list[0].mount];
         //     });
+        this.showCount();
         this.getData();
     },
-    mounted: function () {},
 };
 </script>
 

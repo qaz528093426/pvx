@@ -41,7 +41,7 @@ import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/wiki/WikiPanel";
 import WikiRevisions from "@jx3box/jx3box-common-ui/src/wiki/WikiRevisions";
 import { publishLink, ts2str } from "@jx3box/jx3box-common/js/utils";
-import { WikiPost } from "@jx3box/jx3box-common/js/helper";
+import { wiki } from "@jx3box/jx3box-common/js/wiki";
 export default {
     name: "Wiki",
     components: {
@@ -91,27 +91,15 @@ export default {
     },
     methods: {
         loadData: function () {
-            if (this.client == "std") {
-                WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
-                    this.wiki_post = res?.data?.data;
-                    console.log("获取重制攻略");
-                });
-            } else {
-                WikiPost.newest(this.source_type, this.source_id, 1, "origin")
-                    .then((res) => {
-                        this.wiki_post = res?.data?.data;
-                        console.log("获取缘起攻略");
-                    })
-                    .then(() => {
-                        if (!this.post_content) {
-                            WikiPost.newest(this.source_type, this.source_id, 1, "std").then((res) => {
-                                this.wiki_post = res?.data?.data;
-                                this.compatible = true;
-                                console.log("兼容：获取重制攻略");
-                            });
-                        }
-                    });
-            }
+            wiki.mix({ type: this.source_type, id: this.source_id, client: this.client }, { supply: 1 }).then(res => {
+                const { post, source, compatible, users } = res;
+                this.wiki_post = {
+                    post: post,
+                    source: source,
+                    users: users,
+                };
+                this.compatible = compatible;
+            })
         },
     },
     watch: {
@@ -123,7 +111,7 @@ export default {
         },
     },
     mounted: function () {
-        console.log(this.type)
+        // console.log(this.type)
     },
 };
 </script>

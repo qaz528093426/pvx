@@ -1,12 +1,17 @@
 <template>
-    <div class="u-child" @click="toEmit({ id: item.ID })" v-if="item">
+    <div class="u-child" @click="toStore(make.ID)" v-if="make.ID">
         <div class="u-label">
-            <img class="u-img" :src="iconLink(item.IconID)" :alt="item.Name" />
-            <span :class="`u-quality--${item.Quality}`">{{ item.Name }}</span>
+            <img class="u-img" :src="iconLink(make.IconID)" :alt="make.Name" />
+            <span :class="`u-quality--${make.Quality}`">{{ make.Name }}</span>
         </div>
         <div class="u-btn">
-            <el-input-number v-model="item.count" :min="1" size="mini" @click.stop.native></el-input-number>
-            <el-button icon="el-icon-shopping-cart-2" size="mini" type="success" @click.stop="toEmit({ id: item.ID, count: item.count })"></el-button>
+            <el-input-number v-model="make.count" size="mini" @click.stop.native></el-input-number>
+            <el-button
+                icon="el-icon-shopping-cart-2"
+                size="mini"
+                type="success"
+                @click.stop="toAddCart(make.count)"
+            ></el-button>
         </div>
     </div>
 </template>
@@ -15,10 +20,18 @@ import { iconLink } from "@jx3box/jx3box-common/js/utils.js";
 export default {
     name: "MakeItem",
     props: ["item"],
+    computed: {
+        make() {
+            return this.item;
+        },
+    },
     methods: {
         iconLink,
-        toEmit(data) {
-            this.$emit("toEmit", data);
+        toStore(item_id) {
+            this.$store.commit("toState", { item_id });
+        },
+        toAddCart(count) {
+            this.$store.dispatch("toAddCart", { count });
         },
     },
 };

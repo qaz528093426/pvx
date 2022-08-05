@@ -1,6 +1,8 @@
 <template>
     <el-popover popper-class="m-add-price" placement="bottom-end" trigger="click" v-model="visible">
-        <el-divider content-position="left">修改 [ <b>{{data.Name}}</b> ] 单价</el-divider>
+        <el-divider content-position="left"
+            >修改 [ <b>{{ data.Name }}</b> ] 单价</el-divider
+        >
         <div class="u-add">
             <el-input class="u-input" type="number" size="mini" v-model="my_Price.jin"></el-input>
             <img :src="`${img}/jin.png`" alt="金" />
@@ -48,7 +50,7 @@ export default {
             yin = yin * 100;
             tong = tong * 1;
             const Price = jin + yin + tong;
-            this.$emit("toEmit", { Price, id: this.data.id });
+            this.$store.commit("toMyPrice", { Price, id: this.data.id });
 
             this.visible = false;
             this.my_Price = {
@@ -61,44 +63,44 @@ export default {
 };
 </script>
 <style lang="less">
-    .m-price-item {
-        .dbi;
-        .pointer;
-        .u-null {
-            .fz(13px);
-            color: #d00;
-            opacity: 0.9;
+.m-price-item {
+    .dbi;
+    .pointer;
+    .u-null {
+        .fz(13px);
+        color: #d00;
+        opacity: 0.9;
+    }
+    .u-edit {
+        .ml(5px);
+        color: #08cfd9;
+    }
+}
+.m-add-price {
+    .u-add {
+        .flex;
+        align-items: center;
+        .u-input {
+            .el-input__inner {
+                .x;
+                .w(60px);
+                padding: 0 5px;
+            }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+            }
+            input[type="number"] {
+                -moz-appearance: textfield;
+            }
         }
-        .u-edit{
-            .ml(5px);
-            color:#08cfd9;
+        img {
+            .size(25px,18px);
+            margin: 0 3px;
+        }
+        .u-button {
+            .ml(10px);
         }
     }
-    .m-add-price {
-        .u-add {
-            .flex;
-            align-items: center;
-            .u-input {
-                .el-input__inner {
-                    .x;
-                    .w(60px);
-                    padding: 0 5px;
-                }
-                input::-webkit-outer-spin-button,
-                input::-webkit-inner-spin-button {
-                    -webkit-appearance: none;
-                }
-                input[type="number"] {
-                    -moz-appearance: textfield;
-                }
-            }
-            img {
-                .size(25px,18px);
-                margin: 0 3px;
-            }
-            .u-button {
-                .ml(10px);
-            }
-        }
-    }
+}
 </style>

@@ -20,7 +20,7 @@
             <li v-for="(item, i) in list" :key="i">
                 <span class="u-date">{{ item.date_str | showDate }}</span>
                 <span class="u-time">{{ item.dwTime | wikiDate }}</span>
-                <span class="u-server">{{ item.gegion }}-{{ item.server }}</span>
+                <span class="u-server">{{ item.region }}-{{ item.server }}</span>
                 <span class="u-name">{{ item.name || "匿名" }}</span>
             </li>
         </ul>

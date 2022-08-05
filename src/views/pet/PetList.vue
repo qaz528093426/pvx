@@ -1,6 +1,6 @@
 <template>
     <div class="v-pet-list" v-loading="loading">
-        <div class="m-pet-header flex">
+        <div class="m-pet-header flex" ref="listRef">
             <div class="m-pet-title flex">
                 <i class="u-logo"></i>
             </div>
@@ -10,10 +10,12 @@
                         <el-radio v-for="item in Type" :key="item.type" :label="item.class">{{ item.name }}</el-radio>
                     </el-radio-group>
                     <el-select class="u-type u-type-select" v-model="petType" placeholder="宠物种类">
-                        <el-option v-for="item in Type" :key="item.type" :label="item.name" :value="item.class"> </el-option>
+                        <el-option v-for="item in Type" :key="item.type" :label="item.name" :value="item.class">
+                        </el-option>
                     </el-select>
                     <el-select class="u-source" v-model="petSource" placeholder="获取来源">
-                        <el-option v-for="item in Source" :key="item.source" :label="item.name" :value="item.source"> </el-option>
+                        <el-option v-for="item in Source" :key="item.source" :label="item.name" :value="item.source">
+                        </el-option>
                     </el-select>
                 </div>
                 <div class="m-pet-search flex">
@@ -21,11 +23,19 @@
                 </div>
             </div>
         </div>
-        <div class="m-pet-content" v-if="petList && petList.length > 0">
-            <div class="m-pet-list flex">
+        <div class="m-pet-content" v-if="petList && petList.length">
+            <div class="m-pet-list">
                 <pet-item v-for="pet in petList" :key="pet.Index" :petObject="pet" :lucky="luckyList"></pet-item>
             </div>
-            <el-button class="m-archive-more m-pet-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
+            <el-button
+                class="m-archive-more m-pet-more"
+                v-show="hasNextPage"
+                type="primary"
+                @click="appendPage"
+                :loading="loading"
+                icon="el-icon-arrow-down"
+                >加载更多</el-button
+            >
             <el-pagination
                 class="m-archive-pages m-pet-pages"
                 background
@@ -47,7 +57,7 @@ import { getPets, getPetLucky } from "@/service/pet";
 import Type from "@/assets/data/pet_type.json";
 import Source from "@/assets/data/pet_source.json";
 import petItem from "@/components/pet/PetItem.vue";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 export default {
     name: "PetList",
     props: [],
@@ -61,7 +71,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 16, //每页条目
+            per: "", //每页条目
 
             Type,
             Source,
@@ -104,10 +114,12 @@ export default {
         },
         params: {
             deep: true,
-            immediate: true,
             handler: function () {
                 this.getPetList();
             },
+        },
+        $route(obj) {
+            if (obj.params.search) this.petName = obj.params.search;
         },
     },
     methods: {
@@ -142,13 +154,20 @@ export default {
         getPetLucky: function () {
             getPetLucky().then((res) => {
                 let data = res.data.std;
-                let dateIndex = dayjs(new Date()).format('MDD')
+                let dateIndex = dayjs(new Date()).format("MDD");
                 this.luckyList = data[dateIndex];
             });
         },
+        // 按宽度显示个数
+        showCount() {
+            const listWidth = this.$refs.listRef?.clientWidth;
+            this.per = Math.floor(listWidth / 260) * 4;
+        },
     },
-    created: function () {
+    mounted: function () {
+        this.showCount();
         this.getPetLucky();
+        this.getPetList();
     },
 };
 </script>

@@ -6,7 +6,9 @@
                 <el-button size="mini" icon="el-icon-edit" @click="dialogVisible = true">编辑信息</el-button>
                 <el-button size="mini" icon="el-icon-thumb" type="primary" @click="setMyPlan">直接保存</el-button>
             </div>
-            <el-button slot="reference" type="success" icon="el-icon-document-checked" size="small">保存至我的清单</el-button>
+            <el-button slot="reference" type="success" icon="el-icon-document-checked" size="small"
+                >保存至我的清单</el-button
+            >
         </el-popover>
         <el-alert class="u-tip" v-if="done" type="success">
             <span slot="title">清单创建成功，<a :href="url" target="_blank">点击查看</a></span>
@@ -23,7 +25,6 @@
                 <el-form-item label="是否公开">
                     <el-switch v-model="plan.publics"></el-switch>
                 </el-form-item>
-
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -64,9 +65,9 @@ export default {
             let recipe = [],
                 materials = [];
             this.list.forEach((item) => {
-                recipe.push({ id: item.item.price_id, count: item.item.count });
-                item.children.forEach((el) => {
-                    materials.push({ id: el.price_id, count: el.count * item.item.count });
+                recipe.push({ id: item.item_key, count: item.count });
+                item.childrenList.forEach((el) => {
+                    materials.push({ id: el.price_id, count: el.count * item.count });
                 });
             });
             materials = this.merge(materials);
@@ -93,8 +94,9 @@ export default {
                     message: "请在创作中心查看",
                     type: "success",
                 });
-                this.$emit("toEmit", { del: -1 });
             });
+            this.data = "";
+            this.$store.commit("toState", { cartList: [] });
         },
 
         // 合并所有材料的id和数量
@@ -117,27 +119,27 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-    .m-create-plan {
-        .x(right);
+.m-create-plan {
+    .x(right);
 
-        .u-tip {
-            .mt(10px);
-        }
+    .u-tip {
+        .mt(10px);
     }
+}
 </style>
 <style lang="less">
-    .m-plan-tips {
-        .u-tips {
-            .flex;
-            justify-content: space-around;
-        }
+.m-plan-tips {
+    .u-tips {
+        .flex;
+        justify-content: space-around;
     }
-    .m-plan-dialog {
-        .el-dialog__header {
-            .x(left);
-        }
-        .el-form {
-            .flex;
-        }
+}
+.m-plan-dialog {
+    .el-dialog__header {
+        .x(left);
     }
+    .el-form {
+        .flex;
+    }
+}
 </style>
