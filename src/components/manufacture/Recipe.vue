@@ -148,6 +148,8 @@ export default {
                     } else if (key.startsWith("CreateItem")) {
                         if (key.startsWith("CreateItemType1")) _item[0] = data[key];
                         if (key.startsWith("CreateItemIndex1")) _item[1] = data[key];
+                        if (key.startsWith("CreateItemMax1")) _obj[key] = data[key];
+                        if (key.startsWith("CreateItemMin1")) _obj[key] = data[key];
                     } else {
                         _obj[key] = data[key];
                     }
