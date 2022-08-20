@@ -67,13 +67,6 @@ export default {
                     index: "2",
                     submenus: [
                         {
-                            path: "/furniture",
-                            label: "家具大全",
-                            icon: "el-icon-files",
-                            key: "furniture",
-                            status: true,
-                        },
-                        {
                             path: "/pet",
                             label: "宠物大全",
                             icon: "el-icon-files",
@@ -124,16 +117,23 @@ export default {
 
                 {
                     key: "homeland",
-                    label: "其它",
+                    label: "家园",
                     index: "4",
                     submenus: [
                         {
-                            path: "/homeland/tutorial",
-                            label: "家园建设",
-                            icon: "el-icon-reading",
-                            key: "tutorial",
+                            path: "/furniture",
+                            label: "家具大全",
+                            icon: "el-icon-files",
+                            key: "furniture",
                             status: true,
                         },
+                        // {
+                        //     path: "/homeland/tutorial",
+                        //     label: "家园建设",
+                        //     icon: "el-icon-reading",
+                        //     key: "tutorial",
+                        //     status: true,
+                        // },
                         {
                             path: "/homeland/maps",
                             label: "家园地图",
@@ -141,13 +141,13 @@ export default {
                             key: "maps",
                             status: true,
                         },
-                        {
-                            path: "/homeland/flower",
-                            label: "家园花价",
-                            icon: "el-icon-sunny",
-                            key: "flower",
-                            status: true,
-                        },
+                        // {
+                        //     path: "/homeland/flower",
+                        //     label: "家园花价",
+                        //     icon: "el-icon-sunny",
+                        //     key: "flower",
+                        //     status: true,
+                        // },
                         {
                             path: "https://jx3.xoyo.com/zt/2020/09/24/blueprint/#/",
                             label: "家园蓝图",
