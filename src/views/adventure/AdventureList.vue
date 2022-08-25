@@ -11,24 +11,11 @@
             <el-alert title="没有对应的奇遇，请重新查找" type="info" center show-icon />
         </div>
 
-        <el-button
-            class="m-archive-more"
-            v-show="hasNextPage"
-            type="primary"
-            @click="appendPage"
-            icon="el-icon-arrow-down"
-            >加载更多</el-button
-        >
-        <el-pagination
-            class="m-archive-pages"
-            background
-            layout="total, prev, pager, next, jumper"
-            :hide-on-single-page="true"
-            :page-size="per"
-            :total="total"
-            :current-page.sync="page"
-            @current-change="changePage"
-        ></el-pagination>
+        <el-button class="m-archive-more" v-show="hasNextPage" type="primary" @click="appendPage"
+            icon="el-icon-arrow-down">加载更多</el-button>
+        <el-pagination class="m-archive-pages" background layout="total, prev, pager, next, jumper"
+            :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page"
+            @current-change="changePage"></el-pagination>
     </div>
 </template>
 
@@ -77,15 +64,15 @@ export default {
         },
     },
     watch: {
-        $route(obj) {
+        $route (obj) {
             if (obj.params.search) this.hasSearch = obj.params.search;
         },
-        per(val) {
+        per (val) {
             console.log(val);
         },
     },
     methods: {
-        getData() {
+        getData () {
             this.loading = true;
             let params = { ...this.params, ...this.search };
             getAdventures(params)
@@ -105,25 +92,24 @@ export default {
                 });
         },
         //处理特殊的链接
-        toSpecial(data) {
-            if (data.szOpenRewardPath) {
-                let str = data.szOpenRewardPath;
-                if (str?.indexOf("weapon") !== -1)
-                    str = "ui/Image/Adventure/reward/Open/weapon/school_" + this.school + "_Open.tga";
-                if (str?.indexOf("camp") !== -1) {
-                    data.bHide
-                        ? (str = "ui/Image/Adventure/reward/Open/camp/camp_2_Open.tga")
-                        : (str = "ui/Image/Adventure/reward/Open/camp/camp_0_Open.tga");
-                }
-                if (str?.indexOf("zzwg") !== -1)
-                    str = "ui/Image/Adventure/reward/Open/zzwg/school_" + this.school + "_Open.tga";
-                if (str?.indexOf("jcs") !== -1)
-                    str = "ui/Image/Adventure/reward/Open/jcs/school_" + this.school + "_Open.tga";
-                data.szOpenRewardPath = str;
+        toSpecial (data) {
+            const type = data.szRewardType;
+            let str = data.szOpenRewardPath
+            const name = data.szOpenRewardPath.split('\\').filter(Boolean).pop()
+            
+            if (type == 'school')
+                str = `ui/Image/Adventure/reward/Open/${name}/school_${this.school}_Open.tga`;
+
+            if (type == "camp") {
+                data.bHide
+                    ? (str = "ui/Image/Adventure/reward/Open/camp/camp_2_Open.tga")
+                    : (str = "ui/Image/Adventure/reward/Open/camp/camp_0_Open.tga");
             }
+
+            data.szOpenRewardPath = str;
             return data;
         },
-        changePage(i) {
+        changePage (i) {
             this.page = i;
             this.getData();
         },
@@ -132,13 +118,13 @@ export default {
             this.appendMode = true;
             this.getData();
         },
-        onSearch(params) {
+        onSearch (params) {
             this.page = 1;
             this.search = params;
             this.getData();
         },
         // 按宽度显示个数
-        showCount() {
+        showCount () {
             const listWidth = this.$refs.listRef?.clientWidth;
             this.per = Math.floor(listWidth / 300) * 4;
         },
