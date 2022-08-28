@@ -29,8 +29,8 @@
                                 <span v-text="item.label"></span>
                             </span>
                             <span class="u-price">
-                                <span class="u-trending" :class="item | showItemTrendingClass">{{ item |
-                                        showItemTrending
+                                <span class="u-trending" :class="showItemTrendingClass(item)">{{
+                                        showItemTrending(item)
                                 }}</span>
                                 <template v-if="item.sub_days_0_price">
                                     <span>今日：</span>
@@ -126,28 +126,7 @@ export default {
         icon_url: function (id) {
             return iconLink(id, this.client);
         },
-    },
-    watch: {
-        server: {
-            immediate: true,
-            handler () {
-                this.get_data();
-            },
-        },
-    },
-    mounted: function () {
-        if (User.isLogin() && this.$store.state.client == "std") {
-            getProfile().then((data) => {
-                if (data) {
-                    this.server = data.jx3_server || "斗转星移";
-                }
-            });
-        } else {
-            this.server =
-                this.$store.state.client == "origin" ? "缘起稻香" : "斗转星移";
-        }
-    },
-    filters: {
+
         showItemTrending: function (item) {
             if (item.sub_days_0_price && item.sub_days_1_price) {
                 if (item.sub_days_0_price - item.sub_days_1_price > 0) {
@@ -171,9 +150,26 @@ export default {
             }
         },
         iconLink,
-        showItemLink: function (val) {
-            return `/item/#/view/${val}`;
+    },
+    watch: {
+        server: {
+            immediate: true,
+            handler () {
+                this.get_data();
+            },
         },
+    },
+    mounted: function () {
+        if (User.isLogin() && this.$store.state.client == "std") {
+            getProfile().then((data) => {
+                if (data) {
+                    this.server = data.jx3_server || "斗转星移";
+                }
+            });
+        } else {
+            this.server =
+                this.$store.state.client == "origin" ? "缘起稻香" : "斗转星移";
+        }
     },
 };
 </script>
