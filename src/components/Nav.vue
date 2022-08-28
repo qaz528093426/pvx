@@ -11,12 +11,8 @@
             <el-submenu :index="group.index" v-for="group in clientMenus" :key="group.key">
                 <template slot="title">{{ group.label }}</template>
                 <el-menu-item-group>
-                    <el-menu-item
-                        v-for="item in group.submenus"
-                        :key="item.key"
-                        :class="{ 'is-active': active == item.key }"
-                        v-show="item.status"
-                    >
+                    <el-menu-item v-for="item in group.submenus" :key="item.key"
+                        :class="{ 'is-active': active == item.key }" v-show="item.status">
                         <a :href="item.path" :target="item.target || '_self'">
                             <!-- <i :class="item.icon"></i> -->
                             <img :src="getNavIcon(item.key)" :alt="item.label" />
@@ -109,6 +105,13 @@ export default {
                             key: "manufacture",
                             status: true,
                         },
+                        {
+                            path: "/pvg/item_price",
+                            label: "物价大全",
+                            icon: "el-icon-sugar",
+                            key: "tutorial",
+                            status: true,
+                        },
                         // 物价大全
                         // 金价走势
                         // 万宝楼
@@ -166,10 +169,10 @@ export default {
             let arr = compact(location.pathname?.split("/"));
             return arr.length > 1 ? arr[1] : arr[0];
         },
-        client() {
+        client () {
             return location.href.includes("origin") ? "origin" : "std";
         },
-        clientMenus() {
+        clientMenus () {
             let menus = this.menus;
             if (this.client !== "std") {
                 menus = menus
@@ -198,7 +201,7 @@ export default {
                 return `/pvx/${appKey}`;
             }
         },
-        getNavIcon(key) {
+        getNavIcon (key) {
             return require(`../assets/img/nav/${key}.png`);
         },
     },
