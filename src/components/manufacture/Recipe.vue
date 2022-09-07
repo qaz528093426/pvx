@@ -189,7 +189,7 @@ export default {
         // 描述过滤
         textFilter(str) {
             // 匹配分段
-            const regex = /<Text>text=(.*?)font=(\d+).*?<\/text>/gimsy;
+            const regex = /<Text>text="(.*?)"\s*?font=(\d+)\s*?<\/text>/gimsy;
             let matches = [];
             let match;
             while ((match = regex.exec(str))) {
@@ -199,7 +199,7 @@ export default {
             // 格式化分段
             let result = [];
             for (let group of matches) {
-                result.push(group[1].slice(1, -2).replace(/[\\n]/g, ""));
+                result.push(group[1].replace(/[\\n]/g, ""));
             }
             result = result.filter(Boolean);
             return result;
