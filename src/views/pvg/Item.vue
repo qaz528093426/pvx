@@ -13,14 +13,18 @@
             </el-input>
         </div> -->
 
-
         <div class="m-price-list" v-if="groups && groups.length && isEmpty">
             <!-- <div v-for="i in 2" :key="'wrapper' + i"> -->
             <el-row class="m-item" :gutter="20" v-for="(group, key) in groups" :key="key">
                 <div :span="24" class="u-group-title" v-text="group.label"></div>
                 <el-col :span="6" v-for="(item, k) in group.items" :key="k">
-                    <router-link v-if="item" class="u-item" :class="`u-item-${key}`"
-                        :to="{ name: 'view', params: { item_id: item.item_id } }">
+                    <a
+                        :href="`${link}item/view/${item.item_id}`"
+                        target="_blank"
+                        v-if="item"
+                        class="u-item"
+                        :class="`u-item-${key}`"
+                    >
                         <div class="u-icon">
                             <img :src="icon_url(item.icon)" />
                         </div>
@@ -30,7 +34,7 @@
                             </span>
                             <span class="u-price">
                                 <span class="u-trending" :class="showItemTrendingClass(item)">{{
-                                        showItemTrending(item)
+                                    showItemTrending(item)
                                 }}</span>
                                 <template v-if="item.sub_days_0_price">
                                     <span>今日：</span>
@@ -41,21 +45,22 @@
                                     <GamePrice :price="item.sub_days_1_price" />
                                 </template>
                                 <template
-                                    v-else-if="!item.sub_days_0_price && !item.sub_days_1_price && item.sub_days_2_price">
+                                    v-else-if="
+                                        !item.sub_days_0_price && !item.sub_days_1_price && item.sub_days_2_price
+                                    "
+                                >
                                     <span>前日：</span>
                                     <GamePrice :price="item.sub_days_2_price" />
                                 </template>
                                 <span v-else>暂无价目</span>
                             </span>
                         </div>
-                    </router-link>
+                    </a>
                 </el-col>
             </el-row>
             <!-- </div> -->
         </div>
     </div>
-
-
 </template>
 
 <script>
@@ -64,12 +69,13 @@ import servers_std from "@jx3box/jx3box-data/data/server/server_std.json";
 import GamePrice from "@jx3box/jx3box-common-ui/src/wiki/GamePrice.vue";
 import User from "@jx3box/jx3box-common/js/user";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 
 import { getProfile, getItemPrice } from "@/service/item";
 
 export default {
     name: "ItemPrice",
-    data () {
+    data() {
         return {
             groups: [],
             server: "",
@@ -78,35 +84,31 @@ export default {
         };
     },
     computed: {
-        item_ids: function () {
-            return this.$store.state.client == "origin"
-                ? ["origin1", "origin2", "origin3"]
-                : ["index1", "index2", "teshucailiao"];
-        },
         servers: function () {
-            return this.$store.state.client == "origin"
-                ? servers_origin
-                : servers_std;
+            return this.$store.state.client == "origin" ? servers_origin : servers_std;
         },
         client: function () {
             return this.$store.state.client;
         },
         isEmpty: function () {
-            return this.groups.some(item => item);
-        }
+            return this.groups.some((item) => item);
+        },
+        link: function () {
+            return __Root;
+        },
     },
     components: {
         GamePrice,
     },
     methods: {
         // 获取星标物品
-        get_data () {
+        get_data() {
             if (!this.server) return;
 
             this.loading = true;
             getItemPrice({
                 server: this.server,
-                keys: this.item_ids.join(","),
+                limit: 18,
             })
                 .then((data) => {
                     data = data.data;
@@ -118,10 +120,7 @@ export default {
         },
         goItemPage: function () {
             let host = location.origin;
-            window.open(
-                `${host}/item/#/search/${this.search}?page=1`,
-                "_blank"
-            );
+            window.open(`${host}/item/#/search/${this.search}?page=1`, "_blank");
         },
         icon_url: function (id) {
             return iconLink(id, this.client);
@@ -154,7 +153,7 @@ export default {
     watch: {
         server: {
             immediate: true,
-            handler () {
+            handler() {
                 this.get_data();
             },
         },
@@ -167,8 +166,7 @@ export default {
                 }
             });
         } else {
-            this.server =
-                this.$store.state.client == "origin" ? "缘起稻香" : "斗转星移";
+            // this.server = this.$store.state.client == "origin" ? "缘起稻香" : "斗转星移";
         }
     },
 };

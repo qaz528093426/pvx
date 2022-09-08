@@ -7,7 +7,7 @@
         align-items: flex-end;
         gap: 10px;
         .u-title {
-            .bold;
+            font-weight: 300;
             margin: 0;
             flex-shrink: 0;
         }
@@ -58,12 +58,15 @@
 
 .m-price-list {
     animation: priceAni 10s linear infinite;
-    
+
     .m-item {
+        .r(5px);
+        padding: 20px 10px 10px 10px;
+        background-color: #fafbfc;
         .mt(20px);
     }
     .u-group-title {
-        .mb(8px);
+        .mb(20px);
         font-weight: 600;
         color: #666666;
         padding: 0 10px;
@@ -73,7 +76,7 @@
         .db;
         .clearfix;
         .mb(10px);
-        background-color: @bg-gray;
+        background-color: #fff;
         transition: 0.1s ease-in-out;
 
         &:hover {

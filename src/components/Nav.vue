@@ -182,6 +182,7 @@ export default {
                             .map((el) => {
                                 if (el.key == "adventure") return false;
                                 if (el.key == "furniture") return false;
+                                if (el.key == "tutorial") return false;
                                 return el;
                             })
                             .filter(Boolean);
