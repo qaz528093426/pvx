@@ -7,11 +7,12 @@
                 <el-option v-for="serve in servers" :key="serve" :label="serve" :value="serve"></el-option>
             </el-select>
         </div>
-        <!-- <div class="m-search">
-            <el-input class="u-search" placeholder="搜索.." v-model="search" size="mini" @keyup.enter.native="goItemPage">
+        <div class="m-search">
+            <el-input class="u-search" placeholder="请输入搜索内容" v-model="search" size="mini" @keyup.enter.native="goItemPage">
+                <span slot="prepend">关键词</span>
                 <el-button slot="append" icon="el-icon-search" @click="goItemPage"></el-button>
             </el-input>
-        </div> -->
+        </div>
 
         <div class="m-price-list" v-if="groups && groups.length && isEmpty">
             <!-- <div v-for="i in 2" :key="'wrapper' + i"> -->
@@ -19,7 +20,7 @@
                 <div :span="24" class="u-group-title" v-text="group.label"></div>
                 <el-col :span="6" v-for="(item, k) in group.items" :key="k">
                     <a
-                        :href="`${link}item/view/${item.item_id}`"
+                        :href="`/item/view/${item.item_id}`"
                         target="_blank"
                         v-if="item"
                         class="u-item"
@@ -78,7 +79,7 @@ export default {
     data() {
         return {
             groups: [],
-            server: "",
+            server: "蝶恋花",
             loading: false,
             search: "",
         };
@@ -166,12 +167,12 @@ export default {
                 }
             });
         } else {
-            // this.server = this.$store.state.client == "origin" ? "缘起稻香" : "斗转星移";
+            this.server = "斗转星移";
         }
     },
 };
 </script>
 
 <style lang="less">
-@import "../../assets/css/manufacture/item_price.less";
+@import "~@/assets/css/manufacture/item_price.less";
 </style>
