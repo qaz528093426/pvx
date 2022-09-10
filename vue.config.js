@@ -48,6 +48,12 @@ module.exports = {
             template: "public/index.html",
             filename: "pvg/index.html",
         },
+        face: {
+            title: "捏脸分享 - JX3BOX",
+            entry: "src/pages/face.js",
+            template: "public/index.html",
+            filename: "face/index.html",
+        }
     },
 
     //❤️ Proxy ~
