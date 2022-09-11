@@ -10,7 +10,7 @@
 				<span v-if="item.Attribute5"><span class="u-label u-purple">趣味</span>{{ item.Attribute5 }}</span>
 				<span><span class="u-label">园宅等级：</span>{{ item.LevelLimit }}级</span>
 			</div>
-		
+
 		</el-popover> -->
 		<router-link v-for="(item, i) in furnitures" :key="i" class="u-item" :class="quality(item.Quality)" slot="reference" :to="`/${item.dwID}`">
 			<img class="u-pic" :src="formatImg(item.Path)" />
