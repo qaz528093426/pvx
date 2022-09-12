@@ -1,5 +1,5 @@
 <template>
-    <div class="v-share-list m-face">
+    <div class="v-share-list m-face" v-loading="loading">
         <div class="m-share-search">
             <a :href="publish_link" class="u-publish el-button el-button--primary">+ 分享捏脸</a>
             <el-input placeholder="请输入搜索内容" v-model="title" class="input-with-select">
@@ -32,6 +32,7 @@
                 :current-page.sync="page"
             ></el-pagination>
         </template>
+        <el-alert v-else class="m-archive-null" :title="alertTitle" type="info" center show-icon></el-alert>
     </div>
 </template>
 
@@ -79,7 +80,11 @@ export default {
         },
         hasNextPage() {
             return this.page < this.pageTotal;
-        }
+        },
+        alertTitle: function () {
+            if (this.title) return "没找到对应的捏脸，请重新选择条件或关键词搜索";
+            return "没有找到相关的捏脸";
+        },
     },
     watch: {
         params: {
@@ -92,15 +97,18 @@ export default {
     },
     methods: {
         getFaceList: function () {
+            this.loading = true;
             getFaceList(this.params).then((res) => {
                 if (this.appendMode) {
-                    this.list = this.list.concat(res.data.data.list);
+                    this.list = this.list.concat(res.data.data.list || []);
                 } else {
-                    this.list = res.data.data.list;
+                    this.list = res.data.data.list || [];
                 }
-                this.list = res.data.data.list;
                 this.total = res.data.data.page.total;
                 this.pageTotal = res.data.data.page.pageTotal;
+            }).finally(() => {
+                this.loading = false;
+                this.appendMode = false;
             });
         },
         appendPage: function () {
