@@ -62,6 +62,7 @@
     .mr(20px);
     .mb(20px);
     .w(190px);
+    overflow: hidden;
 
     .u-img {
         .db;
@@ -81,9 +82,57 @@
         }
     }
 
+    .u-author-box {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        overflow: hidden;
+    }
+
     .u-author {
         .fz(12px,2);
         color: #aaa;
+        cursor: pointer;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:hover {
+            color: #409eff;
+        }
+    }
+
+    .u-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    .u-price {
+        .fz(12px,2);
+        color: #409eff;
+        .ml(5px);
+
+        &::before {
+            content: "价格：";
+            .fz(12px,2);
+            color: #aaa;
+        }
+    }
+
+    .u-star-mark {
+        color: #fff;
+        font-size: 12px;
+        line-height: 16px;
+        transform: rotate(45deg) scale(.8);
+        position: absolute;
+        right: -20px;
+        top: 0;
+        padding: 0 15px 0 30px;
+        font-style: normal;
+        background-color: #fc3c3c;
     }
 
     .clearfix;
@@ -95,8 +144,11 @@
         .pr;
     }
     .u-op {
-        .pa;
-        .rb(0);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px;
+        padding: 0 5px 0 0;
 
         i {
             .pointer;
