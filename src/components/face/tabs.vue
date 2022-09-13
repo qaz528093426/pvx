@@ -10,7 +10,7 @@
                     active: item.value == active,
                 }"
             >
-                <img class="u-icon-img" :src="getThumbnail(item.label)" :alt="item" />
+                <img class="u-icon-img" :src="getThumbnail(item.label)" :alt="item.label" />
                 <span class="u-tabs-span">{{ item.label }}</span>
             </div>
         </div>
