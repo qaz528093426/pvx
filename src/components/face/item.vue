@@ -7,14 +7,16 @@
         </router-link>
         <span class="u-op">
             <!-- 非原创显示名称，原创显示头像+作者 -->
-            <span class="u-author" :title="item.author_name" v-if="!item.original" @click="onAuthorClick">@{{ item.author_name || "匿名" }}</span>
+            <span class="u-author" :title="item.author_name" v-if="!item.original" @click="onAuthorClick">{{
+                item.author_name || "匿名"
+            }}</span>
             <a class="u-author-box" :href="authorLink(item.user_id)" @click="onAuthorClick" v-else>
                 <img class="u-avatar" :src="showAvatar(item.user_avatar)" :alt="author" />
-                <span class="u-author">@{{ author }}</span>
+                <span class="u-author">{{ author }}</span>
             </a>
 
             <!-- 价格 -->
-            <span class="u-price" v-if="item.price_type != 0">{{ item.price_count }}</span>
+            <span class="u-price" :class="{ isFree: !item.price_count }"><span>{{ item.price_count || "免费" }}</span></span>
         </span>
 
         <i class="u-star-mark" v-if="!!item.star">STAR</i>

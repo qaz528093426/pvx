@@ -15,13 +15,13 @@
             </div>
         </div>
         <div class="u-marks">
-            <el-radio-group v-model="star" class="u-star">
+            <el-radio-group v-model="star" class="u-star" size="small">
                 <el-radio-button label="">全部</el-radio-button>
-                <el-radio-button :label="1">只看精选</el-radio-button>
+                <el-radio-button :label="1">精选</el-radio-button>
             </el-radio-group>
-            <el-radio-group v-model="price_type">
+            <el-radio-group v-model="price_type" size="small">
                 <el-radio-button label="">全部</el-radio-button>
-                <el-radio-button label="0">只看免费</el-radio-button>
+                <el-radio-button label="0">免费</el-radio-button>
                 <!-- <el-radio-button label="1">盒币</el-radio-button> -->
                 <!-- <el-radio-button label="2">金箔</el-radio-button> -->
             </el-radio-group>

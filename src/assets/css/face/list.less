@@ -18,26 +18,33 @@
         align-items: center;
         .pr;
         .pointer;
-        .fz(18px,40px);
+        .fz(14px,20px);
         margin: 0 20px;
+        padding:4px 10px 2px 10px;
         border-bottom: 2px solid transparent;
-        .bold;
-        &.active:after {
-            content: "";
-            .pa;
-            .lb(0,-4px);
-            .size(100%,2px);
-            background-color: #409eff;
-        }
+        background-color:@bg-gray;
+        .r(20px);
+        letter-spacing: 5px;
+        // .bold;
+        font-weight: 300;
+        // &.active:after {
+        //     content: "";
+        //     .pa;
+        //     .lb(0,-4px);
+        //     .size(100%,2px);
+        //     background-color: #409eff;
+        // }
         &.active,
         &:hover {
+            background-color:@color-link;
             .u-tabs-span {
-                color: #409eff;
+                color: #fff;
             }
         }
         img{
             .r(2px);
         }
+        .mb(10px);
     }
     .u-marks {
         .pt(20px);
@@ -72,14 +79,17 @@
         background-color: #f5f8fa;
         border: 1px dashed #e6f0fb;
         transition: all 0.2s ease-in-out;
+        .r(4px);
         .u-pic {
             .full;
+            .r(4px);
         }
         &:hover {
             filter: saturate(120%) brightness(110%);
             transform: scale(1.06);
             border-color: transparent;
         }
+        .mb(10px);
     }
 
     .u-author-box {
@@ -119,6 +129,12 @@
             content: "价格：";
             .fz(12px,2);
             color: #aaa;
+        }
+
+        &.isFree{
+            span{
+                color:#35a300;
+            }
         }
     }
 
