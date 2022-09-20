@@ -86,6 +86,11 @@ export default {
             return "没有找到相关的捏脸";
         },
     },
+    created() {
+        if(this.$route.params.title){
+            this.title=this.$route.params.title
+        }
+    },
     watch: {
         params: {
             deep: true,

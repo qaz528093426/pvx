@@ -1,7 +1,8 @@
 .m-header {
+    padding: 10px 0;
+    text-align: center;
     h2 {
-        .fz(32px,1.5);
-        .pb(10px);
+        .fz(32px, 1.5);
         font-weight: 300;
         margin: 0;
         letter-spacing: 0.5px;
@@ -15,26 +16,53 @@
             border-bottom: 1px solid #0366d6;
         }
     }
-
+    .u-title {
+        font-weight: 300;
+        margin: 0;
+        text-align: center;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        height: auto;
+    }
     .u-info {
-        .flex;
+        // .flex;
         .fz(12px);
-        height: 20px;
-        align-items: center;
+        // height: 20px;
+        // align-items: center;
+    }
+    .u-author {
+        padding: 5px 0;
     }
     .u-info-margin {
-        .flex;
+        // .flex;
         .mr(15px);
         align-items: center;
+        cursor:pointer;
         i {
             .fz(16px);
             .mr(5px);
-            &.u-label-client {
-                .fz(12px,20px);
-            }
+            // &.u-label-client {
+            //     .fz(12px, 20px);
+            // }
         }
     }
+    .u-desc {
+        border: 1px dashed #e1e4e8;
+        border-radius: 4px;
+        padding: 10px;
+        background-color: #fafbfc;
+        font-size: 14px;
+        line-height: 2;
+        margin: 10px 0;
+        white-space: pre-line;
+        box-sizing: border-box;
+        color: #555;
+        text-align: left;
+    }
     .u-client {
+        .mr(5px);
         font-style: normal;
         font-size: 12px;
         padding: 0 5px;
@@ -44,6 +72,23 @@
         &.std {
             border: 1px solid #f0b400;
             color: #f0b400;
+        }
+        &.u-man {
+            border: 1px solid #00aaff;
+            color: #00aaff;
+            // #0eb7ce
+        }
+        &.u-woman {
+            border: 1px solid #aaaaff;
+            color: #aaaaff;
+        }
+        &.u-girl {
+            border: 1px solid #ffaaff;
+            color: #ffaaff;
+        }
+        &.u-boy {
+            border: 1px solid #3fbd5c;
+            color: #3fbd5c;
         }
     }
     .u-label-client {
@@ -71,10 +116,75 @@
 .m-single-header {
     .pt(0);
 }
-.u-single-author {
-    .db;
-    .x;
-    padding: 20px;
+.m-face-pay {
+    .flex;
+    .pt(5px);
+    .m-face-pay-info {
+        span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .el-button--text {
+            color: #000;
+        }
+    }
+    .m-face-pay-info .m-face-pay-type {
+        .ml(10px);
+    }
+    .m-face-pay-btn {
+        text-align: right;
+        flex-grow: 1;
+    }
+}
+.m-face-tips {
+    border: 1px dashed #e1e4e8;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fafbfc;
+    font-size: 14px;
+    line-height: 2;
+    margin: 10px 0;
+    white-space: pre-line;
+    box-sizing: border-box;
+    color: #555;
+    text-align: left;
+}
+.m-face-down {
+    .m-face-files {
+        display: block;
+        .m-face-box-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #e1e4e8;
+            border-radius: 4px;
+            li {
+                padding: 10px 150px 10px 10px;
+                position: relative;
+            }
+            .u-icon {
+                float: left;
+                margin-right: 8px;
+                margin-top: 4px;
+            }
+            .u-desc {
+                clear: both;
+                display: block;
+                font-size: 12px;
+                line-height: 2;
+                color: #999;
+            }
+            .u-group {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .u-action {
+                position: absolute;
+                right: 10px;
+                bottom: 15px;
+            }
+        }
+    }
 }
 
 .m-face-pic {
@@ -90,8 +200,19 @@
 
 .m-navigation {
     .mb(20px);
+    display: flex;
 }
-
+.u-goback {
+    margin-right: 10px;
+}
+.f-s-banner {
+    background-color: @color;
+    border-radius: 6px;
+    height: 206px;
+    div {
+        border-radius: 6px;
+    }
+}
 .el-carousel__item.is-active {
     .z(100);
     // pointer-events:none;
@@ -109,7 +230,7 @@
     .none !important;
 }
 
-.el-slider__button-wrapper{
+.el-slider__button-wrapper {
     .z(100) !important;
 }
 
