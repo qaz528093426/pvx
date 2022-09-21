@@ -81,7 +81,7 @@ export default {
         authorLink,
         onAuthorClick() {
             if (!this.item.original) {
-                window.open(item.author_link, "_blank");
+                window.open(this.item.author_link, "_blank");
             }
         },
     },

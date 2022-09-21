@@ -8,26 +8,28 @@
             </el-input>
         </div>
         <!-- 海报banner -->
-        <div class="f-s-banner" v-if="post.banner"><el-image style="width:100%;height:100%" :src="post.banner"></el-image></div>
+        <div class="m-banner" v-if="post.banner">
+            <img  :src="post.banner">
+        </div>
         <!-- 基本信息 -->
         <div class="m-header">
-            <!-- <img :src="'https://console.cnyixun.com/upload/avatar/2021/3/5/1893535.jpg?x-oss-process=style/avatar_m'" class="u-avatar" /> -->
+            <img :src="showAvatar(post.user_avatar)" class="u-avatar" v-if="post.original"/>
             <h2 class="u-title">{{ title }}</h2>
             <div class="u-info">
                 <div class="u-author u-info-margin">
                     By
-                    <a class="u-name" :href="author_link" target="_blank">{{ author_name }}</a>
+                    <a class="u-name" :href="authorLink(post.user_id)" @click="onAuthorClick"  v-if="post.original">{{ author_name }}</a>
+                    <span class="u-name" @click="onAuthorClick" v-else>{{ author_name }}</span>
                     <time class="u-time">{{ updated_at }}</time>
                 </div>
+
                 <div class="u-info-client">
-                    <!-- <span class="u-client" :class="client">{{ showClientLabel(client) }}</span> -->
                     <span :class="client">
-                        <i class="u-client" v-if="post.star">STAR</i>
+                        <i class="u-client u-mark " v-if="post.star">★ 编辑推荐</i>
                         <i class="u-client" :class="client || 'std'">{{ showClientLabel(client) }}</i>
                         <i class="u-client" :class="body_type_info.class" v-if="body_type_info">{{body_type_info.name}}</i>
                     </span>
-                    <!-- :href="edit_link" v-if="canEdit" -->
-<!--                    <a class="u-info-margin" >
+                   <!-- <a class="u-info-margin" :href="edit_link" v-if="canEdit" >
                         <i class="u-icon-edit el-icon-edit-outline"></i>
                         <span>编辑</span>
                     </a> -->
@@ -35,13 +37,15 @@
 
             </div>
             <div class="u-desc" v-if="remark">{{ remark }}</div>
-            <el-divider content-position="left">JX3BOX</el-divider>
+            <el-divider content-position="left">
+                 <i class="el-icon-pie-chart"></i>预览
+            </el-divider>
         </div>
 
-        <div class="m-single-pics" v-if="previewSrcList && previewSrcList.length">
+        <div class="m-single-pics" v-if="previewSrcList && previewSrcList.length>0">
             <el-carousel class="m-carousel" :interval="4000" type="card" arrow="always">
                 <el-carousel-item v-for="(item, i) in previewSrcList" :key="i">
-                    <div class="m-face-pic" @click="showOriginImage(i)"><el-image fit="contain" :src="item" class="u-pic" :preview-src-list="previewSrcList"></el-image></div>
+                    <div class="m-face-pic"><el-image fit="contain" :src="item" class="u-pic" :preview-src-list="previewSrcList"></el-image></div>
                 </el-carousel-item>
             </el-carousel>
         </div>
@@ -49,38 +53,35 @@
         <div class="m-face-tips">
             <div class="m-face-pay">
                 <div class="m-face-pay-info">
-                    <el-button type="text">作品类型：</el-button>
-                    <span v-if="price_type==0">免费</span>
-                    <span v-if="price_type!=0">收费</span>
-                    <span v-if="price_type!=0" class="m-face-pay-type">
-                        <el-button type="text">收费类型：</el-button>
-                        <span v-if="price_type == 1">{{ price_count }} 盒币</span>
-                        <span v-if="price_type == 2">{{ price_count }} 金箔</span>
-                    </span>
+                    <el-tag effect="plain" type="success" v-if="price_type==0">免费</el-tag>
+                    <el-tag effect="plain" type="warning" v-if="price_type!=0">
+                        <span v-if="price_type == 1">{{ post.price_count }} 盒币</span>
+                        <span v-if="price_type == 2">{{ post.price_count }} 金箔</span>
+                    </el-tag>
                 </div>
                 <div class="m-face-pay-btn" v-if="price_type!=0 && !has_buy"><el-button type="warning" round size="small">购买</el-button></div>
             </div>
             <div>如数据中包含付费元素，将不可用于新建角色导入，如用于新建角色请点击最下方导出</div>
         </div>
-        <div class="m-face-down">
+        <div class="m-face-files">
             <el-divider content-position="left">下载列表</el-divider>
-            <div class="m-face-files">
+            <div class="u-face-files">
                 <div v-if="downFileList.length==0">
                     暂无数据。
                 </div>
-                <ul  class="m-face-box-list" v-if="downFileList.length>0">
+                <ul class="m-face-files-list" v-if="downFileList.length>0">
                     <li v-for="item in downFileList" :key="item.id">
                         <i  class="el-icon-document"></i>
                         <span>
                             {{item.describe?item.describe:'暂无描述'}}
                         </span>
-                        <div  class="u-desc">
+                        <div class="u-desc">
                             <span >
                                 <i  class="el-icon-date"></i>
                                 创建于 {{item.created_at}}
                             </span>
                         </div>
-                        <div  class="el-button-group u-action">
+                        <div class="el-button-group u-action">
                             <el-button  icon="el-icon-download" size="small" round @click="getDownUrl(item.uuid)">下载</el-button>
                         </div>
                     </li>
@@ -89,10 +90,10 @@
             <el-pagination
                 small
                 layout="prev, pager, next"
-                :hide-on-single-page="downPageQueryInfo.pageSize > downPageQueryInfo.total"
-                :page-size="downPageQueryInfo.pageSize"
-                :current-page="downPageQueryInfo.pageIndex"
-                :total="downPageQueryInfo.total"
+                :hide-on-single-page="downloadParams.pageSize > downloadParams.total"
+                :page-size="downloadParams.pageSize"
+                :current-page="downloadParams.pageIndex"
+                :total="downloadParams.total"
                 @current-change="getAccessoryList"
             ></el-pagination>
         </div>
@@ -111,14 +112,12 @@
 </template>
 
 <script>
-import { resolveImagePath } from '@jx3box/jx3box-common/js/utils';
 import { getOneFaceInfo, getAccessoryList,getDownUrl} from '@/service/face.js';
 import { getStat, postStat } from '@jx3box/jx3box-common/js/stat';
 import facedata from '@jx3box/jx3box-facedat/src/Facedat.vue';
 import Comment from '@jx3box/jx3box-comment-ui/src/Comment.vue';
-import { __Links } from '@jx3box/jx3box-common/data/jx3box.json';
-import { showDate } from '@jx3box/jx3box-common/js/moment';
-import { editLink, authorLink } from '@jx3box/jx3box-common/js/utils.js';
+// import { editLink, authorLink } from '@jx3box/jx3box-common/js/utils.js';
+import { showMinibanner, showBanner, showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import User from '@jx3box/jx3box-common/js/user';
 export default {
     name: 'single',
@@ -159,7 +158,7 @@ export default {
                 }
             ],
             downFileList: [],
-            downPageQueryInfo: {
+            downloadParams: {
                 pageIndex: 1,
                 pageSize: 15,
                 total: 0
@@ -172,6 +171,9 @@ export default {
         },
         author_name: function() {
             return this.post?.author_name || '匿名';
+        },
+        original: function() {
+            return this.post?.original || 0;
         },
         updated_at: function() {
             return this.post?.updated_at || '';
@@ -186,7 +188,7 @@ export default {
             return this.post?.remark || '';
         },
         facedata: function() {
-            return this.post?.post_meta?.data || '';
+            return this.post?.data || '';
         },
         meta: function() {
             return this.post?.post_meta || '';
@@ -198,7 +200,7 @@ export default {
             return this.post?.user_id || '';
         },
         edit_link: function () {
-            return editLink(this.post?.post_type, this.post?.ID);
+            return editLink(this.post?.post_type, this.post?.id);
         },
         post_type: function() {
             return this.post?.post_type || 'face';
@@ -206,21 +208,20 @@ export default {
         price_type: function() {
             return this.post?.price_type || '';
         },
-        price_count() {
-            return this.post?.price_count || '0';
-        },
         previewSrcList: function() {
             return this.post?.images || [];
         },
-        // canEdit: function () {
-        //     return this.post?.post_author == User.getInfo().uid || User.isEditor();
-        // },
+        canEdit: function () {
+            return this.post?.user_id == User.getInfo().uid || User.isEditor();
+        },
     },
     watch: {},
     created: function() {
         this.getData();
     },
     methods: {
+        showAvatar,
+        authorLink,
         getFaceList() {
             this.$router.push({name:'list',params:{title:this.searcheTitle}})
         },
@@ -248,14 +249,19 @@ export default {
                 postStat('face', this.id);
             }
         },
+        onAuthorClick() {
+            if (!this.post.original) {
+                window.open(this.author_link, "_blank");
+            }
+        },
         getAccessoryList() {
-            getAccessoryList(this.id, this.downPageQueryInfo).then(res => {
+            getAccessoryList(this.id, this.downloadParams).then(res => {
                 // console.log(res)
                 let data = res.data.data;
                 this.has_buy = data.has_buy;
                 if(data.has_buy){
                     this.downFileList = data.list;
-                    this.downPageQueryInfo.total = data.page.total;
+                    this.downloadParams.total = data.page.total;
                 }
 
             });
@@ -271,9 +277,6 @@ export default {
         showClientLabel: function(val) {
             return this.client_map[val];
         },
-        showOriginImage: function(i) {
-            console.log(i);
-        }
     }
 };
 </script>

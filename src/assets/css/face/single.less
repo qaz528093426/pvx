@@ -1,3 +1,16 @@
+.m-navigation {
+    .mb(20px);
+    display: flex;
+}
+.m-banner {
+    background-color: @color;
+    border-radius: 6px;
+    height: 206px;
+    img{
+        border-radius: 6px;
+        width:100%;height:100%;
+    }
+}
 .m-header {
     padding: 10px 0;
     text-align: center;
@@ -8,7 +21,7 @@
         letter-spacing: 0.5px;
     }
     .el-divider__text {
-        .color(#888);
+        // .color(#888);
         font-weight: 300;
     }
     a {
@@ -26,11 +39,23 @@
         overflow: hidden;
         height: auto;
     }
+    .u-avatar {
+        .auto(x);
+        .size(88px);
+        .db;
+        .mb(10px);
+    }
+
     .u-info {
         // .flex;
         .fz(12px);
         // height: 20px;
         // align-items: center;
+
+    }
+    .u-name{
+        padding-right: 6px;
+        color: #0366d6;
     }
     .u-author {
         padding: 5px 0;
@@ -61,12 +86,13 @@
         color: #555;
         text-align: left;
     }
+
     .u-client {
-        .mr(5px);
+        .mr(6px);
         font-style: normal;
         font-size: 12px;
-        padding: 0 5px;
-        border-radius: 3px;
+        padding: 0 6px;
+        border-radius: 2px;
         border: 1px solid #0eb7ce;
         color: #0eb7ce;
         &.std {
@@ -89,6 +115,10 @@
         &.u-boy {
             border: 1px solid #3fbd5c;
             color: #3fbd5c;
+        }
+        &.u-mark{
+            border: 1px solid #6f42c1;
+            color: #6f42c1;
         }
     }
     .u-label-client {
@@ -149,10 +179,10 @@
     color: #555;
     text-align: left;
 }
-.m-face-down {
-    .m-face-files {
+.m-face-files {
+    .u-face-files {
         display: block;
-        .m-face-box-list {
+        .m-face-files-list {
             list-style: none;
             padding: 0;
             margin: 0;
@@ -198,21 +228,11 @@
     }
 }
 
-.m-navigation {
-    .mb(20px);
-    display: flex;
-}
+
 .u-goback {
     margin-right: 10px;
 }
-.f-s-banner {
-    background-color: @color;
-    border-radius: 6px;
-    height: 206px;
-    div {
-        border-radius: 6px;
-    }
-}
+
 .el-carousel__item.is-active {
     .z(100);
     // pointer-events:none;
