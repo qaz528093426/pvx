@@ -7,7 +7,7 @@ const faceSingle = () => import("@/views/face/single.vue");
 
 const routes = [
     { name: "list", path: "/", component: faceList },
-    { name: "single", path: "/:id(\\d+)", component: faceSingle },
+    { name: "single", path: "/single/:id(\\d+)", component: faceSingle },
 ];
 
 const router = new VueRouter({

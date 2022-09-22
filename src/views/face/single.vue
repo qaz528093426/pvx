@@ -29,7 +29,7 @@
                         <i class="u-client" :class="client || 'std'">{{ showClientLabel(client) }}</i>
                         <i class="u-client" :class="body_type_info.class" v-if="body_type_info">{{body_type_info.name}}</i>
                     </span>
-                   <!-- <a class="u-info-margin" :href="edit_link" v-if="canEdit" >
+                   <!-- <a class="u-info-margin" :href="edit_link" v-if="!canEdit" >
                         <i class="u-icon-edit el-icon-edit-outline"></i>
                         <span>编辑</span>
                     </a> -->
@@ -63,7 +63,7 @@
             </div>
             <div>如数据中包含付费元素，将不可用于新建角色导入，如用于新建角色请点击最下方导出</div>
         </div>
-        <div class="m-face-files">
+        <div class="m-face-files" v-if="has_buy">
             <el-divider content-position="left">下载列表</el-divider>
             <div class="u-face-files">
                 <div v-if="downFileList.length==0">
@@ -97,7 +97,7 @@
                 @current-change="getAccessoryList"
             ></el-pagination>
         </div>
-       <div class="m-single-data">
+       <div class="m-single-data" v-if="has_buy">
             <el-divider content-position="left">独家数据分析</el-divider>
             <facedata v-if="facedata" :data="facedata" />
         </div>
@@ -112,12 +112,12 @@
 </template>
 
 <script>
-import { getOneFaceInfo, getAccessoryList,getDownUrl} from '@/service/face.js';
+import { getOneFaceInfo, payFace,loopPayStatus,getAccessoryList,getDownUrl} from '@/service/face.js';
 import { getStat, postStat } from '@jx3box/jx3box-common/js/stat';
 import facedata from '@jx3box/jx3box-facedat/src/Facedat.vue';
 import Comment from '@jx3box/jx3box-comment-ui/src/Comment.vue';
 // import { editLink, authorLink } from '@jx3box/jx3box-common/js/utils.js';
-import { showMinibanner, showBanner, showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
+import {editLink,showMinibanner, showBanner, showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import User from '@jx3box/jx3box-common/js/user';
 export default {
     name: 'single',
@@ -199,8 +199,9 @@ export default {
         author_id() {
             return this.post?.user_id || '';
         },
+
         edit_link: function () {
-            return editLink(this.post?.post_type, this.post?.id);
+            return editLink(this.post?.post_type || 'face', this.post?.id);
         },
         post_type: function() {
             return this.post?.post_type || 'face';
@@ -230,7 +231,7 @@ export default {
                 this.loading = true;
                 getOneFaceInfo(this.id)
                     .then(res => {
-                        this.post = this.$store.state.post = res.data.data;
+                        this.post = this.$store.state.faceSingle = res.data.data;
                         document.title = this.post.title;
                         for(let i=0;i<this.body_type_arr.length;i++){
                             if(this.body_type_arr[i].type==this.post.body_type){
