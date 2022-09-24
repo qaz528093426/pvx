@@ -1,6 +1,6 @@
 <template>
     <div class="m-share-item">
-        <router-link class="u-face" :to="`/${item.id}`">
+        <router-link class="u-face" :to="`/${item.id}`" target="_blank">
             <i class="u-img">
                 <img class="u-pic" :src="showThumb(imgLink)" loading="lazy" />
             </i>
@@ -47,7 +47,7 @@ export default {
             return this.item.display_name || "匿名";
         },
         imgLink: function () {
-            return this.item.images[0] || __imgPath + "image/face/null2.png";
+            return this.item.images?.[0] || __imgPath + "image/face/null2.png";
         },
     },
     methods: {

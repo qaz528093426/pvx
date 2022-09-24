@@ -11,7 +11,7 @@
 
         <template v-if="list.length > 0">
             <div class="m-share-list">
-                <faceItem v-for="(item, index) in list" :key="index" :item="item" />
+                <faceItem v-for="(item) in list" :key="item.id" :item="item" />
             </div>
             <el-button
                 class="m-archive-more"
@@ -55,7 +55,7 @@ export default {
 
             list: [],
             page: 1,
-            per_page: 21,
+            per_page: 14,
             pageTotal: 1,
             total: 0,
 
@@ -113,6 +113,7 @@ export default {
                     }
                     this.total = res.data.data.page.total;
                     this.pageTotal = res.data.data.page.pageTotal;
+                    this.$forceUpdate()
                 })
                 .finally(() => {
                     this.loading = false;

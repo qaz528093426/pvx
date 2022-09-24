@@ -262,7 +262,6 @@ export default {
             payFace(params).then((res) => {
                 let payid = res.data.data.id;
                 // 轮询接口
-                console.log(res);
                 let setIntervalId = setInterval(
                     loopPayStatus(payid).then((d) => {
                         this.getPayFaceStatus(d.data.data.pay_status, setIntervalId);
