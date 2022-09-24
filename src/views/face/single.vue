@@ -89,7 +89,7 @@
         <div class="m-random-list">
             <el-divider content-position="left">作者其他作品</el-divider>
             <el-row :gutter="20">
-                <el-col :span="4" v-for="item in randomList" :key="item.id">
+                <el-col :span="3" v-for="item in randomList" :key="item.id">
                     <div class="u-random-box" @click="goToOther(item)">
                         <div class="u-random-img">
                             <el-image fit="contain" :src="item.images[0]" :preview-src-list="[item.images[0]]">
@@ -223,7 +223,6 @@ export default {
           })
         },
         facePay(){
-            console.log(this.post)
             let res=this.post
             let params={
                 postType:'face',
@@ -233,6 +232,8 @@ export default {
                 accessUserId:res.user_id,
                 payUserId:User.getInfo().uid
             }
+            console.log(params)
+            // return;
             //支付
             payFace(params).then(res=>{
                let payid=res.data.data.id;
@@ -267,7 +268,7 @@ export default {
             let post=this.post
             let params={
                 user_id:post.user_id,
-                limit:6
+                limit:8
             }
             getRandomFace(params).then(res=>{
                 console.log(res)
