@@ -9,38 +9,54 @@ function getFaceList(params) {
 }
 /**
  * 获取一个捏脸
- * @param {Object} id
+ * @param {int} id
  */
 function getOneFaceInfo(id){
     return $next().get(`/api/face/${id}`);
 }
 /**
  * 管理员设置一个精选
- * @param {Object} id
+ * @param {int} id
  */
 function setStar(id){
-    return $next().put(`/face/${id}/manager/set/star`)
+    return $next().put(`/api/face/${id}/manager/set/star`)
 }
 /**
  * 管理员取消一个精选
- * @param {Object} id
+ * @param {int} id
  */
 function cancelStar(id){
-    return $next().put(`/face/${id}/manager/cancel/star`)
+    return $next().put(`/api/face/${id}/manager/cancel/star`)
 }
 /**
- * 管理员上架捏脸
- * @param {Object} id
+ * 管理员/作者上架捏脸
+ * @param {int} id
+ * @param {Boolean} isAdmin
  */
-function onlineFace(id){
-    return $next().put(`/face/${id}/manager/online`)
+function onlineFace(id,isAdmin){
+    if(isAdmin){
+        return $next().put(`/api/face/${id}/manager/online`)
+    }
+    return $next().put(`/api/face/${id}/online`)
 }
 /**
- * 管理员下架捏脸
- * @param {Object} id
+ * 管理员/作者下架捏脸
+ * @param {int} id
+ * @param {Boolean} isAdmin
  */
-function offlineFace(id){
-    return $next().put(`/face/${id}/manager/offline`)
+function offlineFace(id,isAdmin){
+    if(isAdmin){
+        return $next().put(`/api/face/${id}/manager/offline`)
+    }
+    return $next().put(`/api/face/${id}/offline`)
+}
+
+/**
+ * 删除一个捏脸，软删除
+ * @param id
+ */
+function deleteFace(id){
+    return $next().delete(`/api/face/${id}`)
 }
 /**
  * 购买捏脸
@@ -52,7 +68,8 @@ function offlineFace(id){
  * accessUserId {int} 出售人的id  【可以从捏脸列表中获取 user_id】
  */
 function payFace(params){
-    return $pay().post(`/api/buy-licence/article/${params.postType}/${params.postId}/pay/${params.priceType}/${params.priceCount}/from/${params.payUserId}/to/${params.accessUserId}`)
+    // return $pay().post(`/api/buy-licence/article/${params.postType}/${params.postId}/pay/${params.priceType}/${params.priceCount}/from/${params.payUserId}/to/${params.accessUserId}`)
+    return $pay().post(`/api/buy-licence/article/${params.postType}/${params.PostId}/pay/${params.priceType}/${params.priceCount}/from/${params.payUserId}/to/${params.accessUserId}`)
 }
 /**
  * 循环获取支付结果
@@ -63,21 +80,49 @@ function loopPayStatus(id){
 }
 /**
  * 获取附件列表
- * @param {Object} postId
+ * @param {int} postId
+ * @param {Object} params
  */
 function getAccessoryList(postId,params){
     return $next().get(`/api/charge_attachment/face/${postId}`,{
         params: params,
     });
 }
+
+/**
+ * 获取最新一个附件（没有被作者或者管理删除的最新一个版本）
+ * @param {int} postId
+ * @param {Object} params
+ */
+function  getNewAccessory(postId,params){
+    return $next().get(`/api/charge_attachment/face/${postId}/lastest`,{
+        params: params,
+    });
+}
 /**
  * 获取下载地址
- * @param {Object} postId
+ * @param {int} postId
  * @param {Object} uuid
  */
 function getDownUrl(postId,uuid){
     return $next().get(`/api/charge_attachment/download/face/${postId}/${uuid}`);
 }
+
+/**
+ * 获取下载历史（当文章被删除后，或者附件被删除后,曾经下载过的数据，可以通过这个接口查询重新下载）
+ * @param params
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+function  getDownHistory(params){
+    return $next().get(`/api/charge_attachment/download-history`,{
+        params: params,
+    });
+}
+function  getRandomFace(params){
+    return $next().get(`/api/face/random`,{
+        params: params,
+    });
+}
 export {
-    getFaceList,getOneFaceInfo,setStar,cancelStar,onlineFace,offlineFace,payFace,loopPayStatus,getAccessoryList,getDownUrl
+    getFaceList,getOneFaceInfo,setStar,cancelStar,onlineFace,offlineFace,deleteFace,payFace,loopPayStatus,getAccessoryList,getNewAccessory,getDownUrl,getDownHistory,getRandomFace
 }
