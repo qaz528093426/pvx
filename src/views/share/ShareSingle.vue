@@ -86,6 +86,7 @@ import { __Links } from "@jx3box/jx3box-common/data/jx3box.json";
 import { showDate } from "@jx3box/jx3box-common/js/moment";
 import { editLink, authorLink } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user";
+import { getFaceList } from "@/service/face"
 export default {
     name: "single",
     components: { facedata, Comment },
@@ -152,7 +153,6 @@ export default {
             return this.meta?.pics.map((item) => resolveImagePath(item.url));
         },
     },
-    watch: {},
     methods: {
         getData() {
             if (this.id) {
@@ -184,10 +184,26 @@ export default {
         showOriginImage: function (i) {
             console.log(i);
         },
+
+        // 兼容旧版
+        getFaceData: function () {
+            return getFaceList({
+                post_id: this.id,
+                pageSize: 10
+            }).then(res => {
+                return res.data.data.list
+            })
+        },
     },
 
     created: function () {
         this.getData();
+    },
+    beforeRouteEnter(to, from, next) {
+        next(async (vm) => {
+            const data = await vm.getFaceData();
+            location.href = '/face/' + data[0].id;
+        });
     },
 };
 </script>
