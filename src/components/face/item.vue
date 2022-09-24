@@ -1,6 +1,6 @@
 <template>
     <div class="m-share-item">
-        <router-link class="u-face" :to="'/single/' + item.id">
+        <router-link class="u-face" :to="`/${item.id}`">
             <i class="u-img">
                 <img class="u-pic" :src="showThumb(imgLink)" loading="lazy" />
             </i>

@@ -40,7 +40,7 @@ export default {
                     index: "1",
                     submenus: [
                         {
-                            path: "/share",
+                            path: "/face",
                             label: "捏脸分享",
                             icon: "el-icon-download",
                             key: "share",
