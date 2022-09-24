@@ -82,7 +82,7 @@
         </div>
         <!--下载区-->
         <div class="m-face-files" v-if="has_buy && downFileList.length > 0">
-            <el-divider content-position="left">原始下载列表</el-divider>
+            <el-divider content-position="left">原始文件列表</el-divider>
             <ul class="m-face-files-list">
                 <li v-for="item in downFileList" :key="item.id">
                     <span class="u-label">版本 : {{ item.created_at }}</span>
@@ -147,6 +147,7 @@ import {
 } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import { bodyMap } from "@jx3box/jx3box-data/data/role/body.json";
+import { __clients } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "single",
     components: { facedata, Comment },
@@ -157,11 +158,7 @@ export default {
             post: {},
             stat: {},
             has_buy: false, //是否购买
-            client_map: {
-                std: "重制",
-                origin: "缘起",
-                all: "双端",
-            },
+            client_map: __clients,
             downFileList: [],
             downloadParams: {
                 pageIndex: 1,

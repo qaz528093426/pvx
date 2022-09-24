@@ -86,11 +86,6 @@ export default {
             return "没有找到相关的捏脸";
         },
     },
-    created() {
-        if (this.$route.params.title) {
-            this.title = this.$route.params.title;
-        }
-    },
     watch: {
         params: {
             deep: true,
@@ -99,6 +94,12 @@ export default {
                 this.getFaceList();
             },
         },
+        '$route.query.title':{
+            immediate: true,
+            handler() {
+                this.title = this.$route.query.title;
+            },
+        }
     },
     methods: {
         getFaceList: function () {
