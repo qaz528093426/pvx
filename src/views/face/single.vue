@@ -26,7 +26,7 @@
                     <a class="u-name" :href="authorLink(post.user_id)" target="_blank" v-if="!!~~post.original">{{
                         post.display_name
                     }}</a>
-                    <a class="u-name" :href="post.author_link" target="_blank">{{ post.author_name }}</a>
+                    <a class="u-name" :href="post.author_link" target="_blank" v-else>{{ post.author_name }}</a>
                     <time class="u-time">{{ post.updated_at }}</time>
                 </div>
 
