@@ -57,61 +57,62 @@
         </div>
         <!-- 购买区 -->
         <div class="m-face-pay" v-if="post.price_type != 0 && !has_buy">
-            <div class="m-face-pay-info" >
+            <div class="m-face-pay-info">
                 价格：
-                <el-tag effect="plain" type="warning" >
+                <el-tag effect="plain" type="warning">
                     <span v-if="post.price_type == 1">{{ post.price_count }} 盒币</span>
                     <span v-if="post.price_type == 2">{{ post.price_count }} 金箔</span>
                 </el-tag>
             </div>
-            <div class="m-face-pay-btn">
-                <el-button type="primary" size="small" icon="el-icon-shopping-cart-2" @click="facePay">购买</el-button>
+            <div class="m-face-pay-btn" v-if="post.price_type != 0 && !has_buy && !isAuthor">
+                <el-button
+                    type="primary"
+                    size="small"
+                    icon="el-icon-shopping-cart-2"
+                    @click="facePay"
+                    :loading="payBtnLoading"
+                    >购买</el-button
+                >
             </div>
         </div>
-        <!--下载区-->
-        <div class="m-face-files" v-if="has_buy && downFileList > 0">
-            <el-divider content-position="left">下载列表</el-divider>
-            <ul class="m-face-files-list">
-                <li v-for="item in downFileList" :key="item.id">
-                    <i class="el-icon-document"></i>
-                    <span class="u-desc">
-                        {{ item.describe ? item.describe : "暂无描述" }}
-                    </span>
-                    <div class="u-time">
-                        <i class="el-icon-date"></i>
-                        上传于 {{ item.created_at }}
-                    </div>
-                    <div class="el-button-group u-action">
-                        <el-button icon="el-icon-download" size="small" round @click="getDownUrl(item.uuid)"
-                            >下载</el-button
-                        >
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <!-- 数据区 -->
         <div class="m-single-data" v-if="has_buy && facedata">
             <el-divider content-position="left">独家数据分析</el-divider>
             <facedata v-if="facedata" :data="facedata" />
         </div>
+        <!--下载区-->
+        <div class="m-face-files" v-if="has_buy && downFileList.length > 0">
+            <el-divider content-position="left">原始下载列表</el-divider>
+            <ul class="m-face-files-list">
+                <li v-for="item in downFileList" :key="item.id">
+                    <span class="u-label">版本 : {{ item.created_at }}</span>
+                    <el-button
+                        class="u-action"
+                        icon="el-icon-download"
+                        size="mini"
+                        type="primary"
+                        round
+                        @click="getDownUrl(item.uuid)"
+                        >下载</el-button
+                    >
+                </li>
+            </ul>
+        </div>
         <!--作者随机作品-->
         <div class="m-random-list">
             <el-divider content-position="left">作者其他作品</el-divider>
-            <el-row :gutter="20">
-                <el-col :span="3" v-for="item in randomList" :key="item.id">
-                    <div class="u-random-box" @click="goToOther(item)">
-                        <div class="u-random-img">
-                            <el-image fit="contain" :src="item.images[0]" :preview-src-list="[item.images[0]]">
-                                <div slot="error" class="u-image-slot">
-                                    <i class="el-icon-picture-outline"></i>
-                                </div>
-                            </el-image>
-                        </div>
-                        <router-link class="u-face" :to="'/single/' + item.id" target="_blank">
-                            {{ item.title || "未命名" }}
-                        </router-link>
+            <div class="u-list">
+                <a class="u-item" :href="`/face/` + item.id" target="_blank" v-for="item in randomList" :key="item.id">
+                    <div class="u-pic">
+                        <el-image fit="cover" :src="item.images[0]">
+                            <div slot="error" class="u-image-slot">
+                                <i class="el-icon-picture-outline"></i>
+                            </div>
+                        </el-image>
                     </div>
-                </el-col>
-            </el-row>
+                    <span class="u-name">{{ item.title || "未命名" }}</span>
+                </a>
+            </div>
         </div>
         <!-- 点赞 -->
         <Thx
@@ -136,7 +137,14 @@ import { getOneFaceInfo, payFace, loopPayStatus, getAccessoryList, getDownUrl, g
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 import facedata from "@jx3box/jx3box-facedat/src/Facedat.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
-import { editLink, showMinibanner, showBanner, showAvatar, authorLink,resolveImagePath } from "@jx3box/jx3box-common/js/utils";
+import {
+    editLink,
+    showMinibanner,
+    showBanner,
+    showAvatar,
+    authorLink,
+    resolveImagePath,
+} from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import { bodyMap } from "@jx3box/jx3box-data/data/role/body.json";
 export default {
@@ -160,12 +168,16 @@ export default {
                 pageSize: 4,
                 total: 0,
             },
+            payBtnLoading: false,
             randomList: [],
         };
     },
     computed: {
         id: function () {
             return this.$route.params.id;
+        },
+        isAuthor: function () {
+            return this.post?.user_id == User.getInfo().uid || false;
         },
         facedata: function () {
             return this.post?.data || "";
@@ -182,12 +194,12 @@ export default {
         showAvatar(url) {
             return showAvatar(url, "l");
         },
-        showThumbnail(url){
+        showThumbnail(url) {
             return resolveImagePath(url);
         },
         authorLink,
         getFaceList() {
-            this.$router.push({ name: "list", params: { title: this.search } });
+            this.$router.push({ name: "list", query: { title: this.search } });
         },
         goBack() {
             this.$router.push({ name: "list" });
@@ -201,17 +213,13 @@ export default {
         getData() {
             if (this.id) {
                 this.loading = true;
-                getOneFaceInfo(this.id)
-                    .then((res) => {
-                        this.post = this.$store.state.faceSingle = res.data.data;
-                        document.title = this.post.title;
-                        this.getAccessoryList();
-                        //获取作者作品
-                        this.getRandomFaceList();
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                    });
+                getOneFaceInfo(this.id).then((res) => {
+                    this.post = this.$store.state.faceSingle = res.data.data;
+                    document.title = this.post.title;
+                    this.getAccessoryList();
+                    //获取作者作品
+                    this.getRandomFaceList();
+                });
 
                 getStat("face", this.id).then((res) => {
                     this.stat = res.data;
@@ -219,23 +227,32 @@ export default {
                 postStat("face", this.id);
             }
         },
+        onAuthorClick() {
+            if (!this.post.original) {
+                window.open(this.post.author_link, "_blank");
+            }
+        },
         downloadPageQuery(pageIndex) {
             this.downloadParams.pageIndex = pageIndex;
             this.getAccessoryList();
         },
         getAccessoryList() {
-            getAccessoryList(this.id, this.downloadParams).then((res) => {
-                let data = res.data.data;
-                this.has_buy = data.has_buy;
-                if (data.has_buy) {
-                    this.downFileList = data.list;
-                    this.downloadParams.total = data.page.total;
-                }
-            });
+            getAccessoryList(this.id, this.downloadParams)
+                .then((res) => {
+                    let data = res.data.data;
+                    this.has_buy = data.has_buy;
+                    if (data.has_buy) {
+                        this.downFileList = data.list;
+                        this.downloadParams.total = data.page.total;
+                    }
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         getDownUrl(uuid) {
             getDownUrl(this.id, uuid).then((res) => {
-                window.location.href = res.data.data.url;
+                window.location.href = res.data.data?.url;
             });
         },
         facePay() {
@@ -248,35 +265,36 @@ export default {
                 accessUserId: res.user_id,
                 payUserId: User.getInfo().uid,
             };
-            console.log(params);
-            // return;
             //支付
+            this.payBtnLoading = true;
             payFace(params).then((res) => {
                 let payid = res.data.data.id;
                 // 轮询接口
-                console.log(res)
-                let setIntervalId=setInterval(
-                    loopPayStatus(payid).then(d=>{
-                        this.getPayFaceStatus(d.data.data.pay_status,setIntervalId)
-                    },1000)
-                )
+                console.log(res);
+                let setIntervalId = setInterval(
+                    loopPayStatus(payid).then((d) => {
+                        this.getPayFaceStatus(d.data.data.pay_status, setIntervalId);
+                    }, 1000)
+                );
             });
         },
         getPayFaceStatus(pay_status, setIntervalId) {
             if (pay_status == 1) {
+                this.payBtnLoading = false;
+                //购买成功后需要重载数据，拉取下载列表
+                this.getAccessoryList();
+                clearInterval(setIntervalId);
                 this.$notify.success({
                     title: "成功",
                     message: "购买成功",
                 });
+            } else if (pay_status == 2) {
+                this.payBtnLoading = false;
                 clearInterval(setIntervalId);
-                //购买成功后需要重载数据，拉取下载列表
-                this.getAccessoryList();
-            }else if(pay_status==2){
                 this.$notify.error({
                     title: "失败",
                     message: "支付失败",
                 });
-                clearInterval(setIntervalId);
             }
         },
         getRandomFaceList() {
@@ -286,7 +304,6 @@ export default {
                 limit: 8,
             };
             getRandomFace(params).then((res) => {
-                console.log(res);
                 if (res.data.data.list && res.data.data.list.length > 0) {
                     this.randomList = res.data.data.list;
                 }

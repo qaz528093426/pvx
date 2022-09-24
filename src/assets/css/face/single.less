@@ -14,7 +14,8 @@
     img {
         width: auto;
         height: 100%;
-        .db;.auto(x);
+        .db;
+        .auto(x);
     }
 }
 .m-header {
@@ -194,59 +195,57 @@
         flex-grow: 1;
     }
 }
+.m-face-files {
+    .mb(40px);
+}
 .m-face-files-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    border: 1px solid #e1e4e8;
     border-radius: 4px;
     li {
-        padding: 10px 150px 10px 10px;
         position: relative;
+        border-bottom: 1px dotted #e1e4e8;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
     }
-    .u-icon {
-        float: left;
-        margin-right: 8px;
-        margin-top: 4px;
-    }
-    .u-desc {
-    }
-    .u-time {
-        clear: both;
-        display: block;
-        font-size: 12px;
-        line-height: 2;
-        color: #999;
-    }
-    .u-action {
-        position: absolute;
-        right: 10px;
-        bottom: 15px;
+    .u-label {
+        .fz(12px,28px);
     }
 }
 .m-random-list {
     padding-bottom: 30px;
-    .u-random-box {
-        border: 1px dashed #e1e4e8;
+    .u-list{
+        display: flex;
+        gap:20px;
+    }
+    .u-item {
         border-radius: 4px;
-        .fz(16px);
         text-align: center;
-        padding: 6px 0 12px 0;
-        width: 100%;
-        .u-random-img {
-            //
-            img {
-                max-height: 80px;
-            }
-            padding-bottom: 4px;
+        .w(160px);
+        background-color:@bg-light;
+        padding:5px 5px 0 5px;
+        overflow: hidden;
+    }
+    .u-pic {
+        height:100px;
+        .w(auto);
+        overflow: hidden;
+        .el-image,.u-image-slot{
+            .flex;
+            justify-content: center;
+            .size(100%);
+            align-items: center;
+            color:#999;
         }
-        .u-image-slot {
-            height: 80px;
-            i {
-                .fz(24px);
-                line-height: 80px;
-            }
-        }
+    }
+    .u-name{
+        .mt(8px);
+        .fz(12px,2.2);
+        color:@color;
+        .nobreak;
+        .w(100%);
     }
 }
 .m-face-pic {
