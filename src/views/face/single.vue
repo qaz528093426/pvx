@@ -227,11 +227,6 @@ export default {
                 postStat("face", this.id);
             }
         },
-        onAuthorClick() {
-            if (!this.post.original) {
-                window.open(this.post.author_link, "_blank");
-            }
-        },
         downloadPageQuery(pageIndex) {
             this.downloadParams.pageIndex = pageIndex;
             this.getAccessoryList();
