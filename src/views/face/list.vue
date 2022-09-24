@@ -43,25 +43,25 @@ import { getFaceList } from "@/service/face";
 import faceTabs from "@/components/face/tabs";
 import faceItem from "@/components/face/item";
 export default {
-    name: 'face',
+    name: "face",
     components: {
         faceTabs,
-        faceItem
+        faceItem,
     },
     data() {
         return {
-            title: '',
+            title: "",
             tabsData: {},
 
             list: [],
             page: 1,
-            per_page: 20,
+            per_page: 21,
             pageTotal: 1,
             total: 0,
 
             appendMode: false,
             loading: false,
-        }
+        };
     },
     computed: {
         publish_link() {
@@ -76,7 +76,7 @@ export default {
                 ...tabsData,
                 pageIndex: this.page,
                 pageSize: this.per_page,
-            }
+            };
         },
         hasNextPage() {
             return this.page < this.pageTotal;
@@ -87,8 +87,8 @@ export default {
         },
     },
     created() {
-        if(this.$route.params.title){
-            this.title=this.$route.params.title
+        if (this.$route.params.title) {
+            this.title = this.$route.params.title;
         }
     },
     watch: {
@@ -98,33 +98,35 @@ export default {
             handler() {
                 this.getFaceList();
             },
-        }
+        },
     },
     methods: {
         getFaceList: function () {
             this.loading = true;
-            getFaceList(this.params).then((res) => {
-                if (this.appendMode) {
-                    this.list = this.list.concat(res.data.data.list || []);
-                } else {
-                    this.list = res.data.data.list || [];
-                }
-                this.total = res.data.data.page.total;
-                this.pageTotal = res.data.data.page.pageTotal;
-            }).finally(() => {
-                this.loading = false;
-                this.appendMode = false;
-            });
+            getFaceList(this.params)
+                .then((res) => {
+                    if (this.appendMode) {
+                        this.list = this.list.concat(res.data.data.list || []);
+                    } else {
+                        this.list = res.data.data.list || [];
+                    }
+                    this.total = res.data.data.page.total;
+                    this.pageTotal = res.data.data.page.pageTotal;
+                })
+                .finally(() => {
+                    this.loading = false;
+                    this.appendMode = false;
+                });
         },
         appendPage: function () {
             this.appendMode = true;
             this.page = this.page + 1;
         },
-        handleFaceTabChange: function (data){
-            this.tabsData = data
-        }
+        handleFaceTabChange: function (data) {
+            this.tabsData = data;
+        },
     },
-}
+};
 </script>
 
 <style lang="less">
