@@ -27,7 +27,7 @@
 
                 <div class="u-info-client">
                     <span :class="post.client">
-                        <i class="u-mark " v-if="!post.star">★ 编辑推荐</i>
+                        <i class="u-mark " v-if="!!post.star">★ 编辑推荐</i>
                         <i class="u-client" :class="post.client || 'std'">{{ showClientLabel(post.client) }}</i>
                         <i class="u-bodytype" :class="'u-bodytyoe-'+post.body_type" v-if="post.body_type">{{showBodyTypeLabel(post.body_type)}}</i>
                     </span>
