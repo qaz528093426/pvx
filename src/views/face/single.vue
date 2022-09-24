@@ -241,7 +241,6 @@ export default {
                 console.log(res)
                 let setIntervalId=setInterval(
                     loopPayStatus(payid).then(d=>{
-                        console.log(d)
                         this.getPayFaceStatus(d.data.data.pay_status,setIntervalId)
                     },1000)
                 )
@@ -255,7 +254,7 @@ export default {
                 });
                 clearInterval(setIntervalId)
                 //购买成功后需要重载数据，拉取下载列表
-
+                this.getAccessoryList();
             }else if(pay_status==2){
                 this.$notify.error({
                     title: '失败',
