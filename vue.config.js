@@ -42,7 +42,7 @@ module.exports = {
             template: "public/index.html",
             filename: "adventure/index.html",
         },
-        pvg : {
+        pvg: {
             title: "商贾奇才 - JX3BOX",
             entry: "src/pages/pvg.js",
             template: "public/index.html",
@@ -53,7 +53,7 @@ module.exports = {
             entry: "src/pages/face.js",
             template: "public/index.html",
             filename: "face/index.html",
-        }
+        },
     },
 
     //❤️ Proxy ~
@@ -88,7 +88,13 @@ module.exports = {
             },
             "/api/team": {
                 target: "https://team.api.jx3box.com",
-                onProxyReq: function(request) {
+                onProxyReq: function (request) {
+                    request.setHeader("origin", "");
+                },
+            },
+            "/api/buy-licence": {
+                target: "https://pay.jx3box.com",
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },
             },

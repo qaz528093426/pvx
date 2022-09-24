@@ -5,7 +5,7 @@
             <el-button class="u-goback" size="medium" icon="el-icon-arrow-left" @click="goBack" plain
                 >返回列表</el-button
             >
-            <el-input placeholder="请输入搜索内容" v-model="searcheTitle" class="input-with-select">
+            <el-input placeholder="请输入搜索内容" v-model="search" class="input-with-select">
                 <span slot="prepend">关键词</span>
                 <el-button slot="append" icon="el-icon-search" @click="getFaceList"></el-button>
             </el-input>
@@ -55,17 +55,18 @@
         <div class="m-face-tips">
             <div class="m-face-pay">
                 <div class="m-face-pay-info">
-                    <el-tag effect="plain" type="success" v-if="price_type == 0">免费</el-tag>
-                    <el-tag effect="plain" type="warning" v-if="price_type != 0">
-                        <span v-if="price_type == 1">{{ post.price_count }} 盒币</span>
-                        <span v-if="price_type == 2">{{ post.price_count }} 金箔</span>
+                    <span class="u-label">价格：</span>
+                    <el-tag effect="plain" type="success" v-if="post.price_type == 0">免费</el-tag>
+                    <el-tag effect="plain" type="warning" v-if="post.price_type != 0">
+                        <span v-if="post.price_type == 1">{{ post.price_count }} 盒币</span>
+                        <span v-if="post.price_type == 2">{{ post.price_count }} 金箔</span>
                     </el-tag>
                 </div>
-                <div class="m-face-pay-btn" v-if="price_type != 0 && !has_buy">
-                    <el-button type="warning" round size="small">购买</el-button>
+                <div class="m-face-pay-btn" v-if="post.price_type != 0 && !has_buy">
+                    <el-button type="primary" size="small">购买</el-button>
                 </div>
             </div>
-            <div>如数据中包含付费元素，将不可用于新建角色导入，如用于新建角色请点击最下方导出</div>
+            <!-- <div>如数据中包含付费元素，将不可用于新建角色导入，如用于新建角色请点击最下方导出</div> -->
         </div>
         <div class="m-face-files" v-if="has_buy">
             <el-divider content-position="left">下载列表</el-divider>
@@ -145,7 +146,7 @@ export default {
     data: function () {
         return {
             loading: false,
-            searcheTitle: "", //搜索值
+            search: "", //搜索值
             post: {},
             stat: {},
             has_buy: false, //是否购买
@@ -189,30 +190,11 @@ export default {
         id: function () {
             return this.$route.params.id;
         },
-        remark: function () {
-            return this.post?.remark || "";
-        },
         facedata: function () {
             return this.post?.data || "";
         },
-        meta: function () {
-            return this.post?.post_meta || "";
-        },
-
-        edit_link: function () {
-            return editLink(this.post?.post_type || "face", this.post?.id);
-        },
-        post_type: function () {
-            return this.post?.post_type || "face";
-        },
-        price_type: function () {
-            return this.post?.price_type || "";
-        },
         previewSrcList: function () {
             return this.post?.images || [];
-        },
-        canEdit: function () {
-            return this.post?.user_id == User.getInfo().uid || User.isEditor();
         },
     },
     watch: {},
@@ -228,7 +210,7 @@ export default {
             return resolveImagePath(url);
         },
         getFaceList() {
-            this.$router.push({ name: "list", params: { title: this.searcheTitle } });
+            this.$router.push({ name: "list", params: { title: this.search } });
         },
         getData() {
             if (this.id) {
