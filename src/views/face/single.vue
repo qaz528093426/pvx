@@ -251,13 +251,12 @@ export default {
             payFace(params).then((res) => {
                 let payid = res.data.data.id;
                 // 轮询接口
-                console.log(res);
-                let setIntervalId = setInterval(
-                    loopPayStatus(payid).then((d) => {
-                        console.log(d);
-                        this.getPayFaceStatus(d.data.data.pay_status, setIntervalId);
-                    }, 1000)
-                );
+                console.log(res)
+                let setIntervalId=setInterval(
+                    loopPayStatus(payid).then(d=>{
+                        this.getPayFaceStatus(d.data.data.pay_status,setIntervalId)
+                    },1000)
+                )
             });
         },
         getPayFaceStatus(pay_status, setIntervalId) {
@@ -268,7 +267,8 @@ export default {
                 });
                 clearInterval(setIntervalId);
                 //购买成功后需要重载数据，拉取下载列表
-            } else if (pay_status == 2) {
+                this.getAccessoryList();
+            }else if(pay_status==2){
                 this.$notify.error({
                     title: "失败",
                     message: "支付失败",
