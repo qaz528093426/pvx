@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="u-desc" v-if="post.remark">{{ post.remark }}</div>
-            <el-divider content-position="left"> <i class="el-icon-pie-chart"></i>预览 </el-divider>
+            <el-divider content-position="left"> <i class="el-icon-pie-chart"></i> 预览</el-divider>
         </div>
 
         <div class="m-single-pics" v-if="previewSrcList && previewSrcList.length > 0">
@@ -56,14 +56,15 @@
             </el-carousel>
         </div>
         <!-- 购买区 -->
-        <div class="m-face-pay" v-if="post.price_type != 0">
+        <div class="m-face-pay" v-if="post.price_type != 0 && !has_buy">
             <div class="m-face-pay-info" >
+                价格：
                 <el-tag effect="plain" type="warning" >
                     <span v-if="post.price_type == 1">{{ post.price_count }} 盒币</span>
                     <span v-if="post.price_type == 2">{{ post.price_count }} 金箔</span>
                 </el-tag>
             </div>
-            <div class="m-face-pay-btn" v-if="post.price_type != 0 && !has_buy">
+            <div class="m-face-pay-btn">
                 <el-button type="primary" size="small" icon="el-icon-shopping-cart-2" @click="facePay">购买</el-button>
             </div>
         </div>
