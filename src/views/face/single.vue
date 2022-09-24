@@ -10,10 +10,12 @@
                 <el-button slot="append" icon="el-icon-search" @click="getFaceList"></el-button>
             </el-input>
         </div>
+
         <!-- 海报banner -->
         <div class="m-banner" v-if="post.banner">
             <img :src="showThumbnail(post.banner)" />
         </div>
+
         <!-- 基本信息 -->
         <div class="m-header">
             <img :src="showAvatar(post.user_avatar)" class="u-avatar" v-if="post.original" />
@@ -30,7 +32,7 @@
 
                 <div class="u-info">
                     <i class="u-mark" v-if="post.star">★ 编辑推荐</i>
-                    <i class="u-client" :class="post.client || 'std'">{{ showClientLabel(client) }}</i>
+                    <i class="u-client" :class="post.client || 'std'">{{ showClientLabel(post.client) }}</i>
                     <i class="u-bodytype" :class="body_type_info.class" v-if="body_type_info">{{
                         body_type_info.name
                     }}</i>
@@ -40,86 +42,82 @@
         </div>
 
         <!-- 预览区 -->
-        <div class="m-single-pics" v-if="previewSrcList && previewSrcList.length > 0">
-            <el-divider content-position="left"> <i class="el-icon-pie-chart"></i>预览 </el-divider>
-            <el-carousel class="m-carousel" :interval="4000" type="card" arrow="always">
-                <el-carousel-item v-for="(item, i) in previewSrcList" :key="i">
-                    <div class="m-face-pic">
-                        <el-image fit="contain" :src="item" class="u-pic" :preview-src-list="previewSrcList"></el-image>
-                    </div>
-                </el-carousel-item>
-            </el-carousel>
+        <div class="m-face-preview" v-if="previewSrcList && previewSrcList.length > 0">
+            <el-divider content-position="left"> <i class="el-icon-pie-chart"></i> 预览</el-divider>
+            <div class="m-face-images">
+                <el-carousel class="m-carousel" :interval="4000" type="card" arrow="always">
+                    <el-carousel-item v-for="(item, i) in previewSrcList" :key="i">
+                        <div class="m-face-pic">
+                            <el-image
+                                fit="contain"
+                                :src="item"
+                                class="u-pic"
+                                :preview-src-list="previewSrcList"
+                            ></el-image>
+                        </div>
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
         </div>
 
-        <!-- 购买区及下载区 -->
-        <div class="m-face-tips">
-            <div class="m-face-pay">
-                <div class="m-face-pay-info">
-                    <span class="u-label">价格：</span>
-                    <el-tag effect="plain" type="success" v-if="post.price_type == 0">免费</el-tag>
-                    <el-tag effect="plain" type="warning" v-if="post.price_type != 0">
-                        <span v-if="post.price_type == 1">{{ post.price_count }} 盒币</span>
-                        <span v-if="post.price_type == 2">{{ post.price_count }} 金箔</span>
-                    </el-tag>
-                </div>
-                <div class="m-face-pay-btn" v-if="post.price_type != 0 && !has_buy">
-                    <el-button type="primary" size="small">购买</el-button>
-                </div>
+        <!-- 购买区 -->
+        <div class="m-face-pay">
+            <div class="m-face-pay-info">
+                <span class="u-label">价格：</span>
+                <el-tag effect="plain" type="success" v-if="post.price_type == 0">免费</el-tag>
+                <el-tag effect="plain" type="warning" v-if="post.price_type != 0">
+                    <span v-if="post.price_type == 1">{{ post.price_count }} 盒币</span>
+                    <span v-if="post.price_type == 2">{{ post.price_count }} 金箔</span>
+                </el-tag>
             </div>
-            <!-- <div>如数据中包含付费元素，将不可用于新建角色导入，如用于新建角色请点击最下方导出</div> -->
+            <div class="m-face-pay-btn" v-if="post.price_type != 0 && !has_buy">
+                <el-button type="primary" size="small" icon="el-icon-shopping-cart-2">购买</el-button>
+            </div>
         </div>
-        <div class="m-face-files" v-if="has_buy">
+
+        <!-- 下载区 -->
+        <div class="m-face-files" v-if="has_buy && downFileList.length">
             <el-divider content-position="left">下载列表</el-divider>
-            <div class="u-face-files">
-                <div v-if="downFileList.length == 0">暂无数据。</div>
-                <ul class="m-face-files-list" v-if="downFileList.length > 0">
-                    <li v-for="item in downFileList" :key="item.id">
-                        <i class="el-icon-document"></i>
-                        <span>
-                            {{ item.describe ? item.describe : "暂无描述" }}
-                        </span>
-                        <div class="u-desc">
-                            <span>
-                                <i class="el-icon-date"></i>
-                                创建于 {{ item.created_at }}
-                            </span>
-                        </div>
-                        <div class="el-button-group u-action">
-                            <el-button icon="el-icon-download" size="small" round @click="getDownUrl(item.uuid)"
-                                >下载</el-button
-                            >
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <el-pagination
-                small
-                layout="prev, pager, next"
-                :hide-on-single-page="downloadParams.pageSize > downloadParams.total"
-                :page-size="downloadParams.pageSize"
-                :current-page="downloadParams.pageIndex"
-                :total="downloadParams.total"
-                @current-change="getAccessoryList"
-            ></el-pagination>
+            <ul class="m-face-files-list">
+                <li v-for="item in downFileList" :key="item.id">
+                    <i class="el-icon-document"></i>
+                    <span class="u-desc">
+                        {{ item.describe ? item.describe : "暂无描述" }}
+                    </span>
+                    <div class="u-time">
+                        <i class="el-icon-date"></i>
+                        上传于 {{ item.created_at }}
+                    </div>
+                    <div class="u-action">
+                        <el-button icon="el-icon-download" size="small" round @click="getDownUrl(item.uuid)"
+                            >下载</el-button
+                        >
+                    </div>
+                </li>
+            </ul>
         </div>
-        <div class="m-single-data" v-if="has_buy">
+
+        <!-- 数据分析 -->
+        <div class="m-single-data" v-if="has_buy && facedata">
             <el-divider content-position="left">独家数据分析</el-divider>
-            <facedata v-if="facedata" :data="facedata" />
+            <facedata :data="facedata" />
         </div>
+
         <!-- 点赞 -->
         <Thx
             class="m-thx"
             :postId="id"
-            :postType="post_type"
-            :postTitle="title"
-            :userId="author_id"
+            postType="face"
+            :postTitle="post.title"
+            :userId="post.user_id"
             :adminBoxcoinEnable="true"
             :userBoxcoinEnable="true"
         />
+
         <!-- 评论 -->
-        <div>
+        <div class="m-face-comment">
             <el-divider content-position="left">讨论</el-divider>
-            <Comment :id="id" :category="post_type" />
+            <Comment :id="id" category="face" />
         </div>
     </div>
 </template>
@@ -225,21 +223,18 @@ export default {
                             }
                         }
                         this.getAccessoryList();
+                        this.triggerStat();
                     })
                     .finally(() => {
                         this.loading = false;
                     });
-
-                getStat("face", this.id).then((res) => {
-                    this.stat = res.data;
-                });
-                postStat("face", this.id);
             }
         },
-        onAuthorClick() {
-            if (!this.post.original) {
-                window.open(this.author_link, "_blank");
-            }
+        triggerStat() {
+            getStat("face", this.id).then((res) => {
+                this.stat = res.data;
+            });
+            postStat("face", this.id);
         },
         getAccessoryList() {
             getAccessoryList(this.id, this.downloadParams).then((res) => {
