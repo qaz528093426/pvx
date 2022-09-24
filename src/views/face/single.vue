@@ -6,7 +6,7 @@
             >
             <el-input
                 placeholder="请输入搜索内容"
-                v-model="searche"
+                v-model="search"
                 class="input-with-select"
                 @keyup.enter.native="getFaceList"
             >
@@ -16,7 +16,7 @@
         </div>
         <!-- 海报banner -->
         <div class="m-banner" v-if="post.banner">
-            <img :src="post.banner" />
+            <img :src="showThumbnail(post.banner)" />
         </div>
         <!-- 基本信息 -->
         <div class="m-header">
@@ -36,7 +36,7 @@
                     <span :class="post.client">
                         <i class="u-mark" v-if="!!post.star">★ 编辑推荐</i>
                         <i class="u-client" :class="post.client || 'std'">{{ showClientLabel(post.client) }}</i>
-                        <i class="u-bodytype" :class="'u-bodytyoe-' + post.body_type" v-if="post.body_type">{{
+                        <i class="u-bodytype" :class="'u-bodytype-' + post.body_type" v-if="post.body_type">{{
                             showBodyTypeLabel(post.body_type)
                         }}</i>
                     </span>
@@ -56,10 +56,9 @@
             </el-carousel>
         </div>
         <!-- 购买区 -->
-        <div class="m-face-pay">
-            <div class="m-face-pay-info">
-                <el-tag effect="plain" type="success" v-if="post.price_type == 0">免费</el-tag>
-                <el-tag effect="plain" type="warning" v-if="post.price_type != 0">
+        <div class="m-face-pay" v-if="post.price_type != 0">
+            <div class="m-face-pay-info" >
+                <el-tag effect="plain" type="warning" >
                     <span v-if="post.price_type == 1">{{ post.price_count }} 盒币</span>
                     <span v-if="post.price_type == 2">{{ post.price_count }} 金箔</span>
                 </el-tag>
@@ -136,7 +135,7 @@ import { getOneFaceInfo, payFace, loopPayStatus, getAccessoryList, getDownUrl, g
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 import facedata from "@jx3box/jx3box-facedat/src/Facedat.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
-import { editLink, showMinibanner, showBanner, showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
+import { editLink, showMinibanner, showBanner, showAvatar, authorLink,resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import { bodyMap } from "@jx3box/jx3box-data/data/role/body.json";
 export default {
@@ -145,7 +144,7 @@ export default {
     data: function () {
         return {
             loading: false,
-            searche: "", //搜索值
+            search: "", //搜索值
             post: {},
             stat: {},
             has_buy: false, //是否购买
@@ -182,9 +181,12 @@ export default {
         showAvatar(url) {
             return showAvatar(url, "l");
         },
+        showThumbnail(url){
+            return resolveImagePath(url);
+        },
         authorLink,
         getFaceList() {
-            this.$router.push({ name: "list", params: { title: this.searche } });
+            this.$router.push({ name: "list", params: { title: this.search } });
         },
         goBack() {
             this.$router.push({ name: "list" });
