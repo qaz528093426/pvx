@@ -41,12 +41,13 @@
                         }}</i>
                     </span>
                 </div>
+
             </div>
             <div class="u-desc" v-if="post.remark">{{ post.remark }}</div>
             <el-divider content-position="left"> <i class="el-icon-pie-chart"></i>预览 </el-divider>
         </div>
 
-        <div class="m-single-pics" v-if="previewSrcList && previewSrcList.length > 0">
+        <div class="m-single-pics" v-if="previewSrcList && previewSrcList.length>0">
             <el-carousel class="m-carousel" :interval="4000" type="card" arrow="always">
                 <el-carousel-item v-for="(item, i) in previewSrcList" :key="i">
                     <div class="m-face-pic">
@@ -64,12 +65,12 @@
                     <span v-if="post.price_type == 2">{{ post.price_count }} 金箔</span>
                 </el-tag>
             </div>
-            <div class="m-face-pay-btn" v-if="post.price_type != 0 && !has_buy">
-                <el-button type="primary" size="small" icon="el-icon-shopping-cart-2" @click="facePay">购买</el-button>
+            <div class="m-face-pay-btn" v-if="post.price_type != 0 && !has_buy && !isAuthor">
+                <el-button type="primary" size="small" icon="el-icon-shopping-cart-2" @click="facePay" :loading="payBtnLoading">购买</el-button>
             </div>
         </div>
         <!--下载区-->
-        <div class="m-face-files" v-if="has_buy && downFileList > 0">
+        <div class="m-face-files" v-if="has_buy && downFileList.length>0">
             <el-divider content-position="left">下载列表</el-divider>
             <ul class="m-face-files-list">
                 <li v-for="item in downFileList" :key="item.id">
@@ -107,7 +108,7 @@
                             </el-image>
                         </div>
                         <router-link class="u-face" :to="'/single/' + item.id" target="_blank">
-                            {{ item.title || "未命名" }}
+                            {{item.title || "未命名"}}
                         </router-link>
                     </div>
                 </el-col>
@@ -160,22 +161,26 @@ export default {
                 pageSize: 4,
                 total: 0,
             },
-            randomList: [],
+            payBtnLoading:false,
+            randomList: []
         };
     },
     computed: {
-        id: function () {
+        id: function() {
             return this.$route.params.id;
         },
-        facedata: function () {
-            return this.post?.data || "";
+        isAuthor:function(){
+            return this.post?.user_id == User.getInfo().uid || false;
         },
-        previewSrcList: function () {
+        facedata: function() {
+            return this.post?.data || '';
+        },
+        previewSrcList: function() {
             return this.post?.images || [];
         },
     },
     watch: {},
-    created: function () {
+    created: function() {
         this.getData();
     },
     methods: {
@@ -184,72 +189,76 @@ export default {
         },
         authorLink,
         getFaceList() {
-            this.$router.push({ name: "list", params: { title: this.searche } });
+            this.$router.push({name:'list',params:{title:this.searche}})
         },
         goBack() {
-            this.$router.push({ name: "list" });
+            this.$router.push({ name: 'list' });
         },
-        showClientLabel: function (val) {
+        showClientLabel: function(val) {
             return this.client_map[val];
         },
-        showBodyTypeLabel(val) {
+        showBodyTypeLabel(val){
             return bodyMap[val];
         },
         getData() {
             if (this.id) {
                 this.loading = true;
                 getOneFaceInfo(this.id)
-                    .then((res) => {
+                    .then(res => {
                         this.post = this.$store.state.faceSingle = res.data.data;
                         document.title = this.post.title;
                         this.getAccessoryList();
                         //获取作者作品
                         this.getRandomFaceList();
                     })
-                    .finally(() => {
-                        this.loading = false;
-                    });
 
-                getStat("face", this.id).then((res) => {
+
+                getStat('face', this.id).then(res => {
                     this.stat = res.data;
                 });
-                postStat("face", this.id);
+                postStat('face', this.id);
             }
         },
-        downloadPageQuery(pageIndex) {
-            this.downloadParams.pageIndex = pageIndex;
-            this.getAccessoryList();
+        onAuthorClick() {
+            if (!this.post.original) {
+                window.open(this.post.author_link, "_blank");
+            }
+        },
+        downloadPageQuery(pageIndex){
+            this.downloadParams.pageIndex=pageIndex
+            this.getAccessoryList()
         },
         getAccessoryList() {
-            getAccessoryList(this.id, this.downloadParams).then((res) => {
+            getAccessoryList(this.id, this.downloadParams).then(res => {
                 let data = res.data.data;
                 this.has_buy = data.has_buy;
-                if (data.has_buy) {
+                if(data.has_buy){
                     this.downFileList = data.list;
                     this.downloadParams.total = data.page.total;
                 }
+            }).finally(() => {
+                this.loading = false;
             });
         },
-        getDownUrl(uuid) {
-            getDownUrl(this.id, uuid).then((res) => {
-                window.location.href = res.data.data.url;
-            });
+        getDownUrl(uuid){
+          getDownUrl(this.id,uuid).then(res=>{
+              window.location.href=res.data.data.url
+          })
         },
-        facePay() {
-            let res = this.post;
-            let params = {
-                postType: "face",
-                PostId: res.id,
-                priceType: res.price_type,
-                priceCount: res.price_count,
-                accessUserId: res.user_id,
-                payUserId: User.getInfo().uid,
-            };
-            console.log(params);
-            // return;
+        facePay(){
+            let res=this.post
+            let params={
+                postType:'face',
+                PostId:res.id,
+                priceType:res.price_type,
+                priceCount:res.price_count,
+                accessUserId:res.user_id,
+                payUserId:User.getInfo().uid
+            }
             //支付
-            payFace(params).then((res) => {
-                let payid = res.data.data.id;
+            this.payBtnLoading = true;
+            payFace(params).then(res=>{
+               let payid=res.data.data.id;
                 // 轮询接口
                 console.log(res)
                 let setIntervalId=setInterval(
@@ -259,40 +268,41 @@ export default {
                 )
             });
         },
-        getPayFaceStatus(pay_status, setIntervalId) {
-            if (pay_status == 1) {
-                this.$notify.success({
-                    title: "成功",
-                    message: "购买成功",
-                });
-                clearInterval(setIntervalId);
+        getPayFaceStatus(pay_status,setIntervalId){
+            if(pay_status ==1){
+                this.payBtnLoading = false;
                 //购买成功后需要重载数据，拉取下载列表
                 this.getAccessoryList();
-            }else if(pay_status==2){
-                this.$notify.error({
-                    title: "失败",
-                    message: "支付失败",
+                clearInterval(setIntervalId)
+                this.$notify.success({
+                    title: '成功',
+                    message: '购买成功'
                 });
-                clearInterval(setIntervalId);
+            }else if(pay_status==2){
+                this.payBtnLoading=false
+                clearInterval(setIntervalId)
+                this.$notify.error({
+                    title: '失败',
+                    message: '支付失败'
+                });
             }
         },
-        getRandomFaceList() {
-            let post = this.post;
-            let params = {
-                user_id: post.user_id,
-                limit: 8,
-            };
-            getRandomFace(params).then((res) => {
-                console.log(res);
-                if (res.data.data.list && res.data.data.list.length > 0) {
-                    this.randomList = res.data.data.list;
+        getRandomFaceList(){
+            let post=this.post
+            let params={
+                user_id:post.user_id,
+                limit:8
+            }
+            getRandomFace(params).then(res=>{
+                if(res.data.data.list && res.data.data.list.length>0){
+                    this.randomList=res.data.data.list;
                 }
-            });
-        },
-    },
+            })
+        }
+    }
 };
 </script>
 
 <style lang="less">
-@import "~@/assets/css/face/single.less";
+@import '~@/assets/css/face/single.less';
 </style>
