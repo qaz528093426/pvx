@@ -26,7 +26,7 @@
                 <!-- <el-radio-button label="2">金箔</el-radio-button> -->
             </el-radio-group>
 
-            <el-checkbox v-model="filter_empty_images" border size="small">不看无封面</el-checkbox>
+            <el-checkbox v-model="filter_empty_images" border size="small">不看无图片</el-checkbox>
         </div>
     </div>
 </template>

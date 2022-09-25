@@ -225,6 +225,7 @@
     .u-list{
         display: flex;
         gap:20px;
+        flex-wrap: wrap;
     }
     .u-item {
         border-radius: 4px;
@@ -295,12 +296,9 @@
         h2 {
             .fz(1rem);
         }
-        .u-info {
-            .u-info-client,
-            .u-info-date {
-                .none;
-            }
-        }
+    }
+    .v-face-single .el-input-group__prepend{
+        .none;
     }
     .m-carousel .el-carousel__container {
         height: 240px;
