@@ -76,6 +76,7 @@ export default {
                 ...tabsData,
                 pageIndex: this.page,
                 pageSize: this.per_page,
+                client: this.client,
             };
         },
         hasNextPage() {
