@@ -199,6 +199,7 @@ export default {
             this.$router.push({ name: "list", query: { title: this.search } });
         },
         goBack() {
+            document.title = "捏脸分享 - JX3BOX"
             this.$router.push({ name: "list" });
         },
         showClientLabel: function (val) {
