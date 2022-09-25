@@ -91,6 +91,7 @@ export default {
     watch: {
         params: {
             deep: true,
+            immediate: true,
             handler: function (obj) {
                 this.$emit("change", obj);
             },
