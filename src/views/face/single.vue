@@ -108,7 +108,7 @@
                             </div>
                         </el-image>
                     </div>
-                    <span class="u-name">{{ item.title || "未命名" }}</span>
+                    <div class="u-name" :title="item.title">{{ item.title || "未命名" }}</div>
                 </a>
             </div>
         </div>
@@ -197,6 +197,7 @@ export default {
             this.$router.push({ name: "list", query: { title: this.search } });
         },
         goBack() {
+            document.title = "捏脸分享 - JX3BOX"
             this.$router.push({ name: "list" });
         },
         showClientLabel: function (val) {

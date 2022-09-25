@@ -58,7 +58,7 @@ export default {
             active: '',
             star: '',
             price_type: '',
-            filter_empty_images: false,
+            filter_empty_images: true,
         };
     },
     computed: {
@@ -91,6 +91,7 @@ export default {
     watch: {
         params: {
             deep: true,
+            immediate: true,
             handler: function (obj) {
                 this.$emit("change", obj);
             },
