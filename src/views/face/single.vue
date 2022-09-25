@@ -20,7 +20,7 @@
         </div>
         <!-- 基本信息 -->
         <div class="m-header">
-            <img :src="showAvatar(post.user_avatar)" class="u-avatar" v-if="post.original" />
+            <img :src="showAvatar(post.user_avatar)" class="u-avatar" v-if="!!post.original" />
             <h2 class="u-title">{{ post.title || "无标题" }}</h2>
             <div class="u-info">
                 <div class="u-author">
@@ -48,7 +48,7 @@
             <el-carousel class="m-carousel" :interval="4000" type="card" arrow="always">
                 <el-carousel-item v-for="(item, i) in previewSrcList" :key="i">
                     <div class="m-face-pic">
-                        <el-image fit="contain" :src="item" class="u-pic" :preview-src-list="previewSrcList"></el-image>
+                        <el-image fit="contain" :src="showPic(item)" class="u-pic" :preview-src-list="previewSrcList"></el-image>
                     </div>
                 </el-carousel-item>
             </el-carousel>
@@ -298,6 +298,9 @@ export default {
                 }
             });
         },
+        showPic(url){
+            return resolveImagePath(url)
+        }
     },
 };
 </script>
