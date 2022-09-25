@@ -1,4 +1,4 @@
-import { $next,$pay } from "@jx3box/jx3box-common/js/https";
+import { $next, $pay } from "@jx3box/jx3box-common/js/https";
 
 /**
  * 获取捏脸列表
@@ -7,56 +7,64 @@ import { $next,$pay } from "@jx3box/jx3box-common/js/https";
 function getFaceList(params) {
     return $next().get("/api/face", { params });
 }
+
+/**
+ * 兼容旧版的接口
+ */
+function getFaceOld(id) {
+    return $next().get(`/api/face/old/${id}`);
+}
+
 /**
  * 获取一个捏脸
  * @param {int} id
  */
-function getOneFaceInfo(id){
+function getOneFaceInfo(id) {
     return $next().get(`/api/face/${id}`);
 }
 /**
  * 管理员设置一个精选
  * @param {int} id
  */
-function setStar(id){
-    return $next().put(`/api/face/${id}/manager/set/star`)
+function setStar(id) {
+    return $next().put(`/api/face/${id}/manager/set/star`);
 }
 /**
  * 管理员取消一个精选
  * @param {int} id
  */
-function cancelStar(id){
-    return $next().put(`/api/face/${id}/manager/cancel/star`)
+function cancelStar(id) {
+    return $next().put(`/api/face/${id}/manager/cancel/star`);
 }
 /**
  * 管理员/作者上架捏脸
  * @param {int} id
  * @param {Boolean} isAdmin
  */
-function onlineFace(id,isAdmin){
-    if(isAdmin){
-        return $next().put(`/api/face/${id}/manager/online`)
+function onlineFace(id, isAdmin) {
+    if (isAdmin) {
+        return $next().put(`/api/face/${id}/manager/online`);
     }
-    return $next().put(`/api/face/${id}/online`)
+    return $next().put(`/api/face/${id}/online`);
 }
 /**
  * 管理员/作者下架捏脸
  * @param {int} id
  * @param {Boolean} isAdmin
  */
-function offlineFace(id,isAdmin){
-    if(isAdmin){
-        return $next().put(`/api/face/${id}/manager/offline`)
+function offlineFace(id, isAdmin) {
+    if (isAdmin) {
+        return $next().put(`/api/face/${id}/manager/offline`);
     }
-    return $next().put(`/api/face/${id}/offline`)
+    return $next().put(`/api/face/${id}/offline`);
 }
 
 /**
  * 删除一个捏脸，软删除
  * @param id
  */
-function deleteFace(id){
-    return $next().delete(`/api/face/${id}`)
+function deleteFace(id) {
+    return $next().delete(`/api/face/${id}`);
 }
 /**
  * 购买捏脸
@@ -67,23 +75,26 @@ function deleteFace(id){
  * payUserId {int} 购买人的id  【当前登录用户】
  * accessUserId {int} 出售人的id  【可以从捏脸列表中获取 user_id】
  */
-function payFace(params){
-    return $pay().post(`/api/buy-licence/article/${params.postType}/${params.PostId}/pay/${params.priceType}/${params.priceCount}/from/${params.payUserId}/to/${params.accessUserId}`,{})
+function payFace(params) {
+    return $pay().post(
+        `/api/buy-licence/article/${params.postType}/${params.PostId}/pay/${params.priceType}/${params.priceCount}/from/${params.payUserId}/to/${params.accessUserId}`,
+        {}
+    );
 }
 /**
  * 循环获取支付结果
  * @param {Object} id  购买记录id
  */
-function loopPayStatus(id){
-    return $pay().get(`/api/buy-licence/result/${id}`)
+function loopPayStatus(id) {
+    return $pay().get(`/api/buy-licence/result/${id}`);
 }
 /**
  * 获取附件列表
  * @param {int} postId
  * @param {Object} params
  */
-function getAccessoryList(postId,params){
-    return $next().get(`/api/charge_attachment/face/${postId}`,{
+function getAccessoryList(postId, params) {
+    return $next().get(`/api/charge_attachment/face/${postId}`, {
         params: params,
     });
 }
@@ -93,8 +104,8 @@ function getAccessoryList(postId,params){
  * @param {int} postId
  * @param {Object} params
  */
-function  getNewAccessory(postId,params){
-    return $next().get(`/api/charge_attachment/face/${postId}/lastest`,{
+function getNewAccessory(postId, params) {
+    return $next().get(`/api/charge_attachment/face/${postId}/lastest`, {
         params: params,
     });
 }
@@ -103,7 +114,7 @@ function  getNewAccessory(postId,params){
  * @param {int} postId
  * @param {Object} uuid
  */
-function getDownUrl(postId,uuid){
+function getDownUrl(postId, uuid) {
     return $next().get(`/api/charge_attachment/download/face/${postId}/${uuid}`);
 }
 
@@ -112,16 +123,30 @@ function getDownUrl(postId,uuid){
  * @param params
  * @returns {Promise<AxiosResponse<any>>}
  */
-function  getDownHistory(params){
-    return $next().get(`/api/charge_attachment/download-history`,{
+function getDownHistory(params) {
+    return $next().get(`/api/charge_attachment/download-history`, {
         params: params,
     });
 }
-function  getRandomFace(params){
-    return $next().get(`/api/face/random`,{
+function getRandomFace(params) {
+    return $next().get(`/api/face/random`, {
         params: params,
     });
 }
 export {
-    getFaceList,getOneFaceInfo,setStar,cancelStar,onlineFace,offlineFace,deleteFace,payFace,loopPayStatus,getAccessoryList,getNewAccessory,getDownUrl,getDownHistory,getRandomFace
-}
+    getFaceList,
+    getOneFaceInfo,
+    setStar,
+    cancelStar,
+    onlineFace,
+    offlineFace,
+    deleteFace,
+    payFace,
+    loopPayStatus,
+    getAccessoryList,
+    getNewAccessory,
+    getDownUrl,
+    getDownHistory,
+    getRandomFace,
+    getFaceOld,
+};
