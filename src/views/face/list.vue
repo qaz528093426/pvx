@@ -90,7 +90,6 @@ export default {
     watch: {
         params: {
             deep: true,
-            immediate: true,
             handler() {
                 this.getFaceList();
             },
