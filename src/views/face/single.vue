@@ -30,6 +30,10 @@
                     }}</a>
                     <a class="u-name" :href="post.author_link" target="_blank" v-else>{{ post.author_name }}</a>
                     <time class="u-time">{{ post.updated_at }}</time>
+                    <a v-if="canEdit" :href="editLink('face', post.id)" target="_blank">
+                        <i class="el-icon-edit-outline u-edit-icon"></i>
+                        编辑
+                    </a>
                 </div>
 
                 <div class="u-info-client">
@@ -182,6 +186,9 @@ export default {
         previewSrcList: function () {
             return this.post?.images || [];
         },
+        canEdit: function () {
+            return User.isEditor() || this.post?.user_id == User.getInfo().uid;
+        },
     },
     watch: {},
     created: function () {
@@ -195,6 +202,7 @@ export default {
             return resolveImagePath(url);
         },
         authorLink,
+        editLink,
         getFaceList() {
             this.$router.push({ name: "list", query: { title: this.search } });
         },
