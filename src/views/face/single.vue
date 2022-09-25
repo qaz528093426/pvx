@@ -114,7 +114,7 @@
             <div class="u-list">
                 <a class="u-item" :href="`/face/` + item.id" target="_blank" v-for="item in randomList" :key="item.id">
                     <div class="u-pic">
-                        <el-image fit="cover" :src="item.images[0]">
+                        <el-image fit="cover" :src="showPic(item.images[0])">
                             <div slot="error" class="u-image-slot">
                                 <i class="el-icon-picture-outline"></i>
                             </div>
