@@ -91,7 +91,7 @@
             <facedata v-if="facedata" :data="facedata" />
         </div>
         <!--下载区-->
-        <div class="m-face-files" v-if="has_buy && downFileList.length > 0">
+        <div class="m-face-files" v-if="has_buy && downFileList && downFileList.length > 0">
             <el-divider content-position="left">原始文件列表</el-divider>
             <ul class="m-face-files-list">
                 <li v-for="item in downFileList" :key="item.id">
