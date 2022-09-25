@@ -35,7 +35,7 @@ export default {
         return {
             menus: [
                 {
-                    key: "face",
+                    key: "share",
                     label: "栉掠",
                     index: "1",
                     submenus: [
@@ -43,7 +43,7 @@ export default {
                             path: "/face",
                             label: "捏脸分享",
                             icon: "el-icon-download",
-                            key: "share",
+                            key: "face",
                             status: true,
                             isStd: true,
                         },
@@ -109,7 +109,7 @@ export default {
                             path: "/pvg/item_price",
                             label: "物价大全",
                             icon: "el-icon-sugar",
-                            key: "tutorial",
+                            key: "item_price",
                             status: true,
                         },
                         // 物价大全
