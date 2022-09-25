@@ -125,6 +125,7 @@ export default {
             this.page = this.page + 1;
         },
         handleFaceTabChange: function (data) {
+            this.page = 1;
             this.tabsData = data;
         },
     },

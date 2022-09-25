@@ -19,12 +19,14 @@
                 <el-radio-button label="">全部</el-radio-button>
                 <el-radio-button :label="1">精选</el-radio-button>
             </el-radio-group>
-            <el-radio-group v-model="price_type" size="small">
+            <el-radio-group v-model="price_type" class="u-star" size="small">
                 <el-radio-button label="">全部</el-radio-button>
                 <el-radio-button label="0">免费</el-radio-button>
                 <!-- <el-radio-button label="1">盒币</el-radio-button> -->
                 <!-- <el-radio-button label="2">金箔</el-radio-button> -->
             </el-radio-group>
+
+            <el-checkbox v-model="filter_empty_images" border size="small">不看无封面</el-checkbox>
         </div>
     </div>
 </template>
@@ -56,15 +58,25 @@ export default {
             active: '',
             star: '',
             price_type: '',
+            filter_empty_images: false,
         };
     },
     computed: {
         params() {
-            return {
-                star: this.star,
-                body_type: this.active,
-                price_type: this.price_type,
-            };
+            const _params = {};
+            if (this.active) {
+                _params.body_type = this.active;
+            }
+            if (this.star) {
+                _params.star = this.star;
+            }
+            if (this.price_type) {
+                _params.price_type = this.price_type;
+            }
+            if (this.filter_empty_images) {
+                _params.filter_empty_images = true;
+            }
+            return _params;
         },
     },
     methods: {
