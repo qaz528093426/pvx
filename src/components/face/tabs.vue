@@ -58,7 +58,7 @@ export default {
             active: '',
             star: '',
             price_type: '',
-            filter_empty_images: false,
+            filter_empty_images: true,
         };
     },
     computed: {
