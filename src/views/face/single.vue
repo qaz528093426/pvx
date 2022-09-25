@@ -28,7 +28,10 @@
                     <a class="u-name" :href="authorLink(post.user_id)" target="_blank" v-if="!!~~post.original">{{
                         post.display_name
                     }}</a>
-                    <a class="u-name" :href="post.author_link" target="_blank" v-else>{{ post.author_name }}</a>
+                    <a class="u-name" :href="post.author_link" target="_blank" v-else-if="post.author_link">{{
+                        post.author_name
+                    }}</a>
+                    <span class="u-name" v-else>{{ post.author_name }}</span>
                     <time class="u-time">{{ post.updated_at }}</time>
                 </div>
 
@@ -48,7 +51,12 @@
             <el-carousel class="m-carousel" :interval="4000" type="card" arrow="always">
                 <el-carousel-item v-for="(item, i) in previewSrcList" :key="i">
                     <div class="m-face-pic">
-                        <el-image fit="contain" :src="showPic(item)" class="u-pic" :preview-src-list="previewSrcList"></el-image>
+                        <el-image
+                            fit="contain"
+                            :src="showPic(item)"
+                            class="u-pic"
+                            :preview-src-list="previewSrcList"
+                        ></el-image>
                     </div>
                 </el-carousel-item>
             </el-carousel>
@@ -197,7 +205,7 @@ export default {
             this.$router.push({ name: "list", query: { title: this.search } });
         },
         goBack() {
-            document.title = "捏脸分享 - JX3BOX"
+            document.title = "捏脸分享 - JX3BOX";
             this.$router.push({ name: "list" });
         },
         showClientLabel: function (val) {
@@ -299,9 +307,9 @@ export default {
                 }
             });
         },
-        showPic(url){
-            return resolveImagePath(url)
-        }
+        showPic(url) {
+            return resolveImagePath(url);
+        },
     },
 };
 </script>
