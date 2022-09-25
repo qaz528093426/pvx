@@ -27,7 +27,7 @@
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
 import { setPost } from "@/service/share";
-import { showMinibanner, showBanner, showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
+import { showMinibanner, showBanner, showAvatar, authorLink, getThumbnail } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "item",
     props: ["item"],
@@ -71,11 +71,8 @@ export default {
                 });
             });
         },
-        showThumb: function (item) {
-            return showBanner(item, "face");
-        },
-        showBanner: function (val) {
-            return showMinibanner(val);
+        showThumb: function (url) {
+            return getThumbnail(url,360);
         },
         showAvatar,
         authorLink,
