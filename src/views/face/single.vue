@@ -110,7 +110,7 @@
                             </div>
                         </el-image>
                     </div>
-                    <span class="u-name">{{ item.title || "未命名" }}</span>
+                    <div class="u-name" :title="item.title">{{ item.title || "未命名" }}</div>
                 </a>
             </div>
         </div>
