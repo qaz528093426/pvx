@@ -55,7 +55,7 @@ export default {
 
             list: [],
             page: 1,
-            per_page: 14,
+            // per_page: 14,
             pageTotal: 1,
             total: 0,
 
@@ -86,6 +86,25 @@ export default {
             if (this.title) return "没找到对应的捏脸，请重新选择条件或关键词搜索";
             return "没有找到相关的捏脸";
         },
+        per_page: function (){
+            let count = 18;
+            let w = window.innerWidth;
+
+            // 根据分辨率设置
+            if (w < 768) {
+                count = 6;
+            } else if (w < 992) {
+                count = 12;
+            } else if (w < 1600) {
+                count = 15;
+            } else if (w < 1920) {
+                count = 18;
+            } else {
+                count = 21;
+            }
+
+            return count;
+        }
     },
     watch: {
         params: {
@@ -99,7 +118,7 @@ export default {
             handler() {
                 this.title = this.$route.query.title;
             },
-        }
+        },
     },
     methods: {
         getFaceList: function () {
