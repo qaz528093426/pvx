@@ -20,12 +20,12 @@
         </div>
         <!-- 基本信息 -->
         <div class="m-header">
-            <img :src="showAvatar(post.user_avatar)" class="u-avatar" v-if="!!post.original" />
+            <Avatar :uid="post.user_id" :url="post.user_avatar" :frame="post.user_avatar_frame" class="u-avatar" v-if="!!post.original"/>
             <h2 class="u-title">{{ post.title || "无标题" }}</h2>
             <div class="u-info">
                 <div class="u-author">
                     By
-                    <a class="u-name" :href="authorLink(post.user_id)" target="_blank" v-if="!!~~post.original">{{
+                    <a class="u-name" :href="authorLink(post.user_id)" target="_blank" v-if="!!post.original">{{
                         post.display_name
                     }}</a>
                     <a class="u-name" :href="post.author_link" target="_blank" v-else-if="post.author_link">{{
@@ -41,6 +41,7 @@
 
                 <div class="u-meta">
                     <i class="u-mark" v-if="!!post.star">★ 编辑推荐</i>
+                    <i class="u-original" v-if="!!post.original">原创</i>
                     <i class="u-client" :class="post.client || 'std'">{{ showClientLabel(post.client) }}</i>
                     <i class="u-bodytype" :class="'u-bodytype-' + post.body_type" v-if="post.body_type">{{
                         showBodyTypeLabel(post.body_type)
