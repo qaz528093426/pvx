@@ -67,7 +67,7 @@
             </el-carousel>
         </div>
         <!-- 购买区 -->
-        <div class="m-face-pay" v-if="post.price_type != 0 && !has_buy">
+        <div class="m-face-pay" v-if="post.price_type && post.price_type != 0 && !has_buy">
             <div class="m-face-pay-info">
                 价格：
                 <el-tag effect="plain" type="warning">
@@ -75,7 +75,7 @@
                     <span v-if="post.price_type == 2">{{ post.price_count }} 金箔</span>
                 </el-tag>
             </div>
-            <div class="m-face-pay-btn" v-if="post.price_type != 0 && !has_buy && !isAuthor">
+            <div class="m-face-pay-btn">
                 <el-button
                     type="primary"
                     size="small"
@@ -232,7 +232,9 @@ export default {
                     this.getAccessoryList();
                     //获取作者作品
                     this.getRandomFaceList();
-                });
+                }).catch(err => {
+                    this.loading = false;
+                })
 
                 getStat("face", this.id).then((res) => {
                     this.stat = res.data;
@@ -288,9 +290,9 @@ export default {
         getPayFaceStatus(pay_status, setIntervalId) {
             if (pay_status == 1) {
                 this.payBtnLoading = false;
-                //购买成功后需要重载数据，拉取下载列表
-                this.getAccessoryList();
                 clearInterval(setIntervalId);
+                //购买成功后需要重载数据，拉取下载列表
+                this.getData();
                 this.$notify.success({
                     title: "成功",
                     message: "购买成功",
