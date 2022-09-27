@@ -10,9 +10,6 @@
         </div>
         <div class="m-pet-content flex">
             <div class="m-pet-links">
-                <a class="u-link u-lucky-dates" v-if="luckyDateList.length != 0" @click="luckyDateShow = true"
-                    ><i class="el-icon-date"></i>福缘日期</a
-                >
                 <a class="u-link u-item" :href="getLink('item', item_id)" target="_blank"
                     ><i class="el-icon-collection-tag"></i>物品信息</a
                 >
@@ -79,6 +76,15 @@
                                 ><i class="u-icon-coin"></i
                             ></el-tag>
                         </span>
+                    </div>
+                    <div class="u-meta u-lucky-dates" v-if="luckyDateList.length != 0">
+                        <span class="u-meta-label">福缘日期：</span>
+                        <a
+                            class="u-meta u-link u-lucky-dates"
+                            @click="luckyDateShow = true"
+                        >
+                            <i class="el-icon-date"></i>点击查看
+                        </a>
                     </div>
                 </div>
             </div>
