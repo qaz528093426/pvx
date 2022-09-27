@@ -38,10 +38,14 @@ function getPetLucky() {
     return axios.get(__dataPath + "pvx/pet/output/pet_lucky.json");
 }
 
+function getPetLuckyReverse() {
+    return axios.get(__dataPath + "pvx/pet/output/pet_lucky_reverse.json");
+}
+
 function getSkill(params) {
     return $.get('/skills', {
         params
     })
 }
 
-export { getPets, getPet, getPetSkill, getShopInfo, getPetLucky, getSkill };
+export { getPets, getPet, getPetSkill, getShopInfo, getPetLucky, getPetLuckyReverse, getSkill };
