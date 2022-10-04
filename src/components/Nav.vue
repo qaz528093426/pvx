@@ -183,6 +183,7 @@ export default {
                                 if (el.key == "adventure") return false;
                                 if (el.key == "furniture") return false;
                                 if (el.key == "tutorial") return false;
+                                if (el.key == "item_price") return false;
                                 return el;
                             })
                             .filter(Boolean);
