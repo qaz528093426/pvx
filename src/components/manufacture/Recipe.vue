@@ -4,7 +4,9 @@
         <el-popover popper-class="u-icon-popper" placement="right" :visible-arrow="false" trigger="hover">
             <Item :item_id="item.item_key" />
             <div class="u-img" slot="reference">
-                <span class="u-amount" v-if="item.CreateItemMin1 != item.CreateItemMax1">{{item.CreateItemMin1}}~{{item.CreateItemMax1}}</span>
+                <span class="u-amount" v-if="item.CreateItemMin1 != item.CreateItemMax1"
+                    >{{ item.CreateItemMin1 }}~{{ item.CreateItemMax1 }}</span
+                >
                 <div
                     class="u-border"
                     :style="{ backgroundImage: item_border(item.Quality), opacity: item.Quality == 5 ? 0.9 : 1 }"
@@ -124,13 +126,15 @@ export default {
         // // 获取item数据
         loadData() {
             this.loading = true;
-            getManufactureItem(this.craft_key, this.item_id, this.client)
-                .then((res) => {
-                    res.data && this.processor(res.data);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+
+            this.item_id &&
+                getManufactureItem(this.craft_key, this.item_id, this.client)
+                    .then((res) => {
+                        res.data && this.processor(res.data);
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
         },
         // 1、过滤空值 拼合物品ID
         processor(data) {
@@ -229,13 +233,6 @@ export default {
         count(count) {
             this.item.count = count;
             this.$store.commit("toState", { item: this.item });
-        },
-        priceData: {
-            deep: true,
-            immediate:true,
-            handler: function (val) {
-                console.log(val);
-            },
         },
     },
     created: function () {},

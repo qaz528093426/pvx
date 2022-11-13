@@ -79,7 +79,7 @@ export default {
     },
     watch: {
         craft_key(val) {
-            this.loadData(val);
+            if (val !== this.$store.state.craft_key) this.loadData(val);
         },
         search(val) {
             let _list = [];
@@ -180,6 +180,7 @@ export default {
             this.profession_id = ProfessionID;
             this.craft_name = name;
             this.craft_key = key;
+            if (key !== this.$store.state.craft_key) this.$store.commit("toState", { item_id: "" });
         },
     },
     created() {

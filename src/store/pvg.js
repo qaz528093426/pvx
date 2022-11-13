@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { getOther, getItemsPrice } from "@/service/manufacture";
+import { cloneDeep } from "lodash";
 
 Vue.use(Vuex);
 
@@ -43,20 +44,20 @@ let store = {
         },
         // 加入购物车
         toCart(state, { item }) {
-            if (state.cartList.findIndex((cart) => cart.ID == item.ID) == -1) {
-                state.cartList.push(JSON.parse(JSON.stringify(item)));
+            if (state.cartList.filter((cart) => cart.ID == item.ID && cart.IdKey == item.IdKey).length == 0) {
+                state.cartList.push(cloneDeep(item));
             } else {
                 state.cartList = state.cartList.map((cart) => {
-                    if (cart.ID == item.ID) cart.count += item.count;
-                    console.log(cart, item);
+                    if (cart.ID == item.ID && cart.IdKey == item.IdKey) cart.count += item.count;
                     return cart;
                 });
             }
         },
         // 自定义价格
         toMyPrice(state, { id, Price }) {
-            state.priceData = Object.assign({}, state.priceData, { [id]: Price });
-            console.log(state.cartList);
+            state.priceData = Object.assign({}, state.priceData, {
+                [id]: Price
+            });
             if (state.cartList.length)
                 state.cartList = state.cartList.map((item) => {
                     item.childrenList = item.childrenList.map((el) => {

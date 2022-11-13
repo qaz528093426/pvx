@@ -67,9 +67,6 @@ export default {
         $route (obj) {
             if (obj.params.search) this.hasSearch = obj.params.search;
         },
-        per (val) {
-            console.log(val);
-        },
     },
     methods: {
         getData () {

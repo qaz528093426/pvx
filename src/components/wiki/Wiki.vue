@@ -14,19 +14,30 @@
                 </template>
                 <template slot="body">
                     <div class="m-wiki-compatible" v-if="compatible">
-                        <i class="el-icon-warning-outline"></i> 暂无缘起攻略，以下为重制攻略，仅作参考，<a class="s-link" :href="publish_url">参与修订</a>。
+                        <i class="el-icon-warning-outline"></i> 暂无缘起攻略，以下为重制攻略，仅作参考，<a
+                            class="s-link"
+                            :href="publish_url"
+                            >参与修订</a
+                        >。
                     </div>
                     <Article :content="wiki_post.post.content" />
                     <div class="m-wiki-signature">
                         <i class="el-icon-edit"></i>
                         本次修订由 <b>{{ user_name }}</b> 提交于{{ updated_at }}
                     </div>
-                    <Thx class="m-thx" :postId="id" :postType="type" :postTitle="source_title" :adminBoxcoinEnable="false" :userBoxcoinEnable="false" />
+                    <Thx
+                        class="m-thx"
+                        :postId="id"
+                        :postType="type"
+                        :postTitle="source_title"
+                        :adminBoxcoinEnable="false"
+                        :userBoxcoinEnable="false"
+                    />
                 </template>
             </WikiPanel>
 
             <!-- 历史版本 -->
-            <WikiRevisions :type="source_type" :source-id="source_id" :isGame="true"/>
+            <WikiRevisions :type="source_type" :source-id="source_id" :isGame="true" />
         </div>
         <div class="m-wiki-post-empty" v-if="is_empty">
             <i class="el-icon-s-opportunity"></i>
@@ -49,7 +60,7 @@ export default {
         WikiRevisions,
         Article,
     },
-    props: ["title", "source_type", "source_id", "type", "id","source_title"],
+    props: ["title", "source_type", "source_id", "type", "id", "source_title"],
     data() {
         return {
             wiki_post: null,
@@ -59,11 +70,11 @@ export default {
         };
     },
     computed: {
-        post_content : function (){
-            return this.wiki_post?.post
+        post_content: function () {
+            return this.wiki_post?.post;
         },
-        is_empty : function (){
-            return !this.wiki_post?.post
+        is_empty: function () {
+            return !this.wiki_post?.post;
         },
         isRevision: function () {
             return !!this.$route.params.post_id;
@@ -91,7 +102,7 @@ export default {
     },
     methods: {
         loadData: function () {
-            wiki.mix({ type: this.source_type, id: this.source_id, client: this.client }, { supply: 1 }).then(res => {
+            wiki.mix({ type: this.source_type, id: this.source_id, client: this.client }, { supply: 1 }).then((res) => {
                 const { post, source, compatible, users } = res;
                 this.wiki_post = {
                     post: post,
@@ -99,7 +110,7 @@ export default {
                     users: users,
                 };
                 this.compatible = compatible;
-            })
+            });
         },
     },
     watch: {
@@ -110,9 +121,7 @@ export default {
             },
         },
     },
-    mounted: function () {
-        // console.log(this.type)
-    },
+    mounted: function () {},
 };
 </script>
 
