@@ -14,11 +14,9 @@
                 <img class="u-avatar" :src="showAvatar(item.user_avatar)" :alt="author" />
                 <span class="u-author">{{ author }}</span>
             </a>
-
             <!-- 价格 -->
             <span class="u-price" :class="{ isFree: !item.price_count }"><span>{{ item.price_count || "免费" }}</span></span>
         </span>
-
         <i class="u-star-mark" v-if="!!item.star">STAR</i>
     </div>
 </template>
