@@ -57,10 +57,12 @@
                 <el-carousel-item v-for="(item, i) in previewSrcList" :key="i">
                     <div class="m-face-pic">
                         <el-image
+                            ref="previewImage"
                             fit="contain"
                             :src="showPic(item)"
                             class="u-pic"
                             :preview-src-list="previewSrcList"
+                            @click.capture="handlePreviewImage(i)"
                         ></el-image>
                     </div>
                 </el-carousel-item>
@@ -222,6 +224,11 @@ export default {
         },
         showBodyTypeLabel(val) {
             return bodyMap[val];
+        },
+        handlePreviewImage(index){
+            const imageViewerChild = this.$refs.previewImage[index].$children[0]
+            imageViewerChild && imageViewerChild.reset()
+            imageViewerChild && (imageViewerChild.index = index)
         },
         getData() {
             if (this.id) {
