@@ -77,7 +77,7 @@
                     </div>
                     <div class="u-item-num">
                         <span><i class="el-icon-sunny"></i> 消耗精力值：</span>
-                        <b>{{ item.CostVigor * item.count }}</b>
+                        <b>{{ (item.CostVigor || item.CostStamina) * item.count }}</b>
                     </div>
                     <div class="u-item-num">
                         <span><i class="el-icon-coin"></i> 小计金额：</span>
@@ -148,7 +148,7 @@ export default {
             if (!this.cartList.length) return 0;
             let _num = 0;
             let _list = this.cartList.map((el) => {
-                return { exp: el.CostVigor, count: el.count };
+                return { exp: el.CostVigor || el.CostStamina, count: el.count };
             });
             _list.forEach((item) => {
                 _num += item.count * item.exp;
