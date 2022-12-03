@@ -29,7 +29,7 @@
                 >需求等级: <b>{{ item.nLevel || "未知" }}</b></span
             >
             <span
-                >消耗精力: <b>{{ item.CostVigor }}</b></span
+                >消耗精力: <b>{{ item.CostVigor || item.CostStamina }}</b></span
             >
             <span
                 >经验值: <b>{{ item.Exp }}</b></span
