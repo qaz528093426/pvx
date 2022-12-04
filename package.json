@@ -7,14 +7,14 @@
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
         "inspect": "vue inspect > output.js",
-        "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest"
+        "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest @jx3box/jx3box-facedat@latest"
     },
     "dependencies": {
         "@jx3box/jx3box-comment-ui": "^1.7.0",
         "@jx3box/jx3box-common": "^7.5.0",
-        "@jx3box/jx3box-common-ui": "^6.4.0",
+        "@jx3box/jx3box-common-ui": "^6.4.4",
         "@jx3box/jx3box-data": "^1.11.5",
-        "@jx3box/jx3box-facedat": "^2.3.6",
+        "@jx3box/jx3box-facedat": "^2.3.8",
         "@jx3box/jx3box-petmap": "^0.1.9",
         "axios": "^0.19.2",
         "core-js": "^3.4.3",
