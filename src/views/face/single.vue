@@ -226,9 +226,12 @@ export default {
             return bodyMap[val];
         },
         handlePreviewImage(index){
-            const imageViewerChild = this.$refs.previewImage[index].$children[0]
-            imageViewerChild && imageViewerChild.reset()
-            imageViewerChild && (imageViewerChild.index = index)
+            setTimeout(() => {
+                const imageViewerChild = this.$refs.previewImage[index].$children[0]
+                imageViewerChild && imageViewerChild.reset()
+                imageViewerChild && (imageViewerChild.index = index)
+            }, 0)
+
         },
         getData() {
             if (this.id) {
